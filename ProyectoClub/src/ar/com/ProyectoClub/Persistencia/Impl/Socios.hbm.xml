@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 14-sep-2016 13:31:11 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ar.com.ProyectoClub.Dominio.Socios" table="socios" catalog="datosclub">
+        <id name="dniSocios" type="int">
+            <column name="dni_socios" />
+            <generator class="foreign">
+                <param name="property">personas</param>
+            </generator>
+        </id>
+        <many-to-one name="categoria" class="ar.com.ProyectoClub.Dominio.Categoria" fetch="select">
+            <column name="FK_Categoria" not-null="true" />
+        </many-to-one>
+        <one-to-one name="personas" class="ar.com.ProyectoClub.Dominio.Personas" constrained="true"></one-to-one>
+        <property name="sexo" type="string">
+            <column name="sexo" length="20" not-null="true" />
+        </property>
+        <property name="estado" type="string">
+            <column name="estado" length="20" not-null="true" />
+        </property>
+        <property name="nacionalidad" type="string">
+            <column name="nacionalidad" length="30" not-null="true" />
+        </property>
+        <property name="estadocivil" type="string">
+            <column name="estadocivil" length="20" not-null="true" />
+        </property>
+        <property name="fechaingreso" type="date">
+            <column name="fechaingreso" length="10" not-null="true" />
+        </property>
+        <property name="idx" type="int">
+            <column name="idx" not-null="true">
+                <comment>se utiliza esta columna para tener una lista ordenada de socios</comment>
+            </column>
+        </property>
+        <set name="alquilers" table="alquiler" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="socios_dni_socios" />
+            </key>
+            <one-to-many class="ar.com.ProyectoClub.Dominio.Alquiler" />
+        </set>
+        <set name="cuotas" table="cuota" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="FK_DniSocio" not-null="true" />
+            </key>
+            <one-to-many class="ar.com.ProyectoClub.Dominio.Cuota" />
+        </set>
+    </class>
+</hibernate-mapping>
