@@ -15,41 +15,46 @@ import org.hibernate.service.ServiceRegistry;
  */
 public class HibernateUtil {
      
-	private static SessionFactory _Sessionfactory;
+	private static SessionFactory sessionfactory;
+	private static Configuration hibConfig;
+	
+	public static Configuration getHibConfig() {
+    	builsessionfactory();
+		return hibConfig;
+	}
      
      public static synchronized void builsessionfactory(){
-    	 if(_Sessionfactory== null){
-    		 Configuration _Configuration= new Configuration();
-    		 _Configuration.configure();
-    		 _Configuration.setProperty("hibernet.curren_session_context_class", "thread");
-    		 ServiceRegistry _ServiceRegistry  = new StandardServiceRegistryBuilder().applySettings(
-    		            _Configuration.getProperties()).build();
-    		 _Sessionfactory = _Configuration.buildSessionFactory(_ServiceRegistry);
+    	 if(sessionfactory== null){
+    		 hibConfig = new Configuration();
+    		 hibConfig.configure("/hibernate.cfg.xml");
+    		 hibConfig.setProperty("hibernet.curren_session_context_class", "thread");
+    		 ServiceRegistry _ServiceRegistry  = new StandardServiceRegistryBuilder().applySettings(hibConfig.getProperties()).build();
+    		 sessionfactory = hibConfig.buildSessionFactory(_ServiceRegistry);
     	 }
      }
      
      public static void openSessionAndBindToThread(){
-    	 Session _Session=_Sessionfactory.openSession();
+    	 Session _Session= sessionfactory.openSession();
     	 ThreadLocalSessionContext.bind(_Session);
      }
      
      public static SessionFactory getSessionFactory(){
-    	 if(_Sessionfactory ==null){
+    	 if(sessionfactory ==null){
     		builsessionfactory(); 
     	 }
-    	 return _Sessionfactory;
+    	 return sessionfactory;
      }
      
      public static void closeSessionAndUnbindFromThread(){
-    	 Session _session=ThreadLocalSessionContext.unbind(_Sessionfactory);
+    	 Session _session=ThreadLocalSessionContext.unbind(sessionfactory);
     	 if(_session != null){
     		 _session.close();
     	 }
      }
      
      public static void closeSessionFactory(){
-    	 if((_Sessionfactory != null) && (_Sessionfactory.isClosed()==false)){
-    		 _Sessionfactory.close();
+    	 if((sessionfactory != null) && (sessionfactory.isClosed()==false)){
+    		 sessionfactory.close();
     	 }
      }
 }
