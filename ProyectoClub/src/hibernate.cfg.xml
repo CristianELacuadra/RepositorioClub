@@ -1,25 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
                                          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
- <session-factory name="MySqlConexion">
-  <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+ <session-factory name="SessionFactoryHibernet">
   <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
   <property name="hibernate.connection.password">cris709</property>
   <property name="hibernate.connection.url">jdbc:mysql://localhost/datosclub</property>
   <property name="hibernate.connection.username">root</property>
-  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-  <property name="hibernate.search.autoregister_listeners">false</property>
-  <property name="hibernate.validator.apply_to_ddl">false</property>
-  <property name="hibernate.show_sql">true</property>
-  <property name="hibernate.current_session_context_class">thread</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
   <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Alquiler.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Caja.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Nosocio.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Categoria.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Cuota.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Nosocio.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Personas.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Socios.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Inmuebles.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Cuota.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

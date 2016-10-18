@@ -3,14 +3,9 @@
 
 <hibernate-reverse-engineering>
 <type-mapping>
-	<sql-type jdbc-type="VARCHAR" hibernate-type="string"></sql-type>
-	<sql-type jdbc-type="VARCHAR" hibernate-type="string"></sql-type>
-	<sql-type jdbc-type="VARCHAR" hibernate-type="string"></sql-type>
-	<sql-type jdbc-type="VARCHAR" hibernate-type="string"></sql-type>
-	<sql-type jdbc-type="VARCHAR" hibernate-type="string"></sql-type>
-	<sql-type jdbc-type="VARCHAR" hibernate-type="string"></sql-type>
-	<sql-type jdbc-type="VARCHAR" hibernate-type="string"></sql-type>
-	<sql-type jdbc-type="VARCHAR" hibernate-type="string"></sql-type>
+	<sql-type jdbc-type="INTEGER" hibernate-type="Integer"
+		not-null="true">
+	</sql-type>
 </type-mapping>
 <table-filter match-catalog="datosclub" match-name="alquiler"/>
   <table-filter match-catalog="datosclub" match-name="caja"/>

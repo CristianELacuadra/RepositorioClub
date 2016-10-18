@@ -1,27 +1,28 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 14-sep-2016 13:31:11 by Hibernate Tools 3.4.0.CR1 -->
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17-oct-2016 13:15:31 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="ar.com.ProyectoClub.Dominio.Cuota" table="cuota" catalog="datosclub">
-        <id name="id" type="java.lang.Integer">
-            <column name="ID" />
-            <generator class="identity" />
-        </id>
-        <many-to-one name="socios" class="ar.com.ProyectoClub.Dominio.Socios" fetch="select">
-            <column name="FK_DniSocio" not-null="true" />
-        </many-to-one>
-        <many-to-one name="caja" class="ar.com.ProyectoClub.Dominio.Caja" fetch="select">
-            <column name="caja_ID_Caja" not-null="true" />
-        </many-to-one>
-        <property name="fecha" type="date">
-            <column name="fecha" length="10" not-null="true" />
-        </property>
-        <property name="monto" type="float">
-            <column name="Monto" precision="12" scale="0" not-null="true" />
-        </property>
-        <property name="estado" type="string">
-            <column name="Estado" length="25" not-null="true" />
-        </property>
-    </class>
+ <class catalog="datosclub" entity-name="Cuota"
+  name="ar.com.ProyectoClub.Dominio.Cuota" table="cuota">
+  <id name="id" type="java.lang.Integer">
+   <column name="ID"/>
+   <generator class="identity"/>
+  </id>
+  <many-to-one class="Caja" fetch="select" name="caja">
+   <column name="caja_ID_Caja" not-null="true"/>
+  </many-to-one>
+  <many-to-one class="Socios" fetch="select" name="socios">
+   <column name="FK_DniSocio" not-null="true"/>
+  </many-to-one>
+  <property generated="never" lazy="false" name="fecha" type="date">
+   <column length="10" name="fecha" not-null="true"/>
+  </property>
+  <property generated="never" lazy="false" name="monto" type="float">
+   <column name="Monto" not-null="true" precision="12" scale="0"/>
+  </property>
+  <property generated="never" lazy="false" name="estado" type="string">
+   <column length="25" name="Estado" not-null="true"/>
+  </property>
+ </class>
 </hibernate-mapping>

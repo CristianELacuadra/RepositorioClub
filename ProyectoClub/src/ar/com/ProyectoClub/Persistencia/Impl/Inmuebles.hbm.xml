@@ -1,30 +1,32 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 14-sep-2016 13:31:11 by Hibernate Tools 3.4.0.CR1 -->
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17-oct-2016 13:15:31 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="ar.com.ProyectoClub.Dominio.Inmuebles" table="inmuebles" catalog="datosclub">
-        <id name="idInmueble" type="java.lang.Integer">
-            <column name="ID_Inmueble" />
-            <generator class="identity" />
-        </id>
-        <property name="descripcion" type="string">
-            <column name="descripcion" length="65535" />
-        </property>
-        <property name="precioHora" type="float">
-            <column name="precio_hora" precision="12" scale="0" not-null="true" />
-        </property>
-        <property name="direccion" type="string">
-            <column name="Direccion" length="50" not-null="true" />
-        </property>
-        <property name="nombre" type="string">
-            <column name="nombre" length="20" not-null="true" />
-        </property>
-        <set name="alquilers" table="alquiler" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="inmuebles_ID_Inmueble" not-null="true" />
-            </key>
-            <one-to-many class="ar.com.ProyectoClub.Dominio.Alquiler" />
-        </set>
-    </class>
+ <class catalog="datosclub" entity-name="Inmuebles"
+  name="ar.com.ProyectoClub.Dominio.Inmuebles" table="inmuebles">
+  <id name="idInmueble" type="java.lang.Integer">
+   <column name="ID_Inmueble"/>
+   <generator class="identity"/>
+  </id>
+  <property generated="never" lazy="false" name="descripcion" type="string">
+   <column length="65535" name="descripcion"/>
+  </property>
+  <property generated="never" lazy="false" name="precioHora" type="float">
+   <column name="precio_hora" not-null="true" precision="12" scale="0"/>
+  </property>
+  <property generated="never" lazy="false" name="direccion" type="string">
+   <column length="50" name="Direccion" not-null="true"/>
+  </property>
+  <property generated="never" lazy="false" name="nombre" type="string">
+   <column length="20" name="nombre" not-null="true"/>
+  </property>
+  <set fetch="select" inverse="true" lazy="true" name="alquilers"
+   sort="unsorted" table="alquiler">
+   <key>
+    <column name="inmuebles_ID_Inmueble" not-null="true"/>
+   </key>
+   <one-to-many class="Alquiler"/>
+  </set>
+ </class>
 </hibernate-mapping>

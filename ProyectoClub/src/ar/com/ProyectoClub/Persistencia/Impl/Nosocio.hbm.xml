@@ -1,21 +1,23 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 14-sep-2016 13:31:11 by Hibernate Tools 3.4.0.CR1 -->
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17-oct-2016 13:15:31 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="ar.com.ProyectoClub.Dominio.Nosocio" table="nosocio" catalog="datosclub">
-        <id name="dniNoSocio" type="int">
-            <column name="dni_no_socio" />
-            <generator class="foreign">
-                <param name="property">personas</param>
-            </generator>
-        </id>
-        <one-to-one name="personas" class="ar.com.ProyectoClub.Dominio.Personas" constrained="true"></one-to-one>
-        <set name="alquilers" table="alquiler" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="nosocio_dni_no_socio" />
-            </key>
-            <one-to-many class="ar.com.ProyectoClub.Dominio.Alquiler" />
-        </set>
-    </class>
+ <class catalog="datosclub" entity-name="Nosocio"
+  name="ar.com.ProyectoClub.Dominio.Nosocio" table="nosocio">
+  <id name="dniNoSocio" type="int">
+   <column name="dni_no_socio"/>
+   <generator class="foreign">
+    <param name="property">personas</param>
+   </generator>
+  </id>
+  <one-to-one class="Personas" constrained="true" name="personas"/>
+  <set fetch="select" inverse="true" lazy="true" name="alquilers"
+   sort="unsorted" table="alquiler">
+   <key>
+    <column name="nosocio_dni_no_socio"/>
+   </key>
+   <one-to-many class="Alquiler"/>
+  </set>
+ </class>
 </hibernate-mapping>
