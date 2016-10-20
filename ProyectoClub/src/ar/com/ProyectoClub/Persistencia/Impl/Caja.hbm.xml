@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 17-oct-2016 13:15:31 by Hibernate Tools 4.3.1 -->
+<!-- Generated 19-oct-2016 11:05:12 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
  <class catalog="datosclub" entity-name="Caja"
   name="ar.com.ProyectoClub.Dominio.Caja" table="caja">
@@ -19,21 +19,11 @@
    <column name="Monto" not-null="true" precision="12" scale="0"/>
   </property>
   <property generated="never" lazy="false" name="subTotal" type="float">
-   <column name="sub_total" not-null="true" precision="12" scale="0"/>
+   <column name="sub_total" not-null="true" precision="12" scale="0">
+    <comment>campo que almacena el resto de la plata total</comment>
+   </column>
   </property>
-  <set fetch="select" inverse="true" lazy="true" name="cuotas"
-   sort="unsorted" table="cuota">
-   <key>
-    <column name="caja_ID_Caja" not-null="true"/>
-   </key>
-   <one-to-many class="Cuota"/>
-  </set>
-  <set fetch="select" inverse="true" lazy="true" name="alquilers"
-   sort="unsorted" table="alquiler">
-   <key>
-    <column name="caja_ID_Caja" not-null="true"/>
-   </key>
-   <one-to-many class="Alquiler"/>
-  </set>
+  <one-to-one class="CajaCuota" name="cajaCuota"/>
+  <one-to-one class="CajaAlquiler" name="cajaAlquiler"/>
  </class>
 </hibernate-mapping>

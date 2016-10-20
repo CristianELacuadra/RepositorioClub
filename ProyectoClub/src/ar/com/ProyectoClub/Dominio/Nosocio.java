@@ -1,4 +1,6 @@
 package ar.com.ProyectoClub.Dominio;
+// Generated 19-oct-2016 11:03:04 by Hibernate Tools 4.3.1
+
 import java.util.HashSet;
 import java.util.Set;
 

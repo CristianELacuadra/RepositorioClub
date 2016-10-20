@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-oct-2016 11:05:12 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+ <class catalog="datosclub" entity-name="CajaCuota"
+  name="ar.com.ProyectoClub.Dominio.CajaCuota" table="`caja-cuota`">
+  <id name="idCaja" type="java.lang.Integer">
+   <column name="ID_Caja"/>
+   <generator class="foreign">
+    <param name="property">caja</param>
+   </generator>
+  </id>
+  <one-to-one class="Caja" constrained="true" name="caja"/>
+  <many-to-one class="Cuota" fetch="select" name="cuota">
+   <column name="ID_Cuota" not-null="true"/>
+  </many-to-one>
+ </class>
+</hibernate-mapping>

@@ -25,5 +25,6 @@
 	<classpathentry kind="lib" path="lib/reflections-0.9.5.jar"/>
 	<classpathentry kind="lib" path="lib/org.springframework.core-3.1.2.release.jar"/>
 	<classpathentry kind="lib" path="lib/javax.ws.rs-api-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

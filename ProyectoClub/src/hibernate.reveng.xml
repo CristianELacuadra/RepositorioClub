@@ -7,12 +7,16 @@
 		not-null="true">
 	</sql-type>
 </type-mapping>
-<table-filter match-catalog="datosclub" match-name="alquiler"/>
-  <table-filter match-catalog="datosclub" match-name="caja"/>
-  <table-filter match-catalog="datosclub" match-name="categoria"/>
-  <table-filter match-catalog="datosclub" match-name="cuota"/>
-  <table-filter match-catalog="datosclub" match-name="inmuebles"/>
-  <table-filter match-catalog="datosclub" match-name="nosocio"/>
-  <table-filter match-catalog="datosclub" match-name="personas"/>
-  <table-filter match-catalog="datosclub" match-name="socios"/>
+<table-filter match-name="alquiler" match-catalog="datosclub"></table-filter>
+	<table-filter match-name="caja" match-catalog="datosclub"></table-filter>
+	<table-filter match-name="caja-alquiler"
+		match-catalog="datosclub">
+	</table-filter>
+	<table-filter match-name="caja-cuota" match-catalog="datosclub"></table-filter>
+	<table-filter match-name="categoria" match-catalog="datosclub"></table-filter>
+	<table-filter match-name="cuota" match-catalog="datosclub"></table-filter>
+	<table-filter match-name="inmuebles" match-catalog="datosclub"></table-filter>
+	<table-filter match-name="nosocio" match-catalog="datosclub"></table-filter>
+	<table-filter match-name="personas" match-catalog="datosclub"></table-filter>
+	<table-filter match-name="socios" match-catalog="datosclub"></table-filter>
 </hibernate-reverse-engineering>

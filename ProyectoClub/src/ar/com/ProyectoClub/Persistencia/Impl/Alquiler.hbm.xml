@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 17-oct-2016 13:15:31 by Hibernate Tools 4.3.1 -->
+<!-- Generated 19-oct-2016 11:05:12 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
  <class catalog="datosclub" entity-name="Alquiler"
   name="ar.com.ProyectoClub.Dominio.Alquiler" table="alquiler">
@@ -9,9 +9,6 @@
    <column name="Nro_Alquiler"/>
    <generator class="identity"/>
   </id>
-  <many-to-one class="Caja" fetch="select" name="caja">
-   <column name="caja_ID_Caja" not-null="true"/>
-  </many-to-one>
   <many-to-one class="Inmuebles" fetch="select" name="inmuebles">
    <column name="inmuebles_ID_Inmueble" not-null="true"/>
   </many-to-one>
@@ -36,5 +33,12 @@
   <property generated="never" lazy="false" name="precioTotal" type="float">
    <column name="Precio_Total" not-null="true" precision="12" scale="0"/>
   </property>
+  <set fetch="select" inverse="true" lazy="true" name="cajaAlquilers"
+   sort="unsorted" table="`caja-alquiler`">
+   <key>
+    <column name="Nro_alquiler" not-null="true"/>
+   </key>
+   <one-to-many class="CajaAlquiler"/>
+  </set>
  </class>
 </hibernate-mapping>
