@@ -33,7 +33,7 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 	}
 	
 	@Override
-	public T create() throws BussinessException {
+	public T crear() throws BussinessException {
 		try{
 			return getEntityClass().newInstance();
 		}
@@ -49,7 +49,7 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 	}
 	
 	@Override
-	public void GuardarActualizar(T entity) throws BussinessException {
+	public void Insertar(T entity) throws BussinessException {
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -101,9 +101,63 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 			throw new RuntimeException(ex);
 		}
 	}
+	@Override
+	public void Actualizar(T entity) throws BussinessException {
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			session.saveOrUpdate(entity);
+			session.getTransaction().commit();
+		} 
+		catch (javax.validation.ConstraintViolationException cve) {
+			try {
+				if (session.getTransaction().isActive()) {
+					session.getTransaction().rollback();
+				}
+			} 
+			catch (Exception exc) {
+				LOGGER.log(Level.WARNING,"Falló al hacer un rollback", exc);
+			}
+			throw new BussinessException(cve);
+		} 
+		catch (org.hibernate.exception.ConstraintViolationException cve) {
+			try {
+				if (session.getTransaction().isActive()) {
+					session.getTransaction().rollback();
+				}
+			} 
+			catch (Exception exc) {
+				LOGGER.log(Level.WARNING,"Falló al hacer un rollback", exc);
+			}
+			throw new BussinessException(cve);
+		} 
+		catch (RuntimeException ex) {
+			try {
+				if (session.getTransaction().isActive()) {
+					session.getTransaction().rollback();
+				}
+			} 
+			catch (Exception exc) {
+				LOGGER.log(Level.WARNING,"Falló al hacer un rollback", exc);
+			}
+			throw ex;
+		} 
+		catch (Exception ex) {
+			try {
+				if (session.getTransaction().isActive()) {
+					session.getTransaction().rollback();
+				}
+			} 
+			catch (Exception exc) {
+				LOGGER.log(Level.WARNING,"Falló al hacer un rollback", exc);
+			}
+			throw new RuntimeException(ex);
+		}
+		
+	}
 	
 	@Override
-	public T GetUno(Id id) throws BussinessException {
+	public T BuscarUno(Id id) throws BussinessException {
 		Session session=sessionFactory.getCurrentSession();
 		try{
 			session.beginTransaction();
@@ -228,7 +282,7 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 	
 	@SuppressWarnings({ "rawtypes", "deprecation" })
 	@Override
-	public List<T> GetTodos() throws BussinessException {
+	public List<T> Todos() throws BussinessException {
 		Session session = sessionFactory.getCurrentSession();
 		try{
 			org.hibernate.query.Query query= session.createQuery("SELECT e FROM"+ getEntityClass().getName()+ "e" );
