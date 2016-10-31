@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-oct-2016 11:05:12 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+ <class catalog="datosclub" entity-name="Cuota"
+  name="ar.com.ProyectoClub.Modelo.Dominio.Cuota" table="cuota">
+  <id name="id" type="java.lang.Integer">
+   <column name="ID"/>
+   <generator class="identity"/>
+  </id>
+  <many-to-one class="Socios" fetch="select" name="socios">
+   <column name="FK_DniSocio" not-null="true"/>
+  </many-to-one>
+  <property generated="never" lazy="false" name="fecha" type="date">
+   <column length="10" name="fecha" not-null="true"/>
+  </property>
+  <property generated="never" lazy="false" name="monto" type="float">
+   <column name="Monto" not-null="true" precision="12" scale="0"/>
+  </property>
+  <property generated="never" lazy="false" name="estado" type="string">
+   <column length="25" name="Estado" not-null="true"/>
+  </property>
+  <set fetch="select" inverse="true" lazy="true" name="cajaCuotas"
+   sort="unsorted" table="`caja-cuota`">
+   <key>
+    <column name="ID_Cuota" not-null="true"/>
+   </key>
+   <one-to-many class="CajaCuota"/>
+  </set>
+ </class>
+</hibernate-mapping>

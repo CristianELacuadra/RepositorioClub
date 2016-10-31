@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-oct-2016 11:05:12 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+ <class catalog="datosclub" entity-name="Personas"
+  name="ar.com.ProyectoClub.Modelo.Dominio.Personas" table="personas">
+  <id name="dni" type="java.lang.Integer">
+   <column name="dni"/>
+   <generator class="assigned"/>
+  </id>
+  <property generated="never" lazy="false" name="nombre" type="string">
+   <column length="20" name="nombre" not-null="true"/>
+  </property>
+  <property generated="never" lazy="false" name="apellido" type="string">
+   <column length="20" name="apellido" not-null="true"/>
+  </property>
+  <property generated="never" lazy="false" name="telefono" type="integer">
+   <column name="telefono" not-null="true"/>
+  </property>
+  <property generated="never" lazy="false" name="domicilio" type="string">
+   <column length="30" name="domicilio" not-null="true"/>
+  </property>
+  <property generated="never" lazy="false" name="fechanacimiento" type="date">
+   <column length="10" name="fechanacimiento" not-null="true"/>
+  </property>
+  <one-to-one class="Socios" name="socios"/>
+  <one-to-one class="Nosocio" name="nosocio"/>
+ </class>
+</hibernate-mapping>
