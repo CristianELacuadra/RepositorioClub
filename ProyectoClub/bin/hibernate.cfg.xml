@@ -8,15 +8,15 @@
   <property name="hibernate.connection.url">jdbc:mysql://localhost/datosclub</property>
   <property name="hibernate.connection.username">root</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
-  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Alquiler.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Caja.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Categoria.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Cuota.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Nosocio.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Personas.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Socios.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/Inmuebles.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/CajaAlquiler.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/Persistencia/Impl/CajaCuota.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/Modelo/Persistencia/Impl/Alquiler.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/Modelo/Persistencia/Impl/Caja.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/Modelo/Persistencia/Impl/CajaAlquiler.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/Modelo/Persistencia/Impl/CajaCuota.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/Modelo/Persistencia/Impl/Categoria.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/Modelo/Persistencia/Impl/Cuota.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/Modelo/Persistencia/Impl/Inmuebles.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/Modelo/Persistencia/Impl/Nosocio.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/Modelo/Persistencia/Impl/Personas.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/Modelo/Persistencia/Impl/Socios.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>
