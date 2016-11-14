@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 10-nov-2016 12:43:34 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ar.com.ProyectoClub.Modelo.Entidades.Personas" table="personas" catalog="datosclub">
+        <id name="dni" type="java.lang.Integer">
+            <column name="dni" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="20" not-null="true" />
+        </property>
+        <property name="apellido" type="string">
+            <column name="apellido" length="20" not-null="true" />
+        </property>
+        <property name="telefono" type="java.lang.Integer">
+            <column name="telefono" not-null="true" />
+        </property>
+        <property name="domicilio" type="string">
+            <column name="domicilio" length="30" not-null="true" />
+        </property>
+        <property name="fechanacimiento" type="date">
+            <column name="fechanacimiento" length="10" not-null="true" />
+        </property>
+        <one-to-one name="socios" class="ar.com.ProyectoClub.Modelo.Entidades.Socios"></one-to-one>
+        <one-to-one name="nosocio" class="ar.com.ProyectoClub.Modelo.Entidades.Nosocio"></one-to-one>
+    </class>
+</hibernate-mapping>

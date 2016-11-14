@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 10-nov-2016 12:43:34 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ar.com.ProyectoClub.Modelo.Entidades.Alquiler" table="alquiler" catalog="datosclub">
+        <id name="nroAlquiler" type="java.lang.Integer">
+            <column name="Nro_Alquiler" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="inmuebles" class="ar.com.ProyectoClub.Modelo.Entidades.Inmuebles" fetch="select">
+            <column name="inmuebles_ID_Inmueble" not-null="true" />
+        </many-to-one>
+        <property name="fechaActual" type="date">
+            <column name="FechaActual" length="10" not-null="true" />
+        </property>
+        <property name="horaActual" type="time">
+            <column name="Hora_Actual" length="8" not-null="true" />
+        </property>
+        <property name="fechaReserva" type="date">
+            <column name="Fecha_Reserva" length="10" not-null="true" />
+        </property>
+        <property name="horaReserva" type="time">
+            <column name="Hora_Reserva" length="8" not-null="true" />
+        </property>
+        <property name="precioTotal" type="float">
+            <column name="Precio_Total" precision="12" scale="0" not-null="true" />
+        </property>
+        <property name="activo" type="boolean">
+            <column name="activo" not-null="true">
+                <comment>el alquiler puede estar activo o inactivo, si esta inactivo es por que lo dio de baja teniendo que pagar la reserva o simplemente se realizo el alquiler
+                con exito</comment>
+            </column>
+        </property>
+        <one-to-one name="socioAlquiler" class="ar.com.ProyectoClub.Modelo.Entidades.SocioAlquiler"></one-to-one>
+        <one-to-one name="nosocioAlquiler" class="ar.com.ProyectoClub.Modelo.Entidades.NosocioAlquiler"></one-to-one>
+        <set name="cajaAlquilers" table="`caja-alquiler`" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Nro_alquiler" not-null="true" />
+            </key>
+            <one-to-many class="ar.com.ProyectoClub.Modelo.Entidades.CajaAlquiler" />
+        </set>
+    </class>
+</hibernate-mapping>
