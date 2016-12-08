@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory name="SessionFactoryHibernet">
+  <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="hibernate.connection.password">cris709</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost/datosclub</property>
+  <property name="hibernate.connection.username">root</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+  <property name="hibernate.search.autoregister_listeners">false</property>
+  <property name="hibernate.validator.apply_to_ddl">false</property>
+  <property name="hibernate.show_sql">true</property>
+  <property name="hibernate.transaction.auto_close_session">true</property>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Alquiler.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Caja.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/CajaAlquiler.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/CajaCuota.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Categoria.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Cuota.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Inmuebles.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Nosocio.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/NosocioAlquiler.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/SocioAlquiler.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Sociosa.hbm.xml"/>
+ </session-factory>
+</hibernate-configuration>
