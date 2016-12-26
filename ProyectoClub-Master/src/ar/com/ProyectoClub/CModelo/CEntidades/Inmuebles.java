@@ -1,6 +1,6 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
 
-// Generated 07-dic-2016 12:36:53 by Hibernate Tools 3.4.0.CR1
+// Generated 26-dic-2016 12:08:49 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +16,7 @@ public class Inmuebles implements java.io.Serializable {
 	private String direccion;
 	private String nombre;
 	private boolean habilitado;
+	private Set reservas = new HashSet(0);
 	private Set alquilers = new HashSet(0);
 
 	public Inmuebles() {
@@ -30,12 +31,13 @@ public class Inmuebles implements java.io.Serializable {
 	}
 
 	public Inmuebles(String descripcion, float precioHora, String direccion,
-			String nombre, boolean habilitado, Set alquilers) {
+			String nombre, boolean habilitado, Set reservas, Set alquilers) {
 		this.descripcion = descripcion;
 		this.precioHora = precioHora;
 		this.direccion = direccion;
 		this.nombre = nombre;
 		this.habilitado = habilitado;
+		this.reservas = reservas;
 		this.alquilers = alquilers;
 	}
 
@@ -85,6 +87,14 @@ public class Inmuebles implements java.io.Serializable {
 
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
+	}
+
+	public Set getReservas() {
+		return this.reservas;
+	}
+
+	public void setReservas(Set reservas) {
+		this.reservas = reservas;
 	}
 
 	public Set getAlquilers() {

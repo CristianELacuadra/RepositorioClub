@@ -2,9 +2,6 @@ package ar.com.ProyectoClub.CModelo.DPersistencia.CIDao;
 
 
 import java.util.List;
-
-import org.hibernate.type.NTextType;
-
 import ar.com.ProyectoClub.CModelo.CEntidades.Caja;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.IGenericDAO;
 

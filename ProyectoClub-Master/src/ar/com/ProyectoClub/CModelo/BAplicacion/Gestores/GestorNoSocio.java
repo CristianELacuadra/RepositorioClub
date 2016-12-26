@@ -1,17 +1,17 @@
-package ar.com.ProyectoClub.Modelo.Aplicacion.Gestores;
+package ar.com.ProyectoClub.CModelo.BAplicacion.Gestores;
 
 import java.util.List;
 
-import org.apache.commons.lang3.NotImplementedException;
+import org.apache.commons.lang.NotImplementedException;
 
-import ar.com.ProyectoClub.Modelo.Aplicacion.IGestor.IGestorGeneric;
-import ar.com.ProyectoClub.Modelo.Dominio.Nosocio;
-import ar.com.ProyectoClub.Modelo.Persistencia.Dao.BussinessException;
-import ar.com.ProyectoClub.Modelo.Persistencia.IDao.INoSocioDAO;
-import ar.com.ProyectoClub.Modelo.Persistencia.IDao.Impl.Hibernet.NoSocioDaoImplHibernate;
+import ar.com.ProyectoClub.CModelo.BAplicacion.IGestor.IGestorNoSocio;
+import ar.com.ProyectoClub.CModelo.CEntidades.Nosocio;
+import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.INoSocioDAO;
+import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.NoSocioDaoImplHibernate;
+
 
 @SuppressWarnings("serial")
-public class GestorNoSocio implements IGestorGeneric<Nosocio> {
+public class GestorNoSocio implements IGestorNoSocio {
     private Nosocio _Nosocio;
     private INoSocioDAO _INoSocio;
 	private List<Nosocio> _Listanosocio;
@@ -32,12 +32,16 @@ public class GestorNoSocio implements IGestorGeneric<Nosocio> {
 	 * Guarda un nuevo nosocio
 	 */
 	@Override
-	public void Guardar(Nosocio entidad) throws BussinessException {
+	public void Guardar(Nosocio entidad){
 		try{
-				_INoSocio.Insertar(entidad);// atributo unico de la entidad para no socio es dni por lo tanto no se actualiza,solo inserta
+				_INoSocio.GuardarEntity(entidad);// atributo unico de la entidad para no socio es dni por lo tanto no se actualiza,solo inserta
 		}
-		catch(Exception ex){
-			 throw new RuntimeException(ex);
+		catch(RuntimeException ex){
+			throw ex;
+		}
+		
+		catch(Exception e){
+			 throw new RuntimeException(e);
 		}
 		
 	}
@@ -49,11 +53,14 @@ public class GestorNoSocio implements IGestorGeneric<Nosocio> {
 	 */
 	
 	@Override
-	public void Habilitar(Nosocio entidad) throws BussinessException {
+	public void Habilitar(Nosocio entidad){
 		try{
-			_Nosocio=_INoSocio.BuscarUno(entidad.getDniNoSocio());
+			_Nosocio=_INoSocio.BuscarUno(entidad.getDni());
 			_Nosocio.setHabilitado(entidad.isHabilitado());
-			_INoSocio.Actualizar(_Nosocio);
+			_INoSocio.GuardarEntity(_Nosocio);
+		}
+		catch(RuntimeException e){
+			throw e;
 		}
 		catch(Exception ex){
 			throw new RuntimeException(ex);
@@ -67,12 +74,14 @@ public class GestorNoSocio implements IGestorGeneric<Nosocio> {
 	 * metodo deshabilita al nosocio a realizar cualquier tramite 
 	 */
 	@Override
-	public void Deshabilitar(Nosocio entidad) throws BussinessException {
+	public void Deshabilitar(Nosocio entidad){
 		try{
-			_Nosocio=_INoSocio.BuscarUno(entidad.getDniNoSocio());
+			_Nosocio=_INoSocio.BuscarUno(entidad.getDni());
 			_Nosocio.setHabilitado(entidad.isHabilitado());
-			_INoSocio.Actualizar(_Nosocio);
-			
+			_INoSocio.GuardarEntity(_Nosocio);
+		}
+		catch(RuntimeException e){
+			throw e;
 		}
 		catch(Exception ex){
 			throw new RuntimeException(ex);
@@ -85,7 +94,7 @@ public class GestorNoSocio implements IGestorGeneric<Nosocio> {
 	 */
 	@Override
 	public void Validar(Nosocio entidad) {
-		throw new NotImplementedException("no se puede validar");
+		throw new NotImplementedException();
 	};
 //___________________________________________________________________________________	
 	/*
@@ -94,29 +103,51 @@ public class GestorNoSocio implements IGestorGeneric<Nosocio> {
 	 * busca en la DBB el dni del socio
 	 */
 	@Override
-	public Nosocio Buscaruno(Integer id) throws BussinessException {
+	public Nosocio Buscaruno(Integer id){
 		
 		try {
 			_Nosocio=_INoSocio.BuscarUno(id);
+			return _Nosocio;
 			
 		} 
+		catch (RuntimeException ex){
+			throw ex;
+		}
 		catch (Exception e) {
 			throw new RuntimeException(e);	
 		}
-		return _Nosocio;
+		
 	}
 //___________________________________________________________________________________
 	@Override
-	public List<Nosocio> listar() throws BussinessException {
+	public List<Nosocio> listar(){
 		
 		
 		try {
-			_Listanosocio=_INoSocio.Todos();
+			_Listanosocio=_INoSocio.Listar();
+			return _Listanosocio;
 			
 		} 
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (RuntimeException ex){
+			throw ex;
 		}
-		return _Listanosocio;
+		catch (Exception e) {
+			throw new RuntimeException(e);	
+		}
+		
 	}	
+	@Override
+	public List<Nosocio> NoSociosInhabilitados() {
+		try {
+			_Listanosocio=_INoSocio.ListaNoSociosInhabilitados();
+			return _Listanosocio;
+			
+		} 
+		catch (RuntimeException ex){
+			throw ex;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);	
+		}
+	}
 }

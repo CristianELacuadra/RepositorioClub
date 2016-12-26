@@ -1,6 +1,6 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
 
-// Generated 07-dic-2016 12:36:53 by Hibernate Tools 3.4.0.CR1
+// Generated 26-dic-2016 12:08:49 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -26,8 +26,9 @@ public class Sociosa implements java.io.Serializable {
 	private String estadoCivil;
 	private Date fechaIngreso;
 	private boolean habilitado;
+	private Set alquilers = new HashSet(0);
 	private Set cuotas = new HashSet(0);
-	private Set socioAlquilers = new HashSet(0);
+	private Set reservas = new HashSet(0);
 
 	public Sociosa() {
 	}
@@ -58,8 +59,8 @@ public class Sociosa implements java.io.Serializable {
 			String nombre, String apellido, String telefono, String domicilio,
 			Date fechaNacimiento, Integer matricula, String sexo,
 			String estado, String nacionalidad, String estadoCivil,
-			Date fechaIngreso, boolean habilitado, Set cuotas,
-			Set socioAlquilers) {
+			Date fechaIngreso, boolean habilitado, Set alquilers, Set cuotas,
+			Set reservas) {
 		this.dni = dni;
 		this.categoria = categoria;
 		this.nroSocio = nroSocio;
@@ -75,8 +76,9 @@ public class Sociosa implements java.io.Serializable {
 		this.estadoCivil = estadoCivil;
 		this.fechaIngreso = fechaIngreso;
 		this.habilitado = habilitado;
+		this.alquilers = alquilers;
 		this.cuotas = cuotas;
-		this.socioAlquilers = socioAlquilers;
+		this.reservas = reservas;
 	}
 
 	public Integer getDni() {
@@ -199,6 +201,14 @@ public class Sociosa implements java.io.Serializable {
 		this.habilitado = habilitado;
 	}
 
+	public Set getAlquilers() {
+		return this.alquilers;
+	}
+
+	public void setAlquilers(Set alquilers) {
+		this.alquilers = alquilers;
+	}
+
 	public Set getCuotas() {
 		return this.cuotas;
 	}
@@ -207,12 +217,12 @@ public class Sociosa implements java.io.Serializable {
 		this.cuotas = cuotas;
 	}
 
-	public Set getSocioAlquilers() {
-		return this.socioAlquilers;
+	public Set getReservas() {
+		return this.reservas;
 	}
 
-	public void setSocioAlquilers(Set socioAlquilers) {
-		this.socioAlquilers = socioAlquilers;
+	public void setReservas(Set reservas) {
+		this.reservas = reservas;
 	}
 
 }

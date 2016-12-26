@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 06-dic-2016 11:12:21 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 26-dic-2016 12:26:43 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles" table="inmuebles" catalog="datosclub">
         <id name="idInmueble" type="java.lang.Integer">
@@ -23,9 +23,15 @@
         <property name="habilitado" type="boolean">
             <column name="habilitado" not-null="true" />
         </property>
+        <set name="reservas" table="reserva" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Id_Inmueble" not-null="true" />
+            </key>
+            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Reserva" />
+        </set>
         <set name="alquilers" table="alquiler" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="inmuebles_ID_Inmueble" not-null="true" />
+                <column name="Id_Inmueble" not-null="true" />
             </key>
             <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" />
         </set>

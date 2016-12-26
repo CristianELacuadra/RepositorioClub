@@ -1,6 +1,6 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
 
-// Generated 07-dic-2016 12:36:53 by Hibernate Tools 3.4.0.CR1
+// Generated 26-dic-2016 12:08:49 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -13,45 +13,37 @@ public class Alquiler implements java.io.Serializable {
 
 	private Integer nroAlquiler;
 	private Inmuebles inmuebles;
-	private Date fechaActual;
-	private Date horaActual;
-	private Date fechaReserva;
-	private Date horaReserva;
+	private Sociosa sociosa;
+	private Nosocio nosocio;
+	private Date fechaAlquiler;
+	private Date horaAlquiler;
 	private float precioTotal;
 	private boolean activo;
-	private NosocioAlquiler nosocioAlquiler;
-	private SocioAlquiler socioAlquiler;
-	private Set cajaAlquilers = new HashSet(0);
+	private Set cajas = new HashSet(0);
 
 	public Alquiler() {
 	}
 
-	public Alquiler(Inmuebles inmuebles, Date fechaActual, Date horaActual,
-			Date fechaReserva, Date horaReserva, float precioTotal,
-			boolean activo) {
+	public Alquiler(Inmuebles inmuebles, Date fechaAlquiler, Date horaAlquiler,
+			float precioTotal, boolean activo) {
 		this.inmuebles = inmuebles;
-		this.fechaActual = fechaActual;
-		this.horaActual = horaActual;
-		this.fechaReserva = fechaReserva;
-		this.horaReserva = horaReserva;
+		this.fechaAlquiler = fechaAlquiler;
+		this.horaAlquiler = horaAlquiler;
 		this.precioTotal = precioTotal;
 		this.activo = activo;
 	}
 
-	public Alquiler(Inmuebles inmuebles, Date fechaActual, Date horaActual,
-			Date fechaReserva, Date horaReserva, float precioTotal,
-			boolean activo, NosocioAlquiler nosocioAlquiler,
-			SocioAlquiler socioAlquiler, Set cajaAlquilers) {
+	public Alquiler(Inmuebles inmuebles, Sociosa sociosa, Nosocio nosocio,
+			Date fechaAlquiler, Date horaAlquiler, float precioTotal,
+			boolean activo, Set cajas) {
 		this.inmuebles = inmuebles;
-		this.fechaActual = fechaActual;
-		this.horaActual = horaActual;
-		this.fechaReserva = fechaReserva;
-		this.horaReserva = horaReserva;
+		this.sociosa = sociosa;
+		this.nosocio = nosocio;
+		this.fechaAlquiler = fechaAlquiler;
+		this.horaAlquiler = horaAlquiler;
 		this.precioTotal = precioTotal;
 		this.activo = activo;
-		this.nosocioAlquiler = nosocioAlquiler;
-		this.socioAlquiler = socioAlquiler;
-		this.cajaAlquilers = cajaAlquilers;
+		this.cajas = cajas;
 	}
 
 	public Integer getNroAlquiler() {
@@ -70,36 +62,36 @@ public class Alquiler implements java.io.Serializable {
 		this.inmuebles = inmuebles;
 	}
 
-	public Date getFechaActual() {
-		return this.fechaActual;
+	public Sociosa getSociosa() {
+		return this.sociosa;
 	}
 
-	public void setFechaActual(Date fechaActual) {
-		this.fechaActual = fechaActual;
+	public void setSociosa(Sociosa sociosa) {
+		this.sociosa = sociosa;
 	}
 
-	public Date getHoraActual() {
-		return this.horaActual;
+	public Nosocio getNosocio() {
+		return this.nosocio;
 	}
 
-	public void setHoraActual(Date horaActual) {
-		this.horaActual = horaActual;
+	public void setNosocio(Nosocio nosocio) {
+		this.nosocio = nosocio;
 	}
 
-	public Date getFechaReserva() {
-		return this.fechaReserva;
+	public Date getFechaAlquiler() {
+		return this.fechaAlquiler;
 	}
 
-	public void setFechaReserva(Date fechaReserva) {
-		this.fechaReserva = fechaReserva;
+	public void setFechaAlquiler(Date fechaAlquiler) {
+		this.fechaAlquiler = fechaAlquiler;
 	}
 
-	public Date getHoraReserva() {
-		return this.horaReserva;
+	public Date getHoraAlquiler() {
+		return this.horaAlquiler;
 	}
 
-	public void setHoraReserva(Date horaReserva) {
-		this.horaReserva = horaReserva;
+	public void setHoraAlquiler(Date horaAlquiler) {
+		this.horaAlquiler = horaAlquiler;
 	}
 
 	public float getPrecioTotal() {
@@ -118,28 +110,12 @@ public class Alquiler implements java.io.Serializable {
 		this.activo = activo;
 	}
 
-	public NosocioAlquiler getNosocioAlquiler() {
-		return this.nosocioAlquiler;
+	public Set getCajas() {
+		return this.cajas;
 	}
 
-	public void setNosocioAlquiler(NosocioAlquiler nosocioAlquiler) {
-		this.nosocioAlquiler = nosocioAlquiler;
-	}
-
-	public SocioAlquiler getSocioAlquiler() {
-		return this.socioAlquiler;
-	}
-
-	public void setSocioAlquiler(SocioAlquiler socioAlquiler) {
-		this.socioAlquiler = socioAlquiler;
-	}
-
-	public Set getCajaAlquilers() {
-		return this.cajaAlquilers;
-	}
-
-	public void setCajaAlquilers(Set cajaAlquilers) {
-		this.cajaAlquilers = cajaAlquilers;
+	public void setCajas(Set cajas) {
+		this.cajas = cajas;
 	}
 
 }

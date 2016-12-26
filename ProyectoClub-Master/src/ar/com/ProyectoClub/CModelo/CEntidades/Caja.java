@@ -1,6 +1,6 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
 
-// Generated 07-dic-2016 12:36:53 by Hibernate Tools 3.4.0.CR1
+// Generated 26-dic-2016 12:08:49 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 
@@ -10,13 +10,13 @@ import java.util.Date;
 public class Caja implements java.io.Serializable {
 
 	private Integer idCaja;
+	private Cuota cuota;
+	private Alquiler alquiler;
 	private Date fecha;
 	private String descripcion;
 	private float monto;
 	private float subTotal;
 	private boolean tipo;
-	private CajaCuota cajaCuota;
-	private CajaAlquiler cajaAlquiler;
 
 	public Caja() {
 	}
@@ -30,15 +30,15 @@ public class Caja implements java.io.Serializable {
 		this.tipo = tipo;
 	}
 
-	public Caja(Date fecha, String descripcion, float monto, float subTotal,
-			boolean tipo, CajaCuota cajaCuota, CajaAlquiler cajaAlquiler) {
+	public Caja(Cuota cuota, Alquiler alquiler, Date fecha, String descripcion,
+			float monto, float subTotal, boolean tipo) {
+		this.cuota = cuota;
+		this.alquiler = alquiler;
 		this.fecha = fecha;
 		this.descripcion = descripcion;
 		this.monto = monto;
 		this.subTotal = subTotal;
 		this.tipo = tipo;
-		this.cajaCuota = cajaCuota;
-		this.cajaAlquiler = cajaAlquiler;
 	}
 
 	public Integer getIdCaja() {
@@ -47,6 +47,22 @@ public class Caja implements java.io.Serializable {
 
 	public void setIdCaja(Integer idCaja) {
 		this.idCaja = idCaja;
+	}
+
+	public Cuota getCuota() {
+		return this.cuota;
+	}
+
+	public void setCuota(Cuota cuota) {
+		this.cuota = cuota;
+	}
+
+	public Alquiler getAlquiler() {
+		return this.alquiler;
+	}
+
+	public void setAlquiler(Alquiler alquiler) {
+		this.alquiler = alquiler;
 	}
 
 	public Date getFecha() {
@@ -87,22 +103,6 @@ public class Caja implements java.io.Serializable {
 
 	public void setTipo(boolean tipo) {
 		this.tipo = tipo;
-	}
-
-	public CajaCuota getCajaCuota() {
-		return this.cajaCuota;
-	}
-
-	public void setCajaCuota(CajaCuota cajaCuota) {
-		this.cajaCuota = cajaCuota;
-	}
-
-	public CajaAlquiler getCajaAlquiler() {
-		return this.cajaAlquiler;
-	}
-
-	public void setCajaAlquiler(CajaAlquiler cajaAlquiler) {
-		this.cajaAlquiler = cajaAlquiler;
 	}
 
 }

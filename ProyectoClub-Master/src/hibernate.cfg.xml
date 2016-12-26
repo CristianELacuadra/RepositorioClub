@@ -15,14 +15,11 @@
   <property name="hibernate.transaction.auto_close_session">true</property>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Alquiler.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Caja.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/CajaAlquiler.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/CajaCuota.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Categoria.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Cuota.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Inmuebles.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Nosocio.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/NosocioAlquiler.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/SocioAlquiler.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Reserva.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Sociosa.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

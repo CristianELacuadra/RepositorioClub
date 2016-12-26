@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-dic-2016 12:26:43 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Reserva" table="reserva" catalog="datosclub">
+        <id name="idReserva" type="java.lang.Integer">
+            <column name="Id_Reserva" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="sociosa" class="ar.com.ProyectoClub.CModelo.CEntidades.Sociosa" fetch="select">
+            <column name="DniSocio" />
+        </many-to-one>
+        <many-to-one name="inmuebles" class="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles" fetch="select">
+            <column name="Id_Inmueble" not-null="true" />
+        </many-to-one>
+        <many-to-one name="nosocio" class="ar.com.ProyectoClub.CModelo.CEntidades.Nosocio" fetch="select">
+            <column name="DniNoSocio" />
+        </many-to-one>
+        <property name="fechaActual" type="date">
+            <column name="Fecha_Actual" length="10" not-null="true" />
+        </property>
+        <property name="puede" type="boolean">
+            <column name="puede" not-null="true">
+                <comment>Booleano que nos dice si la reserva ya est&#225; disponible para convertirse en alquiler</comment>
+            </column>
+        </property>
+        <property name="fechaReserva" type="date">
+            <column name="Fecha_Reserva" length="10" not-null="true" />
+        </property>
+        <property name="horaReserva" type="time">
+            <column name="Hora_Reserva" length="8" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

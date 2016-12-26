@@ -1,6 +1,6 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
 
-// Generated 07-dic-2016 12:36:53 by Hibernate Tools 3.4.0.CR1
+// Generated 26-dic-2016 12:08:49 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -18,7 +18,8 @@ public class Nosocio implements java.io.Serializable {
 	private String domicilio;
 	private Date fechaNacimiento;
 	private boolean habilitado;
-	private Set nosocioAlquilers = new HashSet(0);
+	private Set alquilers = new HashSet(0);
+	private Set reservas = new HashSet(0);
 
 	public Nosocio() {
 	}
@@ -37,7 +38,7 @@ public class Nosocio implements java.io.Serializable {
 
 	public Nosocio(Integer dni, String nombre, String apellido,
 			String telefono, String domicilio, Date fechaNacimiento,
-			boolean habilitado, Set nosocioAlquilers) {
+			boolean habilitado, Set alquilers, Set reservas) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -45,7 +46,8 @@ public class Nosocio implements java.io.Serializable {
 		this.domicilio = domicilio;
 		this.fechaNacimiento = fechaNacimiento;
 		this.habilitado = habilitado;
-		this.nosocioAlquilers = nosocioAlquilers;
+		this.alquilers = alquilers;
+		this.reservas = reservas;
 	}
 
 	public Integer getDni() {
@@ -104,12 +106,20 @@ public class Nosocio implements java.io.Serializable {
 		this.habilitado = habilitado;
 	}
 
-	public Set getNosocioAlquilers() {
-		return this.nosocioAlquilers;
+	public Set getAlquilers() {
+		return this.alquilers;
 	}
 
-	public void setNosocioAlquilers(Set nosocioAlquilers) {
-		this.nosocioAlquilers = nosocioAlquilers;
+	public void setAlquilers(Set alquilers) {
+		this.alquilers = alquilers;
+	}
+
+	public Set getReservas() {
+		return this.reservas;
+	}
+
+	public void setReservas(Set reservas) {
+		this.reservas = reservas;
 	}
 
 }

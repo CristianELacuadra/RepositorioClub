@@ -5,21 +5,14 @@ package ar.com.ProyectoClub.CModelo.DPersistencia.BDao.Imple;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 
-import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Example;
 
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessMessage;
@@ -37,12 +30,15 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.AHibernet.HibernateUtil;
 public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGenericDAO<T,Id> {
     
 	protected SessionFactory sessionFactory;
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private Class classePersistente; 
-    private EntityManager entitymanager;  
+    @SuppressWarnings("unused")
+	private EntityManager entitymanager;  
     private final static Logger LOGGER=Logger.getLogger(GenericDAOImplHibernate.class.getName());
 	 
 
-     public GenericDAOImplHibernate() {
+     @SuppressWarnings("rawtypes")
+	public GenericDAOImplHibernate() {
     	 /*
     	  * guarda el tipo actual de la clase T
     	  */
@@ -70,10 +66,9 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 			throw new RuntimeException(ex);
 		}
 	}
-	
-	@Override
-	public void GuardarActualizar(T entity) throws BussinessException {
-		Session session = sessionFactory.getCurrentSession();
+    @Override
+	public void GuardarEntity(T entity) throws BussinessException {
+    	Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
 			session.saveOrUpdate(entity);
@@ -251,6 +246,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 		  throw new RuntimeException(ex);
 	  }
 	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> Listar() throws BussinessException {
 		Session session = sessionFactory.getCurrentSession();
@@ -305,7 +302,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private Class<T> getEntityClass() {
 		return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-				}
+	}
 }

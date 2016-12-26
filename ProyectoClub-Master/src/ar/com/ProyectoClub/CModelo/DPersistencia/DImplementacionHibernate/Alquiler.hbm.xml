@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 06-dic-2016 11:12:21 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 26-dic-2016 12:26:43 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" table="alquiler" catalog="datosclub">
         <id name="nroAlquiler" type="java.lang.Integer">
@@ -9,19 +9,19 @@
             <generator class="identity" />
         </id>
         <many-to-one name="inmuebles" class="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles" fetch="select">
-            <column name="inmuebles_ID_Inmueble" not-null="true" />
+            <column name="Id_Inmueble" not-null="true" />
         </many-to-one>
-        <property name="fechaActual" type="date">
-            <column name="FechaActual" length="10" not-null="true" />
+        <many-to-one name="sociosa" class="ar.com.ProyectoClub.CModelo.CEntidades.Sociosa" fetch="select">
+            <column name="Dni_socio" />
+        </many-to-one>
+        <many-to-one name="nosocio" class="ar.com.ProyectoClub.CModelo.CEntidades.Nosocio" fetch="select">
+            <column name="Dni_Nosocio" />
+        </many-to-one>
+        <property name="fechaAlquiler" type="date">
+            <column name="Fecha_Alquiler" length="10" not-null="true" />
         </property>
-        <property name="horaActual" type="time">
-            <column name="Hora_Actual" length="8" not-null="true" />
-        </property>
-        <property name="fechaReserva" type="date">
-            <column name="Fecha_Reserva" length="10" not-null="true" />
-        </property>
-        <property name="horaReserva" type="time">
-            <column name="Hora_Reserva" length="8" not-null="true" />
+        <property name="horaAlquiler" type="time">
+            <column name="Hora_Alquiler" length="8" not-null="true" />
         </property>
         <property name="precioTotal" type="float">
             <column name="Precio_Total" precision="12" scale="0" not-null="true" />
@@ -32,13 +32,11 @@
                 con exito</comment>
             </column>
         </property>
-        <one-to-one name="nosocioAlquiler" class="ar.com.ProyectoClub.CModelo.CEntidades.NosocioAlquiler"></one-to-one>
-        <one-to-one name="socioAlquiler" class="ar.com.ProyectoClub.CModelo.CEntidades.SocioAlquiler"></one-to-one>
-        <set name="cajaAlquilers" table="`caja-alquiler`" inverse="true" lazy="true" fetch="select">
+        <set name="cajas" table="caja" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="Nro_alquiler" not-null="true" />
+                <column name="Alquiler" />
             </key>
-            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.CajaAlquiler" />
+            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Caja" />
         </set>
     </class>
 </hibernate-mapping>

@@ -9,8 +9,9 @@ public interface IGenericDAO<T,Id extends Serializable > {
        * Listar
        */
 	  T crear() throws BussinessException;
-	  void GuardarActualizar(T entity) throws BussinessException;
+	  void GuardarEntity(T entity)throws BussinessException;//Actualiza o inserta la entidad
+	  void Eliminar(Id id) throws BussinessException ;
       T BuscarUno(Id id) throws BussinessException;
-      void Eliminar(Id id) throws BussinessException;
       List<T> Listar() throws BussinessException;
+      
 }

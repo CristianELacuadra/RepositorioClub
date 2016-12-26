@@ -1,6 +1,6 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
 
-// Generated 07-dic-2016 12:36:53 by Hibernate Tools 3.4.0.CR1
+// Generated 26-dic-2016 12:08:49 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -16,7 +16,7 @@ public class Cuota implements java.io.Serializable {
 	private Date fecha;
 	private float monto;
 	private String estado;
-	private Set cajaCuotas = new HashSet(0);
+	private Set cajas = new HashSet(0);
 
 	public Cuota() {
 	}
@@ -29,12 +29,12 @@ public class Cuota implements java.io.Serializable {
 	}
 
 	public Cuota(Sociosa sociosa, Date fecha, float monto, String estado,
-			Set cajaCuotas) {
+			Set cajas) {
 		this.sociosa = sociosa;
 		this.fecha = fecha;
 		this.monto = monto;
 		this.estado = estado;
-		this.cajaCuotas = cajaCuotas;
+		this.cajas = cajas;
 	}
 
 	public Integer getId() {
@@ -77,12 +77,12 @@ public class Cuota implements java.io.Serializable {
 		this.estado = estado;
 	}
 
-	public Set getCajaCuotas() {
-		return this.cajaCuotas;
+	public Set getCajas() {
+		return this.cajas;
 	}
 
-	public void setCajaCuotas(Set cajaCuotas) {
-		this.cajaCuotas = cajaCuotas;
+	public void setCajas(Set cajas) {
+		this.cajas = cajas;
 	}
 
 }

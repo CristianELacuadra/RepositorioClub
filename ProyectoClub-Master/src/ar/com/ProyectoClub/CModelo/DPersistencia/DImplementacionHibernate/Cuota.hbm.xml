@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 06-dic-2016 11:12:21 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 26-dic-2016 12:26:43 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="ar.com.ProyectoClub.CModelo.CEntidades.Cuota" table="cuota" catalog="datosclub">
         <id name="id" type="java.lang.Integer">
@@ -20,11 +20,11 @@
         <property name="estado" type="string">
             <column name="Estado" length="25" not-null="true" />
         </property>
-        <set name="cajaCuotas" table="`caja-cuota`" inverse="true" lazy="true" fetch="select">
+        <set name="cajas" table="caja" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="ID_Cuota" not-null="true" />
+                <column name="Cuota" />
             </key>
-            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.CajaCuota" />
+            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Caja" />
         </set>
     </class>
 </hibernate-mapping>
