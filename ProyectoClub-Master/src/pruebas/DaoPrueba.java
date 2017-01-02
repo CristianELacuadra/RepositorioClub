@@ -12,6 +12,8 @@ import ar.com.ProyectoClub.CModelo.BAplicacion.IGestor.IGestorSocios;
 import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
 import ar.com.ProyectoClub.CModelo.CEntidades.Nosocio;
 import ar.com.ProyectoClub.CModelo.CEntidades.Sociosa;
+import ar.com.ProyectoClub.CModelo.DPersistencia.AHibernet.HibernateUtil;
+import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 
 public class DaoPrueba {
 
@@ -26,20 +28,19 @@ public class DaoPrueba {
 		
 		//Gestor No socio
 		//Insertar OK,Actualizar OK,Personas Inhabilitadas OK,Listar todos OK,inhabilitar Ok,
-		Date fechanacimiento=new Date(85,02,06);
-		IGestorCategoria gestorCategoria=new GestorCategoria();
-		Categoria _categoria=new Categoria();
-		_categoria=gestorCategoria.Buscaruno(2);
-		gestorCategoria.Eliminar(_categoria.getIdCategoria());
-		
 		/*
-		for(Nosocio a : Gestornosocio.listar()){
-			System.out.print("Dni: "+a.getDni()+"       ");
-			System.out.print("Nombre: "+a.getNombre()+"     ");
-			System.out.println("Apellido: "+a.getApellido());
+		IGestorCategoria gestor=new GestorCategoria();
+		Categoria una=new Categoria();
+		try{
+		una=gestor.Buscaruno(5);
+		una.setDescripcion("hola");
+		}
+		catch(BussinessException ex){
+			ex.printStackTrace();
+			System.out.print("Error al eliminar :"+ex.getMessage());
 		}
 		*/
-		
+		HibernateUtil.buildSessionFactory();
 	}
 }
 

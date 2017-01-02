@@ -3,7 +3,9 @@ package ar.com.ProyectoClub.CModelo.BAplicacion.Gestores;
 import java.util.List;
 
 
-import ar.com.ProyectoClub.CModelo.BAplicacion.IGestor.IAlquilerGestor;
+
+
+import ar.com.ProyectoClub.CModelo.BAplicacion.IGestor.IGestorAlquiler;
 import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.IAlquilerDAO;
@@ -11,7 +13,7 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.AlquilerDao
 
 
 
-public class GestorAlquiler implements IAlquilerGestor {
+public class GestorAlquiler implements IGestorAlquiler {
 	
 	private Alquiler _UnAlquiler;
 	private IAlquilerDAO _IAlquilerDao;
@@ -32,7 +34,7 @@ public class GestorAlquiler implements IAlquilerGestor {
 	 * @see ar.com.ProyectoClub.Modelo.Aplicacion.IGestor.IGestorGeneric#Guardar(java.lang.Object)
 	 */
 	@Override
-	public void Guardar(Alquiler entidad) throws BussinessException {
+	public void Guardar(Alquiler entidad){
 		try{
 			if(entidad.getNroAlquiler() > 0){
 				_UnAlquiler=_IAlquilerDao.BuscarUno(entidad.getNroAlquiler());

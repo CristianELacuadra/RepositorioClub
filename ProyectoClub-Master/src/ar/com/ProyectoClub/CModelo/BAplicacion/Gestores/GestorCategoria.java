@@ -4,10 +4,9 @@ package ar.com.ProyectoClub.CModelo.BAplicacion.Gestores;
 
 import java.util.List;
 
-import org.apache.commons.lang.NotImplementedException;
-
 import ar.com.ProyectoClub.CModelo.BAplicacion.IGestor.IGestorCategoria;
 import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
+import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ICategoriaDAO;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.CategoriaDaoImplHibernate;
 
@@ -33,44 +32,21 @@ public class GestorCategoria implements IGestorCategoria{
 		
 	}
 	@Override
-	public void Eliminar(Integer id) {
-		try{
-			_categoriadao.Eliminar(id);
-			System.out.print("Datos eliminados");
-		}
-		catch(RuntimeException e){
-			e.printStackTrace();
-			throw e;
-		}
-		catch (Exception ex){
-			throw new RuntimeException(ex);
-		}
-		
+	public void insertar(Categoria entidad) throws BussinessException {
+		_categoriadao.GuardarEntity(entidad);
 	}
-//___________________________________________________________________________________	
+	
 	@Override
-	public void Guardar(Categoria entidad){
-		try{
-			if(null !=_categoriadao.BuscarUno(entidad.getIdCategoria())){
-				_categoria=_categoriadao.BuscarUno(entidad.getIdCategoria());
-				this.actualizarcategoria(entidad,_categoria );
-				_categoriadao.GuardarEntity(_categoria);
-			}
-			else{
-				_categoriadao.GuardarEntity(entidad);
-			}
-
-		}
-		catch(RuntimeException ex){
-			ex.printStackTrace();
-			throw ex;
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-
-
+	public void Actualizar(Categoria entidad) throws BussinessException {
+		_categoria=_categoriadao.BuscarUno(entidad.getIdCategoria());
+		this.actualizarcategoria(entidad,_categoria );
+		_categoriadao.GuardarEntity(_categoria);
+	}
+	
+	@Override
+	public void eliminar(Categoria entidad) throws BussinessException{
+			_categoriadao.Eliminar(entidad.getIdCategoria());
+			System.out.print("Datos eliminados");
 	}
 	//___________________________________________________________________________________
 	@Override
@@ -107,11 +83,6 @@ public class GestorCategoria implements IGestorCategoria{
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-	}
-//___________________________________________________________________________________	
-	@Override
-	public void Validar(Categoria entidad) {
-		throw new NotImplementedException();
 	}
 //___________________________________________________________________________________	
 	@Override
