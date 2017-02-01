@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 02-ene-2017 11:50:47 by Hibernate Tools 3.4.0.CR1 -->
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 01-feb-2017 12:33:46 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="ar.com.ProyectoClub.CModelo.CEntidades.Sociosa" table="sociosa" catalog="datosclub">
-        <id name="dni" type="java.lang.Integer">
-            <column name="DNI" />
-            <generator class="assigned" />
+        <id name="nroSocio" type="java.lang.Integer">
+            <column name="NroSocio" />
+            <generator class="identity" />
         </id>
         <many-to-one name="categoria" class="ar.com.ProyectoClub.CModelo.CEntidades.Categoria" fetch="select">
             <column name="FK_Categoria" not-null="true" />
         </many-to-one>
-        <property name="nroSocio" type="java.lang.Integer">
-            <column name="NroSocio" not-null="true" />
+        <property name="dni" type="java.lang.Integer">
+            <column name="Dni" not-null="true" unique="true" />
         </property>
         <property name="nombre" type="string">
             <column name="Nombre" length="30" not-null="true" />
@@ -50,23 +50,17 @@
         <property name="habilitado" type="boolean">
             <column name="Habilitado" not-null="true" />
         </property>
-        <set name="alquilers" table="alquiler" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="Dni_socio" />
-            </key>
-            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" />
-        </set>
         <set name="cuotas" table="cuota" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="FKSocio" not-null="true" />
+                <column name="NroSocio_FK" not-null="true" />
             </key>
             <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Cuota" />
         </set>
-        <set name="reservas" table="reserva" inverse="true" lazy="true" fetch="select">
+        <set name="alquilers" table="alquiler" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="DniSocio" />
+                <column name="NroSocio" />
             </key>
-            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Reserva" />
+            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" />
         </set>
     </class>
 </hibernate-mapping>

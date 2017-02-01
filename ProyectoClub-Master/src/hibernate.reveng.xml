@@ -13,6 +13,5 @@
 	<table-filter match-name="cuota" match-catalog="datosclub"></table-filter>
 	<table-filter match-name="inmuebles" match-catalog="datosclub"></table-filter>
 	<table-filter match-name="nosocio" match-catalog="datosclub"></table-filter>
-	<table-filter match-name="reserva" match-catalog="datosclub"></table-filter>
 	<table-filter match-name="sociosa" match-catalog="datosclub"></table-filter>
 </hibernate-reverse-engineering>

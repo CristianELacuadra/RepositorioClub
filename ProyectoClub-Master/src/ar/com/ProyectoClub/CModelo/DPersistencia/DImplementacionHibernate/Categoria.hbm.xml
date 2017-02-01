@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 02-ene-2017 11:50:47 by Hibernate Tools 3.4.0.CR1 -->
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 01-feb-2017 12:33:46 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="ar.com.ProyectoClub.CModelo.CEntidades.Categoria" table="categoria" catalog="datosclub">
         <id name="idCategoria" type="java.lang.Integer">
@@ -13,6 +13,9 @@
         </property>
         <property name="descripcion" type="string">
             <column name="descripcion" length="100" not-null="true" />
+        </property>
+        <property name="monto" type="float">
+            <column name="monto" precision="12" scale="0" not-null="true" />
         </property>
         <property name="descuento" type="float">
             <column name="descuento" precision="12" scale="0" not-null="true" />

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 02-ene-2017 11:50:47 by Hibernate Tools 3.4.0.CR1 -->
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 01-feb-2017 12:33:46 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="ar.com.ProyectoClub.CModelo.CEntidades.Caja" table="caja" catalog="datosclub">
         <id name="idCaja" type="java.lang.Integer">

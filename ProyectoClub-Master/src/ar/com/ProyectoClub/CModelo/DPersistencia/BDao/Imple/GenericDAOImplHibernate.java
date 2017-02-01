@@ -118,7 +118,6 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 			}
 			throw new RuntimeException(ex);
 		}
-		
 	}
 	
 	@SuppressWarnings("unchecked")

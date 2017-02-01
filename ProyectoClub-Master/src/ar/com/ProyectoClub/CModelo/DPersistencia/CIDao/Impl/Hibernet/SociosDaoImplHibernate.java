@@ -1,7 +1,9 @@
 package ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet;
 
 
+import ar.com.ProyectoClub.CModelo.CEntidades.DTOPersonalisadoSocio;
 import ar.com.ProyectoClub.CModelo.CEntidades.Sociosa;
+import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.Imple.GenericDAOImplHibernate;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ISociosDAO;
 import java.util.ArrayList;
@@ -11,14 +13,45 @@ import org.hibernate.Session;
 
 public class SociosDaoImplHibernate extends GenericDAOImplHibernate<Sociosa, Integer> implements ISociosDAO {
 	private List<Sociosa> socios = new ArrayList<Sociosa>();
-	
 	public SociosDaoImplHibernate() {
 		super();
 	}
-	
+	/*
+	 * (non-Javadoc)
+	 * @see ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ISociosDAO#BusquedaXDni(java.lang.Integer)
+	 * HQL busqueda por dni
+	 */
+	public Sociosa BusquedaXDni(Integer dni) throws BussinessException{
+		Session session=sessionFactory.getCurrentSession();
+		try{
+			session.beginTransaction();
+			Sociosa _nuevo=(Sociosa) session.createQuery("SELECT query FROM Sociosa query WHERE Dni="+dni.toString()).uniqueResult();
+			return _nuevo;
+		}
+		catch (javax.validation.ConstraintViolationException cve){
+			throw new BussinessException(cve);
+		}
+		catch(org.hibernate.exception.ConstraintViolationException ce){
+			throw new BussinessException(ce);
+		}
+		catch(RuntimeException re){
+			throw re;
+		}
+		catch(Exception e){
+			throw new RuntimeException(e);
+		}
+		finally{
+			session.close();
+		}
+	}
+	/*
+	 * (non-Javadoc)
+	 * @see ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ISociosDAO#ListaActivaSocios()
+	 * Lista de los socios activos en el club
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Sociosa> ListaActivaSocios() {
+	public List<Sociosa> ListaActivaSocios() throws BussinessException {
 		Session session=sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -27,7 +60,12 @@ public class SociosDaoImplHibernate extends GenericDAOImplHibernate<Sociosa, Int
 			 */
 			socios = session.createQuery("SELECT s FROM Sociosa s WHERE habilitado=true").list();	
 			return socios;
-		
+		}
+		catch (javax.validation.ConstraintViolationException cve){
+			throw new BussinessException(cve);
+		}
+		catch(org.hibernate.exception.ConstraintViolationException ce){
+			throw new BussinessException(ce);
 		}
 		catch (RuntimeException ex) {
 			throw ex;
@@ -38,26 +76,30 @@ public class SociosDaoImplHibernate extends GenericDAOImplHibernate<Sociosa, Int
 		finally{
 			session.close();
 		}
-		
+
 	}
-	
+	/*
+	 * (non-Javadoc)
+	 * @see ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ISociosDAO#ListaMorosos()
+	 * Lista de morosos
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Boolean ValidarSocio(Sociosa socio) {
+	public List<DTOPersonalisadoSocio> ListaMorosos() {
 		Session session=sessionFactory.getCurrentSession();
+		List<DTOPersonalisadoSocio> _morosos=new ArrayList<DTOPersonalisadoSocio>();
 		try{
 			session.beginTransaction();
-			List<Integer> ListaNro=session.createQuery("SELECT s.nroSocio FROM Sociosa s").list();
-			
-			for(Integer Nro : ListaNro) {
-				if(socio.getNroSocio()== Nro.intValue())
-					return true;
+			List<Sociosa> ListaNro=session.createQuery("SELECT s FROM Sociosa s WHERE estado='Moroso'").list();
+			for(Sociosa Nro : ListaNro) {
+				DTOPersonalisadoSocio DTO=new DTOPersonalisadoSocio();
+				DTO.setNroSocio(Nro.getNroSocio());
+				DTO.setDni(Nro.getDni());
+				DTO.setNombre(Nro.getNombre());
+				DTO.setApellido(Nro.getApellido());
+				_morosos.add(DTO);
 			}
-			return false;
-		}
-		catch (RuntimeException ex) {
-			ex.printStackTrace();
-			throw ex;
+			return _morosos;
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -66,7 +108,6 @@ public class SociosDaoImplHibernate extends GenericDAOImplHibernate<Sociosa, Int
 		finally{
 			session.close();
 		}
+		
 	}
-	
-	
 }

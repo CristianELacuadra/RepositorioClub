@@ -1,6 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-
-// Generated 02-ene-2017 11:50:46 by Hibernate Tools 3.4.0.CR1
+// Generated 01-feb-2017 12:33:45 by Hibernate Tools 3.5.0.Final
 
 import java.util.Date;
 
@@ -21,8 +20,7 @@ public class Caja implements java.io.Serializable {
 	public Caja() {
 	}
 
-	public Caja(Date fecha, String descripcion, float monto, float subTotal,
-			boolean tipo) {
+	public Caja(Date fecha, String descripcion, float monto, float subTotal, boolean tipo) {
 		this.fecha = fecha;
 		this.descripcion = descripcion;
 		this.monto = monto;
@@ -30,8 +28,8 @@ public class Caja implements java.io.Serializable {
 		this.tipo = tipo;
 	}
 
-	public Caja(Cuota cuota, Alquiler alquiler, Date fecha, String descripcion,
-			float monto, float subTotal, boolean tipo) {
+	public Caja(Cuota cuota, Alquiler alquiler, Date fecha, String descripcion, float monto, float subTotal,
+			boolean tipo) {
 		this.cuota = cuota;
 		this.alquiler = alquiler;
 		this.fecha = fecha;

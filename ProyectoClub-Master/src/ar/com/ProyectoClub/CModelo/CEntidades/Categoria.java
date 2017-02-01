@@ -1,6 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-
-// Generated 02-ene-2017 11:50:46 by Hibernate Tools 3.4.0.CR1
+// Generated 01-feb-2017 12:33:45 by Hibernate Tools 3.5.0.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +12,7 @@ public class Categoria implements java.io.Serializable {
 	private Integer idCategoria;
 	private String nombre;
 	private String descripcion;
+	private float monto;
 	private float descuento;
 	private boolean habilitado;
 	private Set sociosas = new HashSet(0);
@@ -20,18 +20,19 @@ public class Categoria implements java.io.Serializable {
 	public Categoria() {
 	}
 
-	public Categoria(String nombre, String descripcion, float descuento,
-			boolean habilitado) {
+	public Categoria(String nombre, String descripcion, float monto, float descuento, boolean habilitado) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
+		this.monto = monto;
 		this.descuento = descuento;
 		this.habilitado = habilitado;
 	}
 
-	public Categoria(String nombre, String descripcion, float descuento,
-			boolean habilitado, Set sociosas) {
+	public Categoria(String nombre, String descripcion, float monto, float descuento, boolean habilitado,
+			Set sociosas) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
+		this.monto = monto;
 		this.descuento = descuento;
 		this.habilitado = habilitado;
 		this.sociosas = sociosas;
@@ -59,6 +60,14 @@ public class Categoria implements java.io.Serializable {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public float getMonto() {
+		return this.monto;
+	}
+
+	public void setMonto(float monto) {
+		this.monto = monto;
 	}
 
 	public float getDescuento() {

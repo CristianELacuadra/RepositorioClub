@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
                                          "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
- <session-factory>
+ <session-factory name="">
   <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
   <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
   <property name="hibernate.connection.password">cris709</property>
@@ -19,7 +19,6 @@
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Cuota.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Inmuebles.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Nosocio.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Reserva.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Sociosa.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

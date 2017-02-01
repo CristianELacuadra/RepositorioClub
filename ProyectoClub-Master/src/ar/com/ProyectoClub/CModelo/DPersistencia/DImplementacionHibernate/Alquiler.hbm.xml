@@ -1,27 +1,33 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 02-ene-2017 11:50:47 by Hibernate Tools 3.4.0.CR1 -->
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 01-feb-2017 12:33:46 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" table="alquiler" catalog="datosclub">
         <id name="nroAlquiler" type="java.lang.Integer">
             <column name="Nro_Alquiler" />
             <generator class="identity" />
         </id>
+        <many-to-one name="sociosa" class="ar.com.ProyectoClub.CModelo.CEntidades.Sociosa" fetch="select">
+            <column name="NroSocio" />
+        </many-to-one>
         <many-to-one name="inmuebles" class="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles" fetch="select">
             <column name="Id_Inmueble" not-null="true" />
         </many-to-one>
-        <many-to-one name="sociosa" class="ar.com.ProyectoClub.CModelo.CEntidades.Sociosa" fetch="select">
-            <column name="Dni_socio" />
-        </many-to-one>
         <many-to-one name="nosocio" class="ar.com.ProyectoClub.CModelo.CEntidades.Nosocio" fetch="select">
-            <column name="Dni_Nosocio" />
+            <column name="DniNoSocio" />
         </many-to-one>
-        <property name="fechaAlquiler" type="date">
-            <column name="Fecha_Alquiler" length="10" not-null="true" />
+        <property name="fechaActual" type="date">
+            <column name="Fecha_Actual" length="10" not-null="true" />
         </property>
-        <property name="horaAlquiler" type="time">
-            <column name="Hora_Alquiler" length="8" not-null="true" />
+        <property name="horaActual" type="time">
+            <column name="Hora_actual" length="8" not-null="true" />
+        </property>
+        <property name="fechaReserva" type="date">
+            <column name="Fecha_Reserva" length="10" not-null="true" />
+        </property>
+        <property name="horaReserva" type="time">
+            <column name="Hora_Reserva" length="8" not-null="true" />
         </property>
         <property name="precioTotal" type="float">
             <column name="Precio_Total" precision="12" scale="0" not-null="true" />

@@ -1,6 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-
-// Generated 02-ene-2017 11:50:46 by Hibernate Tools 3.4.0.CR1
+// Generated 01-feb-2017 12:33:45 by Hibernate Tools 3.5.0.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -13,26 +12,34 @@ public class Cuota implements java.io.Serializable {
 
 	private Integer id;
 	private Sociosa sociosa;
-	private Date fecha;
-	private float monto;
+	private Integer mes;
+	private Integer anio;
+	private Date fechaPago;
+	private String descripcion;
+	private float importe;
 	private String estado;
 	private Set cajas = new HashSet(0);
 
 	public Cuota() {
 	}
 
-	public Cuota(Sociosa sociosa, Date fecha, float monto, String estado) {
+	public Cuota(Sociosa sociosa, Integer mes, Integer anio, String descripcion, float importe, String estado) {
 		this.sociosa = sociosa;
-		this.fecha = fecha;
-		this.monto = monto;
+		this.mes = mes;
+		this.anio = anio;
+		this.descripcion = descripcion;
+		this.importe = importe;
 		this.estado = estado;
 	}
 
-	public Cuota(Sociosa sociosa, Date fecha, float monto, String estado,
-			Set cajas) {
+	public Cuota(Sociosa sociosa, Integer mes, Integer anio, Date fechaPago, String descripcion, float importe,
+			String estado, Set cajas) {
 		this.sociosa = sociosa;
-		this.fecha = fecha;
-		this.monto = monto;
+		this.mes = mes;
+		this.anio = anio;
+		this.fechaPago = fechaPago;
+		this.descripcion = descripcion;
+		this.importe = importe;
 		this.estado = estado;
 		this.cajas = cajas;
 	}
@@ -53,20 +60,44 @@ public class Cuota implements java.io.Serializable {
 		this.sociosa = sociosa;
 	}
 
-	public Date getFecha() {
-		return this.fecha;
+	public Integer getMes() {
+		return this.mes;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setMes(Integer mes) {
+		this.mes = mes;
 	}
 
-	public float getMonto() {
-		return this.monto;
+	public Integer getAnio() {
+		return this.anio;
 	}
 
-	public void setMonto(float monto) {
-		this.monto = monto;
+	public void setAnio(Integer anio) {
+		this.anio = anio;
+	}
+
+	public Date getFechaPago() {
+		return this.fechaPago;
+	}
+
+	public void setFechaPago(Date fechaPago) {
+		this.fechaPago = fechaPago;
+	}
+
+	public String getDescripcion() {
+		return this.descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public float getImporte() {
+		return this.importe;
+	}
+
+	public void setImporte(float importe) {
+		this.importe = importe;
 	}
 
 	public String getEstado() {
