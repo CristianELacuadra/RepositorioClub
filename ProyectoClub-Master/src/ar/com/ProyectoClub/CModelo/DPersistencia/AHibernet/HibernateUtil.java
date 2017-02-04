@@ -12,7 +12,6 @@ public class HibernateUtil {
     private static SessionFactory sessionFactory;
 
     public static synchronized void buildSessionFactory() {
-    	try{
     		if (sessionFactory == null) {
     			Configuration configuration = new Configuration();
     			configuration.configure();
@@ -20,13 +19,6 @@ public class HibernateUtil {
     			ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
     			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
     		}
-    	}
-    	catch(Throwable ex){
-    		System.err.println("No se pudo crear la SessionFactory:" + ex);
-    		throw new ExceptionInInitializerError(ex);
-    	}
-
-
     }
 
    public static void openSessionAndBindToThread() {

@@ -19,15 +19,28 @@ public class ServiceCuota implements IServiceCuota {
 	public ServiceCuota() {
 		_cuotaDao= new CuotaDaoImplHibernate();
 	}
-	/*
-	 * (non-Javadoc)
-	 * @see ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCuota#ListaDeudorMes(int)
-	 * ListaDeudorMes(int mes) devuelve una lista de todos los que no
-	 * pagaron en mes dado comparando fecha de pago
-	 */
 	
 	@Override
-	public List<Sociosa> ListaDeudorMes(int mes, int anio) {
+	public boolean RegistrarPagoCuota(Cuota nueva) {
+		try {
+			Cuota _cuota=new Cuota();
+			_cuota=_cuotaDao.BuscarUno(nueva.getId());
+			if(_cuota.getFechaPago()==null || _cuota ==null) {
+				_cuota.setFechaPago(FechaHora.DameFechaActual());
+				_cuota.setEstado("Saldado");
+				_cuotaDao.GuardarEntity(_cuota);
+				return true;
+			}
+			else
+				return false;
+		}
+		catch(Exception ex) {
+			throw new RuntimeException(ex.toString());
+		}
+	}
+	
+	@Override
+	public List<Sociosa> ListaDeudorMorososMes(int mes, int anio) {
 		List<Sociosa> _list=new ArrayList<Sociosa>();
 		List<Cuota> ListarC=this._cuotaDao.ListaCuotaMes(mes, anio); // llega una list con las cuotas del mes anterior
 		for(Cuota Lcuotas : ListarC){
@@ -36,7 +49,7 @@ public class ServiceCuota implements IServiceCuota {
 	    }
 		return _list;
 	}
-	
+	/*
 	@SuppressWarnings("deprecation")
 	@Override
 	public List<Sociosa> ListaMorososMes(int mes, int anio) {
@@ -56,6 +69,7 @@ public class ServiceCuota implements IServiceCuota {
 		}
 		return _list;
 	}
+	*/
 
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import ar.com.ProyectoClub.CModelo.AServicios.FechaHora;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCuota;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio;
 import ar.com.ProyectoClub.CModelo.CEntidades.Cuota;
@@ -128,13 +129,13 @@ public class ServiceSocios implements IServiceSocio {
 	/*
 	 * (non-Javadoc)
 	 * @see ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio#validar(java.lang.Integer)
-	 * Servicio de validacion verifica si el dni del un socio esta estado moroso 
+	 * Servicio de validacion verifica si el id pasado como parametro es moroso
 	 */
 	@Override
-	public boolean validar(Integer dni) throws BussinessException {
+	public boolean validar(Integer id) throws BussinessException {
 		try{
 			for(DTOPersonalisadoSocio _dto : _socioDao.ListaMorosos()){ //Forech para recorrer la lista de morosos
-				if(_dto.getDni().equals(dni))  //si el dni es igual el socio es moroso
+				if(_dto.getNroSocio().equals(id))
 					return true;
 			}
 			return false;
@@ -145,7 +146,7 @@ public class ServiceSocios implements IServiceSocio {
 	}
 	
 	
-
+/*
 	@SuppressWarnings("unused")
 	private static boolean Verificar_edad(Date fechanacimiento){
 		Calendar fecnac=Calendar.getInstance();
@@ -168,31 +169,45 @@ public class ServiceSocios implements IServiceSocio {
 		else 
 			return true;
 	}
-	
+	*/
+	@SuppressWarnings("deprecation")
 	@Override
-	public void ControlEstadoMorosos(int mes, int anio) {
+	public void ControlEstadoMorosos(Date fecha) {
 		IServiceCuota _serviceCuota=new ServiceCuota();
 		try{
 			Sociosa _socio=new Sociosa();
-			for (Sociosa lista:_serviceCuota.ListaMorososMes(mes,anio)) {	
-				_socio=_socioDao.BuscarUno(lista.getNroSocio());
-				if(_socio.isHabilitado()){
-					_socio.setEstado("Moroso");
-					_socio.setHabilitado(false);
-					_socioDao.GuardarEntity(_socio);
+			List<Sociosa> _LMorosos=new ArrayList<>();
+			for (Sociosa lista: _serviceCuota.ListaDeudorMorososMes(FechaHora.ConvertidorMes(fecha.getMonth()-3),FechaHora.Convertidoranio(fecha.getMonth()-3,fecha.getYear()+1900))){   //lista de los que no pagaron tres meses atras
+				for (Sociosa lista2: _serviceCuota.ListaDeudorMorososMes(FechaHora.ConvertidorMes(fecha.getMonth()-2),FechaHora.Convertidoranio(fecha.getMonth()-2,fecha.getYear()+1900))){ //lista que no pagaron 2 meses atras
+					if(lista.getNroSocio()==lista2.getNroSocio()) 
+						_LMorosos.add(lista2); //guarda el deudor en la lista
+
+				}
+			}
+			for (Sociosa lista: _LMorosos){
+				for (Sociosa lista2: _serviceCuota.ListaDeudorMorososMes(FechaHora.ConvertidorMes(fecha.getMonth()-1),FechaHora.Convertidoranio(fecha.getMonth()-1,fecha.getYear()+1900))){ //lista del mes anterior
+					if(lista.getNroSocio()==lista2.getNroSocio()) { 
+						_socio=_socioDao.BuscarUno(lista.getNroSocio());
+						if(_socio.isHabilitado()){
+							_socio.setEstado("Moroso");
+							_socio.setHabilitado(false);
+							_socioDao.GuardarEntity(_socio);
+						}
+
+					}
 				}
 			}
 		}
 		catch(Exception ex){
 			throw new RuntimeException(ex.toString());
 		}
+
 	}
 	
 	@Override
 	public void ControlEstadoDeudor(int mes, int anio) {
 		IServiceCuota _servicecuota=new ServiceCuota();
-		List<Sociosa> Listadeudor=_servicecuota.ListaDeudorMes(mes,anio);
-		
+		List<Sociosa> Listadeudor=_servicecuota.ListaDeudorMorososMes(mes,anio);
 		try{
 			for(Sociosa _lista: Listadeudor){
 				Sociosa _uno=new Sociosa();

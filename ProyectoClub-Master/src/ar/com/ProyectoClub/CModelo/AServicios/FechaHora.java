@@ -30,5 +30,33 @@ public class FechaHora {
         Date fecha2=new Date(año,mes,dia);
         return fecha2;
 	}
-
+	
+	public static int Convertidoranio(int mes,int anio) {
+		int i;
+		if(mes==0|| mes==-1 || mes==-2)
+			i=--anio;
+		else
+			i=anio;
+		return i;
+	}
+	
+	public static int ConvertidorMes(int mes) {
+		int i;
+		switch (mes) {
+		case 0:
+			i=12;
+			break;
+		case -1:
+			i=11;
+			break;
+		case -2:
+		    i=10;
+		    break;
+		default:
+			i=mes;
+			break;
+		} 
+		return i;
+	}
+	
 }
