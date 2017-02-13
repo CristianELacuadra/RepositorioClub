@@ -20,5 +20,6 @@
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Inmuebles.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Nosocio.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Sociosa.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Usuario.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

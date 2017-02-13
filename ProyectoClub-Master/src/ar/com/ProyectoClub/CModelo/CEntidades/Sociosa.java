@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 01-feb-2017 12:33:45 by Hibernate Tools 3.5.0.Final
+// Generated 13-feb-2017 12:57:53 by Hibernate Tools 3.5.0.Final
 
 import java.util.Date;
 import java.util.HashSet;

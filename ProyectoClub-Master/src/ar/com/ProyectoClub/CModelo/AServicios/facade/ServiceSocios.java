@@ -4,7 +4,10 @@ package ar.com.ProyectoClub.CModelo.AServicios.facade;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import ar.com.ProyectoClub.CModelo.AServicios.FechaHora;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCuota;
@@ -34,6 +37,7 @@ public class ServiceSocios implements IServiceSocio {
 	@Override
 	public boolean NuevoSocio(Sociosa socio) throws BussinessException{
 		try{
+			_socio=this.ActualizarEntidad(socio);
 			_socioDao.GuardarEntity(socio);
 			return true;
 		}
@@ -72,7 +76,7 @@ public class ServiceSocios implements IServiceSocio {
 	public boolean ActulizarSocio(Sociosa socio )throws BussinessException {
 		 try {
 			_socio=_socioDao.BuscarUno(socio.getNroSocio());
-			this.ActualizarEntidad(socio);
+			_socio=this.ActualizarEntidad(socio);
 			_socioDao.GuardarEntity(_socio);
 			return true;
 			
@@ -83,13 +87,23 @@ public class ServiceSocios implements IServiceSocio {
 	}
 	@Override
 	public Sociosa UnSocio(Integer id) throws BussinessException {
-		Sociosa nuevo=new Sociosa();
 		try{
-			nuevo=_socioDao.BuscarUno(id);
-			return nuevo;
+			_socio=_socioDao.BuscarUno(id);
+			return _socio;
 		}
 		catch(BussinessException be){
 			throw be;
+		}
+	}
+	@Override
+	public Sociosa BusquedaXdni(Integer dni) {
+		try {
+			_socio=null;
+			_socio=_socioDao.BusquedaXDni(dni);
+			return _socio;
+		}
+		catch(Exception ex) {
+			throw new RuntimeException(ex);
 		}
 	}
 	
@@ -222,21 +236,37 @@ public class ServiceSocios implements IServiceSocio {
 			throw new RuntimeException(ex.toString());
 		}
 	}
+	
+	@Override
+	public Set<Cuota> listarCuotasSocio(Integer id) {
+		try {
+			return null;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
 
 
-	private void ActualizarEntidad(Sociosa entidad){
-		_socio.setNombre(entidad.getNombre());
-		_socio.setApellido(entidad.getApellido());
-		_socio.setCategoria(entidad.getCategoria());
-		_socio.setDomicilio(entidad.getDomicilio());
-		_socio.setEstado(entidad.getEstado());
-		_socio.setEstadoCivil(entidad.getEstadoCivil());
-		_socio.setFechaIngreso(entidad.getFechaIngreso());
-		_socio.setFechaNacimiento(entidad.getFechaNacimiento());
-		_socio.setHabilitado(entidad.isHabilitado());
-		_socio.setMatricula(entidad.getMatricula());
-		_socio.setNacionalidad(entidad.getNacionalidad());
-		_socio.setSexo(entidad.getSexo());
-		_socio.setTelefono(entidad.getTelefono());
+	private Sociosa ActualizarEntidad(Sociosa entidad){
+		Sociosa dev=new Sociosa();
+		dev.setNroSocio(entidad.getNroSocio());
+		dev.setDni(entidad.getDni());
+		dev.setNombre(entidad.getNombre());
+		dev.setApellido(entidad.getApellido());
+		dev.setDomicilio(entidad.getDomicilio());
+		dev.setTelefono(entidad.getTelefono());
+		dev.setDomicilio(entidad.getDomicilio());
+		dev.setFechaNacimiento(entidad.getFechaNacimiento());
+		dev.setMatricula(entidad.getMatricula());
+		dev.setSexo(entidad.getSexo());
+		dev.setEstado(entidad.getEstado());
+		dev.setNacionalidad(entidad.getNacionalidad());
+		dev.setEstadoCivil(entidad.getEstadoCivil());
+		dev.setFechaIngreso(entidad.getFechaIngreso());
+		dev.setHabilitado(entidad.isHabilitado());
+		dev.setCategoria(entidad.getCategoria());
+		return dev;
 	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 01-feb-2017 12:33:46 by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 13-feb-2017 11:05:29 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" table="alquiler" catalog="datosclub">
         <id name="nroAlquiler" type="java.lang.Integer">
@@ -29,13 +29,16 @@
         <property name="horaReserva" type="time">
             <column name="Hora_Reserva" length="8" not-null="true" />
         </property>
+        <property name="cantidadHora" type="java.lang.Integer">
+            <column name="Cantidad_Hora" not-null="true" />
+        </property>
         <property name="precioTotal" type="float">
             <column name="Precio_Total" precision="12" scale="0" not-null="true" />
         </property>
         <property name="activo" type="boolean">
             <column name="activo" not-null="true">
-                <comment>el alquiler puede estar activo o inactivo, si esta inactivo es por que lo dio de baja teniendo que pagar la reserva o simplemente se realizo el alquiler
-                con exito</comment>
+                <comment>si activo es igual a inactivo entonces se dio de baja teniendo que pagar de igual manera la reserva.si esta activo el alquiler esta reservado esperando a
+                ser completado.si esta en concretado ya puede pasarse a la caja</comment>
             </column>
         </property>
         <set name="cajas" table="caja" inverse="true" lazy="true" fetch="select">

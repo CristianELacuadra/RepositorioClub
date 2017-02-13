@@ -14,4 +14,5 @@
 	<table-filter match-name="inmuebles" match-catalog="datosclub"></table-filter>
 	<table-filter match-name="nosocio" match-catalog="datosclub"></table-filter>
 	<table-filter match-name="sociosa" match-catalog="datosclub"></table-filter>
+	<table-filter match-name="usuario" match-catalog="datosclub"></table-filter>
 </hibernate-reverse-engineering>

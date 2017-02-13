@@ -11,32 +11,42 @@ import org.junit.Test;
 
 import ar.com.ProyectoClub.CModelo.AServicios.FechaHora;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCategorias;
+import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCuota;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceCategoria;
+import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceCuota;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceSocios;
+import ar.com.ProyectoClub.CModelo.CEntidades.Cuota;
 import ar.com.ProyectoClub.CModelo.CEntidades.Sociosa;
 import ar.com.ProyectoClub.CModelo.DPersistencia.AHibernet.HibernateUtil;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 
 public class PruebaServiciosJUnit{
-	//Sociosa _s;
-	//IServiceSocio _ser;
-	//IServiceCategorias _sercat; 
-	//@SuppressWarnings("deprecation")
+	IServiceCuota Cuotaservice;
+	@Before
+	public void AntesQue(){
+		
+		Cuotaservice=new ServiceCuota();
+	}
+	
+	@Test 
+	void PruebaenCuotas() {
+		Cuota nuevo=new Cuota();		
+		nuevo=Cuotaservice.Busqueda(1);
+		nuevo.setDescripcion("HOLA MUNDO");
+		assertTrue(Cuotaservice.InsertOrUpdateCuota(nuevo));
+	}
+	
+	
 	
 	@Test
 	public void pruebafecha(){
 		//(FechaHora.DameFechaActual().getDate());
 	}
 
-	/*
-	@Before
-	public void AntesQue(){
-		
-		_ser=new ServiceSocios();
-		_sercat=new ServiceCategoria();
-	}
-	*/
+	
+	
+	
     /*
 	@Test
 	public void InsercionSocio() {

@@ -12,20 +12,68 @@ import ar.com.ProyectoClub.CModelo.CEntidades.Sociosa;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ICuotaDAO;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.CuotaDaoImplHibernate;
-
-public class ServiceCuota implements IServiceCuota {
+	
+	public class ServiceCuota implements IServiceCuota {
 	private ICuotaDAO _cuotaDao;
 	
 	public ServiceCuota() {
 		_cuotaDao= new CuotaDaoImplHibernate();
 	}
 	
+	
+	@Override
+	public boolean InsertOrUpdateCuota(Cuota nueva) {
+		try {
+			Cuota ObjCuota=new Cuota();
+			ObjCuota=_cuotaDao.BuscarUno(nueva.getId());
+			ObjCuota.setId(nueva.getId());
+			ObjCuota.setAnio(nueva.getAnio());
+			ObjCuota.setMes(nueva.getMes());
+			ObjCuota.setFechaPago(nueva.getFechaPago());
+			ObjCuota.setDescripcion(nueva.getDescripcion());
+			ObjCuota.setEstado(nueva.getEstado());
+			ObjCuota.setImporte(nueva.getImporte());
+			_cuotaDao.GuardarEntity(ObjCuota);
+			return true;
+		}
+		catch(Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+	@Override
+	public Cuota Busqueda(Integer id) {
+		try {
+			Cuota ObjCuota=new Cuota();
+			ObjCuota=_cuotaDao.BuscarUno(id);
+			return ObjCuota;
+		}catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	@Override
+	public List<Cuota> listarCuotasimpagas(Integer id) {
+		List<Cuota> _ListCuota=new ArrayList<Cuota>();  
+		try {
+			for(Cuota _busq : _cuotaDao.Listar()) {
+				if(_busq.getSociosa().getNroSocio().compareTo(id)==0)
+					_ListCuota.add(_busq);
+
+			}
+			return _ListCuota;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	
 	@Override
 	public boolean RegistrarPagoCuota(Cuota nueva) {
 		try {
 			Cuota _cuota=new Cuota();
 			_cuota=_cuotaDao.BuscarUno(nueva.getId());
-			if(_cuota.getFechaPago()==null || _cuota ==null) {
+			if(_cuota.getFechaPago()==null) {
 				_cuota.setFechaPago(FechaHora.DameFechaActual());
 				_cuota.setEstado("Saldado");
 				_cuotaDao.GuardarEntity(_cuota);

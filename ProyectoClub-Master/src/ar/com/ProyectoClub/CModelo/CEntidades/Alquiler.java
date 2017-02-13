@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 01-feb-2017 12:33:45 by Hibernate Tools 3.5.0.Final
+// Generated 13-feb-2017 12:57:53 by Hibernate Tools 3.5.0.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -18,6 +18,7 @@ public class Alquiler implements java.io.Serializable {
 	private Date horaActual;
 	private Date fechaReserva;
 	private Date horaReserva;
+	private Integer cantidadHora;
 	private float precioTotal;
 	private boolean activo;
 	private Set cajas = new HashSet(0);
@@ -26,18 +27,19 @@ public class Alquiler implements java.io.Serializable {
 	}
 
 	public Alquiler(Inmuebles inmuebles, Date fechaActual, Date horaActual, Date fechaReserva, Date horaReserva,
-			float precioTotal, boolean activo) {
+			Integer cantidadHora, float precioTotal, boolean activo) {
 		this.inmuebles = inmuebles;
 		this.fechaActual = fechaActual;
 		this.horaActual = horaActual;
 		this.fechaReserva = fechaReserva;
 		this.horaReserva = horaReserva;
+		this.cantidadHora = cantidadHora;
 		this.precioTotal = precioTotal;
 		this.activo = activo;
 	}
 
 	public Alquiler(Sociosa sociosa, Inmuebles inmuebles, Nosocio nosocio, Date fechaActual, Date horaActual,
-			Date fechaReserva, Date horaReserva, float precioTotal, boolean activo, Set cajas) {
+			Date fechaReserva, Date horaReserva, Integer cantidadHora, float precioTotal, boolean activo, Set cajas) {
 		this.sociosa = sociosa;
 		this.inmuebles = inmuebles;
 		this.nosocio = nosocio;
@@ -45,6 +47,7 @@ public class Alquiler implements java.io.Serializable {
 		this.horaActual = horaActual;
 		this.fechaReserva = fechaReserva;
 		this.horaReserva = horaReserva;
+		this.cantidadHora = cantidadHora;
 		this.precioTotal = precioTotal;
 		this.activo = activo;
 		this.cajas = cajas;
@@ -112,6 +115,14 @@ public class Alquiler implements java.io.Serializable {
 
 	public void setHoraReserva(Date horaReserva) {
 		this.horaReserva = horaReserva;
+	}
+
+	public Integer getCantidadHora() {
+		return this.cantidadHora;
+	}
+
+	public void setCantidadHora(Integer cantidadHora) {
+		this.cantidadHora = cantidadHora;
 	}
 
 	public float getPrecioTotal() {

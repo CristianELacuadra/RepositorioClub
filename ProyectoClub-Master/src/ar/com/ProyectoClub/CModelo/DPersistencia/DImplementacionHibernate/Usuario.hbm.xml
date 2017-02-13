@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 13-feb-2017 12:57:53 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Usuario" table="usuario" catalog="datosclub">
+        <id name="idusuario" type="java.lang.Integer">
+            <column name="idusuario" />
+            <generator class="identity" />
+        </id>
+        <property name="nick" type="string">
+            <column name="nick" length="30" not-null="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="30" not-null="true" />
+        </property>
+        <property name="tipousuario" type="string">
+            <column name="tipousuario" length="30" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
