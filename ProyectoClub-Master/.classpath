@@ -20,6 +20,10 @@
 	<classpathentry kind="lib" path="lib/hibernate-core-4.2.21.Final.jar" sourcepath="C:/Users/Cristian/.m2/repository/org/hibernate/hibernate-core/4.2.21.Final/hibernate-core-4.2.21.Final-sources.jar"/>
 	<classpathentry kind="lib" path="lib/validation-api-1.0.0.GA.jar"/>
 	<classpathentry kind="lib" path="lib/spring-core-3.1.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/jcMousePanel-1.6.9.jar"/>
+	<classpathentry kind="lib" path="lib/JCDesktopPane.jar"/>
+	<classpathentry kind="lib" path="lib/JCPanel.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
