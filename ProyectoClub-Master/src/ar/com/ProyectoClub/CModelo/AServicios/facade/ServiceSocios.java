@@ -251,7 +251,6 @@ public class ServiceSocios implements IServiceSocio {
 
 	private Sociosa ActualizarEntidad(Sociosa entidad){
 		Sociosa dev=new Sociosa();
-		dev.setNroSocio(entidad.getNroSocio());
 		dev.setDni(entidad.getDni());
 		dev.setNombre(entidad.getNombre());
 		dev.setApellido(entidad.getApellido());

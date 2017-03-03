@@ -11,8 +11,13 @@ public class ServiceCategoria implements IServiceCategorias {
 	private ICategoriaDAO _DaoCategoria; 
 	
 	public ServiceCategoria() {
+		try {
 		_categoria=new Categoria();
 		_DaoCategoria=new CategoriaDaoImplHibernate();
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	//contructor para cargar la categria
 	

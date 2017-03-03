@@ -1,19 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 01-feb-2017 12:33:46 by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 22-feb-2017 12:40:46 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
-    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Sociosa" table="sociosa" catalog="datosclub">
-        <id name="nroSocio" type="java.lang.Integer">
-            <column name="NroSocio" />
-            <generator class="identity" />
+    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Personas" table="personas" catalog="datosclub">
+        <id name="dni" type="java.lang.Integer">
+            <column name="Dni" />
+            <generator class="assigned" />
         </id>
         <many-to-one name="categoria" class="ar.com.ProyectoClub.CModelo.CEntidades.Categoria" fetch="select">
-            <column name="FK_Categoria" not-null="true" />
+            <column name="Fk_Categoria" />
         </many-to-one>
-        <property name="dni" type="java.lang.Integer">
-            <column name="Dni" not-null="true" unique="true" />
-        </property>
         <property name="nombre" type="string">
             <column name="Nombre" length="30" not-null="true" />
         </property>
@@ -26,39 +23,45 @@
         <property name="domicilio" type="string">
             <column name="Domicilio" length="100" not-null="true" />
         </property>
-        <property name="fechaNacimiento" type="date">
-            <column name="FechaNacimiento" length="10" not-null="true" />
+        <property name="fecNacimiento" type="date">
+            <column name="FecNacimiento" length="10" not-null="true" />
+        </property>
+        <property name="nroSocio" type="java.lang.Integer">
+            <column name="NroSocio" />
         </property>
         <property name="matricula" type="java.lang.Integer">
-            <column name="Matricula" not-null="true" />
+            <column name="Matricula" />
         </property>
         <property name="sexo" type="string">
-            <column name="Sexo" length="15" not-null="true" />
+            <column name="Sexo" length="15" />
         </property>
         <property name="estado" type="string">
-            <column name="Estado" length="20" not-null="true" />
+            <column name="Estado" length="20" />
         </property>
         <property name="nacionalidad" type="string">
-            <column name="Nacionalidad" length="30" not-null="true" />
+            <column name="Nacionalidad" length="30" />
         </property>
         <property name="estadoCivil" type="string">
-            <column name="EstadoCivil" length="30" not-null="true" />
+            <column name="EstadoCivil" length="20" />
         </property>
         <property name="fechaIngreso" type="date">
-            <column name="FechaIngreso" length="10" not-null="true" />
+            <column name="FechaIngreso" length="10" />
         </property>
         <property name="habilitado" type="boolean">
             <column name="Habilitado" not-null="true" />
         </property>
+        <property name="essocio" type="boolean">
+            <column name="Essocio" not-null="true" />
+        </property>
         <set name="cuotas" table="cuota" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="NroSocio_FK" not-null="true" />
+                <column name="Dni" not-null="true" />
             </key>
             <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Cuota" />
         </set>
         <set name="alquilers" table="alquiler" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="NroSocio" />
+                <column name="FK_Dni" not-null="true" />
             </key>
             <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" />
         </set>

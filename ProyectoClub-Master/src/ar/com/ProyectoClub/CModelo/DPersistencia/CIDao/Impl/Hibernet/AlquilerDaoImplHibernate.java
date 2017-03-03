@@ -6,5 +6,9 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.Imple.GenericDAOImplHibern
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.IAlquilerDAO;
 
 public class AlquilerDaoImplHibernate extends GenericDAOImplHibernate<Alquiler, Integer> implements IAlquilerDAO {
+
+	public AlquilerDaoImplHibernate() throws Exception {
+		super();
+	}
 	
 }

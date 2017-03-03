@@ -8,16 +8,10 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.persistence.EntityManager;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessMessage;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.IGenericDAO;
-import ar.com.ProyectoClub.CModelo.DPersistencia.AHibernet.HibernateUtil;
+
 /**
  * implementacion de la clase generica que acceder a la base de datos
  * y de esta manera no se repita el codigo en las demas implementaciones.
@@ -27,57 +21,40 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.AHibernet.HibernateUtil;
 /*
  * CRUD(create,read,update,delete)
  */
-public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGenericDAO<T,Id> {
+public class GenericDAOImplHibernate<T,Id extends Serializable> extends SessionTransactionGeneric implements IGenericDAO<T,Id> {
     
-	protected SessionFactory sessionFactory;
-	@SuppressWarnings({ "rawtypes", "unused" })
-	private Class classePersistente; 
-    @SuppressWarnings("unused")
-	private EntityManager entitymanager;  
-    private final static Logger LOGGER=Logger.getLogger(GenericDAOImplHibernate.class.getName());
-	 
-
-     @SuppressWarnings("rawtypes")
-	public GenericDAOImplHibernate() {
-    	 /*
-    	  * guarda el tipo actual de la clase T
-    	  */
-		this.classePersistente = (Class) ((ParameterizedType) getClass()
-			    .getGenericSuperclass()).getActualTypeArguments()[0];
-		/*
-		 * inicia la session
-		 */
-		sessionFactory=HibernateUtil.getSessionFactory();
+    private final static Logger LOGGER = Logger.getLogger(GenericDAOImplHibernate.class.getName());
+    
+	public GenericDAOImplHibernate() throws Exception {
+		super();
 	}
    
 	
-	@Override
-	public T crear() throws BussinessException {
-		try{
-			return getEntityClass().newInstance();
-		}
-		catch (InstantiationException | IllegalAccessException ex){
-			throw new RuntimeException(ex);
-		} 
-		catch (RuntimeException ex){
-			throw ex;
-		}
-		catch(Exception ex){
-			throw new RuntimeException(ex);
-		}
-	}
+     @Override
+     public T crear() throws BussinessException {
+    	 try {
+    		 return getEntityClass().newInstance();
+    	 } catch (InstantiationException | IllegalAccessException ex) {
+    		 throw new RuntimeException(ex);
+    	 } catch (RuntimeException ex) {
+    		 throw ex;
+    	 } catch (Exception ex) {
+    		 throw new RuntimeException(ex);
+    	 }
+     }
+	
     @Override
 	public void GuardarEntity(T entity) throws BussinessException {
-    	Session session = sessionFactory.getCurrentSession();
 		try {
-			session.beginTransaction();
-			session.saveOrUpdate(entity);
-			session.getTransaction().commit();
+			Setsession();
+			SetTransaction();
+			_sessiondehilo.saveOrUpdate(entity);
+			_sessiondehilo.getTransaction().commit();
 		} 
 		catch (javax.validation.ConstraintViolationException cve) {
 			try {
-				if (session.getTransaction().isActive()) {
-					session.getTransaction().rollback();
+				if (_sessiondehilo.getTransaction().isActive()) {
+					_sessiondehilo .getTransaction().rollback();
 				}
 			} 
 			catch (Exception exc) {
@@ -87,8 +64,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 		} 
 		catch (org.hibernate.exception.ConstraintViolationException cve) {
 			try {
-				if (session.getTransaction().isActive()) {
-					session.getTransaction().rollback();
+				if (_sessiondehilo.getTransaction().isActive()) {
+					_sessiondehilo.getTransaction().rollback();
 				}
 			} 
 			catch (Exception exc) {
@@ -98,8 +75,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 		} 
 		catch (RuntimeException ex) {
 			try {
-				if (session.getTransaction().isActive()) {
-					session.getTransaction().rollback();
+				if (_sessiondehilo.getTransaction().isActive()) {
+					_sessiondehilo.getTransaction().rollback();
 				}
 			} 
 			catch (Exception exc) {
@@ -109,8 +86,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 		} 
 		catch (Exception ex) {
 			try {
-				if (session.getTransaction().isActive()) {
-					session.getTransaction().rollback();
+				if (_sessiondehilo.getTransaction().isActive()) {
+					_sessiondehilo.getTransaction().rollback();
 				}
 			} 
 			catch (Exception exc) {
@@ -123,17 +100,17 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 	@SuppressWarnings("unchecked")
 	@Override
 	public T BuscarUno(Id id) throws BussinessException {
-		Session session=sessionFactory.getCurrentSession();
 		try{
-			session.beginTransaction();
-			T entity = (T) session.get(getEntityClass(),id);
-			session.getTransaction().commit();
+			Setsession();
+			SetTransaction();
+			T entity = (T) _sessiondehilo.get(getEntityClass(),id);
+			_sessiondehilo.getTransaction().commit();
 			return entity;
 		}
 		catch(javax.validation.ConstraintViolationException cve){
 			try{
-				if(session.getTransaction().isActive()){
-					session.getTransaction().rollback();
+				if(_sessiondehilo.getTransaction().isActive()){
+					_sessiondehilo.getTransaction().rollback();
 				}
 			}
 			catch (Exception exc){
@@ -143,8 +120,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 		}
 		catch(org.hibernate.exception.ConstraintViolationException cve){
 			try{
-				if(session.getTransaction().isActive()){
-					session.getTransaction().rollback();
+				if(_sessiondehilo.getTransaction().isActive()){
+					_sessiondehilo.getTransaction().rollback();
 				}
 			}
 			catch (Exception exc){
@@ -154,8 +131,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 		}
 		catch (RuntimeException ex){
 			try{
-				if(session.getTransaction().isActive()){
-					session.getTransaction().rollback();
+				if(_sessiondehilo.getTransaction().isActive()){
+					_sessiondehilo.getTransaction().rollback();
 				}
 			}
 			catch(Exception exc){
@@ -165,8 +142,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 		}
 		catch(Exception ex){
 			try{
-				if(session.getTransaction().isActive()){
-					session.getTransaction().rollback();
+				if(_sessiondehilo.getTransaction().isActive()){
+					_sessiondehilo.getTransaction().rollback();
 				}
 			}
 			catch(Exception exc){
@@ -174,25 +151,26 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 			}
 			throw new RuntimeException(ex);
 		}
+		
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void Eliminar(Id id) throws BussinessException {
-	  Session session=sessionFactory.getCurrentSession();
 	  try{
-		  session.beginTransaction();
-		  T entity= (T) session.get(getEntityClass(), id);
+		  Setsession();
+		  SetTransaction();
+		  T entity= (T) _sessiondehilo.get(getEntityClass(), id);
 		  if(entity == null){
 			  throw new BussinessException(new BussinessMessage(null,"los datos a borrar ya no existen"));
 		  }
-		  session.delete(entity);
-		  session.getTransaction().commit();
+		  _sessiondehilo.delete(entity);
+		  _sessiondehilo.getTransaction().commit();
 	  }
 	  catch (javax.validation.ConstraintViolationException cve){
 		  try{
-			  if(session.getTransaction().isActive()){
-				  session.getTransaction().rollback();
+			  if(_sessiondehilo.getTransaction().isActive()){
+				  _sessiondehilo.getTransaction().rollback();
 			  }
 		  }
 		  catch (Exception exc){
@@ -202,8 +180,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 	  }
 	  catch(org.hibernate.exception.ConstraintViolationException cve){
 		  try{
-			  if(session.getTransaction().isActive()){
-				  session.getTransaction().rollback();
+			  if(_sessiondehilo.getTransaction().isActive()){
+				  _sessiondehilo.getTransaction().rollback();
 			  }
 		  }
 		  catch (Exception exc){
@@ -213,8 +191,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 	  }
 	  catch (BussinessException ex){
 		  try{
-			  if(session.getTransaction().isActive()){
-				  session.getTransaction().rollback();
+			  if(_sessiondehilo.getTransaction().isActive()){
+				  _sessiondehilo.getTransaction().rollback();
 			  }
 		  }
 		  catch(Exception exc){
@@ -224,8 +202,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 	  }
 	  catch (RuntimeException ex){
 		  try {
-			  if(session.getTransaction().isActive()){
-				session.getTransaction().rollback();  
+			  if(_sessiondehilo.getTransaction().isActive()){
+				  _sessiondehilo.getTransaction().rollback();  
 			  }
 		  }
 		  catch (Exception exc){
@@ -235,8 +213,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 	  }
 	  catch(Exception ex){
 		  try{
-			  if(session.getTransaction().isActive()){
-				  session.getTransaction().rollback();
+			  if(_sessiondehilo.getTransaction().isActive()){
+				  _sessiondehilo.getTransaction().rollback();
 			  }
 		  }
 		  catch (Exception exc){
@@ -249,16 +227,17 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> Listar() throws BussinessException {
-		Session session = sessionFactory.getCurrentSession();
 		try {
-			session.beginTransaction();
-			List<T> entities = session.createQuery("SELECT e FROM "+ getEntityClass().getName() +" e").list();
+			Setsession();
+			SetTransaction();
+			List<T> entities = _sessiondehilo.createQuery("SELECT e FROM "+ getEntityClass().getName() +" e").list();
+			_sessiondehilo.getTransaction().commit();
 			return entities;
 		} 
 		catch (javax.validation.ConstraintViolationException cve) {
 			try {
-				if (session.getTransaction().isActive()) {
-					session.getTransaction().rollback();
+				if (_sessiondehilo.getTransaction().isActive()) {
+					_sessiondehilo.getTransaction().rollback();
 					}
 				} 
 			catch (Exception exc) {
@@ -268,8 +247,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 		} 
 		catch (org.hibernate.exception.ConstraintViolationException cve) {
 			try {
-				if (session.getTransaction().isActive()) {
-					session.getTransaction().rollback();
+				if (_sessiondehilo.getTransaction().isActive()) {
+					_sessiondehilo.getTransaction().rollback();
 					}
 				} 
 			catch (Exception exc) {
@@ -279,8 +258,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 		}
 		catch (RuntimeException ex) {
 			try {
-				if (session.getTransaction().isActive()) {
-					session.getTransaction().rollback();
+				if (_sessiondehilo.getTransaction().isActive()) {
+					_sessiondehilo.getTransaction().rollback();
 					}
 				} 
 			catch (Exception exc) {
@@ -290,8 +269,8 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> implements IGene
 		} 
 		catch (Exception ex) {
 			try {
-				if (session.getTransaction().isActive()) {
-					session.getTransaction().rollback();
+				if (_sessiondehilo.getTransaction().isActive()) {
+					_sessiondehilo.getTransaction().rollback();
 				}
 			} 
 			catch (Exception exc) {
