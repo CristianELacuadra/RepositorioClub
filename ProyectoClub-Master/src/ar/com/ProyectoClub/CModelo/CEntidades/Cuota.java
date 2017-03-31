@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 13-feb-2017 12:57:53 by Hibernate Tools 3.5.0.Final
+// Generated 22-feb-2017 12:40:45 by Hibernate Tools 3.5.0.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,7 +11,7 @@ import java.util.Set;
 public class Cuota implements java.io.Serializable {
 
 	private Integer id;
-	private Sociosa sociosa;
+	private Personas personas;
 	private Integer mes;
 	private Integer anio;
 	private Date fechaPago;
@@ -23,8 +23,8 @@ public class Cuota implements java.io.Serializable {
 	public Cuota() {
 	}
 
-	public Cuota(Sociosa sociosa, Integer mes, Integer anio, String descripcion, float importe, String estado) {
-		this.sociosa = sociosa;
+	public Cuota(Personas personas, Integer mes, Integer anio, String descripcion, float importe, String estado) {
+		this.personas = personas;
 		this.mes = mes;
 		this.anio = anio;
 		this.descripcion = descripcion;
@@ -32,9 +32,9 @@ public class Cuota implements java.io.Serializable {
 		this.estado = estado;
 	}
 
-	public Cuota(Sociosa sociosa, Integer mes, Integer anio, Date fechaPago, String descripcion, float importe,
+	public Cuota(Personas personas, Integer mes, Integer anio, Date fechaPago, String descripcion, float importe,
 			String estado, Set cajas) {
-		this.sociosa = sociosa;
+		this.personas = personas;
 		this.mes = mes;
 		this.anio = anio;
 		this.fechaPago = fechaPago;
@@ -52,12 +52,12 @@ public class Cuota implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Sociosa getSociosa() {
-		return this.sociosa;
+	public Personas getPersonas() {
+		return this.personas;
 	}
 
-	public void setSociosa(Sociosa sociosa) {
-		this.sociosa = sociosa;
+	public void setPersonas(Personas personas) {
+		this.personas = personas;
 	}
 
 	public Integer getMes() {

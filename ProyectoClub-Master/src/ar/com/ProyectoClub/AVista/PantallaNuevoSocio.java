@@ -24,8 +24,23 @@ import java.awt.ComponentOrientation;
 import java.awt.Rectangle;
 import javax.swing.BoxLayout;
 import java.awt.GridLayout;
+import javax.swing.JTextField;
+import java.awt.Font;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class PantallaNuevoSocio extends JDialog {
+	private JTextField txtNombre;
+	private JTextField txtApellido;
+	private JTextField txtDni;
+	private JTextField txtTelefono;
+	private JTextField txtDomicilio;
+	private JTextField txtFechaN;
+	private JTextField txtNacion;
+	private JTextField txtEstadoC;
+	private JTextField txtMatricula;
+	private JTextField txt;
+	private JTextField txt;
 
 	/**
 	 * Launch the application.
@@ -58,57 +73,138 @@ public class PantallaNuevoSocio extends JDialog {
 		getContentPane().add(panelLabel);
 		panelLabel.setLayout(null);
 		
-		JLabel label = new JLabel("Nombre");
-		label.setBounds(10, 10, 180, 20);
-		panelLabel.add(label);
+		JLabel labNombre = new JLabel("Nombre");
+		labNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		labNombre.setFont(new Font("Tahoma", Font.BOLD, 13));
+		labNombre.setBounds(10, 10, 180, 20);
+		panelLabel.add(labNombre);
 		
-		JLabel label_1 = new JLabel("Apellido");
-		label_1.setBounds(10, 40, 180, 20);
-		panelLabel.add(label_1);
+		JLabel labApellido = new JLabel("Apellido");
+		labApellido.setHorizontalAlignment(SwingConstants.CENTER);
+		labApellido.setFont(new Font("Tahoma", Font.BOLD, 13));
+		labApellido.setBounds(10, 40, 180, 20);
+		panelLabel.add(labApellido);
 		
-		JLabel label_2 = new JLabel("Dni");
-		label_2.setBounds(10, 70, 180, 20);
-		panelLabel.add(label_2);
+		JLabel labDni = new JLabel("Dni");
+		labDni.setHorizontalAlignment(SwingConstants.CENTER);
+		labDni.setFont(new Font("Tahoma", Font.BOLD, 13));
+		labDni.setBounds(10, 70, 180, 20);
+		panelLabel.add(labDni);
 		
-		JLabel label_3 = new JLabel("Tel\u00E9fono");
-		label_3.setBounds(10, 100, 180, 20);
-		panelLabel.add(label_3);
+		JLabel labTelefono = new JLabel("Telefono");
+		labTelefono.setHorizontalAlignment(SwingConstants.CENTER);
+		labTelefono.setFont(new Font("Tahoma", Font.BOLD, 13));
+		labTelefono.setBounds(10, 100, 180, 20);
+		panelLabel.add(labTelefono);
 		
-		JLabel label_4 = new JLabel("Domicilio");
-		label_4.setBounds(10, 130, 180, 20);
-		panelLabel.add(label_4);
+		JLabel labDomicilio = new JLabel("Domicilio");
+		labDomicilio.setHorizontalAlignment(SwingConstants.CENTER);
+		labDomicilio.setFont(new Font("Tahoma", Font.BOLD, 13));
+		labDomicilio.setBounds(10, 130, 180, 20);
+		panelLabel.add(labDomicilio);
 		
-		JLabel label_5 = new JLabel("Fecha de Nacimiento");
-		label_5.setBounds(10, 160, 180, 20);
-		panelLabel.add(label_5);
+		JLabel labFechaN = new JLabel("Fecha de Nacimiento");
+		labFechaN.setHorizontalAlignment(SwingConstants.CENTER);
+		labFechaN.setFont(new Font("Tahoma", Font.BOLD, 13));
+		labFechaN.setBounds(10, 160, 180, 20);
+		panelLabel.add(labFechaN);
 		
-		JLabel label_6 = new JLabel("Tipo");
-		label_6.setBounds(10, 190, 180, 20);
-		panelLabel.add(label_6);
+		JLabel labTipo = new JLabel("Tipo");
+		labTipo.setHorizontalAlignment(SwingConstants.CENTER);
+		labTipo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		labTipo.setBounds(10, 190, 180, 20);
+		panelLabel.add(labTipo);
 		
-		JLabel label_8 = new JLabel("Sexo");
-		label_8.setBounds(10, 250, 180, 20);
-		panelLabel.add(label_8);
+		JLabel labSexo = new JLabel("Sexo");
+		labSexo.setHorizontalAlignment(SwingConstants.CENTER);
+		labSexo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		labSexo.setBounds(10, 250, 180, 20);
+		panelLabel.add(labSexo);
 		
-		JLabel label_9 = new JLabel("Nacionalidad");
-		label_9.setBounds(10, 280, 180, 20);
-		panelLabel.add(label_9);
+		JLabel labNacion = new JLabel("Nacionalidad");
+		labNacion.setHorizontalAlignment(SwingConstants.CENTER);
+		labNacion.setFont(new Font("Tahoma", Font.BOLD, 13));
+		labNacion.setBounds(10, 280, 180, 20);
+		panelLabel.add(labNacion);
 		
-		JLabel label_10 = new JLabel("Estado Civil");
-		label_10.setBounds(10, 310, 180, 20);
-		panelLabel.add(label_10);
+		JLabel labEstadoC = new JLabel("Estado Civil");
+		labEstadoC.setHorizontalAlignment(SwingConstants.CENTER);
+		labEstadoC.setFont(new Font("Tahoma", Font.BOLD, 13));
+		labEstadoC.setBounds(10, 310, 180, 20);
+		panelLabel.add(labEstadoC);
 		
-		JLabel label_11 = new JLabel("Categoria de Socio");
-		label_11.setBounds(10, 220, 180, 20);
-		panelLabel.add(label_11);
+		JLabel labCategoriaS = new JLabel("Categoria de Socio");
+		labCategoriaS.setHorizontalAlignment(SwingConstants.CENTER);
+		labCategoriaS.setFont(new Font("Tahoma", Font.BOLD, 13));
+		labCategoriaS.setBounds(10, 220, 180, 20);
+		panelLabel.add(labCategoriaS);
 		
-		JLabel label_7 = new JLabel("Matricula");
-		label_7.setBounds(10, 340, 180, 20);
-		panelLabel.add(label_7);
+		JLabel labMatricula = new JLabel("Matricula");
+		labMatricula.setHorizontalAlignment(SwingConstants.CENTER);
+		labMatricula.setFont(new Font("Tahoma", Font.BOLD, 13));
+		labMatricula.setBounds(10, 340, 180, 20);
+		panelLabel.add(labMatricula);
 		
 		JPanel panelTxt = new JPanel();
 		panelTxt.setBounds(200, 0, 220, 462);
 		getContentPane().add(panelTxt);
+		panelTxt.setLayout(null);
+		
+		txtNombre = new JTextField();
+		txtNombre.setBounds(10, 10, 200, 20);
+		panelTxt.add(txtNombre);
+		
+		txtApellido = new JTextField();
+		txtApellido.setBounds(10, 40, 200, 20);
+		panelTxt.add(txtApellido);
+		
+		txtDni = new JTextField();
+		txtDni.setBounds(10, 70, 200, 20);
+		panelTxt.add(txtDni);
+		
+		txtTelefono = new JTextField();
+		txtTelefono.setBounds(10, 100, 200, 20);
+		panelTxt.add(txtTelefono);
+		
+		txtDomicilio = new JTextField();
+		txtDomicilio.setBounds(10, 130, 200, 20);
+		panelTxt.add(txtDomicilio);
+		
+		txtFechaN = new JTextField();
+		txtFechaN.setBounds(10, 160, 200, 20);
+		panelTxt.add(txtFechaN);
+		
+		
+		/*		
+		txtTipo = new JTextField();
+		txtTipo.setBounds(10, 190, 180, 20);
+		panelTxt.add(txtTipo);
+		
+		txtCategoriaS = new JTextField();
+		txtCategoriaS.setBounds(10, 220, 180, 20);
+		panelTxt.add(txtCategoriaS);
+	
+		txtSexo = new JTextField();
+		txtSexo.setBounds(10, 250, 180, 20);
+		panelTxt.add(txtSexo);
+		*/
+		txtNacion = new JTextField();
+		txtNacion.setBounds(10, 280, 200, 20);
+		panelTxt.add(txtNacion);
+		
+		txtEstadoC = new JTextField();
+		txtEstadoC.setBounds(10, 310, 200, 20);
+		panelTxt.add(txtEstadoC);
+	
+		txtMatricula = new JTextField();
+		txtMatricula.setBounds(10, 340, 200, 20);
+		panelTxt.add(txtMatricula);	
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Socio", "No Socio"}));
+		comboBox.setBounds(10, 190, 200, 20);
+		panelTxt.add(comboBox);
+		
 
 	}
 }

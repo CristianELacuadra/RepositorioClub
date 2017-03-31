@@ -5,6 +5,6 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.IGenericDAO;
 
 
 public interface IUsuarioDao extends IGenericDAO<Usuario,Integer> {
-	public Usuario Acceder(String usuario,String pass);
+	public boolean VerificarNick(String usuario);
 
 }

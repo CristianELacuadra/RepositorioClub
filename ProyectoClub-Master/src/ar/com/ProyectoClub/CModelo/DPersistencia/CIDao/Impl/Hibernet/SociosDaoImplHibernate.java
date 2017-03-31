@@ -1,113 +1,80 @@
 package ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet;
 
-
-import ar.com.ProyectoClub.CModelo.CEntidades.DTOPersonalisadoSocio;
-import ar.com.ProyectoClub.CModelo.CEntidades.Sociosa;
+import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.Imple.GenericDAOImplHibernate;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ISociosDAO;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.Session;
+
+import org.hibernate.Query;
 
 
-public class SociosDaoImplHibernate extends GenericDAOImplHibernate<Sociosa, Integer> implements ISociosDAO {
-	private List<Sociosa> socios = new ArrayList<Sociosa>();
-	public SociosDaoImplHibernate() {
+public class SociosDaoImplHibernate extends GenericDAOImplHibernate<Personas, Integer> implements ISociosDAO {
+	private List<Personas> socios = new ArrayList<Personas>();
+
+	public SociosDaoImplHibernate() throws Exception {
 		super();
 	}
-	/*
-	 * (non-Javadoc)
-	 * @see ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ISociosDAO#BusquedaXDni(java.lang.Integer)
-	 * HQL busqueda por dni
-	 */
-	public Sociosa BusquedaXDni(Integer dni) throws BussinessException{
-		Session session=sessionFactory.getCurrentSession();
-		try{
-			session.beginTransaction();
-			Sociosa _nuevo=(Sociosa) session.createQuery("SELECT query FROM Sociosa query WHERE Dni="+dni.toString()).uniqueResult();
-			return _nuevo;
-		}
-		catch (javax.validation.ConstraintViolationException cve){
-			throw new BussinessException(cve);
-		}
-		catch(org.hibernate.exception.ConstraintViolationException ce){
-			throw new BussinessException(ce);
-		}
-		catch(RuntimeException re){
-			throw re;
-		}
-		catch(Exception e){
-			throw new RuntimeException(e);
-		}
-		finally{
-			session.close();
-		}
-	}
-	/*
+	/**
 	 * (non-Javadoc)
 	 * @see ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ISociosDAO#ListaActivaSocios()
-	 * Lista de los socios activos en el club
-	 */
+	 * ListaActivaSocios() Devuelve la lista activa de los socios
+	 **/
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Sociosa> ListaActivaSocios() throws BussinessException {
-		Session session=sessionFactory.getCurrentSession();
+	public List<Personas> ListaActivaSocios() throws BussinessException {
 		try {
-			session.beginTransaction();
+			Setsession();
+			SetTransaction();
 			/*
 			 * HQL para recuperar solo datos habilitados
 			 */
-			socios = session.createQuery("SELECT s FROM Sociosa s WHERE habilitado=true").list();	
+			socios = _sessiondehilo.createQuery("SELECT s FROM Personas s WHERE essocio=true AND habilitado=true").list();	
+			_sessiondehilo.getTransaction().commit();
 			return socios;
 		}
-		catch (javax.validation.ConstraintViolationException cve){
-			throw new BussinessException(cve);
-		}
-		catch(org.hibernate.exception.ConstraintViolationException ce){
-			throw new BussinessException(ce);
-		}
-		catch (RuntimeException ex) {
-			throw ex;
-		}
 		catch (Exception e) {
+			_sessiondehilo.beginTransaction().rollback();
+			_sessiondehilo.close();
 			throw new RuntimeException(e);
 		}
-		finally{
-			session.close();
-		}
-
 	}
-	/*
-	 * (non-Javadoc)
-	 * @see ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ISociosDAO#ListaMorosos()
-	 * Lista de morosos
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DTOPersonalisadoSocio> ListaMorosos() {
-		Session session=sessionFactory.getCurrentSession();
-		List<DTOPersonalisadoSocio> _morosos=new ArrayList<DTOPersonalisadoSocio>();
-		try{
-			session.beginTransaction();
-			List<Sociosa> ListaNro=session.createQuery("SELECT s FROM Sociosa s WHERE estado='Moroso'").list();
-			for(Sociosa Nro : ListaNro) {
-				DTOPersonalisadoSocio DTO=new DTOPersonalisadoSocio();
-				DTO.setNroSocio(Nro.getNroSocio());
-				DTO.setDni(Nro.getDni());
-				DTO.setNombre(Nro.getNombre());
-				DTO.setApellido(Nro.getApellido());
-				_morosos.add(DTO);
-			}
-			return _morosos;
+	public List<Personas> HistoricoSocio() throws BussinessException {
+		try {
+			Setsession();
+			SetTransaction();
+			/*
+			 * HQL para recuperar solo datos habilitados
+			 */
+			List<Personas> _lista= _sessiondehilo.createQuery("SELECT s FROM Personas s WHERE essocio=true").list();	
+			_sessiondehilo.getTransaction().commit();
+			return _lista;
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_sessiondehilo.beginTransaction().rollback();
+			_sessiondehilo.close();
 			throw new RuntimeException(e);
 		}
-		finally{
-			session.close();
+	}
+	
+	@Override
+	public Integer MaxNroSocio() throws BussinessException {
+		try {
+			Setsession();
+			SetTransaction();
+			Integer _query= (Integer) _sessiondehilo.createQuery("SELECT MAX(s.nroSocio) From Personas s").uniqueResult();
+			_sessiondehilo.getTransaction().commit();
+			return _query;
+			
 		}
-		
+		catch (Exception e) {
+			_sessiondehilo.beginTransaction().rollback();
+			_sessiondehilo.close();
+			throw new BussinessException(e);
+		}
 	}
 }

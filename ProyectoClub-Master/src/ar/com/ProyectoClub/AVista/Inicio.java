@@ -129,12 +129,14 @@ public class Inicio extends JFrame {
 		panel_1.add(passwordField);
 		
 		JButton botAceptar = new JButton("Aceptar");
-		botAceptar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		botAceptar.setBorder(UIManager.getBorder("CheckBox.border"));
+		botAceptar.setToolTipText("");
+		botAceptar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		botAceptar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		botAceptar.setForeground(new Color(0, 0, 0));
 		botAceptar.setBounds(224, 208, 120, 43);
 		panel_1.add(botAceptar);
+		
 	//	botAceptar.set
 		
 		JButton botCancelar = new JButton("Salir");

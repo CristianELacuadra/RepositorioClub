@@ -26,7 +26,6 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.CuotaDaoImp
 		try {
 			Cuota ObjCuota=new Cuota();
 			ObjCuota=_cuotaDao.BuscarUno(nueva.getId());
-			ObjCuota.setId(nueva.getId());
 			ObjCuota.setAnio(nueva.getAnio());
 			ObjCuota.setMes(nueva.getMes());
 			ObjCuota.setFechaPago(nueva.getFechaPago());

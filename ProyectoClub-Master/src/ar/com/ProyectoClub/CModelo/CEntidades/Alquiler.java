@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 13-feb-2017 12:57:53 by Hibernate Tools 3.5.0.Final
+// Generated 22-feb-2017 12:40:45 by Hibernate Tools 3.5.0.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,9 +11,8 @@ import java.util.Set;
 public class Alquiler implements java.io.Serializable {
 
 	private Integer nroAlquiler;
-	private Sociosa sociosa;
+	private Personas personas;
 	private Inmuebles inmuebles;
-	private Nosocio nosocio;
 	private Date fechaActual;
 	private Date horaActual;
 	private Date fechaReserva;
@@ -26,8 +25,9 @@ public class Alquiler implements java.io.Serializable {
 	public Alquiler() {
 	}
 
-	public Alquiler(Inmuebles inmuebles, Date fechaActual, Date horaActual, Date fechaReserva, Date horaReserva,
-			Integer cantidadHora, float precioTotal, boolean activo) {
+	public Alquiler(Personas personas, Inmuebles inmuebles, Date fechaActual, Date horaActual, Date fechaReserva,
+			Date horaReserva, Integer cantidadHora, float precioTotal, boolean activo) {
+		this.personas = personas;
 		this.inmuebles = inmuebles;
 		this.fechaActual = fechaActual;
 		this.horaActual = horaActual;
@@ -38,11 +38,10 @@ public class Alquiler implements java.io.Serializable {
 		this.activo = activo;
 	}
 
-	public Alquiler(Sociosa sociosa, Inmuebles inmuebles, Nosocio nosocio, Date fechaActual, Date horaActual,
-			Date fechaReserva, Date horaReserva, Integer cantidadHora, float precioTotal, boolean activo, Set cajas) {
-		this.sociosa = sociosa;
+	public Alquiler(Personas personas, Inmuebles inmuebles, Date fechaActual, Date horaActual, Date fechaReserva,
+			Date horaReserva, Integer cantidadHora, float precioTotal, boolean activo, Set cajas) {
+		this.personas = personas;
 		this.inmuebles = inmuebles;
-		this.nosocio = nosocio;
 		this.fechaActual = fechaActual;
 		this.horaActual = horaActual;
 		this.fechaReserva = fechaReserva;
@@ -61,12 +60,12 @@ public class Alquiler implements java.io.Serializable {
 		this.nroAlquiler = nroAlquiler;
 	}
 
-	public Sociosa getSociosa() {
-		return this.sociosa;
+	public Personas getPersonas() {
+		return this.personas;
 	}
 
-	public void setSociosa(Sociosa sociosa) {
-		this.sociosa = sociosa;
+	public void setPersonas(Personas personas) {
+		this.personas = personas;
 	}
 
 	public Inmuebles getInmuebles() {
@@ -75,14 +74,6 @@ public class Alquiler implements java.io.Serializable {
 
 	public void setInmuebles(Inmuebles inmuebles) {
 		this.inmuebles = inmuebles;
-	}
-
-	public Nosocio getNosocio() {
-		return this.nosocio;
-	}
-
-	public void setNosocio(Nosocio nosocio) {
-		this.nosocio = nosocio;
 	}
 
 	public Date getFechaActual() {

@@ -44,7 +44,6 @@ public class ServiceAlquileres implements IServiceAlquileres {
 	
 	private Alquiler Actualizardatos(Alquiler datos) {
 		Alquiler _Alquiler=new Alquiler();
-		_Alquiler.setNroAlquiler(datos.getNroAlquiler());
 		_Alquiler.setSociosa(datos.getSociosa());
 		_Alquiler.setInmuebles(datos.getInmuebles());
 		_Alquiler.setNosocio(datos.getNosocio());

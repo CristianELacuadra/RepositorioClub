@@ -7,4 +7,9 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ICategoriaDAO;
 
 public class CategoriaDaoImplHibernate extends GenericDAOImplHibernate<Categoria, Integer> implements ICategoriaDAO {
 
+	public CategoriaDaoImplHibernate() throws Exception {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 }

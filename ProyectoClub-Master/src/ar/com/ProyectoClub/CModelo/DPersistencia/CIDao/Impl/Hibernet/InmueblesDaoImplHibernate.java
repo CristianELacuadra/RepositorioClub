@@ -7,4 +7,9 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.IinmueblesDAO;
 
 public class InmueblesDaoImplHibernate extends GenericDAOImplHibernate<Inmuebles, Integer> implements IinmueblesDAO{
 
+	public InmueblesDaoImplHibernate() throws Exception {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 }
