@@ -1,35 +1,37 @@
 package ar.com.ProyectoClub.CModelo.AServicios.facade;
 
 
+import java.util.logging.Logger;
+
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCategorias;
+import ar.com.ProyectoClub.CModelo.BGestores.GestorCategoria;
+import ar.com.ProyectoClub.CModelo.BIGestores.IGestorCategoria;
 import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ICategoriaDAO;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.CategoriaDaoImplHibernate;
 
 public class ServiceCategoria implements IServiceCategorias {
-	private Categoria _categoria;
-	private ICategoriaDAO _DaoCategoria; 
+    private IGestorCategoria gestorcategoria;
 	
 	public ServiceCategoria() {
 		try {
-		_categoria=new Categoria();
-		_DaoCategoria=new CategoriaDaoImplHibernate();
+		gestorcategoria =new GestorCategoria();
 		}
 		catch (Exception e) {
-			// TODO: handle exception
+			Logger.getLogger("Error al generar una instacia de categoria");
 		}
 	}
 	//contructor para cargar la categria
 	
 	public ServiceCategoria(Categoria categoria){
-		this._categoria=categoria;
+		//this._categoria=categoria;
 	}
 	
 	@Override
 	public boolean RegistrarCategoria(Categoria categoria) {
 		try{
-			_categoria=categoria;
-			_DaoCategoria.GuardarEntity(_categoria);
+			//_categoria=categoria;
+			//_DaoCategoria.GuardarEntity(_categoria);
 			return true;
 		}
 		catch(Exception ex){
@@ -43,7 +45,7 @@ public class ServiceCategoria implements IServiceCategorias {
 	public Categoria BuscarCategoria(Integer id) {
 		Categoria nueva=new Categoria();
 		try{
-			nueva=_DaoCategoria.BuscarUno(id);
+			nueva=gestorcategoria.Busqueda(id);
 			return nueva;
 		}
 		catch(Exception ex){

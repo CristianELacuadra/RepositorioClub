@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 22-feb-2017 9:47:26 by Hibernate Tools 3.5.0.Final -->
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13-mar-2017 20:16:32 by Hibernate Tools 5.2.0.CR1 -->
 <hibernate-mapping>
-    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" table="alquiler" catalog="datosclub">
+    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" table="alquiler" catalog="datosclub" optimistic-lock="version">
         <id name="nroAlquiler" type="java.lang.Integer">
             <column name="Nro_Alquiler" />
             <generator class="identity" />
         </id>
-        <many-to-one name="personas" class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" fetch="select">
-            <column name="FK_Dni" not-null="true" />
-        </many-to-one>
         <many-to-one name="inmuebles" class="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles" fetch="select">
             <column name="Id_Inmueble" not-null="true" />
+        </many-to-one>
+        <many-to-one name="personas" class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" fetch="select">
+            <column name="FK_Dni" not-null="true" />
         </many-to-one>
         <property name="fechaActual" type="date">
             <column name="Fecha_Actual" length="10" not-null="true" />
@@ -31,6 +31,9 @@
         </property>
         <property name="precioTotal" type="float">
             <column name="Precio_Total" precision="12" scale="0" not-null="true" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="Observaciones" length="65535" not-null="true" />
         </property>
         <property name="activo" type="boolean">
             <column name="activo" not-null="true">

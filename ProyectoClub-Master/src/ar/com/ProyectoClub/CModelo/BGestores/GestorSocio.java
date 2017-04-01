@@ -62,11 +62,11 @@ public class GestorSocio implements IGestorSocio{
 		
 	}
 	//----------------------------------------------------------------------------------------
-	/*
+	/**
 	 * (non-Javadoc)
 	 * @see ar.com.ProyectoClub.CModelo.BIGestores.IGestorSocio#DevolverUltimoNroSocio()
 	 * para crear un nuevo socio el numero de socio debe llamar a este metodo
-	 */
+	 **/
 	public Integer DevolverUltimoNroSocio() {
 		Integer nro=0;
 		try {
@@ -95,6 +95,10 @@ public class GestorSocio implements IGestorSocio{
 		}
 	}
 	//----------------------------------------------------------------------------------------
+	/**
+	 * public List<Personas> Listar() no devuelve la lista completa de personas sino un historico de socio
+	 * activos e inactivos
+	 **/
 	@Override
 	public List<Personas> Listar() throws Exception {
 		List<Personas> _list=new ArrayList<Personas>();

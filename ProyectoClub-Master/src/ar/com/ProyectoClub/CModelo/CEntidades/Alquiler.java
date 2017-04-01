@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 22-feb-2017 12:40:45 by Hibernate Tools 3.5.0.Final
+// Generated 13-mar-2017 20:16:32 by Hibernate Tools 5.2.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,43 +11,47 @@ import java.util.Set;
 public class Alquiler implements java.io.Serializable {
 
 	private Integer nroAlquiler;
-	private Personas personas;
 	private Inmuebles inmuebles;
+	private Personas personas;
 	private Date fechaActual;
 	private Date horaActual;
 	private Date fechaReserva;
 	private Date horaReserva;
 	private Integer cantidadHora;
 	private float precioTotal;
+	private String observaciones;
 	private boolean activo;
 	private Set cajas = new HashSet(0);
 
 	public Alquiler() {
 	}
 
-	public Alquiler(Personas personas, Inmuebles inmuebles, Date fechaActual, Date horaActual, Date fechaReserva,
-			Date horaReserva, Integer cantidadHora, float precioTotal, boolean activo) {
-		this.personas = personas;
+	public Alquiler(Inmuebles inmuebles, Personas personas, Date fechaActual, Date horaActual, Date fechaReserva,
+			Date horaReserva, Integer cantidadHora, float precioTotal, String observaciones, boolean activo) {
 		this.inmuebles = inmuebles;
+		this.personas = personas;
 		this.fechaActual = fechaActual;
 		this.horaActual = horaActual;
 		this.fechaReserva = fechaReserva;
 		this.horaReserva = horaReserva;
 		this.cantidadHora = cantidadHora;
 		this.precioTotal = precioTotal;
+		this.observaciones = observaciones;
 		this.activo = activo;
 	}
 
-	public Alquiler(Personas personas, Inmuebles inmuebles, Date fechaActual, Date horaActual, Date fechaReserva,
-			Date horaReserva, Integer cantidadHora, float precioTotal, boolean activo, Set cajas) {
-		this.personas = personas;
+	public Alquiler(Inmuebles inmuebles, Personas personas, Date fechaActual, Date horaActual, Date fechaReserva,
+			Date horaReserva, Integer cantidadHora, float precioTotal, String observaciones, boolean activo,
+			Set cajas) {
 		this.inmuebles = inmuebles;
+		this.personas = personas;
 		this.fechaActual = fechaActual;
 		this.horaActual = horaActual;
 		this.fechaReserva = fechaReserva;
 		this.horaReserva = horaReserva;
 		this.cantidadHora = cantidadHora;
 		this.precioTotal = precioTotal;
+		this.observaciones = observaciones;
 		this.activo = activo;
 		this.cajas = cajas;
 	}
@@ -60,20 +64,20 @@ public class Alquiler implements java.io.Serializable {
 		this.nroAlquiler = nroAlquiler;
 	}
 
-	public Personas getPersonas() {
-		return this.personas;
-	}
-
-	public void setPersonas(Personas personas) {
-		this.personas = personas;
-	}
-
 	public Inmuebles getInmuebles() {
 		return this.inmuebles;
 	}
 
 	public void setInmuebles(Inmuebles inmuebles) {
 		this.inmuebles = inmuebles;
+	}
+
+	public Personas getPersonas() {
+		return this.personas;
+	}
+
+	public void setPersonas(Personas personas) {
+		this.personas = personas;
 	}
 
 	public Date getFechaActual() {
@@ -122,6 +126,14 @@ public class Alquiler implements java.io.Serializable {
 
 	public void setPrecioTotal(float precioTotal) {
 		this.precioTotal = precioTotal;
+	}
+
+	public String getObservaciones() {
+		return this.observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
 	}
 
 	public boolean isActivo() {

@@ -28,6 +28,7 @@ public class SociosDaoImplHibernate extends GenericDAOImplHibernate<Personas, In
 		try {
 			Setsession();
 			SetTransaction();
+			socios.clear();
 			/*
 			 * HQL para recuperar solo datos habilitados
 			 */
@@ -47,6 +48,7 @@ public class SociosDaoImplHibernate extends GenericDAOImplHibernate<Personas, In
 		try {
 			Setsession();
 			SetTransaction();
+			socios.clear();
 			/*
 			 * HQL para recuperar solo datos habilitados
 			 */
@@ -66,6 +68,7 @@ public class SociosDaoImplHibernate extends GenericDAOImplHibernate<Personas, In
 		try {
 			Setsession();
 			SetTransaction();
+			socios.clear();
 			Integer _query= (Integer) _sessiondehilo.createQuery("SELECT MAX(s.nroSocio) From Personas s").uniqueResult();
 			_sessiondehilo.getTransaction().commit();
 			return _query;

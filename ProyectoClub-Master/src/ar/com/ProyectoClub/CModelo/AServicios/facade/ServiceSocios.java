@@ -1,32 +1,49 @@
 package ar.com.ProyectoClub.CModelo.AServicios.facade;
 
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
-import ar.com.ProyectoClub.CModelo.AServicios.FechaHora;
-import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCuota;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio;
-import ar.com.ProyectoClub.CModelo.CEntidades.Cuota;
-import ar.com.ProyectoClub.CModelo.CEntidades.DTOPersonalisadoSocio;
-import ar.com.ProyectoClub.CModelo.CEntidades.Sociosa;
-import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ISociosDAO;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.SociosDaoImplHibernate;
+import ar.com.ProyectoClub.CModelo.BGestores.GestorSocio;
+import ar.com.ProyectoClub.CModelo.BIGestores.IGestorSocio;
+
+import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
+
 
 public class ServiceSocios implements IServiceSocio {
-	private Sociosa _socio;
-	private ISociosDAO _socioDao;
+	private IGestorSocio gestorsocio;
 	
 	
 	public ServiceSocios(){
-		_socio=new Sociosa();
-		_socioDao=new SociosDaoImplHibernate();
+		gestorsocio=new GestorSocio();
+	}
+	
+	@Override
+	public Integer UltimoIdSocio() {
+		return gestorsocio.DevolverUltimoNroSocio();
+	}
+	
+	@Override
+	public Personas CrearSocio() throws Exception {
+		return (gestorsocio.Crear());
+	}
+	
+	@Override
+	public void AltaSocio(Personas socio) throws Exception {
+		 Personas objsocio=gestorsocio.Crear();
+		 objsocio=gestorsocio.Busqueda(socio.getDni());
+	     if(objsocio!=null) {
+	    	 if(!objsocio.getEstado().equals("Moroso")) {
+	    		// objsocio.setEstado(socio.getEstado());
+	    		 gestorsocio.Guardar(socio);
+	    		
+	    	 }
+	    	 else 
+	    		 throw new Exception("El socio con dni "+socio.getDni()+"se encuentra sancionado por falta de pago");
+	    	 
+	     }
+	     else
+	    	 gestorsocio.Guardar(socio);
+	     
+	     
 	}
 	
 	/*
@@ -34,6 +51,7 @@ public class ServiceSocios implements IServiceSocio {
 	 * @see ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio#NuevoSocio(ar.com.ProyectoClub.CModelo.CEntidades.Sociosa)
 	 * Servicio de insercion de Socio
 	 */
+	/*
 	@Override
 	public boolean NuevoSocio(Sociosa socio) throws BussinessException{
 		try{
@@ -45,12 +63,7 @@ public class ServiceSocios implements IServiceSocio {
 			throw ex;
 		}
 	}
-	/*
-	 * (non-Javadoc)
-	 * @see ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio#DeshabilitarSocio(ar.com.ProyectoClub.CModelo.CEntidades.Sociosa)
-	 * Servicio para deshabilitar un socio
-	 * Nota: no se implementa eliminacion fisica,sino logica
-	 */
+	
 	@Override
 	public String DeshabilitarSocio(Sociosa socio) throws BussinessException {
 		try{
@@ -65,12 +78,7 @@ public class ServiceSocios implements IServiceSocio {
 	}
 
 
-	/*
-	 * (non-Javadoc)
-	 * @see ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio#ActulizarSocio(ar.com.ProyectoClub.CModelo.CEntidades.Sociosa)
-	 * Servicio de modificacion del socio
-	 * Nota: se actulizan todos los atributos exepto el numero de socio y dni
-	 */
+	
 	
 	@Override
 	public boolean ActulizarSocio(Sociosa socio )throws BussinessException {
@@ -107,11 +115,7 @@ public class ServiceSocios implements IServiceSocio {
 		}
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio#ListarSocio()
-	 * Servicio de lista de socio
-	 */
+	
 	@Override
 	public List<Sociosa> ListarSocio()throws BussinessException {
 		List<Sociosa> _lista=new ArrayList<Sociosa>();
@@ -124,10 +128,7 @@ public class ServiceSocios implements IServiceSocio {
 		}
 		
 	}
-	/*
-	 * (non-Javadoc)
-	 * @see ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio#ListaSociosActivo()
-	 */
+
 	@Override
 	public List<Sociosa> ListaSociosActivo()throws BussinessException {
 		List<Sociosa> _lista=new ArrayList<Sociosa>();
@@ -140,11 +141,7 @@ public class ServiceSocios implements IServiceSocio {
 		}
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio#validar(java.lang.Integer)
-	 * Servicio de validacion verifica si el id pasado como parametro es moroso
-	 */
+	
 	@Override
 	public boolean validar(Integer id) throws BussinessException {
 		try{
@@ -159,8 +156,8 @@ public class ServiceSocios implements IServiceSocio {
 		}
 	}
 	
-	
-/*
+
+
 	@SuppressWarnings("unused")
 	private static boolean Verificar_edad(Date fechanacimiento){
 		Calendar fecnac=Calendar.getInstance();
@@ -183,7 +180,7 @@ public class ServiceSocios implements IServiceSocio {
 		else 
 			return true;
 	}
-	*/
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public void ControlEstadoMorosos(Date fecha) {
@@ -268,4 +265,5 @@ public class ServiceSocios implements IServiceSocio {
 		dev.setCategoria(entidad.getCategoria());
 		return dev;
 	}
+	*/
 }

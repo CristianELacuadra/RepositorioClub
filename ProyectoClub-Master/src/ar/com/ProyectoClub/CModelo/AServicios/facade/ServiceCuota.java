@@ -7,6 +7,8 @@ import java.util.List;
 
 import ar.com.ProyectoClub.CModelo.AServicios.FechaHora;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCuota;
+import ar.com.ProyectoClub.CModelo.BGestores.GestorCuota;
+import ar.com.ProyectoClub.CModelo.BIGestores.IGestorCuota;
 import ar.com.ProyectoClub.CModelo.CEntidades.Cuota;
 import ar.com.ProyectoClub.CModelo.CEntidades.Sociosa;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
@@ -14,10 +16,10 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ICuotaDAO;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.CuotaDaoImplHibernate;
 	
 	public class ServiceCuota implements IServiceCuota {
-	private ICuotaDAO _cuotaDao;
+	private IGestorCuota gestorcuota;
 	
 	public ServiceCuota() {
-		_cuotaDao= new CuotaDaoImplHibernate();
+		gestorcuota= new GestorCuota();
 	}
 	
 	

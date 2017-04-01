@@ -19,13 +19,13 @@ public class CuotaDaoImplHibernate extends GenericDAOImplHibernate<Cuota, Intege
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Cuota> ListaCuotaMes(int mes, int anio) {
-		List<Cuota> _lista=null;
+		ListaCuota.clear();
 		try{
 			Setsession();
 			SetTransaction();
 			Query _query= _sessiondehilo.createQuery("SELECT c FROM Cuota c WHERE c.mes="+mes+"AND c.anio="+anio);
-			_lista = _query.list();
-			return _lista;
+			ListaCuota = _query.list();
+			return ListaCuota;
 		}
 		catch(Exception ex){
 			_sessiondehilo.beginTransaction().rollback();
@@ -42,6 +42,7 @@ public class CuotaDaoImplHibernate extends GenericDAOImplHibernate<Cuota, Intege
 			/*
 			 * HQL para recuperar solo datos habilitados
 			 */
+			ListaCuota.clear();
 			ListaCuota = _sessiondehilo.createQuery("SELECT s FROM Cuota s WHERE s.sociosa.dni="+dni).list();	
 		    return ListaCuota;
 		}

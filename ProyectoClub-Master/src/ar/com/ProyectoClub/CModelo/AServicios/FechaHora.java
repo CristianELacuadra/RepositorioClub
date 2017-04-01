@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class FechaHora {
+	static int[] diasMes= {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	
 	public static boolean ValidarFecha (){
 		Calendar fechaactual=Calendar.getInstance();
@@ -13,10 +14,26 @@ public class FechaHora {
 		else
 			return false;
 	}
-	
+	/**
+	 * 
+	 * @param aaaa, año a comprobar
+	 * @param mm , mes a comprobar
+	 * @param dd , dia a comprobar
+	 * @return true si la fecha es correcta,false si la fecha es incorrecta
+	 * @throws IllegalArgumentException si el año es menor que 1900.
+	 */
+	public static boolean ValidarFechaEntrada(Integer aaaa,Integer mm,Integer dd) {
+			if(aaaa<1900) 
+				throw new IllegalArgumentException("Solo se comprueban fechas del año 1900 o posterior");			
+			if(mm<1 || mm>12)
+				return false;
+			if ( mm==2 && aaaa%4==0 )
+		        return dd>=1 && dd<=29;
+		    return dd>=0 && dd<=diasMes[mm-1];
+	}
 	
 	@SuppressWarnings("deprecation")
-	public static Date DameFechaActual(){
+	public static Date FechaActual(){
 		
 		//Instanciamos el objeto Calendar
         //en fecha obtenemos la fecha y hora del sistema
@@ -25,7 +42,7 @@ public class FechaHora {
         //hora, minuto y segundo del sistema
         //usando el método get y el parámetro correspondiente
         int año = fecha.get(Calendar.YEAR)-1900;
-        int mes = fecha.get(Calendar.MONTH)+1;
+        int mes = fecha.get(Calendar.MONTH);
         int dia = fecha.get(Calendar.DAY_OF_MONTH);
         Date fecha2=new Date(año,mes,dia);
         return fecha2;
@@ -58,5 +75,8 @@ public class FechaHora {
 		} 
 		return i;
 	}
-	
+	public static Calendar HoraActual() {
+		Calendar _calendar= new GregorianCalendar();
+		return _calendar;
+	}
 }

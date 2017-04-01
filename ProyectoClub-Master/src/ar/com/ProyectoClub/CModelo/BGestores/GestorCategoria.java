@@ -4,17 +4,24 @@ import java.util.List;
 
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorCategoria;
 import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
+import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ICategoriaDAO;
+import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.CategoriaDaoImplHibernate;
 
 public class GestorCategoria implements IGestorCategoria {
+	private ICategoriaDAO categoriadao;
 
 	public GestorCategoria() {
-		// TODO Auto-generated constructor stub
+		try {
+			categoriadao=new CategoriaDaoImplHibernate();
+		}
+		catch (Exception e) {
+			throw new RuntimeException("Error al crear el gestor categoria");
+		}
 	}
 
 	@Override
 	public Categoria Crear() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return categoriadao.crear();
 	}
 
 	@Override
@@ -25,8 +32,9 @@ public class GestorCategoria implements IGestorCategoria {
 
 	@Override
 	public Categoria Busqueda(Integer id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Categoria categoria=this.Crear();
+		categoria=categoriadao.BuscarUno(id);
+		return categoria;
 	}
 
 	@Override
