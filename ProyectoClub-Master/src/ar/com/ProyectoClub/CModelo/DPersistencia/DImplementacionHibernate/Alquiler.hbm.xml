@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13-mar-2017 20:16:32 by Hibernate Tools 5.2.0.CR1 -->
+<hibernate-mapping>
+    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" table="alquiler" catalog="datosclub" optimistic-lock="version">
+        <id name="nroAlquiler" type="java.lang.Integer">
+            <column name="Nro_Alquiler" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="inmuebles" class="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles" fetch="select">
+            <column name="Id_Inmueble" not-null="true" />
+        </many-to-one>
+        <many-to-one name="personas" class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" fetch="select">
+            <column name="FK_Dni" not-null="true" />
+        </many-to-one>
+        <property name="fechaActual" type="date">
+            <column name="Fecha_Actual" length="10" not-null="true" />
+        </property>
+        <property name="horaActual" type="time">
+            <column name="Hora_actual" length="8" not-null="true" />
+        </property>
+        <property name="fechaReserva" type="date">
+            <column name="Fecha_Reserva" length="10" not-null="true" />
+        </property>
+        <property name="horaReserva" type="time">
+            <column name="Hora_Reserva" length="8" not-null="true" />
+        </property>
+        <property name="cantidadHora" type="java.lang.Integer">
+            <column name="Cantidad_Hora" not-null="true" />
+        </property>
+        <property name="precioTotal" type="float">
+            <column name="Precio_Total" precision="12" scale="0" not-null="true" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="Observaciones" length="65535" not-null="true" />
+        </property>
+        <property name="activo" type="boolean">
+            <column name="activo" not-null="true">
+                <comment>si activo es igual a inactivo entonces se dio de baja teniendo que pagar de igual manera la reserva.si esta activo el alquiler esta reservado esperando a
+                ser completado.si esta en concretado ya puede pasarse a la caja</comment>
+            </column>
+        </property>
+        <set name="cajas" table="caja" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Alquiler" />
+            </key>
+            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Caja" />
+        </set>
+    </class>
+</hibernate-mapping>

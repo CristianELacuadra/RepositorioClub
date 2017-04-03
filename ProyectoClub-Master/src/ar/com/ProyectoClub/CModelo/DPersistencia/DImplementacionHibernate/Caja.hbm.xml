@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 01-feb-2017 12:33:46 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Caja" table="caja" catalog="datosclub">
+        <id name="idCaja" type="java.lang.Integer">
+            <column name="ID_Caja" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cuota" class="ar.com.ProyectoClub.CModelo.CEntidades.Cuota" fetch="select">
+            <column name="Cuota" />
+        </many-to-one>
+        <many-to-one name="alquiler" class="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" fetch="select">
+            <column name="Alquiler" />
+        </many-to-one>
+        <property name="fecha" type="date">
+            <column name="fecha" length="10" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="65535" not-null="true" />
+        </property>
+        <property name="monto" type="float">
+            <column name="Monto" precision="12" scale="0" not-null="true" />
+        </property>
+        <property name="subTotal" type="float">
+            <column name="sub_total" precision="12" scale="0" not-null="true">
+                <comment>campo que almacena el resto de la plata total</comment>
+            </column>
+        </property>
+        <property name="tipo" type="boolean">
+            <column name="Tipo" not-null="true">
+                <comment>Identificador de ingreso o egreso</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>
