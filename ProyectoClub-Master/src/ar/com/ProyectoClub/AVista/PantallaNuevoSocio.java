@@ -39,8 +39,6 @@ public class PantallaNuevoSocio extends JDialog {
 	private JTextField txtNacion;
 	private JTextField txtEstadoC;
 	private JTextField txtMatricula;
-	private JTextField txt;
-	private JTextField txt;
 
 	/**
 	 * Launch the application.

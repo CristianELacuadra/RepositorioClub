@@ -1,13 +1,12 @@
 package pruebas;
 
-import static org.junit.Assert.*;
+
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+
 
 import ar.com.ProyectoClub.CModelo.AServicios.FechaHora;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCategorias;
@@ -17,29 +16,28 @@ import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceCategoria;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceCuota;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceSocios;
 import ar.com.ProyectoClub.CModelo.CEntidades.Cuota;
-import ar.com.ProyectoClub.CModelo.CEntidades.Sociosa;
 import ar.com.ProyectoClub.CModelo.DPersistencia.AHibernet.HibernateUtil;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 
 public class PruebaServiciosJUnit{
 	IServiceCuota Cuotaservice;
-	@Before
+	//@Before
 	public void AntesQue(){
 		
 		Cuotaservice=new ServiceCuota();
 	}
 	
-	@Test 
+	//@Test 
 	void PruebaenCuotas() {
 		Cuota nuevo=new Cuota();		
 		nuevo=Cuotaservice.Busqueda(1);
 		nuevo.setDescripcion("HOLA MUNDO");
-		assertTrue(Cuotaservice.InsertOrUpdateCuota(nuevo));
+		//assertTrue(Cuotaservice.InsertOrUpdateCuota(nuevo));
 	}
 	
 	
 	
-	@Test
+	//@Test
 	public void pruebafecha(){
 		//(FechaHora.DameFechaActual().getDate());
 	}

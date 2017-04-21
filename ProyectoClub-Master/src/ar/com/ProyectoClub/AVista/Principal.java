@@ -17,6 +17,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.UIManager;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.ImageIcon;
 
 import java.awt.Component;
@@ -38,103 +39,159 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
 import javax.swing.JSeparator;
 
 import java.awt.Window.Type;
 
 import javax.swing.border.TitledBorder;
+
+import JCDesktopPane.JCDesktopPane;
+import j2Button.j2Button;
+
 import javax.swing.border.CompoundBorder;
 
 public class Principal extends JFrame {
 
-	private JPanel contentPane;
+	public JPanel contentPane;
+	public j2Button btnNoSocio;
+	public j2Button btnSocios;
+	public j2Button btnAlquiler; 
+	public j2Button btnCaja;
+	public j2Button btnConfig;
+	public j2Button btnSalir;
+	public JToolBar jtoolbar1;
+	public JDesktopPane jCDesktopPane1; 
+	
+	@SuppressWarnings("deprecation")
+	public Principal() {
+		jtoolbar1 = new JToolBar();
+		btnSocios = new j2Button();		
+		btnNoSocio=new j2Button();
+		btnAlquiler = new j2Button();
+		btnCaja = new j2Button();
+		btnConfig = new j2Button();
+		btnSalir = new j2Button();
+		jCDesktopPane1 = new JDesktopPane();
+		
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		
+		btnSocios.setIcon(new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/user_person_people_6100.png")));
+		btnSocios.setColor1(new java.awt.Color(0, 0, 0));
+		btnSocios.setColor2(new java.awt.Color(153, 153, 153));
+		btnSocios.setFocusable(false);
+        btnSocios.setFuente1(new java.awt.Font("Arial Black", 1, 12));
+        btnSocios.setFuente2(new java.awt.Font("Arial", 1, 10));
+        btnSocios.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSocios.setTexto1("Socios");
+        btnSocios.setTexto2("");
+        btnSocios.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jtoolbar1.add(btnSocios);
+        jtoolbar1.addSeparator();
+        
+        btnNoSocio.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/bootloader_users_person_people_6080.png")));
+        btnNoSocio.setColor1(new java.awt.Color(0, 0, 0));
+		btnNoSocio.setColor2(new java.awt.Color(153, 153, 153));
+        btnNoSocio.setEnabled(true);
+        btnNoSocio.setFocusable(false);
+        btnNoSocio.setFuente1(new java.awt.Font("Arial Black", 1, 12));
+        btnNoSocio.setFuente2(new java.awt.Font("Arial", 1, 10));
+        btnNoSocio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnNoSocio.setTexto1("No socios");
+        btnNoSocio.setTexto2("");
+        btnNoSocio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jtoolbar1.add(btnNoSocio);
+        jtoolbar1.addSeparator();
+        
+        btnAlquiler.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/folder_9903.png")));
+        btnAlquiler.setColor1(new java.awt.Color(0, 0, 0));
+        btnAlquiler.setColor2(new java.awt.Color(153, 153, 153));
+        btnAlquiler.setEnabled(true);
+        btnAlquiler.setFocusable(false);
+        btnAlquiler.setFuente1(new java.awt.Font("Arial Black", 1, 12));
+        btnAlquiler.setFuente2(new java.awt.Font("Arial", 1, 10));
+        btnAlquiler.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAlquiler.setTexto1("Alquiler");
+        btnAlquiler.setTexto2("");
+        btnAlquiler.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jtoolbar1.add(btnAlquiler);
+        jtoolbar1.addSeparator();
+        
+        btnCaja.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/dollar_money_17872.png")));       
+        btnCaja.setColor1(new java.awt.Color(0, 0, 0));
+        btnCaja.setColor2(new java.awt.Color(153, 153, 153));
+        btnCaja.setEnabled(true);
+        btnCaja.setFocusable(false);
+        btnCaja.setFuente1(new java.awt.Font("Arial Black", 1, 12));
+        btnCaja.setFuente2(new java.awt.Font("Arial", 1, 10));
+        btnCaja.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCaja.setTexto1("Caja");
+        btnCaja.setTexto2("");
+        btnCaja.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jtoolbar1.add(btnCaja);
+        jtoolbar1.addSeparator();
+        
+        //btnConfig.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnConfig.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/developer_folder_black_13857.png")));
+		btnConfig.setColor1(new java.awt.Color(0, 0, 0));
+		btnConfig.setColor2(new java.awt.Color(153, 153, 153));
+		btnConfig.setEnabled(true);
+		btnConfig.setFocusable(false);
+		btnConfig.setFuente1(new java.awt.Font("Arial Black", 1, 12));
+		btnConfig.setFuente2(new java.awt.Font("Arial", 1, 10));
+		btnConfig.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		btnConfig.setTexto1("Configuración");
+		btnConfig.setTexto2("");
+		btnConfig.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jtoolbar1.add(btnConfig);
+        jtoolbar1.addSeparator();
+        
+        //btnConfig.setHorizontalTextPosition(SwingConstants.LEFT);
+        btnSalir.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/exit_closethesession_close_6317.png")));
+        btnSalir.setColor1(new java.awt.Color(0, 0, 0));
+        btnSalir.setColor2(new java.awt.Color(153, 153, 153));
+        btnSalir.setEnabled(true);
+        btnSalir.setFocusable(false);
+        btnSalir.setFuente1(new java.awt.Font("Arial Black", 1, 12));
+        btnSalir.setFuente2(new java.awt.Font("Arial", 1, 10));
+        btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSalir.setTexto1("Salir");
+        btnSalir.setTexto2("");
+        btnSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jtoolbar1.add(btnSalir);
+        
+        
+		 jCDesktopPane1.setBackground(new java.awt.Color(153, 153, 153));
+		 
+		 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+	        getContentPane().setLayout(layout);
+	        layout.setHorizontalGroup(
+	            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	            .addComponent(jtoolbar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
+	            .addComponent(jCDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
+	        );
+	        layout.setVerticalGroup(
+	            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	            .addGroup(layout.createSequentialGroup()
+	                .addComponent(jtoolbar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	                .addComponent(jCDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE))
+	        );
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
+	        pack();
+		
+	}
+	public static void main(String args[]) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Principal frame = new Principal();
 					frame.setVisible(true);
-				} catch (Exception e) {
+					} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	@SuppressWarnings("deprecation")
-	public Principal() {
-		setIconImage(null);  // no funca no saca el icono de la pantalla
-		
-		setVisible(true);
-		setResizable(true);
-		setTitle("Principal");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setExtendedState(Frame.MAXIMIZED_BOTH); //maximo tamaño de pestaña
-				
-		setBounds(0, 0, 1000, 700);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-		
-		JPanel panelBotones = new JPanel();
-		panelBotones.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		panelBotones.setBorder(UIManager.getBorder("CheckBox.border"));
-		FlowLayout flowLayout = (FlowLayout) panelBotones.getLayout();
-		flowLayout.setAlignOnBaseline(true);
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		contentPane.add(panelBotones, BorderLayout.NORTH);
-		
-		
-		JButton btnNoSocio = new JButton("No Socios");
-		btnNoSocio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNoSocio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNoSocio.setBorder(UIManager.getBorder("CheckBox.border"));
-		btnNoSocio.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/bootloader_users_person_people_6080.png")));
-		panelBotones.add(btnNoSocio);
-		
-		JButton btnSocios = new JButton("Socios");
-		btnSocios.setBorder(UIManager.getBorder("CheckBox.border"));
-		btnSocios.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/user_person_people_6100.png")));
-		panelBotones.add(btnSocios);
-		
-		JButton btnAlquiler = new JButton("Alquiler");
-		btnAlquiler.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAlquiler.setBorder(UIManager.getBorder("CheckBox.border"));
-		btnAlquiler.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/folder_9903.png")));
-		panelBotones.add(btnAlquiler);
-		
-		JButton btnCaja = new JButton("Caja");
-		btnCaja.setBorder(UIManager.getBorder("CheckBox.border"));
-		btnCaja.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnCaja.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/dollar_money_17872.png")));
-		panelBotones.add(btnCaja);
-		
-		JButton btnConfig = new JButton("Configuraci\u00F3n");
-		btnConfig.setHorizontalTextPosition(SwingConstants.LEFT);
-		btnConfig.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/developer_folder_black_13857.png")));
-		btnConfig.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		btnConfig.setBorder(UIManager.getBorder("CheckBox.border"));
-		btnConfig.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panelBotones.add(btnConfig);
-	
-		
-		
-		JButton btnSalir = new JButton("Salir");
-		btnSalir.setHorizontalTextPosition(SwingConstants.LEFT);
-		btnSalir.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/exit_closethesession_close_6317.png")));
-		btnSalir.setBorder(UIManager.getBorder("CheckBox.border"));
-		panelBotones.add(btnSalir);
-	}
+    }
 
 }

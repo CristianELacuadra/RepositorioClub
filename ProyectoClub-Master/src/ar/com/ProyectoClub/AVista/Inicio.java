@@ -21,10 +21,13 @@ import javax.swing.SpringLayout;
 import com.bolivia.panel.JCPanel;
 import com.bolivia.panel.USEMODE;
 
+import antlr.ParserSharedInputState;
+
 import javax.swing.border.BevelBorder;
 
 import java.awt.Frame;
 import java.awt.SystemColor;
+import java.awt.TextField;
 import java.awt.ComponentOrientation;
 import java.awt.Rectangle;
 import java.awt.Color;
@@ -49,31 +52,28 @@ import javax.swing.SwingConstants;
 
 
 public class Inicio extends JFrame {
-
-	private JPanel contentPane;
-	private JTextField textField;
-	private JPasswordField passwordField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Inicio frame = new Inicio();
-					frame.setVisible(true);
-					} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+    public JButton botCancelar;
+	public JPanel contentPane;
+	public JButton botAceptar;
+	public JTextField textField;
+	public JPasswordField passwordField;
+	
 	public Inicio() {
+		initComponents();
+	}
+	
+	
+	private void initComponents() {
+		botCancelar = new JButton();
+		botAceptar = new JButton();
+		contentPane= new JPanel();
+		textField=new JTextField();
+		passwordField= new JPasswordField();
+		
+	
+       
+		
+
 		setResizable(false);
 		setTitle("Ingresar Usuario y Contraseña");
 		
@@ -128,7 +128,12 @@ public class Inicio extends JFrame {
 		passwordField.setBounds(224, 136, 250, 31);
 		panel_1.add(passwordField);
 		
-		JButton botAceptar = new JButton("Aceptar");
+		
+		botAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		botAceptar.setText("Aceptar");
 		botAceptar.setBorder(UIManager.getBorder("CheckBox.border"));
 		botAceptar.setToolTipText("");
 		botAceptar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -139,7 +144,7 @@ public class Inicio extends JFrame {
 		
 	//	botAceptar.set
 		
-		JButton botCancelar = new JButton("Salir");
+		botCancelar.setText("Salir");
 		botCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		botCancelar.setBorder(UIManager.getBorder("CheckBox.border"));
 		botCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -153,4 +158,22 @@ public class Inicio extends JFrame {
 		
 		//labUsuario.
 	}
+
+	/**
+	 * Launch the application.
+	 */
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Inicio frame = new Inicio();
+					frame.setVisible(true);
+					} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 }

@@ -9,7 +9,7 @@
 	<classpathentry kind="lib" path="lib/el-api-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/geronimo-jta_1.1_spec-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-commons-annotations-5.0.1.Final.jar"/>
-	<classpathentry kind="lib" path="lib/hibernate-core-4.2.21.Final.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-core-4.2.21.Final.jar" sourcepath="C:/Users/Cristian/.m2/repository/org/hibernate/hibernate-core/4.2.21.Final/hibernate-core-4.2.21.Final-sources.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
 	<classpathentry kind="lib" path="lib/jandex-2.0.3.Final.jar"/>
 	<classpathentry kind="lib" path="lib/javassist-3.20.0-GA.jar"/>
@@ -23,5 +23,6 @@
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.39-bin.jar"/>
 	<classpathentry kind="lib" path="lib/spring-core-3.1.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="lib" path="lib/j2Button.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

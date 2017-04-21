@@ -2,6 +2,8 @@ package ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet;
 
 import java.util.List;
 
+import org.hibernate.Query;
+
 import ar.com.ProyectoClub.CModelo.CEntidades.Usuario;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.Imple.GenericDAOImplHibernate;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.IUsuarioDao;
@@ -12,7 +14,7 @@ public class UsuarioDaoImplHibernate extends GenericDAOImplHibernate<Usuario, In
 	public UsuarioDaoImplHibernate() throws Exception {
 		super();
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean VerificarNick(String usuario) {
