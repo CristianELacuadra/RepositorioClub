@@ -48,6 +48,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.Cursor;
 import javax.swing.SwingConstants;
+import java.awt.Toolkit;
 
 
 
@@ -59,6 +60,7 @@ public class Inicio extends JFrame {
 	public JPasswordField passwordField;
 	
 	public Inicio() {
+		
 		initComponents();
 	}
 	
@@ -66,10 +68,12 @@ public class Inicio extends JFrame {
 	private void initComponents() {
 		botCancelar = new JButton();
 		botAceptar = new JButton();
+		botAceptar.setEnabled(false);
 		contentPane= new JPanel();
 		textField=new JTextField();
 		passwordField= new JPasswordField();
 		
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Cristian\\git\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\logo.png"));
 	
        
 		

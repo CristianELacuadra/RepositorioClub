@@ -52,6 +52,8 @@ public class Controlador implements ActionListener,KeyListener {
 	        this.vista.getFrminicio().botAceptar.setActionCommand("Aceptar");
 	        this.vista.getFrminicio().botCancelar.setActionCommand("Salir");
 	        //Se pone a escuchar
+	        this.vista.getFrminicio().textField.addKeyListener(this);
+	        this.vista.getFrminicio().passwordField.addKeyListener(this);
 	        this.vista.getFrminicio().botAceptar.addActionListener(this);
 	        this.vista.getFrminicio().botCancelar.addActionListener(this);
 	        //centrado de formulario
@@ -69,29 +71,49 @@ public class Controlador implements ActionListener,KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		String comando =e.getActionCommand();
 		try {
-		if(comando.equals("Aceptar")) 
-		{	
-			Usuario usuario=modelo.getMdlserviceusuario().newusuario();// crea el usuario
-			usuario=modelo.getMdlserviceusuario().DevolverUsuario(this.vista.getFrminicio().textField.getText(),this.vista.getFrminicio().passwordField.getText());
-			//valida si usuario y contraseña es valido
-			if(!(usuario==null)) 
-			{
-				this.vista.getFrminicio().dispose();
-				form_principal(usuario.getNick(),usuario.getTipousuario());
+			if(comando.equals("Aceptar")) 
+			{	
+				Usuario usuario=modelo.getMdlserviceusuario().newusuario();// crea el usuario
+				usuario=modelo.getMdlserviceusuario().DevolverUsuario(this.vista.getFrminicio().textField.getText(),this.vista.getFrminicio().passwordField.getText());
+				//valida si usuario y contraseña es valido
+				if(!(usuario==null)) 
+				{
+					this.vista.getFrminicio().dispose();
+					form_principal(usuario.getNick(),usuario.getTipousuario());
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"Usuario o Contraseña Incorrecta","Acceso al sistema denegado",JOptionPane.ERROR_MESSAGE);
+					this.vista.getFrminicio().textField.setText(null);
+					this.vista.getFrminicio().passwordField.setText(null);
+					this.vista.getFrminicio().botAceptar.setEnabled(false);
+				}
+
 			}
-			else {
-				JOptionPane.showMessageDialog(null,"Usuario o Contraseña Incorrecta","Mensaje de error",JOptionPane.ERROR_MESSAGE);
-			    this.vista.getFrminicio().textField.setText(null);
-			    this.vista.getFrminicio().passwordField.setText(null);
-			}
-		
-		}
-		else
 			if(comando.equals("Salir")) 
-			{
 				this.vista.getFrminicio().dispose();
+			if(comando.equals("Socios")) {
 				
 			}
+			if(comando.equals("No Socios")) {
+				
+			}
+			if(comando.equals("Alquiler")) {
+				
+			}
+			if(comando.equals("Caja")){
+				
+			}
+			if(comando.equals("Configuracion")){
+			
+			}
+			if(comando.equals("Salir")) {
+				int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente deseas salir?", "Aviso", JOptionPane.YES_NO_OPTION);
+				if (opcion == 0) { //The ISSUE is here
+					this.vista.getFrmrprincipal().dispose();
+					System.exit(0);
+				} 
+			}
+				
 		}
 		catch (Exception ex) {
 			JOptionPane.showMessageDialog(null,ex.toString(),"Mensaje de error",JOptionPane.ERROR_MESSAGE);
@@ -104,6 +126,7 @@ public class Controlador implements ActionListener,KeyListener {
 		this.vista.getFrmrprincipal().setTitle("Usuario: "+usuario+"("+tipo+")");
 		this.vista.getFrmrprincipal().setLocationRelativeTo(null); //centrando en la pantalla
 		this.vista.getFrmrprincipal().setExtendedState(this.vista.getFrmrprincipal().MAXIMIZED_BOTH);//estado maximizado
+		//atiende la acciones a los controles
 		this.vista.getFrmrprincipal().btnSocios.setActionCommand("Socios");
 		this.vista.getFrmrprincipal().btnNoSocio.setActionCommand("No Socios");
 		this.vista.getFrmrprincipal().btnAlquiler.setActionCommand("Alquiler");
@@ -126,15 +149,15 @@ public class Controlador implements ActionListener,KeyListener {
 		this.vista.getFrmrprincipal().btnSalir.addActionListener(this);
 		this.vista.getFrmrprincipal().setVisible(true);
 	}
-	
+	/*form_legeo keyactionlistener*/
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(this.vista.getFrminicio().textField.equals("")||this.vista.getFrminicio().passwordField.equals("")) 
-			this.vista.getFrminicio().botAceptar.setEnabled(false);
-		else
-			this.vista.getFrminicio().botAceptar.setEnabled(true);
+		//e.getKeyChar();
+		if(!this.vista.getFrminicio().textField.getText().isEmpty() && !this.vista.getFrminicio().passwordField.getPassword().equals("")) {
+				this.vista.getFrminicio().botAceptar.setEnabled(true);
+		}
 	}
-	
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -145,5 +168,7 @@ public class Controlador implements ActionListener,KeyListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 }
 
