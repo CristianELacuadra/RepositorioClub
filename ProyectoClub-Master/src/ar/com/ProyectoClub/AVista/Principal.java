@@ -65,6 +65,7 @@ public class Principal extends JFrame {
 	
 	@SuppressWarnings("deprecation")
 	public Principal() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		jtoolbar1 = new JToolBar();
 		btnSocios = new j2Button();		
 		btnNoSocio=new j2Button();
