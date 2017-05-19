@@ -18,12 +18,12 @@ import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceUsuario;
 public class Modelo {
 	
     //servicios del modelo
+	private IServiceSocio mdlservicesocio;
+	private IServiceUsuario mdlserviceusuario;
 	//private IServiceCategorias mdlservicecategoria;
-	//private IServiceSocio mdlservicesocio;
 	//private IServiceAlquileres mdlservicealquiler;
 	//private IServiceCaja mdlservicecaja;
 	//private IServiceInmuebles mdlserviceinmuebles;
-	private IServiceUsuario mdlserviceusuario;
 	//private IServiceCuota mdlservicecuota;
 	
 	//constructor
@@ -33,7 +33,7 @@ public class Modelo {
     	//mdlservicecaja=new ServiceCaja();
     	//mdlservicecuota=new ServiceCuota();
     	//mdlserviceinmuebles=new ServiceInmueble();
-    	//mdlservicesocio=new ServiceSocios();
+    	mdlservicesocio=new ServiceSocios();
     	mdlserviceusuario=new ServiceUsuario();
     }
     
@@ -54,10 +54,11 @@ public class Modelo {
     public IServiceCuota getMdlservicecuota() {
 		return mdlservicecuota;
 	}
+	*/
     public IServiceSocio getMdlservicesocio() {
 		return mdlservicesocio;
 	}
-	*/
+	
     public IServiceUsuario getMdlserviceusuario() {
 		return mdlserviceusuario;
 	}
@@ -66,10 +67,11 @@ public class Modelo {
     public void setMdlserviceusuario(IServiceUsuario mdlserviceusuario) {
 		this.mdlserviceusuario = mdlserviceusuario;
 	}
-    /*
+    
     public void setMdlservicesocio(IServiceSocio mdlservicesocio) {
 		this.mdlservicesocio = mdlservicesocio;
 	}
+    /*
     public void setMdlserviceinmuebles(IServiceInmuebles mdlserviceinmuebles) {
 		this.mdlserviceinmuebles = mdlserviceinmuebles;
 	}

@@ -8,7 +8,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import ar.com.ProyectoClub.AVista.Inicio;
-import ar.com.ProyectoClub.AVista.PantallaNuevoSocio;
 import ar.com.ProyectoClub.AVista.PantallaPersona;
 import ar.com.ProyectoClub.AVista.Principal;
 import ar.com.ProyectoClub.AVista.Vistas;
@@ -33,7 +32,7 @@ public class Main {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             SwingUtilities.updateComponentTreeUI(vista.getFrminicio());
             SwingUtilities.updateComponentTreeUI(vista.getFrmrprincipal());
-            //SwingUtilities.updateComponentTreeUI(vista.getFrmpantallasocio());
+            SwingUtilities.updateComponentTreeUI(vista.getFrmAgregarPersona());
             //SwingUtilities.updateComponentTreeUI(vista.getFrmrprincipal());
             new Controlador(vista,modelo).go(); //vistasocio,vistapersona).go();
         } catch (UnsupportedLookAndFeelException ex) {}

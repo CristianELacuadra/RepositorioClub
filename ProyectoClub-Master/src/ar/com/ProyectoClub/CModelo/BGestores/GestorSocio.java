@@ -143,4 +143,30 @@ public class GestorSocio implements IGestorSocio{
 		_listaactiva=_SocioDao.ListaActivaSocios();
 		return _listaactiva;
 	}
+	
+	@Override
+	public List<Personas> ObtnerTresPrimero(Integer id) {
+		List<Personas> personasList=new ArrayList<Personas>();
+		int i=0;
+		try {			
+			for(Personas personas : _SocioDao.ListaActivaSocios()) 
+			{
+				if(personas.getDni() != id && i<2)
+					personasList.add(personas);
+				i++;
+			}
+			for(Personas personas : _SocioDao.ListaActivaSocios()) 
+			{
+				if(personas.getDni() == id ) 
+				{
+					personasList.add(personas);
+					break;
+				}
+			}
+			return personasList;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

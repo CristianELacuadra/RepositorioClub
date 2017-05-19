@@ -7,5 +7,6 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 
 public interface IGestorSocio extends IGestorGeneric<Personas> {
 	public Integer DevolverUltimoNroSocio();
-	public List<Personas> ListaActivaSocio()throws BussinessException;
+	public List<Personas> ListaActivaSocio() throws BussinessException;
+	public List<Personas> ObtnerTresPrimero(Integer id);
 }

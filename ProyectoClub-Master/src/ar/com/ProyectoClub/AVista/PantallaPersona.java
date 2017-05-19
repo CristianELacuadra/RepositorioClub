@@ -24,10 +24,15 @@ import java.awt.Color;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JTextField;
 import java.awt.Dimension;
+import javax.swing.JToolBar;
+import javax.swing.JPanel;
+import java.awt.FlowLayout;
+import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
 public class PantallaPersona extends JInternalFrame {
-	private JTable table;
-	private JTextField txtBuscar;
+	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -49,97 +54,49 @@ public class PantallaPersona extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public PantallaPersona() {
-		setBounds(100, 100, 616, 429);
+		setBounds(100, 100, 684, 481);
+		
+		JPanel panel = new JPanel();
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		
-		JButton btnNuevoSocio = new JButton("Nuevo Socio");
-		btnNuevoSocio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		
-		JButton btnModificar = new JButton("Modificar");
-		
-		JButton btnVerDetalles = new JButton("ver detalles");
-		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Todos", "Socios - activos", "No-Socios"}));
-		
-		txtBuscar = new JTextField();
-		txtBuscar.setText("buscar");
-		txtBuscar.setColumns(10);
-		
-		JButton btnCerrarPantalla = new JButton("");
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-										.addComponent(btnVerDetalles, GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-										.addComponent(btnModificar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(btnNuevoSocio, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-									.addGap(40))
-								.addComponent(btnCerrarPantalla)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtBuscar, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE))
-							.addGap(32))))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+						.addComponent(panel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGap(39))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(btnCerrarPantalla, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnNuevoSocio)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnModificar)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnVerDetalles)
-					.addGap(86)
-					.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(30)
-					.addComponent(txtBuscar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(127))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+					.addGap(11)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
 					.addContainerGap())
 		);
+		panel.setLayout(null);
 		
-		table = new JTable();
-		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"DNI", "Nombre", "Apellido", "Fecha de ingreso", "Tel.", "Categoria", "Estado", //"Domicilio", // "Matricula",// "Sexo", //"Nacionalidad", "Fecha de Nacimiento","Estado Civil", 
-				
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class, String.class, String.class, String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(0).setPreferredWidth(86);
-		table.getColumnModel().getColumn(1).setResizable(false);
-		table.getColumnModel().getColumn(2).setResizable(false);
-		scrollPane.setViewportView(table);
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnBuscar.setIcon(null);
+		btnBuscar.setBounds(376, 12, 65, 20);
+		panel.add(btnBuscar);
+		
+		textField = new JTextField();
+		textField.setEnabled(false);
+		textField.setBounds(60, 11, 312, 20);
+		panel.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setEnabled(false);
+		textField_1.setColumns(10);
+		textField_1.setBounds(20, 11, 40, 20);
+		panel.add(textField_1);
 		getContentPane().setLayout(groupLayout);
 
 	}

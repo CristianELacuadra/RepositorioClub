@@ -13,11 +13,12 @@ public interface IServiceSocio{
 	public void  AltaSocio(Personas socio)throws Exception;
 	public Personas CrearSocio() throws Exception; 
 	public Integer UltimoIdSocio();
+	public List<Personas>  ListaSociosActivo();//lista de los activos
+	public List<Personas> ObtnerTresPersonas(Integer id);
 	//public String  DeshabilitarSocio(Sociosa socio) throws BussinessException;
 	//public boolean  ActulizarSocio(Sociosa socio)throws BussinessException;
 	//public boolean validar(Integer id)throws BussinessException;
 	//public List<Sociosa>  ListarSocio()throws BussinessException;//historicos de socios
-	//public List<Sociosa>  ListaSociosActivo()throws BussinessException;//lista de los activos
 	//public Sociosa UnSocio(Integer id) throws BussinessException; //busqueda atraves del numero de socio
 	//public Sociosa BusquedaXdni(Integer dni); //busqueda por dni
 	//public void ControlEstadoDeudor(int mes,int anio);

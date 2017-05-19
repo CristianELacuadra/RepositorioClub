@@ -1,11 +1,14 @@
 package ar.com.ProyectoClub.CModelo.AServicios.facade;
 
 
+import java.util.List;
+
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio;
 import ar.com.ProyectoClub.CModelo.BGestores.GestorSocio;
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorSocio;
 
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
+import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 
 
 public class ServiceSocios implements IServiceSocio {
@@ -46,6 +49,20 @@ public class ServiceSocios implements IServiceSocio {
 	     
 	}
 	
+	@Override
+	public List<Personas> ListaSociosActivo(){
+		try {
+		return gestorsocio.ListaActivaSocio();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	@Override
+	public List<Personas> ObtnerTresPersonas(Integer id) {
+		return gestorsocio.ObtnerTresPrimero(id);
+	}
 	/*
 	 * (non-Javadoc)
 	 * @see ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio#NuevoSocio(ar.com.ProyectoClub.CModelo.CEntidades.Sociosa)

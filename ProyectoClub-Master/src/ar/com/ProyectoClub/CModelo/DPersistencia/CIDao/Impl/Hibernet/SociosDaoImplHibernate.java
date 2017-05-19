@@ -80,4 +80,5 @@ public class SociosDaoImplHibernate extends GenericDAOImplHibernate<Personas, In
 			throw new BussinessException(e);
 		}
 	}
+	
 }
