@@ -1,6 +1,7 @@
 package ar.com.ProyectoClub.CModelo.AServicios.facade;
 
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCategorias;
@@ -23,6 +24,16 @@ public class ServiceCategoria implements IServiceCategorias {
 	}
 	//contructor para cargar la categria
 	
+	@Override
+	public Categoria CrearCategoria() {
+		try{
+			return gestorcategoria.Crear();
+		}
+		catch (Exception e) {
+			throw new RuntimeException("No se pudo instanciar el serivicio debido al siguiente error: "+e.getMessage());
+		}
+	}
+	
 	public ServiceCategoria(Categoria categoria){
 		//this._categoria=categoria;
 	}
@@ -39,6 +50,16 @@ public class ServiceCategoria implements IServiceCategorias {
 			throw new RuntimeException(ex.getMessage());
 		}
 		
+	}
+	
+	@Override
+	public List<Categoria> ListarCategorias() {
+		try{
+			return gestorcategoria.Listar();
+		}
+		catch (Exception e) {
+			throw new RuntimeException("Service Categoria"+e.getMessage());
+		}
 	}
 
 	@Override

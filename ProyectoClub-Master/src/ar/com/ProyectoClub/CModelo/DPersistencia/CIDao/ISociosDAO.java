@@ -8,6 +8,7 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.IGenericDAO;
 import java.util.List;
 
 public interface ISociosDAO extends IGenericDAO<Personas,Integer>{
+	public List<Personas> FiltrarNomApe(String Nom,String Ape)throws BussinessException;
 	public List<Personas> HistoricoSocio() throws BussinessException;
 	public List<Personas> ListaActivaSocios() throws BussinessException;
 	public Integer MaxNroSocio() throws BussinessException;

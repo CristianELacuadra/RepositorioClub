@@ -13,44 +13,57 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.UsuarioDaoI
 public class GestorUsuario implements IGestorUsuario {
     
 	private IUsuarioDao isuariodao;
-	
-	public GestorUsuario() {
-		try {
+	//constructor
+	public GestorUsuario() throws Exception {
 			isuariodao=new UsuarioDaoImplHibernate();
-		}
-		catch (Exception e) {
-			throw new RuntimeException("Error al iniciar el gestor"+e.toString());
-		}
 	}
+	
+	//Create,Insert,Delete,Update,Busqueda
+	public Usuario Crear() throws Exception {
+		return(isuariodao.crear());//->Devuelve nueva instancia de la entidad personas
+	}
+	
 	@Override
-	public void AgregarUsuario(Usuario nuevo) {
-		try{
+	public void AgregarUsuario(Usuario nuevo) throws Exception {
 			isuariodao.GuardarEntity(nuevo);
-		}
-		 catch (Exception e) {
-			throw new RuntimeException(e.toString());
-		}
+	}
+	
+	@Override
+	public void BajaUsuario(Usuario usuario) throws Exception{
+		if(usuario.getTipousuario().equals("Administrador"))
+			isuariodao.Eliminar(usuario.getIdusuario());
+		else
+			throw new RuntimeException("Usted no tiene los permisos para realizar esta transaccion");
 	}
 	@Override
-	public boolean BajaUsuario(Usuario baja) {
-		try {
-			return false;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+	public void ActualizarUsuario(Usuario usuarioNew) throws Exception {
+		 Usuario usuario=this.Crear();
+		 usuario.setNick(usuarioNew.getNick());
+		 usuario.setPassword(usuarioNew.getPassword());
+		 usuario.setTipousuario(usuarioNew.getTipousuario());
+		this.AgregarUsuario(usuario);
 	}
 	@Override
-	public Usuario VerificarUsuarioContraseña(String nick, String pass) {
-		try {
-			Usuario nom=isuariodao.crear() ;
-			for(Usuario _Objusuario : isuariodao.Listar()) {
+	public Usuario BuscarUsuario(Integer id) throws Exception {
+		Usuario usuario=this.Crear();
+		usuario=isuariodao.BuscarUno(id);
+		return usuario;
+	}
+	@Override
+	public List<Usuario> ListarUsuario() throws Exception {
+		List<Usuario> listaUsuario=new ArrayList<Usuario>();
+		listaUsuario=isuariodao.Listar();
+		return  listaUsuario;
+	}
+	
+	//
+	@Override
+	public Usuario VerificarUsuarioContraseña(String nick, String pass){
+		try{
+			Usuario nom=this.Crear() ;
+			for(Usuario _Objusuario : this.ListarUsuario()) {
 				if(_Objusuario.getNick().equals(nick) && _Objusuario.getPassword().equals(pass)) {
-					nom=isuariodao.BuscarUno(_Objusuario.getIdusuario());
-					//nom.setIdusuario(_Objusuario.getIdusuario());
-					//nom.setNick(_Objusuario.getNick());
-					//nom.setPassword(_Objusuario.getPassword());
-					//nom.setTipousuario(_Objusuario.getTipousuario());
+					nom=this.BuscarUsuario(_Objusuario.getIdusuario());
 					break;
 				}
 				else 
@@ -59,7 +72,7 @@ public class GestorUsuario implements IGestorUsuario {
 			return nom;
 		}
 		catch (Exception e) {
-			throw new RuntimeException("Se produjo un error a verificar el usuario"+e.toString());
+			throw new RuntimeException("Error al intentar verificar el usuario"+e.getMessage());
 		}
 	}
 	
@@ -71,21 +84,14 @@ public class GestorUsuario implements IGestorUsuario {
 		else
 			return false;
 	}
-	public Usuario Crear() {
-		try {
-			return(isuariodao.crear());//->Devuelve nueva instancia de la entidad personas
-		}
-		catch (BussinessException e) {
-			throw new RuntimeException("Error a instanciar el usuario"+e.getMessage());
-		}
-	}
+	
+	
 	
 	@Override
-	public boolean ValidarUsuContra(String us, String contr) 
-	{
-		boolean validar=false;
-		List<Usuario> listusuario=new ArrayList<Usuario>();
-		try {
+	public boolean ValidarUsuContra(String us, String contr){
+		try{
+			boolean validar=false;
+			List<Usuario> listusuario=new ArrayList<Usuario>();
 			listusuario=isuariodao.Listar();
 			for(Usuario n : listusuario)
 			{
@@ -94,8 +100,8 @@ public class GestorUsuario implements IGestorUsuario {
 			return validar;
 		}
 		catch (Exception e) {
-			throw new RuntimeException("Se produjo un error debido el siguiente error"+e.getMessage());
+			throw new RuntimeException("No se pudo verificar la contraseña o el usuario debido al siguiente error: "+e.getMessage());
 		}
 	}
-
 }
+

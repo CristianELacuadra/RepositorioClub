@@ -10,11 +10,15 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 
 
 public interface IServiceSocio{
-	public void  AltaSocio(Personas socio)throws Exception;
-	public Personas CrearSocio() throws Exception; 
+	public void GuardarSocio(Personas persona);
+	
+	public Personas CrearSocio(); 
 	public Integer UltimoIdSocio();
 	public List<Personas>  ListaSociosActivo();//lista de los activos
 	public List<Personas> ObtnerTresPersonas(Integer id);
+	public Personas BusquedaId(Integer dni); //busqueda por dni
+	public List<Personas> FiltrarNombreApellido(String nom,String ape);
+	
 	//public String  DeshabilitarSocio(Sociosa socio) throws BussinessException;
 	//public boolean  ActulizarSocio(Sociosa socio)throws BussinessException;
 	//public boolean validar(Integer id)throws BussinessException;

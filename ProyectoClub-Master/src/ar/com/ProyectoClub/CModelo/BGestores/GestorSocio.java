@@ -19,25 +19,77 @@ public class GestorSocio implements IGestorSocio{
 	
 	private ISociosDAO _SocioDao;
 	
-	public GestorSocio() {
+	public GestorSocio() throws Exception {
+		_SocioDao=new SociosDaoImplHibernate();
+	}
+	//Create,(InsertUpdate),habilitar deshabilitar,,Busqueda,listar
+	@Override
+	public Personas Crear() throws Exception {
+			return(_SocioDao.crear());//->Devuelve nueva instancia de la entidad personas
+	}
+
+	@Override
+	public void Guardar(Personas entity) throws Exception {
+			if(this.NonnullPartnerData(entity)){ //-> antes de guardar verifica si la entidad no trae valores nulos
+				entity.setEssocio(true);
+				_SocioDao.GuardarEntity(entity);
+			}
+			else
+				throw new RuntimeException("No Puede Tener datos nulos,verifique los datos");
+	}
+
+	@Override
+	public Personas Busqueda(Integer id) throws Exception {
+			Personas _uno=this.Crear();
+			_uno=_SocioDao.BuscarUno(id);
+			return _uno;
+	}
+
+	@Override
+	public List<Personas> Listar() throws Exception {
+		List<Personas> _list=new ArrayList<Personas>();
+		_list=_SocioDao.HistoricoSocio();
+		return _list;
+
+	}
+	
+	@Override
+	public void habilitar(Personas entity) throws Exception {
+		Personas _uno=this.Crear();
+		_uno=this.Busqueda(entity.getDni());
+		_uno.setHabilitado(entity.isHabilitado());//->habilita al socio al realizar tarea
+		this.Guardar(_uno);//->guarda los datos
+	}
+	
+	@Override
+	public void Inhabilitar(Personas entity) throws Exception {
 		try {
-			_SocioDao=new SociosDaoImplHibernate();
+			Personas _uno=this.Crear();
+			_uno=this.Busqueda(entity.getDni());
+			_uno.setHabilitado(entity.isHabilitado());//Inhabilita al socio a realizar tareas
+			this.Guardar(_uno);//guarda los datos
 		}
-		catch (Exception e) {
-			throw new RuntimeException("Error al iniciar el gestor"+e.toString());
+		catch (BussinessException e) {
+			throw new Exception("No se pudo realizar la operacion debido al siguiente error"+e.getMessage());
 		}
+	}
+	
+	@Override
+	public List<Personas> ListaActivaSocio() throws BussinessException {
+		List<Personas> _listaactiva=new ArrayList<Personas>();
+		_listaactiva=_SocioDao.ListaActivaSocios();
+		return _listaactiva;
 	}
 	//----------------------------------------------------------------------------------------
 	@Override
-	public Personas Crear() throws Exception {
-		try {
-			return(_SocioDao.crear());//->Devuelve nueva instancia de la entidad personas
+	public List<Personas> FiltrarNombeApellido(String nom, String ape) {
+		try{
+			return(_SocioDao.FiltrarNomApe(nom, ape));
 		}
-		catch (BussinessException e) {
-			throw new Exception("Error a instanciar la entidad personas"+e.getMessage());
+		catch (Exception e) {
+			throw new RuntimeException("ERROR :"+e.toString());
 		}
 	}
-	//----------------------------------------------------------------------------------------
 	/*
 	 * Verifica si los valores no traen datos nulos
 	 */
@@ -47,26 +99,7 @@ public class GestorSocio implements IGestorSocio{
 		else
 			return true;
 	}
-	//----------------------------------------------------------------------------------------
-	@Override
-	public void Guardar(Personas entity) throws Exception {
-		try {
-			if(this.NonnullPartnerData(entity)) //-> antes de guardar verifica si la entidad no trae valores nulos
-				_SocioDao.GuardarEntity(entity);
-			else
-				throw new RuntimeException("No Puede Tener datos nulos,verifique los datos");
-		}
-		catch (BussinessException e) {
-			throw new Exception("Error al intentar guardar los datos del socio"+e.getMessage());
-		}
-		
-	}
-	//----------------------------------------------------------------------------------------
-	/**
-	 * (non-Javadoc)
-	 * @see ar.com.ProyectoClub.CModelo.BIGestores.IGestorSocio#DevolverUltimoNroSocio()
-	 * para crear un nuevo socio el numero de socio debe llamar a este metodo
-	 **/
+	
 	public Integer DevolverUltimoNroSocio() {
 		Integer nro=0;
 		try {
@@ -82,80 +115,19 @@ public class GestorSocio implements IGestorSocio{
 		}
 		
 	}
-	//----------------------------------------------------------------------------------------
-	@Override
-	public Personas Busqueda(Integer id) throws Exception {
-		try {
-			Personas _uno=this.Crear();
-			_uno=_SocioDao.BuscarUno(id);
-			return _uno;
-		}
-		catch (BussinessException e) {
-			throw new Exception("Fallo,no se pudo hallar el socio"+e.getMessage());
-		}
-	}
-	//----------------------------------------------------------------------------------------
-	/**
-	 * public List<Personas> Listar() no devuelve la lista completa de personas sino un historico de socio
-	 * activos e inactivos
-	 **/
-	@Override
-	public List<Personas> Listar() throws Exception {
-		List<Personas> _list=new ArrayList<Personas>();
-		try {
-			_list=_SocioDao.HistoricoSocio();
-			return _list;
-		}
-		catch (BussinessException e) {
-			throw new Exception("No se pudo Listar los socio"+e.getMessage());
-		}
-	}
-	//----------------------------------------------------------------------------------------
-	@Override
-	public void Inhabilitar(Personas entity) throws Exception {
-		try {
-			Personas _uno=this.Crear();
-			_uno=this.Busqueda(entity.getDni());
-			_uno.setHabilitado(entity.isHabilitado());//Inhabilita al socio a realizar tareas
-			this.Guardar(_uno);//guarda los datos
-		}
-		catch (BussinessException e) {
-			throw new Exception("No se pudo realizar la operacion debido al siguiente error"+e.getMessage());
-		}
-	}
-	//----------------------------------------------------------------------------------------
-	@Override
-	public void habilitar(Personas entity) throws Exception {
-		try {
-			Personas _uno=this.Crear();
-			_uno=this.Busqueda(entity.getDni());
-			_uno.setHabilitado(entity.isHabilitado());//->habilita al socio al realizar tarea
-			this.Guardar(_uno);//->guarda los datos
-		}
-		catch (BussinessException e) {
-			throw new Exception("No se pudo realizar la operacion debido al siguiente error"+e.getMessage());
-		}
-	}
-	//----------------------------------------------------------------------------------------
-	@Override
-	public List<Personas> ListaActivaSocio() throws BussinessException {
-		List<Personas> _listaactiva=new ArrayList<Personas>();
-		_listaactiva=_SocioDao.ListaActivaSocios();
-		return _listaactiva;
-	}
 	
 	@Override
 	public List<Personas> ObtnerTresPrimero(Integer id) {
 		List<Personas> personasList=new ArrayList<Personas>();
 		int i=0;
 		try {			
-			for(Personas personas : _SocioDao.ListaActivaSocios()) 
+			for(Personas personas : this.ListaActivaSocio()) 
 			{
 				if(personas.getDni() != id && i<2)
 					personasList.add(personas);
 				i++;
 			}
-			for(Personas personas : _SocioDao.ListaActivaSocios()) 
+			for(Personas personas : this.ListaActivaSocio()) 
 			{
 				if(personas.getDni() == id ) 
 				{

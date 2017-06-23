@@ -16,7 +16,12 @@ public class ServiceSocios implements IServiceSocio {
 	
 	
 	public ServiceSocios(){
+		try{
 		gestorsocio=new GestorSocio();
+		}
+		catch (Exception e) {
+		    throw new RuntimeException("No se pudo iniciar el servicio debido al siguiente error:"+e.getMessage());
+		}
 	}
 	
 	@Override
@@ -25,30 +30,38 @@ public class ServiceSocios implements IServiceSocio {
 	}
 	
 	@Override
-	public Personas CrearSocio() throws Exception {
-		return (gestorsocio.Crear());
+	public Personas CrearSocio() {
+		try{
+			return (gestorsocio.Crear());
+		}
+		catch (Exception e) {
+			throw new RuntimeException("No se pudo instanciar el serivicio debido al siguiente error: "+e.getMessage());
+		}
+		
 	}
-	
 	@Override
-	public void AltaSocio(Personas socio) throws Exception {
-		 Personas objsocio=gestorsocio.Crear();
-		 objsocio=gestorsocio.Busqueda(socio.getDni());
-	     if(objsocio!=null) {
-	    	 if(!objsocio.getEstado().equals("Moroso")) {
-	    		// objsocio.setEstado(socio.getEstado());
-	    		 gestorsocio.Guardar(socio);
-	    		
-	    	 }
-	    	 else 
-	    		 throw new Exception("El socio con dni "+socio.getDni()+"se encuentra sancionado por falta de pago");
-	    	 
-	     }
-	     else
-	    	 gestorsocio.Guardar(socio);
-	     
-	     
+	public void GuardarSocio(Personas persona) {
+		try {
+			Personas objsocio=gestorsocio.Crear();
+			objsocio=gestorsocio.Busqueda(persona.getDni()); //llama al gestor para que verifique si el dni no posee sanciones
+			if(objsocio!=null) {
+				if(!objsocio.getEstado().equals("Moroso")) {
+					persona.setHabilitado(true); // si ya esta todo okey el servicio se encarga de poner habilitado al socio
+					gestorsocio.Guardar(persona);
+				}
+				else 
+					throw new Exception("El socio con dni "+persona.getDni()+"se encuentra sancionado por falta de pago");
+			}
+			else{
+				persona.setHabilitado(true); // si ya esta todo okey el servicio se encarga de poner habilitado al socio
+				gestorsocio.Guardar(persona);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("¡¡ERROR!!,fallo la tansaccion debido al siguiente error:"+e.getMessage());
+		}
 	}
 	
+	//el siguiente servicio devuelte un rango de 100 socios
 	@Override
 	public List<Personas> ListaSociosActivo(){
 		try {
@@ -62,6 +75,25 @@ public class ServiceSocios implements IServiceSocio {
 	@Override
 	public List<Personas> ObtnerTresPersonas(Integer id) {
 		return gestorsocio.ObtnerTresPrimero(id);
+	}
+	
+	@Override
+	public Personas BusquedaId(Integer dni) {
+		try{
+			return gestorsocio.Busqueda(dni);
+		}
+		catch (Exception e) {
+			throw new RuntimeException("No se pudo realizar la busqueda debido al siguiente error "+ e.toString());
+		}
+	}
+	@Override
+	public List<Personas> FiltrarNombreApellido(String nom, String ape) {
+		try{
+			return (gestorsocio.FiltrarNombeApellido(nom, ape));
+		}
+		catch (Exception e) {
+			throw new RuntimeException("No se pudo realizar la busqueda debido al siguiente error "+ e.toString());
+		}
 	}
 	/*
 	 * (non-Javadoc)

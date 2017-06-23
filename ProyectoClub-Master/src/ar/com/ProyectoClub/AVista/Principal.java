@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Frame;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -47,12 +48,14 @@ import java.awt.Window.Type;
 import javax.swing.border.TitledBorder;
 
 import JCDesktopPane.JCDesktopPane;
+import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
 import j2Button.j2Button;
 
 import javax.swing.border.CompoundBorder;
 
-public class Principal extends JFrame {
-
+public class Principal extends JFrame implements ActionListener{
+    
+	private ControllerCoordinador miCoordinador; //objeto miCoordinador que permite la relacion entre esta clase y la clase ControllerCoordinador
 	public JPanel contentPane;
 	public j2Button btnNoSocio;
 	public j2Button btnSocios;
@@ -136,7 +139,6 @@ public class Principal extends JFrame {
 		btnConfig.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/developer_folder_black_13857.png")));
 		btnConfig.setColor1(new java.awt.Color(0, 0, 0));
 		btnConfig.setColor2(new java.awt.Color(153, 153, 153));
-		btnConfig.setEnabled(true);
 		btnConfig.setFocusable(false);
 		btnConfig.setFuente1(new java.awt.Font("Arial Black", 1, 12));
 		btnConfig.setFuente2(new java.awt.Font("Arial", 1, 10));
@@ -180,19 +182,40 @@ public class Principal extends JFrame {
 	        );
 
 	        pack();
+	        
+	        
+	        //atentos a las acciones del usuario
+	        btnSocios.addActionListener(this);
+			btnNoSocio.addActionListener(this);
+			btnAlquiler.addActionListener(this);
+			btnCaja.addActionListener(this);
+			btnConfig.addActionListener(this);
+			btnSalir.addActionListener(this);
 		
 	}
-	public static void main(String args[]) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Principal frame = new Principal();
-					frame.setVisible(true);
-					} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-    }
+	
+	public void setCoordinador(ControllerCoordinador miCoordinador) {
+		this.miCoordinador=miCoordinador;
+	}	
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource()==btnSocios) {
+			miCoordinador.mostrarVentanaSocio();
+		}
+		
+		if (e.getSource()==btnNoSocio) {
+			miCoordinador. mostrarVentanaNoSocio();			
+		}
+		
+		if(e.getSource()==btnSalir){
+			int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente deseas salir?", "Aviso", JOptionPane.YES_NO_OPTION);
+			if (opcion == 0) { //The ISSUE is here
+				this.dispose();
+				System.exit(0);
+			} 
+		}
+		
+	}
 
 }
