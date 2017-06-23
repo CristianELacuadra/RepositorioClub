@@ -8,7 +8,7 @@ public interface IServiceUsuario {
 	public boolean ValidarNick(String nick);
 	public void AgregarUsuario(Usuario nuevo);
 	public Usuario  DevolverUsuario(String nick,String pass);
-	public boolean BajaUsuario(Usuario baja); 
+	public void BajaUsuario(Usuario baja); 
 	//public Usuario DevolverUsuario(Integer id);
 
 }

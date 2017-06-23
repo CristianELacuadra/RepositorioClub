@@ -28,12 +28,17 @@ public class ServiceUsuario implements IServiceUsuario {
 			gestorusuario=new GestorUsuario();
 		}
 		catch (Exception e) {
-			 throw new RuntimeException("Error al iniciar el servicio de usuario"+e.toString());
+			 throw new RuntimeException("Error al iniciar la conexion con el servidor."+e.toString());
 		}
 	}
 	
 	public Usuario newusuario() {
-		return  gestorusuario.Crear();
+		try{
+			return  gestorusuario.Crear();
+		}
+		catch (Exception e) {
+			throw new RuntimeException("Imposible crear el usuario debido al siguiente error"+e.getMessage());
+		}
 	}
 	
 	@Override
@@ -59,8 +64,13 @@ public class ServiceUsuario implements IServiceUsuario {
 		return gestorusuario.VerificarUsuarioContraseña(nick, pass);
 	}
 	@Override
-	public boolean BajaUsuario(Usuario baja) {
-		return gestorusuario.BajaUsuario(baja);
+	public void BajaUsuario(Usuario baja) {
+		try{
+			gestorusuario.BajaUsuario(baja);
+		}
+		catch (Exception e) {
+			throw new RuntimeException("Fallo la transaccion debido al siguiente error:"+e.getMessage());
+		}
 	}
 	/*
 	@Override

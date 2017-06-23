@@ -28,14 +28,19 @@ public class NoSocioDaoImplHibernate extends GenericDAOImplHibernate<Personas,In
 			Setsession();
 			SetTransaction();
 			Personas _nuevo=(Personas) _sessiondehilo.createQuery("SELECT query FROM Personas query WHERE Dni="+dni.toString()).uniqueResult();
-			Objnosocio.setDni(_nuevo.getDni());
-			Objnosocio.setNombre(_nuevo.getNombre());
-			Objnosocio.setApellido(_nuevo.getApellido());
-			Objnosocio.setDomicilio(_nuevo.getDomicilio());
-			Objnosocio.setTelefono(_nuevo.getTelefono());
-			Objnosocio.setFecNacimiento(_nuevo.getFecNacimiento());
-			Objnosocio.setEssocio(_nuevo.isEssocio());
-			Objnosocio.setHabilitado(_nuevo.isHabilitado());
+			if(_nuevo!=null){
+				Objnosocio.setDni(_nuevo.getDni());
+				Objnosocio.setNombre(_nuevo.getNombre());
+				Objnosocio.setApellido(_nuevo.getApellido());
+				Objnosocio.setDomicilio(_nuevo.getDomicilio());
+				Objnosocio.setTelefono(_nuevo.getTelefono());
+				Objnosocio.setFecNacimiento(_nuevo.getFecNacimiento());
+				Objnosocio.setEssocio(_nuevo.isEssocio());
+				Objnosocio.setHabilitado(_nuevo.isHabilitado());
+			}
+			else{
+				Objnosocio=null;
+			}
 			_sessiondehilo.getTransaction().commit();
 			return Objnosocio;
 		}

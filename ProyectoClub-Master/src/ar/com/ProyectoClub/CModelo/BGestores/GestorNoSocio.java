@@ -16,42 +16,21 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.SociosDaoIm
 
 public class GestorNoSocio implements IGestorNosocio {
 	private INoSocioDAO _NosocioDao;
-	private ISociosDAO _sociodao;
-	public GestorNoSocio() {
-		try {
-			_NosocioDao=new NoSocioDaoImplHibernate();
-			_sociodao=new SociosDaoImplHibernate();
-		}
-		catch (Exception e) {
-			throw new RuntimeException("Error al iniciar el gestor"+e.toString());
-		}
-	}
 
+	//constructor
+	public GestorNoSocio()throws Exception {
+		_NosocioDao=new NoSocioDaoImplHibernate();
+	}
+	//Create,Insert,Delete,Update,Busqueda
 	@Override
 	public NoSocioDTO Crear() throws Exception {
-		throw new NotImplemented();
+		return(new NoSocioDTO());
 	}
-	
-	
-	private boolean VerificarHabilitado(Integer dni) throws Exception {
-		boolean _ver=true;
-		NoSocioDTO nuevo=new NoSocioDTO();
-		nuevo=this.Busqueda(dni);
-		if(nuevo==null)
-			_ver=true;
-		else {
-			if(nuevo.getDni()==dni && !nuevo.isHabilitado()) //->verifica si el no socio ya estuvo anteriormente y si se encontraba inhabilitado
-				_ver=false;
 
-		}
-		return _ver;
-	}
-	
 	@Override
 	public void Guardar(NoSocioDTO entity) throws Exception {
-		try {
-			if(this.VerificarHabilitado(entity.getDni())) {
-			Personas nuevo=_sociodao.crear();
+		if(this.VerificarHabilitado(entity.getDni())) {
+			Personas nuevo=_NosocioDao.crear();
 			nuevo.setDni(entity.getDni());
 			nuevo.setNombre(entity.getNombre());
 			nuevo.setApellido(entity.getApellido());
@@ -61,21 +40,16 @@ public class GestorNoSocio implements IGestorNosocio {
 			nuevo.setHabilitado(true);
 			nuevo.setEssocio(false);
 			_NosocioDao.GuardarEntity(nuevo);
-			}
-			else 
-				throw new Exception("Error,Usted possé deudas en este club.Salde las deudas para poder ejercer nuestro servicio");
 		}
-		catch (BussinessException e) {
-			throw new Exception("Error al guardar,por favor verifique los datos"+e.getMessage());
-		}		
+		else 
+			throw new Exception("Error,Usted possé deudas en este club.Salde las deudas para poder ejercer nuestro servicio");	
 	}
-
 
 	@Override
 	public NoSocioDTO Busqueda(Integer id) throws Exception {
-			NoSocioDTO SocioDTO=new NoSocioDTO(); 
-			SocioDTO=_NosocioDao.BusquedaXDni(id);
-			return SocioDTO;
+		NoSocioDTO SocioDTO=new NoSocioDTO(); 
+		SocioDTO=_NosocioDao.BusquedaXDni(id);
+		return SocioDTO;
 	}
 
 	@Override
@@ -84,22 +58,51 @@ public class GestorNoSocio implements IGestorNosocio {
 		lista=_NosocioDao.ListaNosocio();//->retorna historico de no socios
 		return lista;
 	}
+	@Override
+	public void HabilitarNoSocio(Integer id) throws Exception {
+		NoSocioDTO ObjNosocio=new NoSocioDTO();
+		ObjNosocio=this.Busqueda(id);
+		ObjNosocio.setHabilitado(true);
+		this.Guardar(ObjNosocio);
+		
+	}
+	@Override
+	public void InabilitarNoSocio(Integer id) throws Exception {
+		NoSocioDTO ObjNosocio=new NoSocioDTO();
+		ObjNosocio=this.Busqueda(id);
+		ObjNosocio.setHabilitado(false);
+		this.Guardar(ObjNosocio);
+		
+	}
 
 	@Override
 	public void Inhabilitar(NoSocioDTO entity) throws Exception {
-		NoSocioDTO ObjNosocio=new NoSocioDTO();
-		ObjNosocio=this.Busqueda(entity.getDni());
-		ObjNosocio.setHabilitado(entity.isHabilitado());
-		this.Guardar(ObjNosocio);
+		throw new NotImplemented();
 	}
 
 	@Override
 	public void habilitar(NoSocioDTO entity) throws Exception {
-		NoSocioDTO ObjNosocio=new NoSocioDTO();
-		ObjNosocio=this.Busqueda(entity.getDni());
-		ObjNosocio.setHabilitado(entity.isHabilitado());
-		this.Guardar(ObjNosocio);
+		throw new NotImplemented();
+	}
+	
+	//----------------------------------------------------------------------------------------------------------------------
+	private boolean VerificarHabilitado(Integer dni){
+		try{
+			boolean _ver=true;
+			NoSocioDTO nuevo=new NoSocioDTO();
+			//nuevo=this.Busqueda(dni);
+			if(this.Busqueda(dni)==null)
+				_ver=true;
+			else {
+				if(nuevo.getDni()==dni && !nuevo.isHabilitado()) //->verifica si el no socio ya estuvo anteriormente y si se encontraba inhabilitado
+					_ver=false;
+
+			}
+			return _ver;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
 
 	}
-
 }

@@ -6,6 +6,7 @@ import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 
 public interface IGestorGeneric<T> {
+	//Create,(InsertUpdate),Delete,,Busqueda,listar
 	public T Crear() throws Exception;
 	public void Guardar(T entity) throws Exception;
 	public T Busqueda(Integer id) throws Exception;
