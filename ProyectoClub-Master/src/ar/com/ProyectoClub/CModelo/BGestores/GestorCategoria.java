@@ -1,9 +1,12 @@
 package ar.com.ProyectoClub.CModelo.BGestores;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorCategoria;
 import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
+import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
+import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ICategoriaDAO;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.CategoriaDaoImplHibernate;
 
@@ -39,8 +42,9 @@ public class GestorCategoria implements IGestorCategoria {
 
 	@Override
 	public List<Categoria> Listar() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<Categoria> listaCategoria= new ArrayList<Categoria>();
+        listaCategoria= categoriadao.Listar();
+		return listaCategoria;
 	}
 
 	@Override

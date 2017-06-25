@@ -76,11 +76,11 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		btnBuscar = new JButton();
-		btnBuscar.setBounds(162, 20, 34, 32);
+		btnBuscar.setBounds(151, 11, 45, 39);
 		panel_2.add(btnBuscar);
 		chcIncluidos = new JCheckBox();
 		
-		btnBuscar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\Search.png"));
+		btnBuscar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\buscar2.png"));
 		
 		chcIncluidos.setText("Incluir inhabilitados");
 		chcIncluidos.setBounds(16, 20, 128, 23);

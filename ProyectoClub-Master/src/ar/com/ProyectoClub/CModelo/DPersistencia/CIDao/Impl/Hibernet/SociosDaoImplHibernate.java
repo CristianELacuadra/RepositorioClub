@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 
 
 public class SociosDaoImplHibernate extends GenericDAOImplHibernate<Personas, Integer> implements ISociosDAO {
@@ -21,20 +22,46 @@ public class SociosDaoImplHibernate extends GenericDAOImplHibernate<Personas, In
 	 * @see ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ISociosDAO#ListaActivaSocios()
 	 * ListaActivaSocios() Devuelve la lista activa de los socios
 	 **/
+     @Override
+    public List<Personas> FiltrarNomApe(String Nom, String Ape) throws BussinessException {
+    	 try {
+    		 Setsession();
+    		 SetTransaction();
+    		 String consulta=new String();
 
+    		 if(!Nom.isEmpty() && Ape.isEmpty())
+    			 consulta="SELECT p FROM Personas p WHERE nombre LIKE '%"+Nom+"%' AND p.essocio=true"; //filtro por nombre
+    		 if(Nom.isEmpty() && !Ape.isEmpty())
+    			 consulta="SELECT p FROM Personas p WHERE apellido LIKE '%"+Ape+"%' AND p.essocio=true"; //filtro por apellido
+    		 if(!Nom.isEmpty() && !Ape.isEmpty())
+    			 consulta="SELECT p FROM Personas p WHERE nombre LIKE '%"+Nom+"%' OR apellido LIKE '%"+Ape+"%' AND p.essocio=true"; //filtro por nombre y apellido
+
+    		 Query query=_sessiondehilo.createQuery(consulta);
+    		 List<Personas> lista=query.list();
+    		 _sessiondehilo.getTransaction().commit();
+    		 return lista;
+    	 }
+    	 catch (Exception e) {
+    		 _sessiondehilo.beginTransaction().rollback();
+    		 _sessiondehilo.close();
+    		 throw new RuntimeException(e);
+    	 }
+     }
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Personas> ListaActivaSocios() throws BussinessException {
 		try {
 			Setsession();
 			SetTransaction();
-			socios.clear();
 			/*
 			 * HQL para recuperar solo datos habilitados
 			 */
-			socios = _sessiondehilo.createQuery("SELECT s FROM Personas s WHERE essocio=true AND habilitado=true").list();	
+			//List<Personas> lista=_sessiondehilo.createQuery("SELECT s FROM Personas s WHERE s.essocio=true AND s.habilitado=true").list();
+			Query q= _sessiondehilo.createQuery("SELECT s FROM Personas s WHERE s.essocio=true");
+			q.setMaxResults(100); //Devuelve un maximo de 100	
+			List<Personas> lista=q.list();
 			_sessiondehilo.getTransaction().commit();
-			return socios;
+			return lista;
 		}
 		catch (Exception e) {
 			_sessiondehilo.beginTransaction().rollback();
