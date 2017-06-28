@@ -48,7 +48,7 @@ public class GestorNoSocio implements IGestorNosocio {
 	@Override
 	public NoSocioDTO Busqueda(Integer id) throws Exception {
 		NoSocioDTO SocioDTO=new NoSocioDTO(); 
-		SocioDTO=_NosocioDao.BusquedaXDni(id);
+		SocioDTO=this.PersonaToNoSocioDTO(_NosocioDao.BuscarUno(id));//devuelve una persona y lo convierte a NosocioDTO
 		return SocioDTO;
 	}
 
@@ -73,6 +73,19 @@ public class GestorNoSocio implements IGestorNosocio {
 		ObjNosocio.setHabilitado(false);
 		this.Guardar(ObjNosocio);
 		
+	}
+	private NoSocioDTO PersonaToNoSocioDTO(Personas personas){
+		  NoSocioDTO noSocioDto= new NoSocioDTO();
+		  noSocioDto.setDni(personas.getDni());
+		  noSocioDto.setApellido(personas.getApellido());
+		  noSocioDto.setNombre(personas.getNombre());
+		  noSocioDto.setDomicilio(personas.getDomicilio());
+		  noSocioDto.setFecNacimiento(personas.getFecNacimiento());
+		  noSocioDto.setTelefono(personas.getTelefono());
+		  noSocioDto.setEssocio(personas.isEssocio());
+		  noSocioDto.setHabilitado(personas.isHabilitado());
+		  noSocioDto.setEstado(personas.getEstado());
+		  return noSocioDto;
 	}
 
 	@Override

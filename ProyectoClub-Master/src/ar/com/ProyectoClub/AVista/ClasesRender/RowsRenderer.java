@@ -1,4 +1,4 @@
-package ar.com.ProyectoClub.AVista;
+package ar.com.ProyectoClub.AVista.ClasesRender;
 
 import java.awt.Color;
 import java.awt.Component;

@@ -20,7 +20,7 @@ public abstract class SessionTransactionGeneric implements ISessionTransaccionGe
 		}
 		catch (Exception e) {
 			_sessiondehilo.close();
-			throw new Exception("Error al inicializar la excepcion"+e.toString());
+			throw new RuntimeException("Communications link failure");
 		}
 	}
 	/*

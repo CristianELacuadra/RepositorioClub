@@ -8,7 +8,7 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.IGenericDAO;
 
 public interface INoSocioDAO extends IGenericDAO<Personas , Integer> {
-	public NoSocioDTO BusquedaXDni(Integer dni) throws BussinessException;
+	//public NoSocioDTO BusquedaXDni(Integer dni) throws BussinessException;
 	public List<NoSocioDTO> ListaNosocio();
 
 }

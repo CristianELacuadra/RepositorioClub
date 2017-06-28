@@ -19,7 +19,8 @@ public class ControllerCoordinador {
 	private Inicio miVentanaInicio;
 	private PantallaFormularioPersona miFormularioPersona;
 	private PantallaPersonas miVentanaPersona;
-	private PantallaBusquedaSNS miVentanaElimarSNS;
+	private PantallaBusquedaSNS miVentanaBusquedaSNS;
+	private PantallaDetallesInhabilitarSNS miVentanaDetallesSNS;
 	
 	public Personas CrearPersona(){
 		return miLogica.CrearInstanciaPersona();
@@ -72,14 +73,34 @@ public class ControllerCoordinador {
 	public void setMiLogica(Logica miLogica) {
 		this.miLogica = miLogica;
 	}
-	public PantallaBusquedaSNS getMiVentanaElimarSNS() {
-		return miVentanaElimarSNS;
+	public PantallaBusquedaSNS getMiVentanaBusquedaSNS() {
+		return miVentanaBusquedaSNS;
 	}
-	public void setMiVentanaElimarSNS(PantallaBusquedaSNS miVentanaElimarSNS) {
-		this.miVentanaElimarSNS = miVentanaElimarSNS;
+	public void setMiVentanaBusquedaSNS(PantallaBusquedaSNS miVentanaBusquedaSNS) {
+		this.miVentanaBusquedaSNS = miVentanaBusquedaSNS;
+	}
+	public PantallaDetallesInhabilitarSNS getMiVentanaDetallesSNS() {
+		return miVentanaDetallesSNS;
+	}
+	public void setMiVentanaDetallesSNS(PantallaDetallesInhabilitarSNS miVentanaDetallesSNS) {
+		this.miVentanaDetallesSNS = miVentanaDetallesSNS;
 	}
 	
 //////////////////////////////////////////////////////////
+	
+	public void MostrarVentanaDetallesInhabilitar(Integer dni){
+		 Personas persona=this.CrearPersona();
+		 persona=miLogica.BuscarSocio(dni);
+		 if(persona.isHabilitado() && persona != null){
+			 int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente deseas dar inhabilitar esta persona?", "Aviso", JOptionPane.YES_NO_OPTION);
+				if (opcion == 0) { //The ISSUE is here
+					persona.setHabilitado(false);
+					 miLogica.GuardarSocio(persona);
+				}
+		 }
+		 else
+			 JOptionPane.showMessageDialog(null,"la persona ya se encuentra inhabilitada");
+	}
 	public void Listar(JTable tablaD,String nom,String ape,String dni){
 		if(this.ValidarEsSocio()){ //se selecciono el formulario socio
 			DefaultTableModel  modeloT = new DefaultTableModel();
@@ -110,7 +131,7 @@ public class ControllerCoordinador {
 			if(numRegistros>99){
 				JOptionPane.showMessageDialog(null,"El rango de busqueda esta limitado a 100 personas");
 			}
-			if(miVentanaElimarSNS.chcIncluidos.isSelected()){
+			if(miVentanaBusquedaSNS.chcIncluidos.isSelected()){
 				//recorre y agrega socios habilitados e inhabilitados
 				for (int i = 0; i < numRegistros; i++) {
 					columna[0] = listapersonas.get(i).getDni();
@@ -140,7 +161,7 @@ public class ControllerCoordinador {
 
 			tablaD.getColumnModel().getColumn(3).setPreferredWidth(0);
 
-			tablaD.setDefaultRenderer(Object.class, miVentanaElimarSNS.resaltado);
+			tablaD.setDefaultRenderer(Object.class,miVentanaBusquedaSNS.resaltado);
 		}
 
 	}
@@ -248,7 +269,7 @@ public class ControllerCoordinador {
 	@SuppressWarnings("unchecked")
 	public void mostrarVentanaEliminarSNS(boolean tipo) {
 //		miVentanaElimarSNS.setTitle("Mi ventana de baja");
-		miVentanaElimarSNS.setVisible(true);
+		miVentanaBusquedaSNS.setVisible(true);
 		if(tipo){
 			//Socios
 		}

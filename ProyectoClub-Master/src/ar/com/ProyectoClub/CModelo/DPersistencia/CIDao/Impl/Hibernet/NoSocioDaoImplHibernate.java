@@ -22,6 +22,7 @@ public class NoSocioDaoImplHibernate extends GenericDAOImplHibernate<Personas,In
 	 * Realiza la busqueda en persona y devuelve un DTO personalizado de no socio
 	 * esta busqueda es unicamente para el no socio,ya que el socio posee la busqueda generica  
 	 */
+	/*
 	public NoSocioDTO BusquedaXDni(Integer dni) throws BussinessException{
 		NoSocioDTO Objnosocio=new NoSocioDTO();
 		try{
@@ -50,6 +51,7 @@ public class NoSocioDaoImplHibernate extends GenericDAOImplHibernate<Personas,In
 			throw new RuntimeException("Error al realizar la consulta"+e.toString());
 		}
 	}
+	*/
 	//-----------------------------------------------------------------------------------------------
 	@SuppressWarnings("unchecked")
 	@Override

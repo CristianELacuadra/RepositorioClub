@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import ar.com.ProyectoClub.AVista.ClasesRender.RowsRenderer;
 import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
 
 import java.awt.FlowLayout;

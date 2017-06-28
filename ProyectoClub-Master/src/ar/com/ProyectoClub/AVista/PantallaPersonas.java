@@ -108,7 +108,7 @@ public class PantallaPersonas extends JDialog implements ActionListener {
 		
 		btnModificacion.setText("MODIFICACION");
 		btnModificacion.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnModificacion.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\data-modify.png"));
+		btnModificacion.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\data-modify2.png"));
 		btnModificacion.setHorizontalAlignment(SwingConstants.LEFT);
 		btnModificacion.setBounds(353, 382, 303, 144);
 		contentPane.add(btnModificacion);
