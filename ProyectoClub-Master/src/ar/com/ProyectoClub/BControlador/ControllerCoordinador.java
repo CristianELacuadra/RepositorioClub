@@ -92,7 +92,7 @@ public class ControllerCoordinador {
 		 Personas persona=this.CrearPersona();
 		 persona=miLogica.BuscarSocio(dni);
 		 if(persona.isHabilitado() && persona != null){
-			 int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente deseas dar inhabilitar esta persona?", "Aviso", JOptionPane.YES_NO_OPTION);
+			 int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente deseas inhabilitar esta persona?", "Aviso", JOptionPane.YES_NO_OPTION);
 				if (opcion == 0) { //The ISSUE is here
 					persona.setHabilitado(false);
 					 miLogica.GuardarSocio(persona);
