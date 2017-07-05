@@ -22,6 +22,12 @@ import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JRadioButton;
+import javax.swing.JMenuBar;
+import javax.swing.JInternalFrame;
+import java.awt.BorderLayout;
+import javax.swing.JTabbedPane;
+import java.awt.FlowLayout;
+import java.awt.CardLayout;
 
 
 
@@ -33,12 +39,15 @@ public class PantallaPersonas extends JDialog implements ActionListener {
 	public JPanel contentPane;
 	public JPanel panel;
 	public JLabel lblImagen; 
-	public JLabel lblPersonas; 
 	public JButton btnAlta;
 	public JButton btnBaja;
 	public JButton btnBuscar;
 	public JButton btnModificacion; 
 	public JRadioButton checkEsSocio; 
+	private JPanel panel_3;
+	public JButton btnCobranza;
+	public JLabel lblCuotas;
+	public JLabel lblPersonas; 
 	
 	public PantallaPersonas(Principal vtnPrincipal,boolean b) {
 		super(vtnPrincipal,b);
@@ -48,13 +57,8 @@ public class PantallaPersonas extends JDialog implements ActionListener {
 	private void initComponents(){
 		panel= new JPanel(); 
 		lblImagen = new JLabel();
-		lblPersonas = new JLabel();
-		btnAlta= new JButton();
-		btnBaja=new JButton();
-		btnBuscar = new JButton();
-		btnModificacion= new JButton();
 		checkEsSocio= new JRadioButton();
-		setType(Type.UTILITY);
+		lblPersonas= new JLabel();
 		setBounds(100, 100, 745, 606);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(211, 211, 211));
@@ -79,49 +83,72 @@ public class PantallaPersonas extends JDialog implements ActionListener {
 		lblNewLabel_1.setFont(new Font("Segoe Script", Font.PLAIN, 20));
 		lblNewLabel_1.setForeground(Color.RED);
 		panel_1.add(lblNewLabel_1);
-		
-		lblPersonas.setText("PERSONAS");
-		lblPersonas.setFont(new Font("Segoe Print", Font.PLAIN, 20));
-		lblPersonas.setBounds(248, 144, 157, 29);
-		contentPane.add(lblPersonas);
-		
-		btnAlta.setText("ALTA");
-		btnAlta.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAlta.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnAlta.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\data_add.png"));
-		btnAlta.setBounds(21, 168, 273, 144);
-		contentPane.add(btnAlta);
-		
-		btnBaja.setText("BAJA");
-		btnBaja.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\data_delete.png"));
-		btnBaja.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnBaja.setHorizontalAlignment(SwingConstants.LEFT);
-		btnBaja.setBounds(352, 172, 304, 144);
-		contentPane.add(btnBaja);
-		
-		btnBuscar.setText("BUSCAR");
-		btnBuscar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\data_search.png"));
-		btnBuscar.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnBuscar.setHorizontalAlignment(SwingConstants.LEFT);
-		btnBuscar.setBounds(21, 382, 273, 144);
-		contentPane.add(btnBuscar);
-		
-		btnModificacion.setText("MODIFICACION");
-		btnModificacion.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnModificacion.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\data-modify2.png"));
-		btnModificacion.setHorizontalAlignment(SwingConstants.LEFT);
-		btnModificacion.setBounds(353, 382, 303, 144);
-		contentPane.add(btnModificacion);
 		checkEsSocio.setText("....");
 		checkEsSocio.setVisible(false);
 		checkEsSocio.setBounds(561, 5, 43, 23);
 		contentPane.add(checkEsSocio);
 		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(5, 185, 724, 169);
+		contentPane.add(panel_2);
+		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
+		btnAlta= new JButton();
+		panel_2.add(btnAlta);
+		
+		btnAlta.setText("ALTA");
+		btnAlta.setHorizontalAlignment(SwingConstants.LEFT);
+		btnAlta.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnAlta.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\data_add3.png"));
+		btnBaja=new JButton();
+		panel_2.add(btnBaja);
+		
+		btnBaja.setText("BAJA");
+		btnBaja.setIcon(new ImageIcon(PantallaPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/data_delete.png")));
+		btnBaja.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnBaja.setHorizontalAlignment(SwingConstants.LEFT);
+		btnBuscar = new JButton();
+		panel_2.add(btnBuscar);
+		
+		btnBuscar.setText("BUSCAR");
+		btnBuscar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\data_search.png"));
+		btnBuscar.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnBuscar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnModificacion= new JButton();
+		panel_2.add(btnModificacion);
+		
+		btnModificacion.setText("MODIFICACION");
+		btnModificacion.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnModificacion.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\data-modify2.png"));
+		btnModificacion.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		lblPersonas.setText("PEROSNAS");
+		lblPersonas.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
+		lblPersonas.setBounds(319, 160, 174, 14);
+		contentPane.add(lblPersonas);
+		
+		panel_3 = new JPanel();
+		panel_3.setBounds(5, 399, 724, 169);
+		contentPane.add(panel_3);
+		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
+		
+		btnCobranza = new JButton();
+		btnCobranza.setIcon(new ImageIcon(PantallaPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/sale.png")));
+		btnCobranza.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnCobranza.setText("COBRANZA");
+		btnCobranza.setHorizontalAlignment(SwingConstants.LEFT);
+		panel_3.add(btnCobranza);
+		
+		lblCuotas = new JLabel("CUOTAS");
+		lblCuotas.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
+		lblCuotas.setBounds(319, 374, 174, 14);
+		contentPane.add(lblCuotas);
+		
 		//atentos a las acciones del usuario
-		btnAlta.addActionListener(this);
-		btnBaja.addActionListener(this);
-		btnBuscar.addActionListener(this);
 		btnModificacion.addActionListener(this);
+		btnBuscar.addActionListener(this);
+		btnBaja.addActionListener(this);
+		btnAlta.addActionListener(this);
+		btnCobranza.addActionListener(this);
 	}
 	
 
@@ -143,14 +170,11 @@ public class PantallaPersonas extends JDialog implements ActionListener {
 			
 		}
 		if(e.getSource()==btnBaja){
-			if(checkEsSocio.isSelected()){
-				//socio
-				miCoordinador.mostrarVentanaEliminarSNS(true);
-			}
-			else{
-				//No socio
-				miCoordinador.mostrarVentanaEliminarSNS(false);
-			}
+			miCoordinador.MostrarVentanaBajaSNS();
+		}
+		
+		if(e.getSource() == btnCobranza){
+			miCoordinador.mostrarVentanaCobranza();
 		}
 		
 	}

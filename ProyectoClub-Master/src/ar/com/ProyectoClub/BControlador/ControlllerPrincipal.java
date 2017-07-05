@@ -18,8 +18,11 @@ public class ControlllerPrincipal {
 	Inicio miVentanaInicio;
 	PantallaPersonas miVentanaPersona;
 	PantallaFormularioPersona miFormularioPersona;
-	PantallaBusquedaSNS miVentanaBusquedaSNS;
+	PantallaBusquedaSNS miVentanaBusquedaSNSElim;
+	PantallaBusquedaSNS miVentanaBusquedaSNSCobr;
 	PantallaDetallesInhabilitarSNS miVentanaDetalllesSNS;
+	PantallaCobranzaCuota miVentanaCobranzaCuota;
+	PantallaBajaSNS miventanaBajaSNS;
 
 	//clase puente entre el modelo y las vistas.
 	ControllerCoordinador miCoordinador;
@@ -37,9 +40,12 @@ public class ControlllerPrincipal {
 			miVentanaPrincipal=new Principal();
 			miVentanaPersona=new PantallaPersonas(miVentanaPrincipal,true); //mi ventana persona depende de ventana principal
 			miFormularioPersona=new PantallaFormularioPersona(miVentanaPersona,true); // mi ventana formulario persona depende de pantalla persona
-			miVentanaBusquedaSNS=new PantallaBusquedaSNS(miVentanaPersona,true);
-			miVentanaDetalllesSNS=new PantallaDetallesInhabilitarSNS(miVentanaBusquedaSNS, true);
+			miVentanaBusquedaSNSElim=new PantallaBusquedaSNS(miVentanaPersona,true);
+			miVentanaBusquedaSNSCobr=new PantallaBusquedaSNS(miVentanaCobranzaCuota, true);
+			miVentanaDetalllesSNS=new PantallaDetallesInhabilitarSNS(miVentanaBusquedaSNSCobr, true);
+			miVentanaCobranzaCuota= new PantallaCobranzaCuota(miVentanaPersona,true);
 			miCoordinador= new ControllerCoordinador();
+			miventanaBajaSNS=new PantallaBajaSNS(miVentanaPersona, true);
 
 			/*Se establecen las relaciones entre clases*/
 			miLogica.setCoordinador(miCoordinador);
@@ -47,8 +53,11 @@ public class ControlllerPrincipal {
 			miVentanaInicio.setCoordinador(miCoordinador);
 			miVentanaPersona.setCoordinador(miCoordinador);
 			miFormularioPersona.setCoordinador(miCoordinador);
-			miVentanaBusquedaSNS.setCoordinador(miCoordinador);
+			miVentanaBusquedaSNSElim.setCoordinador(miCoordinador);
+			miVentanaBusquedaSNSCobr.setCoordinador(miCoordinador); 
 			miVentanaDetalllesSNS.setCoordinador(miCoordinador);
+			miVentanaCobranzaCuota.setCoordinador(miCoordinador);
+			miventanaBajaSNS.setCoordinador(miCoordinador);
 
 			/*Se establecen relaciones con la clase coordinador*/
 			miCoordinador.setMiLogica(miLogica);
@@ -56,13 +65,15 @@ public class ControlllerPrincipal {
 			miCoordinador.setMiVentanaInicio(miVentanaInicio);
 			miCoordinador.setMiVentanaPersona(miVentanaPersona);
 			miCoordinador.setMiFormularioPersona(miFormularioPersona);
-			miCoordinador.setMiVentanaBusquedaSNS(miVentanaBusquedaSNS);
+			miCoordinador.setMiVentanaBusquedaSNS(miVentanaBusquedaSNSCobr);
+			miCoordinador.setMiVentanaBusquedaSNS(miVentanaBusquedaSNSElim);
 			miCoordinador.setMiVentanaDetallesSNS(miVentanaDetalllesSNS);
-
+			miCoordinador.setMiVentanaCobranza(miVentanaCobranzaCuota);
+			miCoordinador.setMiVentanaBajaSNS(miventanaBajaSNS);
 			miVentanaInicio.setVisible(true);
 		}
 		catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,"ERROR" , e.getMessage(), JOptionPane.WARNING_MESSAGE);
 			System.exit(0);
 		}
 	}

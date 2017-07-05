@@ -4,6 +4,7 @@ import java.awt.List;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -21,6 +22,8 @@ public class ControllerCoordinador {
 	private PantallaPersonas miVentanaPersona;
 	private PantallaBusquedaSNS miVentanaBusquedaSNS;
 	private PantallaDetallesInhabilitarSNS miVentanaDetallesSNS;
+	private PantallaCobranzaCuota miVentanaCobranza;
+	private PantallaBajaSNS miVentanaBajaSNS;
 	
 	public Personas CrearPersona(){
 		return miLogica.CrearInstanciaPersona();
@@ -85,10 +88,46 @@ public class ControllerCoordinador {
 	public void setMiVentanaDetallesSNS(PantallaDetallesInhabilitarSNS miVentanaDetallesSNS) {
 		this.miVentanaDetallesSNS = miVentanaDetallesSNS;
 	}
+	public PantallaCobranzaCuota getMiVentanaCobranza() {
+		return miVentanaCobranza;
+	}
+	public void setMiVentanaCobranza(PantallaCobranzaCuota miVentanaCobranza) {
+		this.miVentanaCobranza = miVentanaCobranza;
+	}
 	
+	public PantallaBajaSNS getMiVentanaBajaSNS() {
+		return miVentanaBajaSNS;
+	}
+	public void setMiVentanaBajaSNS(PantallaBajaSNS miVentanaBajaSNS) {
+		this.miVentanaBajaSNS = miVentanaBajaSNS;
+	}
 //////////////////////////////////////////////////////////
-	
-	public void MostrarVentanaDetallesInhabilitar(Integer dni){
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void CargarDatosPersona(Personas persona){
+		if(miVentanaBajaSNS.isVisible()){ //Carga los datos para la baja
+			miVentanaBajaSNS.txtDni.setText(Integer.toString(persona.getDni()));
+			miVentanaBajaSNS.txtDom.setText(persona.getDomicilio());
+			miVentanaBajaSNS.txtNyA.setText(persona.getDni()+" "+persona.getApellido());
+			miVentanaBajaSNS.txtTel.setText(persona.getTelefono());
+		}
+		else{
+			if(miVentanaCobranza.isVisible()){ // carga los datos para la cobranza
+              miVentanaCobranza.txtdni.setText(Integer.toString(persona.getDni()));
+              miVentanaCobranza.txtDomi.setText(persona.getDomicilio());
+              miVentanaCobranza.txtMatri.setText(Integer.toString(persona.getMatricula()));
+              miVentanaCobranza.txtNsocio.setText(Integer.toString(persona.getNroSocio()));
+              miVentanaCobranza.txtNyA.setText(persona.getDni()+" "+persona.getApellido());
+              miVentanaCobranza.txtTel.setText(persona.getTelefono());
+              miVentanaCobranza.txtCat.setText(persona.getCategoria().getNombre());
+			}
+		}
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public Personas BuscarPersona(Integer dni){
+		return miLogica.BuscarSocio(dni);
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void InhabilitarSNS(Integer dni){
 		 Personas persona=this.CrearPersona();
 		 persona=miLogica.BuscarSocio(dni);
 		 if(persona.isHabilitado() && persona != null){
@@ -101,18 +140,68 @@ public class ControllerCoordinador {
 		 else
 			 JOptionPane.showMessageDialog(null,"la persona ya se encuentra inhabilitada");
 	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void MostrarVentanaDetallesInhabilitar(Integer dni){
+		String habiilitado=new String();
+		String texto=new String();
+		
+		Personas persona=this.CrearPersona();
+		persona=miLogica.BuscarSocio(dni);
+		if(persona.isHabilitado())
+			habiilitado="Habilitado: "+"SI";
+		else
+			habiilitado="Habilitado: "+"No";
+		if(persona.isEssocio()){
+			miVentanaDetallesSNS.setTitle("DETALLES DEL SOCIO ");
+			texto ="Numero de socio: "+persona.getNroSocio()+'\n'+""
+					+ "Matricula: "+persona.getMatricula()+'\n'+""
+					+"DNI: "+persona.getDni()+'\n'+""
+					+"Nombre: "+persona.getNombre()+'\n'+""
+					+"Apellido: "+persona.getApellido()+'\n'+""
+					+"Domicilio: "+persona.getDomicilio()+'\n'+""
+					+"Fecha de nacimiento: "+persona.getFecNacimiento()+'\n'+""
+					+"Telefono: "+persona.getTelefono()+'\n'+""
+					+"Sexo: "+persona.getSexo()+'\n'+""
+					+"Estado: "+persona.getEstado()+'\n'+""
+					+"Nacionalidad: "+persona.getNacionalidad()+'\n'+""
+					+"Estado Civil: "+persona.getEstadoCivil()+'\n'+""
+					+"Fecha de Ingreso: "+persona.getFechaIngreso()+'\n'+""
+					+"Habilitado: "+habiilitado+'\n';
+		}
+		else{
+			miVentanaDetallesSNS.setTitle("DETALLES DEL NO SOCIO ");
+			texto ="DNI: "+persona.getDni()+'\n'+""
+					+"Nombre: "+persona.getNombre()+'\n'+""
+					+"Apellido: "+persona.getApellido()+'\n'+""
+					+"Domicilio: "+persona.getDomicilio()+'\n'+""
+					+"Fecha de nacimiento: "+persona.getFecNacimiento()+'\n'+""
+					+"Estado: "+persona.getEstado()+'\n'+""
+					+"Habilitado: "+habiilitado+'\n';
+		}
+		miVentanaDetallesSNS.textDetalle.setText(texto);
+		miVentanaDetallesSNS.setVisible(true);
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public void Listar(JTable tablaD,String nom,String ape,String dni){
-		if(this.ValidarEsSocio()){ //se selecciono el formulario socio
-			DefaultTableModel  modeloT = new DefaultTableModel();
-			Object[] columna = new Object[4];
+			DefaultTableModel  modeloT = new DefaultTableModel(){
+				public boolean isCellEditable(int row,int colum){  //la filas de mi tabla no pueden ser editable
+					return false;
+				}
+			};
+			Object[] columna = new Object[5];
 			java.util.List<Personas> listapersonas=new ArrayList<Personas>();
+			JButton btnDetalles=new JButton();
+			btnDetalles.setText("");
+			btnDetalles.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\Search.png"));
 
 			tablaD.setModel(modeloT);
 
 			modeloT.addColumn("DNI");
 			modeloT.addColumn("APELLIDOS");
 			modeloT.addColumn("NOMBRES");
-			modeloT.addColumn("habilitado");
+			modeloT.addColumn("DETALLE");
+			modeloT.addColumn("");
+			//modeloT.isCellEditable(row, column)
 
 			if(dni.isEmpty() && nom.isEmpty() && ape.isEmpty()){
 				JOptionPane.showMessageDialog(null,"El rango de busqueda esta limitado a 100 personas");
@@ -137,7 +226,8 @@ public class ControllerCoordinador {
 					columna[0] = listapersonas.get(i).getDni();
 					columna[1] = listapersonas.get(i).getApellido();
 					columna[2] = listapersonas.get(i).getNombre();
-					columna[3] = listapersonas.get(i).isHabilitado();
+					columna[3]=btnDetalles;
+					columna[4] = listapersonas.get(i).isHabilitado();
 					modeloT.addRow(columna);
 				}
 			}
@@ -148,22 +238,27 @@ public class ControllerCoordinador {
 						columna[0] = listapersonas.get(i).getDni();
 						columna[1] = listapersonas.get(i).getApellido();
 						columna[2] = listapersonas.get(i).getNombre();
-						columna[3] = listapersonas.get(i).isHabilitado();
+						columna[3]=btnDetalles;
+						columna[4] = listapersonas.get(i).isHabilitado();
 						modeloT.addRow(columna);
 					}
 				}
 			}
+			
+			
 
-
-			tablaD.getColumnModel().getColumn(3).setMaxWidth(0);
-
-			tablaD.getColumnModel().getColumn(3).setMinWidth(0);
-
-			tablaD.getColumnModel().getColumn(3).setPreferredWidth(0);
-
+			tablaD.setRowHeight(25); 
+			tablaD.getTableHeader().getColumnModel().getColumn(4).setMaxWidth(0); 
+			tablaD.getColumnModel().getColumn(3).setMaxWidth(70);
+			//tablaD.getColumnModel().getColumn(3).setPreferredWidth(30);
+			
+			tablaD.getColumnModel().getColumn(4).setMaxWidth(0);
+			tablaD.getColumnModel().getColumn(4).setMinWidth(0);
+			tablaD.getColumnModel().getColumn(4).setPreferredWidth(0);
+			
+			//tablaD.setDefaultRenderer(Object.class, new JButtonRenderer());
 			tablaD.setDefaultRenderer(Object.class,miVentanaBusquedaSNS.resaltado);
-		}
-
+			
 	}
 
 	public Integer DevolverUltimoIdSocio(){
@@ -227,7 +322,9 @@ public class ControllerCoordinador {
 		miVentanaPersona.checkEsSocio.setSelected(true);
 		miVentanaPersona.show();// setVisible(true);
 	}
-	
+	public void mostrarVentanaCobranza(){
+		miVentanaCobranza.setVisible(true);
+	}
 	public void mostrarVentanaNoSocio() {
 		miVentanaPersona.lblImagen.setIcon(new ImageIcon(PantallaPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/bootloader_users_person_people_6080.png")));
 		miVentanaPersona.lblPersonas.setText("NO SOCIOS");
@@ -266,20 +363,20 @@ public class ControllerCoordinador {
 		}
 		
 	}
-	@SuppressWarnings("unchecked")
-	public void mostrarVentanaEliminarSNS(boolean tipo) {
-//		miVentanaElimarSNS.setTitle("Mi ventana de baja");
+	//mustra ventana busqueda para obtener un socio para cobrar
+	public void MostrarVentanaBusqueda(){
 		miVentanaBusquedaSNS.setVisible(true);
-		if(tipo){
-			//Socios
-		}
-		else{
-			//No Socio
-			
-		}
-		
 	}
 	
+	public void MostrarVentanaBajaSNS(){
+		miVentanaBajaSNS.setVisible(true);
+	}
+
+	@SuppressWarnings("unchecked")
+	public void mostrarVentanaBusquedaSNS() {
+		miVentanaBusquedaSNS.setVisible(true);
+	}
+		
 	private void PosicionarBotonesSocio(){
 		//textbox
 		miFormularioPersona.txtDni.setBounds(101, 8, 173, 20);

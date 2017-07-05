@@ -72,8 +72,12 @@ public class ServiceNoSocio implements IServiceNoSocio {
 
 	@Override
 	public NoSocioDTO BuscarNoSocio(Integer dni) {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			return Igestornosocio.Busqueda(dni);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

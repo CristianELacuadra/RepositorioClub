@@ -17,11 +17,12 @@ import javax.swing.JTextPane;
 import java.awt.Toolkit;
 
 public class PantallaDetallesInhabilitarSNS extends JDialog implements ActionListener{
-
+    
+	
 	private ControllerCoordinador miCoordinador; //objeto miCoordinador que permite la relacion entre esta clase y la clase ControllerCoordinador
 	private final JPanel contentPanel = new JPanel();
-	public JButton btnEliminar;
-    public JButton btnCancelar;
+    public JTextPane textDetalle; 
+    
 	public PantallaDetallesInhabilitarSNS(PantallaBusquedaSNS vtnbusqueda,boolean b) {
 		super(vtnbusqueda,b);
 		initComponents();	
@@ -29,8 +30,7 @@ public class PantallaDetallesInhabilitarSNS extends JDialog implements ActionLis
 	
 	
 	private void initComponents() {
-		btnEliminar= new JButton();
-		btnCancelar = new JButton();
+		textDetalle= new JTextPane();
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\logo.png"));
 		setBounds(100, 100, 435, 300);
@@ -39,26 +39,13 @@ public class PantallaDetallesInhabilitarSNS extends JDialog implements ActionLis
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JTextPane textPane = new JTextPane();
-			textPane.setEditable(false);
-			textPane.setBounds(0, 0, 424, 228);
-			contentPanel.add(textPane);
-		}
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				
-				btnEliminar.setText("Eliminar");
-				buttonPane.add(btnEliminar);
-			}
-			{
-				btnCancelar.setText("Cancelar");
-				buttonPane.add(btnCancelar);
-			}
+			
+			textDetalle.setEditable(false);
+			textDetalle.setBounds(0, 0, 424, 261);
+			contentPanel.add(textDetalle);
 		}
 	}
+	
 	
 	public void setCoordinador(ControllerCoordinador miCoordinador) {
 		this.miCoordinador=miCoordinador;
@@ -66,7 +53,7 @@ public class PantallaDetallesInhabilitarSNS extends JDialog implements ActionLis
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		 
 		
 	}
 

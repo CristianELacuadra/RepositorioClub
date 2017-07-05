@@ -3,6 +3,7 @@ package ar.com.ProyectoClub.AVista.ClasesRender;
 import java.awt.Color;
 import java.awt.Component;
 
+import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 /*
@@ -21,6 +22,10 @@ public class RowsRenderer extends DefaultTableCellRenderer  {
 		table.setForeground(Color.black);
 		setBackground(Color.white);
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		if(value instanceof JButton){
+			JButton btn=(JButton)value;
+			return btn;
+		}
 		if(table.getValueAt(row,columna).equals(false)){
 			this.setForeground(Color.RED);
 		}

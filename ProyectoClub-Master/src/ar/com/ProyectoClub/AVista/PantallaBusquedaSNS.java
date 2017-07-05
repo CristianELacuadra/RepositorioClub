@@ -9,12 +9,15 @@ import javax.swing.border.EmptyBorder;
 
 import ar.com.ProyectoClub.AVista.ClasesRender.RowsRenderer;
 import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
+import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -32,10 +35,12 @@ import javax.swing.JCheckBox;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import java.awt.event.MouseAdapter;
 
-public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyListener{
+public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyListener,MouseListener{
 	
 	private ControllerCoordinador miCoordinador; //objeto miCoordinador que permite la relacion entre esta clase y la clase ControllerCoordinador
+	private Integer Tempdni=null;
 	public JPanel contentPane;
 	public JPanel panel;
 	public JButton btnBuscar;
@@ -48,18 +53,20 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 	public JTextField txtApe;
 	public RowsRenderer resaltado;
 	public JCheckBox chcIncluidos;
+	public JButton btnSeleccionar; 
 	
-	public PantallaBusquedaSNS(PantallaPersonas vtnPantallaPersona,boolean b) {  
-		super(vtnPantallaPersona,b);
+	public PantallaBusquedaSNS(javax.swing.JDialog ventana,boolean b) {  
+		super(ventana,b);
 		setTitle("Busqueda Persona");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\logo.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaBusquedaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		initComponents();
 	}
 	
 	public void initComponents () {
 		contentPane = new JPanel();
 		panel = new JPanel();
-		resaltado= new RowsRenderer(3);
+		resaltado= new RowsRenderer(4);
+		btnSeleccionar= new JButton();
 		
 		
 		setBounds(100, 100, 717, 445);
@@ -81,7 +88,7 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 		panel_2.add(btnBuscar);
 		chcIncluidos = new JCheckBox();
 		
-		btnBuscar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\buscar2.png"));
+		btnBuscar.setIcon(new ImageIcon(PantallaBusquedaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/buscar2.png")));
 		
 		chcIncluidos.setText("Incluir inhabilitados");
 		chcIncluidos.setBounds(16, 20, 128, 23);
@@ -120,17 +127,18 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 		lblNombre.setBounds(20, 42, 106, 20);
 		panel_3.add(lblNombre);
 		
+		//Se pone a escuchar
 		lblNombre.setText("NOMBRE");
 		txtApe.addKeyListener(this);
 		txtNom.addKeyListener(this);
 		txtDni.addKeyListener(this);
 		chcIncluidos.addKeyListener(this);
-		
-		//Se pone a escuchar
+		//jtdatos.addMouseListener(this);
 		btnBuscar.addActionListener(this);
+		btnSeleccionar.addActionListener(this);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 110, 708, 301);
+		panel_1.setBounds(0, 110, 708, 244);
 		contentPane.add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
@@ -138,6 +146,27 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 		panel_1.add(jScrollPane1);
 		
 		jtdatos= new JTable();
+		jtdatos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int columna=jtdatos.getColumnModel().getColumnIndexAtX(e.getX());
+				int fila=e.getY()/jtdatos.getRowHeight();
+				
+				if(fila< jtdatos.getRowCount() && fila >=0 && columna< jtdatos.getColumnCount() && columna >=0){
+					Object value=jtdatos.getValueAt(fila, columna);
+					Object value2=jtdatos.getValueAt(fila, 0);
+					Tempdni=(Integer)value2;//Mantengo en una varible global el dni para ser dado de baja
+					if(value instanceof JButton){
+						Integer dni=(Integer)jtdatos.getValueAt(fila,0);
+						((JButton)value).doClick();
+						JButton btn=(JButton) value;
+						//Tempdni=dni;
+						miCoordinador.MostrarVentanaDetallesInhabilitar(dni);
+						//System.out.println(dni);
+					}
+				}
+			}
+		});
 		jScrollPane1.setColumnHeaderView(jtdatos);
 		jtdatos.setModel(new javax.swing.table.DefaultTableModel(
 	            new Object [][] {},
@@ -150,16 +179,25 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 	            };
 
 	            public boolean isCellEditable(int rowIndex, int columnIndex) {
-	                return canEdit [columnIndex];
+	                return false;
 	            }
 	        });
 		jtdatos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jtdatos);
+        
+        
+        btnSeleccionar.setText("OK");
+        btnSeleccionar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\apply.png"));
+        btnSeleccionar.setBounds(608, 360, 83, 35);
+        contentPane.add(btnSeleccionar);
+        
+       
 	}
 	
 	public void setCoordinador(ControllerCoordinador miCoordinador) {
 		this.miCoordinador=miCoordinador;
 	}
+	
     //eventos del teclado
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -186,7 +224,10 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 		if(e.getSource()== btnBuscar){
 			this.VerificarEntrada();
 		}
-		
+		if(e.getSource()==btnSeleccionar){
+			Personas persona=miCoordinador.BuscarPersona(Tempdni);
+			miCoordinador.CargarDatosPersona(persona);
+		}
 	}
 	private void VerificarEntrada(){
 		String dni=new String();
@@ -199,5 +240,45 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 		if(!txtNom.getText().isEmpty())
 			nom=txtNom.getText();
 		miCoordinador.Listar(jtdatos,nom,ape,dni);
+	}
+    //eventos del mouse
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		/*
+		int columna=jtdatos.getColumnModel().getColumnIndexAtX(e.getX());
+		int fila=e.getY()/jtdatos.getRowHeight();
+		
+		if(fila< jtdatos.getRowCount() && fila >=0 && columna< jtdatos.getRowCount() && columna >=0){
+			Object value=jtdatos.getValueAt(fila, columna);
+			if(value instanceof JButton){
+				((JButton)value).doClick();
+				JButton btn=(JButton) value;
+			}
+		}
+		*/
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

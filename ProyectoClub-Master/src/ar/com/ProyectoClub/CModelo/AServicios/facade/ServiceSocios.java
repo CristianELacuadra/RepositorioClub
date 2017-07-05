@@ -46,7 +46,7 @@ public class ServiceSocios implements IServiceSocio {
 			objsocio=gestorsocio.Busqueda(persona.getDni()); //llama al gestor para que verifique si el dni no posee sanciones
 			if(objsocio!=null) {
 				if(!objsocio.getEstado().equals("Moroso")) {
-					persona.setHabilitado(true); // si ya esta todo okey el servicio se encarga de poner habilitado al socio
+					//persona.setHabilitado(true); // si ya esta todo okey el servicio se encarga de poner habilitado al socio
 					gestorsocio.Guardar(persona);
 				}
 				else 
