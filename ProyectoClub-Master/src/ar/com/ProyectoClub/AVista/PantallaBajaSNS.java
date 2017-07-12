@@ -19,6 +19,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JRadioButton;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class PantallaBajaSNS extends JDialog implements ActionListener{
 
@@ -34,29 +36,33 @@ public class PantallaBajaSNS extends JDialog implements ActionListener{
 	public JRadioButton rdbtnSocio; 
 	public JButton btnbuscar;
 	
-	public PantallaBajaSNS(PantallaPersonas vtnPantallaPersona,boolean b) {
-		super(vtnPantallaPersona,b);
+	public PantallaBajaSNS(PantallaSocios vtnPantallasocios,boolean b) {
+		super(vtnPantallasocios,b);
 		initComponents();	
 	}
 
 	private void initComponents() {
 		btnbaja= new JButton("BAJA");
+		btnbaja.setIcon(new ImageIcon(PantallaBajaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/down.png")));
 		btncancelar= new JButton("Cancel");
+		btncancelar.setIcon(new ImageIcon(PantallaBajaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/Delete.png")));
 		rdbtnNoSocio= new JRadioButton("NO SOCIO");
+		rdbtnNoSocio.setEnabled(false);
 		rdbtnSocio= new JRadioButton("SOCIO");
+		rdbtnSocio.setEnabled(false);
 		btnbuscar = new JButton("");
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaBajaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
-		setBounds(100, 100, 493, 309);
+		setBounds(100, 100, 493, 331);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			txtNyA = new JTextField();
-			txtNyA.setBackground(new Color(245, 222, 179));
+			txtNyA.setBackground(new Color(245, 255, 250));
 			txtNyA.setEnabled(false);
-			txtNyA.setBounds(137, 62, 299, 20);
+			txtNyA.setBounds(168, 62, 299, 20);
 			contentPanel.add(txtNyA);
 			txtNyA.setColumns(10);
 		}
@@ -72,20 +78,23 @@ public class PantallaBajaSNS extends JDialog implements ActionListener{
 		contentPanel.add(lblNombreYApellido);
 		
 		JLabel label = new JLabel("NOMBRE Y APELLIDO");
-		label.setBounds(10, 65, 117, 14);
+		label.setBounds(10, 65, 148, 14);
 		contentPanel.add(label);
 		
 		txtDni = new JTextField();
+		txtDni.setHorizontalAlignment(SwingConstants.LEFT);
+		txtDni.setFont(new Font("Arial Black", Font.PLAIN, 13));
+		txtDni.setForeground(Color.BLACK);
 		txtDni.setEnabled(false);
 		txtDni.setColumns(10);
-		txtDni.setBackground(new Color(245, 222, 179));
+		txtDni.setBackground(new Color(245, 255, 250));
 		txtDni.setBounds(55, 10, 146, 20);
 		contentPanel.add(txtDni);
 		
 		txtDom = new JTextField();
 		txtDom.setEnabled(false);
 		txtDom.setColumns(10);
-		txtDom.setBackground(new Color(245, 222, 179));
+		txtDom.setBackground(new Color(245, 255, 250));
 		txtDom.setBounds(74, 110, 375, 20);
 		contentPanel.add(txtDom);
 		
@@ -108,7 +117,7 @@ public class PantallaBajaSNS extends JDialog implements ActionListener{
 		txtTel = new JTextField();
 		txtTel.setEnabled(false);
 		txtTel.setColumns(10);
-		txtTel.setBackground(new Color(245, 222, 179));
+		txtTel.setBackground(new Color(245, 255, 250));
 		txtTel.setBounds(74, 165, 375, 20);
 		contentPanel.add(txtTel);
 		{

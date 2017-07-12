@@ -16,13 +16,15 @@ public class ControlllerPrincipal {
 	//Vistas
 	Principal miVentanaPrincipal;
 	Inicio miVentanaInicio;
-	PantallaPersonas miVentanaPersona;
+	PantallaSocios miVentanaSocios;
 	PantallaFormularioPersona miFormularioPersona;
 	PantallaBusquedaSNS miVentanaBusquedaSNSElim;
 	PantallaBusquedaSNS miVentanaBusquedaSNSCobr;
 	PantallaDetallesInhabilitarSNS miVentanaDetalllesSNS;
 	PantallaCobranzaCuota miVentanaCobranzaCuota;
 	PantallaBajaSNS miventanaBajaSNS;
+	PantallaCategoriasTodas miVentanaCategorias;
+	PantallaCaja miVentanaCaja;
 
 	//clase puente entre el modelo y las vistas.
 	ControllerCoordinador miCoordinador;
@@ -38,42 +40,48 @@ public class ControlllerPrincipal {
 			miLogica=new Logica();
 			miVentanaInicio=new Inicio();
 			miVentanaPrincipal=new Principal();
-			miVentanaPersona=new PantallaPersonas(miVentanaPrincipal,true); //mi ventana persona depende de ventana principal
-			miFormularioPersona=new PantallaFormularioPersona(miVentanaPersona,true); // mi ventana formulario persona depende de pantalla persona
-			miVentanaBusquedaSNSElim=new PantallaBusquedaSNS(miVentanaPersona,true);
+			miVentanaSocios=new PantallaSocios(miVentanaPrincipal,true); //mi ventana persona depende de ventana principal
+			miFormularioPersona=new PantallaFormularioPersona(miVentanaSocios,true); // mi ventana formulario persona depende de pantalla persona
+			miVentanaBusquedaSNSElim=new PantallaBusquedaSNS(miVentanaSocios,true);
 			miVentanaBusquedaSNSCobr=new PantallaBusquedaSNS(miVentanaCobranzaCuota, true);
 			miVentanaDetalllesSNS=new PantallaDetallesInhabilitarSNS(miVentanaBusquedaSNSCobr, true);
-			miVentanaCobranzaCuota= new PantallaCobranzaCuota(miVentanaPersona,true);
+			miVentanaCobranzaCuota= new PantallaCobranzaCuota(miVentanaSocios,true);
 			miCoordinador= new ControllerCoordinador();
-			miventanaBajaSNS=new PantallaBajaSNS(miVentanaPersona, true);
+			miventanaBajaSNS=new PantallaBajaSNS(miVentanaSocios, true);
+			miVentanaCategorias=new PantallaCategoriasTodas(miVentanaSocios, true);
+			miVentanaCaja=new PantallaCaja();
 
 			/*Se establecen las relaciones entre clases*/
 			miLogica.setCoordinador(miCoordinador);
 			miVentanaPrincipal.setCoordinador(miCoordinador);
 			miVentanaInicio.setCoordinador(miCoordinador);
-			miVentanaPersona.setCoordinador(miCoordinador);
+			miVentanaSocios.setCoordinador(miCoordinador);
 			miFormularioPersona.setCoordinador(miCoordinador);
 			miVentanaBusquedaSNSElim.setCoordinador(miCoordinador);
 			miVentanaBusquedaSNSCobr.setCoordinador(miCoordinador); 
 			miVentanaDetalllesSNS.setCoordinador(miCoordinador);
 			miVentanaCobranzaCuota.setCoordinador(miCoordinador);
 			miventanaBajaSNS.setCoordinador(miCoordinador);
+			miVentanaCategorias.setCoordinador(miCoordinador);
+			miVentanaCaja.setCoordinador(miCoordinador);
 
 			/*Se establecen relaciones con la clase coordinador*/
 			miCoordinador.setMiLogica(miLogica);
 			miCoordinador.setMiVentanaPrincipal(miVentanaPrincipal);
 			miCoordinador.setMiVentanaInicio(miVentanaInicio);
-			miCoordinador.setMiVentanaPersona(miVentanaPersona);
+			miCoordinador.setMiVentanaSocios(miVentanaSocios);
 			miCoordinador.setMiFormularioPersona(miFormularioPersona);
 			miCoordinador.setMiVentanaBusquedaSNS(miVentanaBusquedaSNSCobr);
 			miCoordinador.setMiVentanaBusquedaSNS(miVentanaBusquedaSNSElim);
 			miCoordinador.setMiVentanaDetallesSNS(miVentanaDetalllesSNS);
 			miCoordinador.setMiVentanaCobranza(miVentanaCobranzaCuota);
 			miCoordinador.setMiVentanaBajaSNS(miventanaBajaSNS);
+			miCoordinador.setMiVentanaCategorias(miVentanaCategorias);
+			miCoordinador.setMiVentanaCaja(miVentanaCaja);
 			miVentanaInicio.setVisible(true);
 		}
 		catch (Exception e) {
-			JOptionPane.showMessageDialog(null,"ERROR" , e.getMessage(), JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,"El sistema no puede seguir la ejecucion debido al siguiente error"+e.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
 	}

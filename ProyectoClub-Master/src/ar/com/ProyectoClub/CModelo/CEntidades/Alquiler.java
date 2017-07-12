@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 13-mar-2017 20:16:32 by Hibernate Tools 5.2.0.CR1
+// Generated 11-jul-2017 9:12:03 by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -20,6 +20,7 @@ public class Alquiler implements java.io.Serializable {
 	private Integer cantidadHora;
 	private float precioTotal;
 	private String observaciones;
+	private boolean PagoAlquiler;
 	private boolean activo;
 	private Set cajas = new HashSet(0);
 
@@ -27,7 +28,7 @@ public class Alquiler implements java.io.Serializable {
 	}
 
 	public Alquiler(Inmuebles inmuebles, Personas personas, Date fechaActual, Date horaActual, Date fechaReserva,
-			Date horaReserva, Integer cantidadHora, float precioTotal, String observaciones, boolean activo) {
+			Date horaReserva, Integer cantidadHora, float precioTotal, String observaciones, boolean activo,boolean PagoAlquiler) {
 		this.inmuebles = inmuebles;
 		this.personas = personas;
 		this.fechaActual = fechaActual;
@@ -38,10 +39,11 @@ public class Alquiler implements java.io.Serializable {
 		this.precioTotal = precioTotal;
 		this.observaciones = observaciones;
 		this.activo = activo;
+		this.PagoAlquiler=PagoAlquiler;
 	}
 
 	public Alquiler(Inmuebles inmuebles, Personas personas, Date fechaActual, Date horaActual, Date fechaReserva,
-			Date horaReserva, Integer cantidadHora, float precioTotal, String observaciones, boolean activo,
+			Date horaReserva, Integer cantidadHora, float precioTotal, String observaciones, boolean activo,boolean PagoAlquiler,
 			Set cajas) {
 		this.inmuebles = inmuebles;
 		this.personas = personas;
@@ -54,6 +56,7 @@ public class Alquiler implements java.io.Serializable {
 		this.observaciones = observaciones;
 		this.activo = activo;
 		this.cajas = cajas;
+		this.PagoAlquiler=PagoAlquiler;
 	}
 
 	public Integer getNroAlquiler() {
@@ -150,6 +153,12 @@ public class Alquiler implements java.io.Serializable {
 
 	public void setCajas(Set cajas) {
 		this.cajas = cajas;
+	}
+	public void setPagoAlquiler(boolean pagoAlquiler) {
+		PagoAlquiler = pagoAlquiler;
+	}
+	public boolean isPagoAlquiler() {
+		return PagoAlquiler;
 	}
 
 }

@@ -2,11 +2,12 @@ package ar.com.ProyectoClub.CModelo.BGestores;
 
 import java.util.ArrayList;
 import java.util.List;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.SociosDaoImplHibernate;
+
+import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.PersonaImplHibernate;
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorSocio;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ISociosDAO;
+import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.IPersonaDAO;
 /**
  * 
  * @author Lacuadra and Gieco.
@@ -17,10 +18,10 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ISociosDAO;
 
 public class GestorSocio implements IGestorSocio{
 	
-	private ISociosDAO _SocioDao;
+	private IPersonaDAO _SocioDao;
 	
 	public GestorSocio() throws Exception {
-		_SocioDao=new SociosDaoImplHibernate();
+		_SocioDao=new PersonaImplHibernate();
 	}
 	//Create,(InsertUpdate),habilitar deshabilitar,,Busqueda,listar
 	@Override
@@ -84,7 +85,7 @@ public class GestorSocio implements IGestorSocio{
 	@Override
 	public List<Personas> FiltrarNombeApellido(String nom, String ape) {
 		try{
-			return(_SocioDao.FiltrarNomApe(nom, ape));
+			return(_SocioDao.FiltrarNomApe(nom, ape,true));
 		}
 		catch (Exception e) {
 			throw new RuntimeException("ERROR :"+e.toString());

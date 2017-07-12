@@ -23,6 +23,9 @@
         <property name="domicilio" type="string">
             <column name="Domicilio" length="100" not-null="true" />
         </property>
+        <property name="domNro" type="java.lang.Integer">
+            <column name="domNro" not-null="true" />
+        </property>
         <property name="fecNacimiento" type="date">
             <column name="FecNacimiento" length="10" not-null="true" />
         </property>

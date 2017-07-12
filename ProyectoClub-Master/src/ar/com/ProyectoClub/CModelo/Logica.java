@@ -1,5 +1,6 @@
 package ar.com.ProyectoClub.CModelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -56,11 +57,41 @@ public class Logica {
 	public Personas BuscarSocio(Integer id){
 		 return servicioSocio.BusquedaId(id);
 	}
-	public List<Personas> filtrarNombreApellido(String nom,String ape){
+	public NoSocioDTO BuscarNoSocio(Integer id){
+		 return serviceNoSocio.BuscarNoSocio(id);
+	}
+
+
+	public List<Personas> filtrarNombreApellidoSocio(String nom,String ape){
 		return servicioSocio.FiltrarNombreApellido(nom, ape);
 	}
+	public List<NoSocioDTO> filtrarNombreApellidoNosocio(String nom,String ape){
+		return serviceNoSocio.FiltrarNombreApellido(nom, ape);
+	}
 	public List<Personas>ListarParcialSocio(){
-		return servicioSocio.ListaSociosActivo(); //el siguiente 
+		return servicioSocio.ListaSociosActivo(); 
+	}
+	
+	public List<NoSocioDTO>ListaHabilitadosNoSocio(){
+		return (serviceNoSocio.ListarNoSocios()) ;
+	}
+	
+//	private Personas NoSocioAPersona(NoSocioDTO noSocio){
+//		 Personas persona=servicioSocio.CrearSocio();
+//		 persona.setDni(noSocio.getDni());
+//		 persona.setNombre(noSocio.getNombre());
+//		 persona.setApellido(noSocio.getApellido());
+//		 persona.setDomicilio(noSocio.getDomicilio());
+//		 persona.setEstado(noSocio.getEstado());
+//		 persona.setEssocio(noSocio.isEssocio());
+//		 persona.setFecNacimiento(noSocio.getFecNacimiento());
+//		 persona.setHabilitado(noSocio.isHabilitado());
+//		 persona.setTelefono(noSocio.getTelefono());
+//		 return persona;
+//		 
+//	}
+	public List<NoSocioDTO>ListaNoSocio(){
+		return serviceNoSocio.ListarNoSocios();//retorna historico de no socios
 	}
 	public Personas CrearInstanciaPersona(){
 		return servicioSocio.CrearSocio();

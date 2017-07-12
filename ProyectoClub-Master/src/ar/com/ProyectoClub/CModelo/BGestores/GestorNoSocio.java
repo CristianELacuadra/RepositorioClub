@@ -8,18 +8,15 @@ import com.mysql.jdbc.NotImplemented;
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorNosocio;
 import ar.com.ProyectoClub.CModelo.CEntidades.NoSocioDTO;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
-import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.INoSocioDAO;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ISociosDAO;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.NoSocioDaoImplHibernate;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.SociosDaoImplHibernate;
+import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.IPersonaDAO;
+import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.PersonaImplHibernate;
 
 public class GestorNoSocio implements IGestorNosocio {
-	private INoSocioDAO _NosocioDao;
+	private IPersonaDAO _NosocioDao;
 
 	//constructor
 	public GestorNoSocio()throws Exception {
-		_NosocioDao=new NoSocioDaoImplHibernate();
+		_NosocioDao=new PersonaImplHibernate();
 	}
 	//Create,Insert,Delete,Update,Busqueda
 	@Override
@@ -54,9 +51,44 @@ public class GestorNoSocio implements IGestorNosocio {
 
 	@Override
 	public List<NoSocioDTO> Listar() throws Exception {
-		List<NoSocioDTO> lista=new ArrayList<NoSocioDTO>();
-		lista=_NosocioDao.ListaNosocio();//->retorna historico de no socios
-		return lista;
+		List<NoSocioDTO> listaNoSocio=new ArrayList<NoSocioDTO>();
+		List<Personas> listaPersona=new ArrayList<Personas>();
+		listaPersona=_NosocioDao.HistoricoNoSocio();//->retorna historico de personas no socias
+		for(Personas persona : listaPersona){
+			listaNoSocio.add(this.PersonaANoSocio(persona));
+		}
+		return listaNoSocio;
+	}
+	
+	@Override
+	public List<NoSocioDTO> FiltrarNombeApellido(String nom, String ape) {
+		try{
+			List<NoSocioDTO> listanosocio=new ArrayList<NoSocioDTO>();
+			List<Personas> listaPersona=new ArrayList<Personas>();
+			listaPersona=_NosocioDao.FiltrarNomApe(nom, ape,false);
+			for(Personas persona : listaPersona){
+				listanosocio.add(this.PersonaANoSocio(persona));
+			}
+			return listanosocio;
+		}
+		catch (Exception e) {
+			throw new RuntimeException("ERROR :"+e.toString());
+		}
+	}
+	
+	private NoSocioDTO PersonaANoSocio(Personas persona){
+		 NoSocioDTO nosocioDTo=new NoSocioDTO();
+		 nosocioDTo.setDni(persona.getDni());
+		 nosocioDTo.setNombre(persona.getNombre());
+		 nosocioDTo.setApellido(persona.getApellido());
+		 nosocioDTo.setDomicilio(persona.getDomicilio());
+		 nosocioDTo.setEstado(persona.getEstado());
+		 nosocioDTo.setEssocio(persona.isEssocio());
+		 nosocioDTo.setFecNacimiento(persona.getFecNacimiento());
+		 nosocioDTo.setHabilitado(persona.isHabilitado());
+		 nosocioDTo.setTelefono(persona.getTelefono());
+		 return nosocioDTo;
+		 
 	}
 	@Override
 	public void HabilitarNoSocio(Integer id) throws Exception {

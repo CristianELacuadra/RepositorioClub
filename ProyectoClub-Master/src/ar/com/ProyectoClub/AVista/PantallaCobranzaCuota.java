@@ -14,6 +14,7 @@ import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import java.awt.Canvas;
 
 public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 
@@ -39,8 +40,9 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 	private JScrollPane scrollPane; 
 	public JTable jtDatosCuota;
 	
-	public PantallaCobranzaCuota(PantallaPersonas vtnPantallaPersona,boolean b) {
-		super(vtnPantallaPersona,b);
+	public PantallaCobranzaCuota(PantallaSocios vtnPantallaSocios,boolean b) {
+		super(vtnPantallaSocios,b);
+		setTitle("Sistema Control Socios-Club Avenida Ejercito");
 		initComponents();	
 	}
 
@@ -119,10 +121,10 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		txtCat.setEditable(false);
 		txtCat.setColumns(10);
 		txtCat.setBackground(Color.RED);
-		txtCat.setBounds(669, 51, 200, 20);
+		txtCat.setBounds(456, 36, 200, 20);
 		panel.add(txtCat);
 		
-		lblCategoria.setBounds(585, 54, 74, 14);
+		lblCategoria.setBounds(393, 39, 74, 14);
 		panel.add(lblCategoria);
 		
 		lblDireccion.setBounds(10, 156, 55, 14);
@@ -134,43 +136,56 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		txtDomi.setBounds(64, 153, 380, 20);
 		panel.add(txtDomi);
 		
-		lblMatricula.setBounds(157, 39, 74, 14);
+		lblMatricula.setBounds(157, 39, 55, 14);
 		panel.add(lblMatricula);
 		
 		txtMatri.setEditable(false);
 		txtMatri.setColumns(10);
 		txtMatri.setBackground(Color.RED);
-		txtMatri.setBounds(207, 36, 106, 20);
+		txtMatri.setBounds(222, 36, 106, 20);
 		panel.add(txtMatri);
 		
 		txtTel.setEditable(false);
 		txtTel.setColumns(10);
 		txtTel.setBackground(Color.RED);
-		txtTel.setBounds(689, 92, 162, 20);
+		txtTel.setBounds(456, 78, 162, 20);
 		panel.add(txtTel);
 		
-		lblTelefono.setBounds(615, 95, 62, 14);
+		lblTelefono.setBounds(393, 78, 74, 14);
 		panel.add(lblTelefono);
 		
 		btnBuscar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\Search.png"));
 		btnBuscar.setBounds(970, 137, 57, 33);
 		panel.add(btnBuscar);
 		
-		JLabel lblDesde = new JLabel("DESDE");
-		lblDesde.setBounds(550, 147, 41, 14);
-		panel.add(lblDesde);
+		JPanel panel_4 = new JPanel();
+		panel_4.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_4.setBounds(660, 97, 284, 73);
+		panel.add(panel_4);
+		panel_4.setLayout(null);
 		
-		JLabel lblHasta = new JLabel("HASTA");
-		lblHasta.setBounds(787, 147, 41, 14);
-		panel.add(lblHasta);
+		JLabel lblDesde = new JLabel("DESDE");
+		lblDesde.setBounds(10, 45, 32, 14);
+		panel_4.add(lblDesde);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(585, 147, 157, 20);
-		panel.add(comboBox);
+		comboBox.setBounds(63, 42, 69, 20);
+		panel_4.add(comboBox);
+		
+		JLabel lblHasta = new JLabel("HASTA");
+		lblHasta.setBounds(159, 45, 33, 14);
+		panel_4.add(lblHasta);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(838, 147, 104, 20);
-		panel.add(comboBox_1);
+		comboBox_1.setBounds(206, 42, 68, 20);
+		panel_4.add(comboBox_1);
+		
+		JLabel lblNewLabel_3 = new JLabel("Filltro Cuotas");
+		lblNewLabel_3.setBackground(new Color(240, 240, 240));
+		lblNewLabel_3.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblNewLabel_3.setForeground(new Color(0, 0, 0));
+		lblNewLabel_3.setBounds(116, 0, 78, 14);
+		panel_4.add(lblNewLabel_3);
 		
 		panel_1.setBounds(0, 11, 1047, 33);
 		contentPane.add(panel_1);

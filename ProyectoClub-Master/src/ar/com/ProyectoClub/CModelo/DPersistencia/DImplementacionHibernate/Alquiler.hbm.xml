@@ -32,6 +32,9 @@
         <property name="precioTotal" type="float">
             <column name="Precio_Total" precision="12" scale="0" not-null="true" />
         </property>
+        <property name="PagoAlquiler" type="boolean">
+            <column name="PagoAlquiler" not-null="true" />
+        </property>
         <property name="observaciones" type="string">
             <column name="Observaciones" length="65535" not-null="true" />
         </property>

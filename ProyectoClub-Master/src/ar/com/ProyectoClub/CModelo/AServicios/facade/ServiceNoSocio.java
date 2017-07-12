@@ -6,6 +6,7 @@ import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceNoSocio;
 import ar.com.ProyectoClub.CModelo.BGestores.GestorNoSocio;
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorNosocio;
 import ar.com.ProyectoClub.CModelo.CEntidades.NoSocioDTO;
+import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 
 public class ServiceNoSocio implements IServiceNoSocio {
 	
@@ -77,6 +78,15 @@ public class ServiceNoSocio implements IServiceNoSocio {
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
+		}
+	}
+	@Override
+	public List<NoSocioDTO> FiltrarNombreApellido(String nom, String ape) {
+		try{
+			return (Igestornosocio.FiltrarNombeApellido(nom, ape));
+		}
+		catch (Exception e) {
+			throw new RuntimeException("No se pudo realizar la busqueda debido al siguiente error "+ e.toString());
 		}
 	}
 

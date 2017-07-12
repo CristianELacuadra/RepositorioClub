@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 22-feb-2017 12:40:45 by Hibernate Tools 3.5.0.Final
+// Generated 11-jul-2017 9:12:03 by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -16,6 +16,7 @@ public class Personas implements java.io.Serializable {
 	private String apellido;
 	private String telefono;
 	private String domicilio;
+	private Integer domNro;
 	private Date fecNacimiento;
 	private Integer nroSocio;
 	private Integer matricula;
@@ -32,27 +33,30 @@ public class Personas implements java.io.Serializable {
 	public Personas() {
 	}
 
-	public Personas(Integer dni, String nombre, String apellido, String telefono, String domicilio, Date fecNacimiento,
-			boolean habilitado, boolean essocio) {
+	public Personas(Integer dni, String nombre, String apellido, String telefono, String domicilio, Integer domNro,
+			Date fecNacimiento, boolean habilitado, boolean essocio) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.telefono = telefono;
 		this.domicilio = domicilio;
+		this.domNro = domNro;
 		this.fecNacimiento = fecNacimiento;
 		this.habilitado = habilitado;
 		this.essocio = essocio;
 	}
 
 	public Personas(Integer dni, Categoria categoria, String nombre, String apellido, String telefono, String domicilio,
-			Date fecNacimiento, Integer nroSocio, Integer matricula, String sexo, String estado, String nacionalidad,
-			String estadoCivil, Date fechaIngreso, boolean habilitado, boolean essocio, Set cuotas, Set alquilers) {
+			Integer domNro, Date fecNacimiento, Integer nroSocio, Integer matricula, String sexo, String estado,
+			String nacionalidad, String estadoCivil, Date fechaIngreso, boolean habilitado, boolean essocio, Set cuotas,
+			Set alquilers) {
 		this.dni = dni;
 		this.categoria = categoria;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.telefono = telefono;
 		this.domicilio = domicilio;
+		this.domNro = domNro;
 		this.fecNacimiento = fecNacimiento;
 		this.nroSocio = nroSocio;
 		this.matricula = matricula;
@@ -113,6 +117,14 @@ public class Personas implements java.io.Serializable {
 
 	public void setDomicilio(String domicilio) {
 		this.domicilio = domicilio;
+	}
+
+	public Integer getDomNro() {
+		return this.domNro;
+	}
+
+	public void setDomNro(Integer domNro) {
+		this.domNro = domNro;
 	}
 
 	public Date getFecNacimiento() {

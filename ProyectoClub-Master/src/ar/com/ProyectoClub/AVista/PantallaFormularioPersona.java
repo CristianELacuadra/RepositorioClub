@@ -83,8 +83,11 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	public JComboBox comboCate;
 	public JComboBox cmbEstadoCivil; 
 	public Map<Integer, String> mapCategoria = new HashMap<Integer, String>();
+	private boolean Essocio;
+	public  JTextField txtDomNro;
+	public JLabel lblNro;
 
-	public PantallaFormularioPersona(PantallaPersonas vtnPantallaPersona,boolean b) {  
+	public PantallaFormularioPersona(PantallaSocios vtnPantallaPersona,boolean b) {  
 		super(vtnPantallaPersona,b);
 		addWindowListener(new WindowAdapter() {			
 			@Override
@@ -151,7 +154,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		btnRegistrar = new JButton();
 		btnLimpiar= new JButton();
 		cmbEstadoCivil= new JComboBox();
-		setBounds(100, 100, 914, 521);
+		setBounds(100, 100, 957, 556);
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
@@ -216,23 +219,23 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		jCDesktopPane1.add(lblDom);
 		
 		
-		txtDom.setBounds(101, 165, 224, 20);
+		txtDom.setBounds(101, 165, 190, 20);
 		jCDesktopPane1.add(txtDom);
 		
 		
 		lblTel.setText("TELEFONO");
-		lblTel.setBounds(10, 207, 81, 14);
+		lblTel.setBounds(10, 231, 81, 14);
 		jCDesktopPane1.add(lblTel);
 		
 		
-		txtTel.setBounds(101, 204, 173, 20);
+		txtTel.setBounds(101, 228, 173, 20);
 		jCDesktopPane1.add(txtTel);
 		
 		
 		panelDatosSocios.setBackground(Color.LIGHT_GRAY);
 		panelDatosSocios.setLayout(null);
 		panelDatosSocios.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panelDatosSocios.setBounds(335, 0, 461, 354);
+		panelDatosSocios.setBounds(377, 0, 419, 354);
 		jCDesktopPane1.add(panelDatosSocios);
 		
 		
@@ -337,6 +340,15 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		btnLimpiar.setBounds(495, 391, 120, 32);
 		jCDesktopPane1.add(btnLimpiar);
 		
+		lblNro = new JLabel();
+		lblNro.setText("NRO");
+		lblNro.setBounds(301, 168, 22, 14);
+		jCDesktopPane1.add(lblNro);
+		
+		txtDomNro = new JTextField();
+		txtDomNro.setBounds(328, 165, 51, 20);
+		jCDesktopPane1.add(txtDomNro);
+		
 		lblTitulo.setText("REGISTRO PERSONAS");
 		lblTitulo.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -359,8 +371,9 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		nuevapersona.setApellido(txtApe.getText());
 		nuevapersona.setFecNacimiento(dateFechNac.getDate());
 		nuevapersona.setDomicilio(txtDom.getText());
+		nuevapersona.setDomNro(Integer.parseInt(txtDom.getText()));
 		nuevapersona.setTelefono(txtTel.getText());
-		if(miCoordinador.ValidarEsSocio()){
+		if(Essocio){
 			nuevapersona.setNroSocio(Integer.parseInt(lblIdSocio.getText()));
 			int matricula= (txtMatri.getText().length()==0) ? 0: Integer.parseInt(txtMatri.getText());
 			nuevapersona.setMatricula(matricula);
@@ -385,11 +398,10 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			}
 			nuevapersona.setCategoria(nuevaCategoria);
 		}
-		if(miCoordinador.ValidarDatosPersona(nuevapersona)){
-			boolean Essocio=miCoordinador.ValidarEsSocio(); 
+		if(miCoordinador.ValidarDatosPersona(nuevapersona)){ 
 			miCoordinador.GuardarSocioNosocio(nuevapersona, Essocio);
 			this.limpiar();
-			if(miCoordinador.ValidarEsSocio()){
+			if(Essocio){
 			lblIdSocio.setText(miCoordinador.DevolverUltimoIdSocio().toString());
 			}
 		}
@@ -399,6 +411,14 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		}
 			
 	}
+	
+	public void setEssocio(boolean essocio) {
+		Essocio = essocio;
+	}
+	public boolean isEssocio() {
+		return Essocio;
+	}
+	
 	//limpiar
 	private void limpiar(){
 		txtDni.setText(null);
@@ -448,8 +468,13 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_ENTER){
-			this.CargaDatos();
+		try{
+			if(e.getKeyCode() == KeyEvent.VK_ENTER){
+				this.CargaDatos();
+			}
+		}
+		catch (Exception ex) {
+			JOptionPane.showMessageDialog(null,"ERROR,Contacte con el administrador" , ex.getMessage(), JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -464,5 +489,4 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		// TODO Auto-generated method stub
 		
 	}
-	
 }

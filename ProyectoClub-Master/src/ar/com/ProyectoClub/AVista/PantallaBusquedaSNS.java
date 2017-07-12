@@ -26,6 +26,7 @@ import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.BoxLayout;
 import java.awt.CardLayout;
 import javax.swing.JScrollPane;
@@ -36,6 +37,7 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import java.awt.event.MouseAdapter;
+import javax.swing.JRadioButton;
 
 public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyListener,MouseListener{
 	
@@ -54,6 +56,7 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 	public RowsRenderer resaltado;
 	public JCheckBox chcIncluidos;
 	public JButton btnSeleccionar; 
+	public JRadioButton rdbSocio; 
 	
 	public PantallaBusquedaSNS(javax.swing.JDialog ventana,boolean b) {  
 		super(ventana,b);
@@ -65,9 +68,9 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 	public void initComponents () {
 		contentPane = new JPanel();
 		panel = new JPanel();
-		resaltado= new RowsRenderer(4);
+		resaltado= new RowsRenderer(6);
 		btnSeleccionar= new JButton();
-		
+		rdbSocio= new JRadioButton("Socios");
 		
 		setBounds(100, 100, 717, 445);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -91,8 +94,13 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 		btnBuscar.setIcon(new ImageIcon(PantallaBusquedaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/buscar2.png")));
 		
 		chcIncluidos.setText("Incluir inhabilitados");
-		chcIncluidos.setBounds(16, 20, 128, 23);
+		chcIncluidos.setBounds(16, 27, 128, 23);
 		panel_2.add(chcIncluidos);
+		
+		
+		rdbSocio.setBounds(16, 7, 109, 23);
+		rdbSocio.setSelected(true);
+		panel_2.add(rdbSocio);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -154,10 +162,10 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 				
 				if(fila< jtdatos.getRowCount() && fila >=0 && columna< jtdatos.getColumnCount() && columna >=0){
 					Object value=jtdatos.getValueAt(fila, columna);
-					Object value2=jtdatos.getValueAt(fila, 0);
+					Object value2=jtdatos.getValueAt(fila, 2);
 					Tempdni=(Integer)value2;//Mantengo en una varible global el dni para ser dado de baja
 					if(value instanceof JButton){
-						Integer dni=(Integer)jtdatos.getValueAt(fila,0);
+						Integer dni=(Integer)jtdatos.getValueAt(fila,2);
 						((JButton)value).doClick();
 						JButton btn=(JButton) value;
 						//Tempdni=dni;
@@ -188,7 +196,7 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
         
         btnSeleccionar.setText("OK");
         btnSeleccionar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\apply.png"));
-        btnSeleccionar.setBounds(608, 360, 83, 35);
+        btnSeleccionar.setBounds(589, 360, 102, 35);
         contentPane.add(btnSeleccionar);
         
        
@@ -221,12 +229,17 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
     // actionperformed
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()== btnBuscar){
-			this.VerificarEntrada();
+		try{
+			if(e.getSource()== btnBuscar){
+				this.VerificarEntrada();
+			}
+			if(e.getSource()==btnSeleccionar){
+				Personas persona=miCoordinador.BuscarPersona(Tempdni);
+				miCoordinador.CargarDatosPersona(persona);
+			}
 		}
-		if(e.getSource()==btnSeleccionar){
-			Personas persona=miCoordinador.BuscarPersona(Tempdni);
-			miCoordinador.CargarDatosPersona(persona);
+		catch (Exception ex) {
+			JOptionPane.showMessageDialog(null,ex.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	private void VerificarEntrada(){
@@ -239,7 +252,7 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 			ape=txtApe.getText();
 		if(!txtNom.getText().isEmpty())
 			nom=txtNom.getText();
-		miCoordinador.Listar(jtdatos,nom,ape,dni);
+		miCoordinador.Listar(jtdatos,nom,ape,dni,rdbSocio.isSelected());
 	}
     //eventos del mouse
 	@Override

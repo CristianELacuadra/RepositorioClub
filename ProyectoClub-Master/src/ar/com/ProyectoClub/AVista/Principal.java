@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.Dialog.ModalExclusionType;
 
 import jcMousePanel.jcMousePanel;
@@ -68,6 +69,10 @@ public class Principal extends JFrame implements ActionListener{
 	
 	@SuppressWarnings("deprecation")
 	public Principal() {
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		jtoolbar1 = new JToolBar();
 		btnSocios = new j2Button();		
@@ -77,8 +82,6 @@ public class Principal extends JFrame implements ActionListener{
 		btnConfig = new j2Button();
 		btnSalir = new j2Button();
 		jCDesktopPane1 = new JDesktopPane();
-		
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		
 		btnSocios.setIcon(new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/user_person_people_6100.png")));
 		btnSocios.setColor1(new java.awt.Color(0, 0, 0));
@@ -206,6 +209,9 @@ public class Principal extends JFrame implements ActionListener{
 		
 		if (e.getSource()==btnNoSocio) {
 			miCoordinador. mostrarVentanaNoSocio();			
+		}
+		if(e.getSource()==btnCaja){
+			miCoordinador.MostrarVentanaCaja();
 		}
 		
 		if(e.getSource()==btnSalir){

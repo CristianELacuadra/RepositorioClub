@@ -15,6 +15,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import java.awt.Toolkit;
+import java.awt.Color;
+import java.awt.Font;
 
 public class PantallaDetallesInhabilitarSNS extends JDialog implements ActionListener{
     
@@ -25,15 +27,18 @@ public class PantallaDetallesInhabilitarSNS extends JDialog implements ActionLis
     
 	public PantallaDetallesInhabilitarSNS(PantallaBusquedaSNS vtnbusqueda,boolean b) {
 		super(vtnbusqueda,b);
+		setTitle("Club Avenida Ejercito - Detalles");
 		initComponents();	
 	}
 	
 	
 	private void initComponents() {
 		textDetalle= new JTextPane();
+		textDetalle.setFont(new Font("Arial", Font.PLAIN, 15));
+		textDetalle.setBackground(new Color(255, 248, 220));
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\logo.png"));
-		setBounds(100, 100, 435, 300);
+		setBounds(100, 100, 435, 369);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -41,7 +46,7 @@ public class PantallaDetallesInhabilitarSNS extends JDialog implements ActionLis
 		{
 			
 			textDetalle.setEditable(false);
-			textDetalle.setBounds(0, 0, 424, 261);
+			textDetalle.setBounds(0, 0, 424, 330);
 			contentPanel.add(textDetalle);
 		}
 	}

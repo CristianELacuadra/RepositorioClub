@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 22-feb-2017 12:40:45 by Hibernate Tools 3.5.0.Final
+// Generated 11-jul-2017 9:12:03 by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 
@@ -9,34 +9,37 @@ import java.util.Date;
 public class Caja implements java.io.Serializable {
 
 	private Integer idCaja;
-	private Cuota cuota;
 	private Alquiler alquiler;
+	private Cuota cuota;
 	private Date fecha;
 	private String descripcion;
 	private float monto;
 	private float subTotal;
 	private boolean tipo;
+	private boolean habilitar;
 
 	public Caja() {
 	}
 
-	public Caja(Date fecha, String descripcion, float monto, float subTotal, boolean tipo) {
+	public Caja(Date fecha, String descripcion, float monto, float subTotal, boolean tipo, boolean habilitar) {
 		this.fecha = fecha;
 		this.descripcion = descripcion;
 		this.monto = monto;
 		this.subTotal = subTotal;
 		this.tipo = tipo;
+		this.habilitar = habilitar;
 	}
 
-	public Caja(Cuota cuota, Alquiler alquiler, Date fecha, String descripcion, float monto, float subTotal,
-			boolean tipo) {
-		this.cuota = cuota;
+	public Caja(Alquiler alquiler, Cuota cuota, Date fecha, String descripcion, float monto, float subTotal,
+			boolean tipo, boolean habilitar) {
 		this.alquiler = alquiler;
+		this.cuota = cuota;
 		this.fecha = fecha;
 		this.descripcion = descripcion;
 		this.monto = monto;
 		this.subTotal = subTotal;
 		this.tipo = tipo;
+		this.habilitar = habilitar;
 	}
 
 	public Integer getIdCaja() {
@@ -47,20 +50,20 @@ public class Caja implements java.io.Serializable {
 		this.idCaja = idCaja;
 	}
 
-	public Cuota getCuota() {
-		return this.cuota;
-	}
-
-	public void setCuota(Cuota cuota) {
-		this.cuota = cuota;
-	}
-
 	public Alquiler getAlquiler() {
 		return this.alquiler;
 	}
 
 	public void setAlquiler(Alquiler alquiler) {
 		this.alquiler = alquiler;
+	}
+
+	public Cuota getCuota() {
+		return this.cuota;
+	}
+
+	public void setCuota(Cuota cuota) {
+		this.cuota = cuota;
 	}
 
 	public Date getFecha() {
@@ -101,6 +104,14 @@ public class Caja implements java.io.Serializable {
 
 	public void setTipo(boolean tipo) {
 		this.tipo = tipo;
+	}
+
+	public boolean isHabilitar() {
+		return this.habilitar;
+	}
+
+	public void setHabilitar(boolean habilitar) {
+		this.habilitar = habilitar;
 	}
 
 }

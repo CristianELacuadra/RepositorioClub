@@ -86,6 +86,10 @@ public class ServiceSocios implements IServiceSocio {
 			throw new RuntimeException("No se pudo realizar la busqueda debido al siguiente error "+ e.toString());
 		}
 	}
+	/*
+	 *este metodo por mas que sea un servicio de socio,hace un filtrado sobre las personas
+	 *en pocas palabras sobre NoSocio y Socio
+	 */
 	@Override
 	public List<Personas> FiltrarNombreApellido(String nom, String ape) {
 		try{

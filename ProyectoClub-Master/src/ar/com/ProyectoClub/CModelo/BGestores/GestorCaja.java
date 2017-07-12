@@ -20,7 +20,6 @@ import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ICajaDAO;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.CajaDaoImplHibernate;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.SociosDaoImplHibernate;
 
 public class GestorCaja implements IGestorCaja {
 	private ICajaDAO _cajadao;

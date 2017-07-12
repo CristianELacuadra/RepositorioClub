@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
                                          "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
@@ -13,12 +13,12 @@
   <property name="hibernate.show_sql">true</property>
   <property name="hibernate.transaction.auto_close_session">false</property>
   <property name="hibernate.validator.apply_to_ddl">false</property>
-  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Alquiler.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Caja.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Categoria.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Personas.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Usuario.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Cuota.hbm.xml"/>
   <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Inmuebles.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Usuario.hbm.xml"/>
-  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Personas.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Caja.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Alquiler.hbm.xml"/>
+  <mapping resource="ar/com/ProyectoClub/CModelo/DPersistencia/DImplementacionHibernate/Categoria.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>
