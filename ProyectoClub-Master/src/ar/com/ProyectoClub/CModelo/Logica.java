@@ -27,8 +27,12 @@ import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceNoSocio;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceSocios;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceUsuario;
 import ar.com.ProyectoClub.CModelo.CEntidades.Caja;
+import ar.com.ProyectoClub.CModelo.AServicios.facade.*;
+import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.*;
+import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
 import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
 import ar.com.ProyectoClub.CModelo.CEntidades.Cuota;
+import ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles;
 import ar.com.ProyectoClub.CModelo.CEntidades.NoSocioDTO;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 import ar.com.ProyectoClub.CModelo.CEntidades.Usuario;
@@ -47,6 +51,8 @@ public class Logica {
 	private IServiceNoSocio serviceNoSocio;
 	private IServiceCaja serviceCaja;
 	private IServiceCuota serviceCuota;
+	private IServiceAlquileres servicioAlquiler;
+	private IServiceInmuebles servicioInmueble;
 	
 	//instancia los servicios
 	
@@ -208,6 +214,14 @@ public class Logica {
 	
 	public List<Categoria> DevolverListaCategoria(){
 		return serviciocategoria.ListarCategorias();
+	}
+	public Inmuebles CrearInstanciaInmueble() {
+		return servicioInmueble.CrearInmueble();
+		 
+	}
+	public Alquiler CrearInstanciaAlquiler() {
+		
+		return servicioAlquiler.CrearAlquiler();
 	}
 	
 /*

@@ -8,6 +8,7 @@ import java.util.List;
 import ar.com.ProyectoClub.CModelo.AServicios.FechaHora;
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorAlquiler;
 import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
+import ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.IAlquilerDAO;
@@ -128,5 +129,25 @@ public class GestorAlquiler implements IGestorAlquiler {
 			_uno.setActivo(entity.isActivo());//el alquiler pasa a estado activo
 			this.Guardar(_uno);//guarda los datos
 	}
+	
+	public Integer ObtenerSiguienteIdAlquiler(){
+		Integer aux=0;
+		List<Alquiler> _list=new ArrayList<Alquiler>();
+		try {
+			_list=this.Listar();
+			if(!_list.isEmpty()){
+				for(Alquiler inm:_list){
+					if(inm.getNroAlquiler()>aux){
+					aux=(inm.getNroAlquiler()+1);
+					}
+				}
+			}
+		
+		} catch (Exception e) {
+			}
+		return aux;
+		
+	}
 
+	
 }
