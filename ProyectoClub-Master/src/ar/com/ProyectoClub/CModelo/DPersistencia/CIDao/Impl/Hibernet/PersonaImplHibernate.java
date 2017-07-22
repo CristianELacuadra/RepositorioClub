@@ -34,7 +34,7 @@ public class PersonaImplHibernate extends GenericDAOImplHibernate<Personas, Inte
 			 */
 			//List<Personas> lista=_sessiondehilo.createQuery("SELECT s FROM Personas s WHERE s.essocio=true AND s.habilitado=true").list();
 			Query q= _sessiondehilo.createQuery("SELECT s FROM Personas s WHERE s.essocio=true");
-			q.setMaxResults(100); //Devuelve un maximo de 100	
+			//q.setMaxResults(100); //Devuelve un maximo de 100	
 			List<Personas> lista=q.list();
 			_sessiondehilo.getTransaction().commit();
 			return lista;

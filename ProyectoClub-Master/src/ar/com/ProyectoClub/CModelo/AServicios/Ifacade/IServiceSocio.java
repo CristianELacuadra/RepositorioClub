@@ -18,6 +18,7 @@ public interface IServiceSocio{
 	public List<Personas> ObtnerTresPersonas(Integer id);
 	public Personas BusquedaId(Integer dni); //busqueda por dni
 	public List<Personas> FiltrarNombreApellido(String nom,String ape);
+	public void CambiarEstadoMoroso(List<Personas> listaPersonas);
 	
 	//public String  DeshabilitarSocio(Sociosa socio) throws BussinessException;
 	//public boolean  ActulizarSocio(Sociosa socio)throws BussinessException;

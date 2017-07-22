@@ -3,6 +3,11 @@ package ar.com.ProyectoClub.BControlador;
 import java.awt.List;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -11,8 +16,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.toedter.calendar.JDateChooser;
+
 import ar.com.ProyectoClub.AVista.*;
 import ar.com.ProyectoClub.CModelo.Logica;
+import ar.com.ProyectoClub.CModelo.AServicios.FechaHora;
 import ar.com.ProyectoClub.CModelo.CEntidades.*;
 
 public class ControllerCoordinador {
@@ -27,6 +35,8 @@ public class ControllerCoordinador {
 	private PantallaBajaSNS miVentanaBajaSNS;
 	private PantallaCategoriasTodas miVentanaCategorias;
 	private PantallaCaja miVentanaCaja;
+	private PantallaIngresoEgreso miventanaIngresoEgreso;
+	private PantallaConfiguracion miVentanaConfiguracion;
 	
 	public Personas CrearPersona(){
 		return miLogica.CrearInstanciaPersona();
@@ -114,8 +124,87 @@ public class ControllerCoordinador {
 	public void setMiVentanaCaja(PantallaCaja miVentanaCaja) {
 		this.miVentanaCaja = miVentanaCaja;
 	}
+	public PantallaIngresoEgreso getMiventanaIngresoEgreso() {
+		return miventanaIngresoEgreso;
+	}
+	public void setMiventanaIngresoEgreso(PantallaIngresoEgreso miventanaIngresoEgreso) {
+		this.miventanaIngresoEgreso = miventanaIngresoEgreso;
+	}
+	
+	public PantallaConfiguracion getMiVentanaConfiguracion() {
+		return miVentanaConfiguracion;
+	}
+	public void setMiVentanaConfiguracion(PantallaConfiguracion miVentanaConfiguracion) {
+		this.miVentanaConfiguracion = miVentanaConfiguracion;
+	}
 //////////////////////////////////////////////////////////
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	
+	public java.util.List<Categoria> ListarCategorias(){
+		return miLogica.DevolverListaCategoria();
+	}
+	public void CerraConfiguracion(){
+		miVentanaConfiguracion.dateProxGeneracion.setDate(null);
+		miVentanaConfiguracion.dateUltGeneracion.setDate(null);
+		miVentanaConfiguracion.dispose();
+	}
+	public void MostrarVentnaConfiguracion(){
+		miVentanaConfiguracion.setVisible(true);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void ConsultarUltimaGeneracionCuota(){
+		Date fechaGene= new Date();
+		fechaGene= miLogica.FechaUltimaGeneracionCuota(); 
+		miVentanaConfiguracion.dateUltGeneracion.setDate(fechaGene);
+		Date fechaProx= new Date();
+		fechaProx=miLogica.sumarFechasDias(fechaGene);
+		fechaProx.setDate(01);
+		miVentanaConfiguracion.dateProxGeneracion.setDate(fechaProx);
+	}
+	
+	//lanza el proceso que verifica si hay cuotas impagas y cambia el estado a los socios
+	public void ProcesarMorosos(){
+		miLogica.ProcesoMorosos();
+	}
+	
+	//Generacion Automatica
+	@SuppressWarnings("deprecation")
+	public void LanzarPrcesoAutGeneracionCuota(){
+		if(FechaHora.FechaActual().getDate()==01){
+			miLogica.LanzarPrcesoGeneracionCuota();
+		}
+	}
+    
+	//Generacion Creada por el usuario Administrador
+	public void LanzarPrcesoUsuGeneracionCuota(){
+			miLogica.LanzarPrcesoGeneracionCuota();
+	}
+
+	public void MostrarVentanaIngresoEgreso(){
+		if(miventanaIngresoEgreso.isEsIngreso())
+			miventanaIngresoEgreso.txtTipo.setText("Ingreso");
+		else
+			miventanaIngresoEgreso.txtTipo.setText("Egreso");
+		miventanaIngresoEgreso.setVisible(true);
+	}
+	public Caja CrearRegistroCaja(){
+		return miLogica.CrearInstanciaCaja();
+	}
+	
+	public void GuardarIngresoEgreso(Caja registro){
+		if(miventanaIngresoEgreso.isEsIngreso())
+			registro.setTipo(true);
+		else
+			registro.setTipo(false);
+		miLogica.GuardarIngresoEgreso(registro);
+	}
+	public void CerrarVentanaIngEgre(){
+		miventanaIngresoEgreso.dispose();
+	}
+	
+	@SuppressWarnings({ "static-access", "unchecked" })
 	public void CargarDatosPersona(Personas persona){
 		if(miVentanaBajaSNS.isVisible()){ //Carga los datos para la baja
 			miVentanaBajaSNS.txtDni.setText(Integer.toString(persona.getDni()));
@@ -127,97 +216,40 @@ public class ControllerCoordinador {
 			miVentanaBusquedaSNS.dispose();
 		}
 		else{
-			if(miVentanaCobranza.isVisible()){ // carga los datos para la cobranza
-				miVentanaCobranza.txtdni.setText(Integer.toString(persona.getDni()));
-				miVentanaCobranza.txtDomi.setText(persona.getDomicilio());
-				miVentanaCobranza.txtMatri.setText(Integer.toString(persona.getMatricula()));
-				miVentanaCobranza.txtNsocio.setText(Integer.toString(persona.getNroSocio()));
-				miVentanaCobranza.txtNyA.setText(persona.getNombre()+" "+persona.getApellido());
-				miVentanaCobranza.txtTel.setText(persona.getTelefono());
-				miVentanaCobranza.txtCat.setText(persona.getCategoria().getNombre());
-				miVentanaBusquedaSNS.dispose();
-			}
-			else{
-				//estable los valores para la ventana socio
-				if(miVentanaSocios.isVisible()){
-					//Carga los datos de la persona
-					miVentanaSocios.txtDom.setText(persona.getDomicilio());
-					miVentanaSocios.txtNroDom.setText(persona.getDomNro().toString());
-					miVentanaSocios.txtdni.setText(Integer.toString(persona.getDni()));
-					miVentanaSocios.txtMatri.setText(Integer.toString(persona.getMatricula()));
-					miVentanaSocios.txtNro.setText(Integer.toString(persona.getNroSocio()));
-					miVentanaSocios.txtNom.setText(persona.getNombre());
-					miVentanaSocios.txtApe.setText(persona.getApellido());
-					miVentanaSocios.txtTel.setText(persona.getTelefono());
-					miVentanaSocios.dateNac.setDate(persona.getFecNacimiento());
-					miVentanaSocios.dateIngre.setDate(persona.getFechaIngreso());
-					if(persona.getSexo().equals("Masculino")){
-						miVentanaSocios.checkMasculino.setSelected(true);
-						miVentanaSocios.checkFemenino.setSelected(false);
+			//estable los valores para la ventana socio
+			if(miVentanaSocios.isVisible()){
+				//Carga los datos de la persona
+				miVentanaSocios.txtDom.setText(persona.getDomicilio());
+				miVentanaSocios.txtNroDom.setText(persona.getDomNro().toString());
+				miVentanaSocios.txtdni.setText(Integer.toString(persona.getDni()));
+				miVentanaSocios.txtMatri.setText(Integer.toString(persona.getMatricula()));
+				miVentanaSocios.txtNro.setText(Integer.toString(persona.getNroSocio()));
+				miVentanaSocios.txtNom.setText(persona.getNombre());
+				miVentanaSocios.txtApe.setText(persona.getApellido());
+				miVentanaSocios.txtTel.setText(persona.getTelefono());
+				miVentanaSocios.dateNac.setDate(persona.getFecNacimiento());
+				miVentanaSocios.dateIngre.setDate(persona.getFechaIngreso());
+				miVentanaSocios.txtNombreCat.setText(persona.getCategoria().getNombre());
+				miVentanaSocios.UltimoIdCategoria=persona.getCategoria().getIdCategoria();
+				miVentanaSocios.comboSexo.setSelectedItem(persona.getSexo());
+				miVentanaSocios.txtNac.setText(persona.getNacionalidad());
+				if(miVentanaSocios.comboCate.getItemCount()>0){
+					for(int i=0;i<miVentanaSocios.comboCate.getItemCount();i++){
+						miVentanaSocios.comboCate.removeItemAt(i);
 					}
-					else{
-						if(persona.getSexo().equals("Femenino")){
-							miVentanaSocios.checkMasculino.setSelected(false);
-							miVentanaSocios.checkFemenino.setSelected(true);
-						}
-					}
-					switch (persona.getEstadoCivil()) {
-					case "Casado/a":
-						miVentanaSocios.checkCasado.setSelected(true);
-						miVentanaSocios.checkSoltero.setSelected(false);
-						miVentanaSocios.checkcompro.setSelected(false);
-						miVentanaSocios.checkDivor.setSelected(false);
-						miVentanaSocios.checkViudo.setSelected(false);
-						break;
-					case "Soltero/a":
-						miVentanaSocios.checkCasado.setSelected(false);
-						miVentanaSocios.checkSoltero.setSelected(true);
-						miVentanaSocios.checkcompro.setSelected(false);
-						miVentanaSocios.checkDivor.setSelected(false);
-						miVentanaSocios.checkViudo.setSelected(false);
-						break;
-					case "Comprometido/a":
-						miVentanaSocios.checkCasado.setSelected(false);
-						miVentanaSocios.checkSoltero.setSelected(false);
-						miVentanaSocios.checkcompro.setSelected(true);
-						miVentanaSocios.checkDivor.setSelected(false);
-						miVentanaSocios.checkViudo.setSelected(false);
-						break;
-					case "Divorciado/a" :
-						miVentanaSocios.checkCasado.setSelected(false);
-						miVentanaSocios.checkSoltero.setSelected(false);
-						miVentanaSocios.checkcompro.setSelected(false);
-						miVentanaSocios.checkDivor.setSelected(true);
-						miVentanaSocios.checkViudo.setSelected(false);
-						break;
-					case "Viudo/a":
-						miVentanaSocios.checkCasado.setSelected(false);
-						miVentanaSocios.checkSoltero.setSelected(false);
-						miVentanaSocios.checkcompro.setSelected(false);
-						miVentanaSocios.checkDivor.setSelected(false);
-						miVentanaSocios.checkViudo.setSelected(true);
-						break;
-					}
-					//datos categoria
-					miVentanaSocios.txtMonCate.setText(String.valueOf(persona.getCategoria().getMonto()));
-					miVentanaSocios.txtDesc.setText(String.valueOf(persona.getCategoria().getDescuento()));
-					//cargo el combo de categoria
-					if(miVentanaSocios.comboCate.getItemCount()>0){
-						for(int i=0;i<miVentanaSocios.comboCate.getItemCount();i++){
-							miFormularioPersona.comboCate.removeItemAt(i);
-						}
-					}
-					miFormularioPersona.comboCate.addItem("pe");
-					for(Categoria categoria : miLogica.DevolverListaCategoria()){
-						miFormularioPersona.comboCate.addItem(categoria.getNombre()); //Cargo Categorias y sus id
-						miFormularioPersona.mapCategoria.put(categoria.getIdCategoria(), categoria.getNombre());
-					}
-					
-					this.EnableBotonesVtnSocios(false);					
-					miVentanaBusquedaSNS.dispose();	
 				}
+
+				miVentanaSocios.comboCate.addItem("Seleccione una categoria");
+				for(Categoria categoria : miLogica.DevolverListaCategoria()){
+					miVentanaSocios.comboCate.addItem(categoria.getNombre()); //Cargo Categorias y sus id
+					miVentanaSocios.mapCategoria.put(categoria.getIdCategoria(), categoria.getNombre());
+				}
+				miVentanaSocios.comboEstadoCivil.setSelectedItem(persona.getEstadoCivil());
+				this.EnableBotonesVtnSocios(false);					
+				miVentanaBusquedaSNS.dispose();	
 			}
 		}
+
 	}
 	public void MostrarPantallaCategorias(JTable tablaD){
 		java.util.List<Categoria> categorias=new ArrayList<Categoria>();
@@ -247,34 +279,108 @@ public class ControllerCoordinador {
 		miVentanaCategorias.setVisible(true);
 	}
 	
-	public void MostrarVentanaCaja(){
+	public void MostrarVentanaCaja(JTable tablaD){
 		miVentanaCaja.show();
+		miVentanaCaja.lblUsuario.setText(miVentanaPrincipal.getTitle());
+		miVentanaCaja.chcEgresos.setSelected(true);
+		miVentanaCaja.chckIngresos.setSelected(true);
+		tablaD.setRowHeight(25);
+		//fecha
+		tablaD.getColumnModel().getColumn(0).setMaxWidth(110);
+		//descripcion
+		tablaD.getColumnModel().getColumn(1).setMaxWidth(1000);
+		//tipo
+		tablaD.getColumnModel().getColumn(2).setMaxWidth(90);
+		//importe
+		tablaD.getColumnModel().getColumn(3).setMaxWidth(150);
+		
+	}
+	
+	private boolean ValidarUltimoIngreso(){
+		//me fijo si esta vacia la caja
+		int total=miLogica.TotalRegistradoCaja().size();
+		if(total==0){
+			return false;
+		}
+		else
+			//miVentanaCaja.txtIngrPlata.setEnabled(false);
+			//miVentanaCaja.btnIngresoMonto.setEnabled(false);
+			return true;
+		
+	}
+	
+	public void BuscarCajaParametros(Date FechaDesde,Date FechaHasta,String Descripcion,boolean Ingreso,boolean Egreso,JTable tablaD){
+		if(!this.ValidarUltimoIngreso()){ // valida si hay registros en la caja
+			JOptionPane.showMessageDialog(null,"No se encuentra registro en la base de datos,Por favor ingrese un monto inicial ","Informacion",JOptionPane.INFORMATION_MESSAGE);
+		}
+		else{
+			java.util.List<Caja> cajas=new ArrayList<Caja>();
+			float SubTotal=0;
+			DefaultTableModel  modeloT = new DefaultTableModel(){
+				public boolean isCellEditable(int row,int colum){  //la filas de mi tabla no pueden ser editable
+					return false;
+				}
+			};
+
+			Object[] columna = new Object[4];
+			tablaD.setModel(modeloT);
+			modeloT.addColumn("FECHA");
+			modeloT.addColumn("DESCRIPCION");
+			modeloT.addColumn("TIPO");
+			modeloT.addColumn("MONTO");
+			cajas=miLogica.BuscarCajasParametros(FechaDesde, FechaHasta, Descripcion, Ingreso, Egreso);
+			int numRegistros=cajas.size();
+			for (int i = 0; i < numRegistros; i++) {
+				columna[0] = cajas.get(i).getFecha();
+				columna[1] = cajas.get(i).getDescripcion();
+				if(cajas.get(i).isTipo()){
+					columna[2] = "I";
+					SubTotal += cajas.get(i).getMonto(); //suma el subtotal
+				}
+				else{
+					columna[2]="E";
+					SubTotal -= cajas.get(i).getMonto();//resta el subtotal
+				}
+				columna[3]= String.valueOf(cajas.get(i).getMonto()); 
+				modeloT.addRow(columna);
+			}
+			//fecha
+			tablaD.getColumnModel().getColumn(0).setMaxWidth(110);
+			//descripcion
+			tablaD.getColumnModel().getColumn(1).setMaxWidth(1000);
+			//tipo
+			tablaD.getColumnModel().getColumn(2).setMaxWidth(90);
+			//importe
+			tablaD.getColumnModel().getColumn(3).setMaxWidth(150);
+			miVentanaCaja.txtSubTotal.setText(String.valueOf(SubTotal));
+		}
 	}
 	
 	@SuppressWarnings("static-access")
 	public void EnableBotonesVtnSocios(boolean valor){
 		//pongo enable los valores que no se puede modificar
-		miVentanaSocios.txtdni.setEnabled(valor);
-		miVentanaSocios.txtNro.setEnabled(valor);
-		miVentanaSocios.txtMatri.setEnabled(valor);
-		miVentanaSocios.txtApe.setEnabled(valor);
-		miVentanaSocios.txtNom.setEnabled(valor);
-		miVentanaSocios.txtTel.setEnabled(valor);
+		miVentanaSocios.txtdni.setEditable(valor);
+		miVentanaSocios.txtNro.setEditable(valor);
+		miVentanaSocios.txtMatri.setEditable(valor);
+		miVentanaSocios.txtApe.setEditable(valor);
+		miVentanaSocios.txtNom.setEditable(valor);
+		miVentanaSocios.txtTel.setEditable(valor);
 		miVentanaSocios.dateIngre.setEnabled(valor);
 		miVentanaSocios.dateNac.setEnabled(valor);
 		miVentanaSocios.btnEditar.setEnabled(!valor);
 		miVentanaSocios.btneliminar.setEnabled(!valor);
 		miVentanaSocios.btnCobranza.setEnabled(!valor);
 		miVentanaSocios.btnimprimir.setEnabled(!valor);
-		miVentanaSocios.checkFemenino.setEnabled(valor);
-		miVentanaSocios.checkMasculino.setEnabled(valor);
+		miVentanaSocios.comboEstadoCivil.setEnabled(valor);
 		miVentanaSocios.btnBuscar.setEnabled(valor);
-		miVentanaSocios.txtDom.setEnabled(valor);
-		miVentanaSocios.txtNroDom.setEnabled(valor);
-		miVentanaSocios.txtNac.setEnabled(valor);
-		miVentanaSocios.txtMonCate.setEnabled(valor);
-		miVentanaSocios.txtDesc.setEnabled(valor);
-		miVentanaSocios.txtDescrip.setEnabled(valor);
+		miVentanaSocios.txtDom.setEditable(valor);
+		miVentanaSocios.txtNroDom.setEditable(valor);
+		miVentanaSocios.txtNac.setEditable(valor);
+		miVentanaSocios.comboCate.setEnabled(valor);
+		miVentanaSocios.comboSexo.setEnabled(valor);
+		miVentanaSocios.txtNro.setEditable(valor);
+		miVentanaSocios.txtMatri.setEditable(valor);
+		miVentanaSocios.txtNombreCat.setEditable(valor);
 	}
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public Personas BuscarPersona(Integer dni){
@@ -345,7 +451,6 @@ public class ControllerCoordinador {
 		modeloT.addColumn("");
 		
 		if(dni.isEmpty() && nom.isEmpty() && ape.isEmpty()){
-			JOptionPane.showMessageDialog(null,"El rango de busqueda esta limitado a 100 personas");
 			listaSocios=miLogica.ListarParcialSocio();
 		}
 		else{
@@ -521,7 +626,7 @@ public class ControllerCoordinador {
 	public boolean ValidarDatosPersona(Personas persona){
 		boolean retorno=true;
 		//datos obligatorio para ambos
-		if(persona.getDni()==0 || persona.getNombre()==null || persona.getApellido()==null || persona.getFecNacimiento()==null ||
+		if(persona.getDomNro()==0 || persona.getDni()==0 || persona.getNombre()==null || persona.getApellido()==null || persona.getFecNacimiento()==null ||
 				persona.getDomicilio()==null || persona.getTelefono()==null)
 			retorno=false;
 		else{
@@ -554,8 +659,25 @@ public class ControllerCoordinador {
 	public void mostrarVentanaSocio() {
 		miVentanaSocios.show();// setVisible(true);
 	}
-	public void mostrarVentanaCobranza(){
-		miVentanaCobranza.setVisible(true);
+	
+	public void CargarDatosCobranza(Personas persona){
+		   //Datos persona
+			miVentanaCobranza.txtdni.setText(Integer.toString(persona.getDni()));
+			miVentanaCobranza.txtDomi.setText(persona.getDomicilio());
+			miVentanaCobranza.txtMatri.setText(Integer.toString(persona.getMatricula()));
+			miVentanaCobranza.txtNsocio.setText(Integer.toString(persona.getNroSocio()));
+			miVentanaCobranza.txtNyA.setText(persona.getNombre()+" "+persona.getApellido());
+			miVentanaCobranza.txtTel.setText(persona.getTelefono());
+			miVentanaCobranza.txtCat.setText(persona.getCategoria().getNombre());
+			//cuota
+			Cuota cuota=miLogica.CrearInstanciaCuota();
+			//cuota=miLogica.busca
+			miVentanaCobranza.setVisible(true);
+	}
+	
+	public void mostrarVentanaCobranza(Personas persona){
+		this.CargarDatosCobranza(persona);
+		
 	}
 	public void mostrarVentanaNoSocio() {
 		///------------------------------------------------------------------------completar
@@ -648,7 +770,7 @@ public class ControllerCoordinador {
 	}
 	
 	public void GuardarPersonas(Personas entity){
-		
+		miLogica.GuardarSocio(entity);
 	}
 	
 /*

@@ -39,6 +39,7 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 	private JLabel lblCuotasImpagas; 
 	private JScrollPane scrollPane; 
 	public JTable jtDatosCuota;
+	public JTextPane txtDescrip;
 	
 	public PantallaCobranzaCuota(PantallaSocios vtnPantallaSocios,boolean b) {
 		super(vtnPantallaSocios,b);
@@ -158,35 +159,6 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		btnBuscar.setBounds(970, 137, 57, 33);
 		panel.add(btnBuscar);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_4.setBounds(660, 97, 284, 73);
-		panel.add(panel_4);
-		panel_4.setLayout(null);
-		
-		JLabel lblDesde = new JLabel("DESDE");
-		lblDesde.setBounds(10, 45, 32, 14);
-		panel_4.add(lblDesde);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(63, 42, 69, 20);
-		panel_4.add(comboBox);
-		
-		JLabel lblHasta = new JLabel("HASTA");
-		lblHasta.setBounds(159, 45, 33, 14);
-		panel_4.add(lblHasta);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(206, 42, 68, 20);
-		panel_4.add(comboBox_1);
-		
-		JLabel lblNewLabel_3 = new JLabel("Filltro Cuotas");
-		lblNewLabel_3.setBackground(new Color(240, 240, 240));
-		lblNewLabel_3.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_3.setForeground(new Color(0, 0, 0));
-		lblNewLabel_3.setBounds(116, 0, 78, 14);
-		panel_4.add(lblNewLabel_3);
-		
 		panel_1.setBounds(0, 11, 1047, 33);
 		contentPane.add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
@@ -203,7 +175,7 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		
 		lblCuotasImpagas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCuotasImpagas.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblCuotasImpagas.setBounds(0, 11, 849, 21);
+		lblCuotasImpagas.setBounds(129, 11, 849, 21);
 		panel_3.add(lblCuotasImpagas);
 		
 		scrollPane.setBounds(10, 43, 1017, 124);
@@ -214,10 +186,10 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		lblNewLabel_2.setBounds(10, 205, 101, 14);
 		panel_3.add(lblNewLabel_2);
 		
-		JTextPane textPane = new JTextPane();
-		textPane.setBackground(new Color(255, 248, 220));
-		textPane.setBounds(110, 205, 264, 154);
-		panel_3.add(textPane);
+		txtDescrip= new JTextPane();
+		txtDescrip.setBackground(new Color(255, 248, 220));
+		txtDescrip.setBounds(110, 205, 264, 154);
+		panel_3.add(txtDescrip);
 		
 		//Panel cuotas
 		jtDatosCuota.setModel(new javax.swing.table.DefaultTableModel(

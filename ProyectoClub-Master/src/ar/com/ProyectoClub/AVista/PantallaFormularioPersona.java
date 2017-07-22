@@ -371,7 +371,8 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		nuevapersona.setApellido(txtApe.getText());
 		nuevapersona.setFecNacimiento(dateFechNac.getDate());
 		nuevapersona.setDomicilio(txtDom.getText());
-		nuevapersona.setDomNro(Integer.parseInt(txtDom.getText()));
+		int domnro= (txtDomNro.getText().length()==0) ? 0: Integer.parseInt(txtDomNro.getText());
+		nuevapersona.setDomNro(domnro);
 		nuevapersona.setTelefono(txtTel.getText());
 		if(Essocio){
 			nuevapersona.setNroSocio(Integer.parseInt(lblIdSocio.getText()));
@@ -399,6 +400,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			nuevapersona.setCategoria(nuevaCategoria);
 		}
 		if(miCoordinador.ValidarDatosPersona(nuevapersona)){ 
+			//if(txtApe.getText().isEmpty() || txtDni.getText().isEmpty() || txtNom.getText().isEmpty() || txtDomNro.getText().isEmpty() || txtMatri.getText()) 
 			miCoordinador.GuardarSocioNosocio(nuevapersona, Essocio);
 			this.limpiar();
 			if(Essocio){
@@ -433,6 +435,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		comboCate.setSelectedItem("Seleccione una categoria");
 		txtNacion.setText(null);
 		dateFechIngreso.setCalendar(null);
+		txtDomNro.setText(null);
 		
 	}
 	//escuchando al usuario

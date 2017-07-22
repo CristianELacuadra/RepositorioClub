@@ -23,14 +23,13 @@
         <property name="monto" type="float">
             <column name="Monto" precision="12" scale="0" not-null="true" />
         </property>
-        <property name="subTotal" type="float">
-            <column name="sub_total" precision="12" scale="0" not-null="true">
-                <comment>campo que almacena el resto de la plata total</comment>
-            </column>
-        </property>
         <property name="tipo" type="boolean">
             <column name="Tipo" not-null="true">
                 <comment>Identificador de ingreso o egreso</comment>
+            </column>
+        </property>
+        <property name="habilitar" type="boolean">
+            <column name="Habilitar" not-null="true">
             </column>
         </property>
     </class>

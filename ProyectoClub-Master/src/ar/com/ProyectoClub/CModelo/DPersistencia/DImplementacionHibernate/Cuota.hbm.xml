@@ -11,11 +11,8 @@
         <many-to-one name="personas" class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" fetch="select">
             <column name="Dni" not-null="true" />
         </many-to-one>
-        <property name="mes" type="java.lang.Integer">
-            <column name="Mes" not-null="true" />
-        </property>
-        <property name="anio" type="java.lang.Integer">
-            <column name="anio" not-null="true" />
+        <property name="fechaGeneracion" type="date">
+            <column name="FechaGeneracion" length="10" />
         </property>
         <property name="fechaPago" type="date">
             <column name="Fecha_pago" length="10" />

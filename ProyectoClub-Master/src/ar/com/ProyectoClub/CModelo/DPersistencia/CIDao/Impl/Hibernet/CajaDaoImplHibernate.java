@@ -1,14 +1,22 @@
 package ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.metamodel.relational.IllegalIdentifierException;
 
+import com.toedter.calendar.JDateChooser;
+
 import ar.com.ProyectoClub.CModelo.CEntidades.Caja;
+import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
+import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.Imple.GenericDAOImplHibernate;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ICajaDAO;
 
@@ -54,23 +62,39 @@ public class CajaDaoImplHibernate extends GenericDAOImplHibernate<Caja, Integer>
 		}
 	}
 		
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
-	public List<Caja> ListaFecha(Integer anio, Integer mes, Integer dia,boolean tipo) {
+	public List<Caja> ListaPorRangoFecha(Date FechaDesde,Date FechaHasta,boolean Ingreso,boolean Egreso) {		
 		try {
 			listcaja.clear();
 			//listcaja=null;
 			Setsession();
 			SetTransaction();
-			String query="SELECT c FROM Caja c WHERE day(c.fecha)="+dia.toString()+"and  month(c.fecha)="+mes.toString()+"and YEAR(c.fecha)="+anio.toString()+"and c.tipo="+tipo;
-			listcaja= _sessiondehilo.createQuery(query).list();
+			String consulta=new String(); 
+			String Desde=new String();
+			String Hasta=new String();
+			int dd=01;
+			int mmDesde=FechaDesde.getMonth()+1;
+			int aaaaDesde=FechaDesde.getYear()+1900;
+			int mmHasta=FechaHasta.getMonth()+1;
+			int aaaaHasta=FechaHasta.getYear()+1900;
+			Desde=aaaaDesde+"-"+mmDesde+"-"+dd;
+			Hasta=aaaaHasta+"-"+mmHasta+"-"+dd;
+			if(Egreso && Ingreso)
+				consulta="SELECT c FROM Caja c WHERE c.fecha BETWEEN "+"'"+Desde+"'"+" AND "+"'"+Hasta+"'"; //filtro por descripcion
+			if(Egreso && !Ingreso)
+				consulta="SELECT c FROM Caja c WHERE c.tipo ="+ !Egreso +" AND c.fecha BETWEEN "+"'"+Desde+"'"+" AND "+"'"+Hasta+"'";;
+			if(!Egreso && Ingreso)
+				consulta="SELECT c FROM Caja c WHERE c.tipo ="+ Ingreso +" AND c.fecha BETWEEN "+"'"+Desde+"'"+" AND "+"'"+Hasta+"'";;	
+			
+			listcaja= _sessiondehilo.createQuery(consulta).list();
 			return listcaja;
 		}
 		catch (Exception e) {
 			_sessiondehilo.beginTransaction().rollback();
 			_sessiondehilo.close();
 			throw new RuntimeException(e);
-			
+
 		}
 	}
 	@SuppressWarnings("unchecked")
@@ -113,7 +137,7 @@ public class CajaDaoImplHibernate extends GenericDAOImplHibernate<Caja, Integer>
 		}
 		catch (Exception e) {
 			_sessiondehilo.close();
-			throw new RuntimeException("Error a realizar la consulta"+e.toString());
+			throw new RuntimeException(e.toString());
 		}
 	}
 	/**
@@ -126,11 +150,12 @@ public class CajaDaoImplHibernate extends GenericDAOImplHibernate<Caja, Integer>
 	@Override
 	public List<Caja> ListaTotalEgresos() {
 		try {
-			listcaja.clear();
-			//listcaja=null;
+			
 			String consulta=new String();
+			listcaja.clear();
 			Setsession();
-			consulta="SELECT s FROM Caja s WHERE s.tipo="+false; //retorna historial de ingreso	
+			SetTransaction();
+			consulta="SELECT s FROM Caja s WHERE s.tipo="+false; //retorna historial de engreso	
 			listcaja= _sessiondehilo.createQuery(consulta).list();		
 			return listcaja;
 		}
@@ -167,6 +192,46 @@ public class CajaDaoImplHibernate extends GenericDAOImplHibernate<Caja, Integer>
 			_sessiondehilo.beginTransaction().rollback();
 			_sessiondehilo.close();
 			throw new RuntimeException(ex);
+		}
+	}
+	@Override
+	public Integer ObtenerUltimoIdIngresado() {
+		try {
+			Setsession();
+			SetTransaction();
+			Integer IdCaja= (Integer) _sessiondehilo.createQuery("SELECT MAX (q.idCaja) FROM Caja q").uniqueResult();
+			return IdCaja;
+		}
+		catch(Exception ex){
+			_sessiondehilo.beginTransaction().rollback();
+			_sessiondehilo.close();
+			throw new RuntimeException(ex);
+		}
+	}
+	@Override
+	public List<Caja> BusquedaPorDescripcion(String Descripcion,boolean Ingreso,boolean Egreso) {
+		try {
+			Setsession();
+			SetTransaction();
+			String consulta=new String();
+			
+			//Distintas consultas
+			if(!Descripcion.isEmpty() && (Egreso && Ingreso))
+				consulta="SELECT c FROM Caja c WHERE c.descripcion LIKE '%"+Descripcion+"%'"; //filtro por descripcion
+			if(!Descripcion.isEmpty() && (!Egreso && Ingreso))
+				consulta="SELECT c FROM Caja c WHERE c.descripcion LIKE '%"+Descripcion+"%'"+" AND tipo="+Ingreso; //filtro por descripcion y ingreso
+			if(!Descripcion.isEmpty() && (Egreso && !Ingreso))
+				consulta="SELECT c FROM Caja c WHERE c.descripcion LIKE '%"+Descripcion+"%'"+" AND tipo="+!Egreso; //filtro por descripcion e egreso
+			
+			Query query=_sessiondehilo.createQuery(consulta);
+			List<Caja> lista=query.list();
+			_sessiondehilo.getTransaction().commit();
+			return lista;
+		}
+		catch (Exception e) {
+			_sessiondehilo.beginTransaction().rollback();
+			_sessiondehilo.close();
+			throw new RuntimeException(e);
 		}
 	}
 }

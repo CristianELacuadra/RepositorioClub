@@ -14,18 +14,16 @@ public class Caja implements java.io.Serializable {
 	private Date fecha;
 	private String descripcion;
 	private float monto;
-	private float subTotal;
 	private boolean tipo;
 	private boolean habilitar;
 
 	public Caja() {
 	}
 
-	public Caja(Date fecha, String descripcion, float monto, float subTotal, boolean tipo, boolean habilitar) {
+	public Caja(Date fecha, String descripcion, float monto, boolean tipo, boolean habilitar) {
 		this.fecha = fecha;
 		this.descripcion = descripcion;
 		this.monto = monto;
-		this.subTotal = subTotal;
 		this.tipo = tipo;
 		this.habilitar = habilitar;
 	}
@@ -37,7 +35,6 @@ public class Caja implements java.io.Serializable {
 		this.fecha = fecha;
 		this.descripcion = descripcion;
 		this.monto = monto;
-		this.subTotal = subTotal;
 		this.tipo = tipo;
 		this.habilitar = habilitar;
 	}
@@ -89,16 +86,8 @@ public class Caja implements java.io.Serializable {
 	public void setMonto(float monto) {
 		this.monto = monto;
 	}
-
-	public float getSubTotal() {
-		return this.subTotal;
-	}
-
-	public void setSubTotal(float subTotal) {
-		this.subTotal = subTotal;
-	}
-
-	public boolean isTipo() {
+	
+    public boolean isTipo() {
 		return this.tipo;
 	}
 

@@ -1,20 +1,34 @@
 package ar.com.ProyectoClub.CModelo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
 
+import com.toedter.calendar.JDateChooser;
+
 import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
+import ar.com.ProyectoClub.CModelo.AServicios.FechaHora;
+import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCaja;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCategorias;
+import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCuota;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceNoSocio;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceUsuario;
+import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceCaja;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceCategoria;
+import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceCuota;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceNoSocio;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceSocios;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceUsuario;
+import ar.com.ProyectoClub.CModelo.CEntidades.Caja;
 import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
+import ar.com.ProyectoClub.CModelo.CEntidades.Cuota;
 import ar.com.ProyectoClub.CModelo.CEntidades.NoSocioDTO;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 import ar.com.ProyectoClub.CModelo.CEntidades.Usuario;
@@ -31,15 +45,70 @@ public class Logica {
 	private IServiceSocio servicioSocio;
 	private IServiceCategorias serviciocategoria;
 	private IServiceNoSocio serviceNoSocio;
+	private IServiceCaja serviceCaja;
+	private IServiceCuota serviceCuota;
 	
 	//instancia los servicios
 	
 	public Logica() {
+		serviceCuota=new ServiceCuota();
 		servicioUsuario=new ServiceUsuario();
 		servicioSocio=new ServiceSocios();
 		serviciocategoria=new ServiceCategoria();
 		serviceNoSocio=new ServiceNoSocio();
+		serviceCaja=new ServiceCaja();
 	}
+	
+	public Cuota CrearInstanciaCuota(){
+		return serviceCuota.CrearInstanciaCuota();
+	}
+	public List<Cuota> ObtenerCuotasSocios(Personas persona){
+		return null;
+	}
+	public void ProcesoMorosos(){
+		List<Cuota> listaCuotasImpagas=new ArrayList<Cuota>();
+		List<Personas> listaMorosos=new ArrayList<Personas>();
+		listaCuotasImpagas=serviceCuota.ObtenerCuotasImpagas();
+		//comparo fechas
+		
+		for(Cuota cuota : listaCuotasImpagas ){
+			Date fechaSumada=new Date();
+			fechaSumada=sumarFechasDias(cuota.getFechaGeneracion(),3);
+			if(CompararFechas(fechaSumada)){
+				listaMorosos.add(cuota.getPersonas());
+			}
+		}
+		servicioSocio.CambiarEstadoMoroso(listaMorosos);
+	}
+	private boolean CompararFechas(Date fechaSumada){
+		if(fechaSumada.compareTo(FechaHora.FechaActual())<0)
+			return true;
+		else
+			return false;
+	}
+	
+	
+	public Date FechaUltimaGeneracionCuota(){
+		Cuota cuota=serviceCuota.CrearInstanciaCuota();
+		cuota=serviceCuota.ObtenerUltimaCuota();
+		return cuota.getFechaGeneracion();
+	}
+	
+	public static Date sumarFechasDias(java.util.Date fch,int mes) {
+        Calendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(fch.getTime());
+        cal.add(Calendar.MONTH, mes);
+        return new java.sql.Date(cal.getTimeInMillis());
+    }
+	
+	public static Date sumarFechasDias(java.util.Date fch) {
+        Calendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(fch.getTime());
+        cal.add(Calendar.MONTH, 1);
+        return new java.sql.Date(cal.getTimeInMillis());
+    }
+	
+	
 	public void GuardarSocio(Personas socio){
 		servicioSocio.GuardarSocio(socio);
 	}
@@ -60,6 +129,12 @@ public class Logica {
 	public NoSocioDTO BuscarNoSocio(Integer id){
 		 return serviceNoSocio.BuscarNoSocio(id);
 	}
+	public Caja CrearInstanciaCaja(){
+		return serviceCaja.Crear();
+	}
+	public void GuardarIngresoEgreso(Caja registro){
+		serviceCaja.GuardarIngresoEgreso(registro);
+	}
 
 
 	public List<Personas> filtrarNombreApellidoSocio(String nom,String ape){
@@ -75,7 +150,16 @@ public class Logica {
 	public List<NoSocioDTO>ListaHabilitadosNoSocio(){
 		return (serviceNoSocio.ListarNoSocios()) ;
 	}
+	public List<Caja> TotalRegistradoCaja(){
+		return serviceCaja.listarRegistrosDeCaja();
+	}
 	
+	public Caja UltimoRegistroDeCaja(){
+		return serviceCaja.UltimoRegistroCaja();
+	}
+    public List<Caja> BuscarCajasParametros(Date FechaDesde,Date FechaHasta,String Descripcion,boolean Ingreso,boolean Egreso){
+		return serviceCaja.ObtenerCajasPorParamatros(FechaDesde, FechaHasta, Descripcion, Ingreso, Egreso);
+    }
 //	private Personas NoSocioAPersona(NoSocioDTO noSocio){
 //		 Personas persona=servicioSocio.CrearSocio();
 //		 persona.setDni(noSocio.getDni());
@@ -90,6 +174,12 @@ public class Logica {
 //		 return persona;
 //		 
 //	}
+    @SuppressWarnings("deprecation")
+    public void LanzarPrcesoGeneracionCuota(){
+    	List<Personas> listaSocios=new ArrayList<Personas>();
+    	listaSocios=servicioSocio.ListaSociosActivo();
+    	serviceCuota.GeneracionCuota(FechaHora.FechaActual(),listaSocios);
+    }
 	public List<NoSocioDTO>ListaNoSocio(){
 		return serviceNoSocio.ListarNoSocios();//retorna historico de no socios
 	}

@@ -14,6 +14,7 @@ import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -60,12 +61,15 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 	
 	public PantallaBusquedaSNS(javax.swing.JDialog ventana,boolean b) {  
 		super(ventana,b);
-		setTitle("Busqueda Persona");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaBusquedaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		initComponents();
+	}
+	public PantallaBusquedaSNS() {  
 		initComponents();
 	}
 	
 	public void initComponents () {
+		setTitle("Busqueda Persona");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaBusquedaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		contentPane = new JPanel();
 		panel = new JPanel();
 		resaltado= new RowsRenderer(6);
@@ -108,6 +112,18 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 		panel.add(panel_3);
 		panel_3.setLayout(null);
 		txtDni = new JTextField();
+		txtDni.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char numero=e.getKeyChar(); 
+				if(Character.isLetter(numero)) { 
+					getToolkit().beep(); 
+					e.consume(); 
+					JOptionPane.showMessageDialog(null,"El campo solo admite valores numericos","ERROR",JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		
 		txtDni.setBounds(136, 11, 213, 20);
 		panel_3.add(txtDni);
 		txtDni.setColumns(10);
@@ -116,6 +132,7 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 		panel_3.add(txtNom);
 		txtNom.setColumns(10);
 		txtApe = new JTextField();
+		
 		txtApe.setBounds(136, 73, 213, 20);
 		panel_3.add(txtApe);
 		

@@ -56,4 +56,34 @@ public class CuotaDaoImplHibernate extends GenericDAOImplHibernate<Cuota, Intege
 			throw new RuntimeException("Error al realizar la consulta"+e.toString());
 		}
 	}
+	
+	@Override
+	public Integer ObtenerUltimoIdIngresado() {
+		try {
+			Setsession();
+			SetTransaction();
+			Integer UltimoId= (Integer) _sessiondehilo.createQuery("SELECT MAX (c.id) FROM Cuota c").uniqueResult();
+			return UltimoId;
+		}
+		catch(Exception ex){
+			_sessiondehilo.beginTransaction().rollback();
+			_sessiondehilo.close();
+			throw new RuntimeException(ex);
+		}
+	}
+	@Override
+	public List<Cuota> ObternerCuotasImpagas() {
+		try {
+			Setsession();
+			SetTransaction();
+			ListaCuota.clear();
+			ListaCuota=_sessiondehilo.createQuery("SELECT c  from Cuota c where c.fechaPago IS NULL").list();
+			return ListaCuota;
+		}
+		catch(Exception ex){
+			_sessiondehilo.beginTransaction().rollback();
+			_sessiondehilo.close();
+			throw new RuntimeException(ex);
+		}
+	}
 }

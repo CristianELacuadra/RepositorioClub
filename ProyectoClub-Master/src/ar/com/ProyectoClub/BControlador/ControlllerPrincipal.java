@@ -25,6 +25,8 @@ public class ControlllerPrincipal {
 	PantallaBajaSNS miventanaBajaSNS;
 	PantallaCategoriasTodas miVentanaCategorias;
 	PantallaCaja miVentanaCaja;
+	PantallaIngresoEgreso miVentanaIngresoEgreso;
+	PantallaConfiguracion miVentanaConfiguracion;
 
 	//clase puente entre el modelo y las vistas.
 	ControllerCoordinador miCoordinador;
@@ -42,13 +44,15 @@ public class ControlllerPrincipal {
 			miVentanaPrincipal=new Principal();
 			miVentanaSocios=new PantallaSocios(miVentanaPrincipal,true); //mi ventana persona depende de ventana principal
 			miFormularioPersona=new PantallaFormularioPersona(miVentanaSocios,true); // mi ventana formulario persona depende de pantalla persona
-			miVentanaBusquedaSNSElim=new PantallaBusquedaSNS(miVentanaSocios,true);
+			miVentanaBusquedaSNSElim=new PantallaBusquedaSNS();
 			miVentanaBusquedaSNSCobr=new PantallaBusquedaSNS(miVentanaCobranzaCuota, true);
 			miVentanaDetalllesSNS=new PantallaDetallesInhabilitarSNS(miVentanaBusquedaSNSCobr, true);
 			miVentanaCobranzaCuota= new PantallaCobranzaCuota(miVentanaSocios,true);
 			miCoordinador= new ControllerCoordinador();
 			miventanaBajaSNS=new PantallaBajaSNS(miVentanaSocios, true);
 			miVentanaCategorias=new PantallaCategoriasTodas(miVentanaSocios, true);
+			miVentanaIngresoEgreso=new PantallaIngresoEgreso(miVentanaCaja, true); 
+			miVentanaConfiguracion=new PantallaConfiguracion(miVentanaPrincipal, true);
 			miVentanaCaja=new PantallaCaja();
 
 			/*Se establecen las relaciones entre clases*/
@@ -64,6 +68,8 @@ public class ControlllerPrincipal {
 			miventanaBajaSNS.setCoordinador(miCoordinador);
 			miVentanaCategorias.setCoordinador(miCoordinador);
 			miVentanaCaja.setCoordinador(miCoordinador);
+			miVentanaIngresoEgreso.setCoordinador(miCoordinador);
+			miVentanaConfiguracion.setCoordinador(miCoordinador);
 
 			/*Se establecen relaciones con la clase coordinador*/
 			miCoordinador.setMiLogica(miLogica);
@@ -78,6 +84,8 @@ public class ControlllerPrincipal {
 			miCoordinador.setMiVentanaBajaSNS(miventanaBajaSNS);
 			miCoordinador.setMiVentanaCategorias(miVentanaCategorias);
 			miCoordinador.setMiVentanaCaja(miVentanaCaja);
+			miCoordinador.setMiventanaIngresoEgreso(miVentanaIngresoEgreso);
+			miCoordinador.setMiVentanaConfiguracion(miVentanaConfiguracion);
 			miVentanaInicio.setVisible(true);
 		}
 		catch (Exception e) {

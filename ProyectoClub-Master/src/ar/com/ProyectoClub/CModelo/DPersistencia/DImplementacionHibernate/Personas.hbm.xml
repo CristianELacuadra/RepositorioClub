@@ -8,7 +8,7 @@
             <column name="Dni" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="categoria" class="ar.com.ProyectoClub.CModelo.CEntidades.Categoria" fetch="select">
+        <many-to-one name="categoria" class="ar.com.ProyectoClub.CModelo.CEntidades.Categoria" lazy="false" fetch="join">
             <column name="Fk_Categoria" />
         </many-to-one>
         <property name="nombre" type="string">

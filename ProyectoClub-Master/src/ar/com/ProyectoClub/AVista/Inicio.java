@@ -56,9 +56,9 @@ public class Inicio extends JFrame  implements ActionListener,KeyListener {
 		passwordField= new JPasswordField();
 		
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Cristian\\git\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\logo.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Inicio.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		setResizable(false);
-		setTitle("Ingresar Usuario y Contraseña");
+		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 300);
 		contentPane = new JPanel();
@@ -158,6 +158,9 @@ public class Inicio extends JFrame  implements ActionListener,KeyListener {
 		usuario.setNick(textField.getText());
 		usuario.setPassword(passwordField.getText());
 		if(miCoordinador.validarUsuario(usuario)){
+			//Antes de abrir lanzo la generacion de cuota;
+			miCoordinador.LanzarPrcesoAutGeneracionCuota(); //Lanza Proceso de generacion de cuotas
+			miCoordinador.ProcesarMorosos(); //lanza proceso de generacion de morosos
 			miCoordinador.mostrarVentanaPrincipal(usuario);
 			this.dispose();
 		}

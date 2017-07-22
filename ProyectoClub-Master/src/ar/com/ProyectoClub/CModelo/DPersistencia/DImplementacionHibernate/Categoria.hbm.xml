@@ -23,7 +23,7 @@
         <property name="habilitado" type="boolean">
             <column name="habilitado" not-null="true" />
         </property>
-        <set name="personases" table="personas" inverse="true" lazy="true" fetch="select">
+        <set name="personases" table="personas" inverse="true" lazy="false" fetch="join">
             <key>
                 <column name="Fk_Categoria" />
             </key>

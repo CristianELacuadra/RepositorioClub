@@ -99,6 +99,17 @@ public class ServiceSocios implements IServiceSocio {
 			throw new RuntimeException("No se pudo realizar la busqueda debido al siguiente error "+ e.toString());
 		}
 	}
+	
+	@Override
+	public void CambiarEstadoMoroso(List<Personas> listaPersonas) {
+		try{
+			gestorsocio.EstadosMorosos(listaPersonas);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e); 
+		}
+		
+	}
 	/*
 	 * (non-Javadoc)
 	 * @see ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio#NuevoSocio(ar.com.ProyectoClub.CModelo.CEntidades.Sociosa)
@@ -319,4 +330,6 @@ public class ServiceSocios implements IServiceSocio {
 		return dev;
 	}
 	*/
+
+	
 }

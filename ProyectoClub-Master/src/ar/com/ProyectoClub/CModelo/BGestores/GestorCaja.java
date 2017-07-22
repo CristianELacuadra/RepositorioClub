@@ -1,6 +1,7 @@
 package ar.com.ProyectoClub.CModelo.BGestores;
 
 import java.awt.geom.Arc2D.Float;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.hibernate.loader.custom.Return;
 import org.jboss.jandex.ThrowsTypeTarget;
 
 import com.mysql.jdbc.NotImplemented;
+import com.toedter.calendar.JDateChooser;
 
 import ar.com.ProyectoClub.CModelo.AServicios.FechaHora;
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorCaja;
@@ -37,13 +39,9 @@ public class GestorCaja implements IGestorCaja {
 
 	@Override
 	public Caja Crear() throws Exception {
-		try {
-			return(_cajadao.crear());//->Devuelve nueva instancia de la entidad personas
-		}
-		catch (BussinessException e) {
-			throw new Exception("Error a instanciar la entidad: "+e.getMessage());
-		}
+		return(_cajadao.crear());//->Devuelve nueva instancia de la entidad personas
 	}
+	
 	private Date TomarFecha() {
 		return(FechaHora.FechaActual());
 	}
@@ -52,53 +50,31 @@ public class GestorCaja implements IGestorCaja {
 	public float DevolverSubtotal() {
 		return _cajadao.Subtotal();
 	}
-	private float CalcularSubTotal( float valor ,float ultvalor,boolean tipo) {
-		float resultado=0;
-		Integer i=_cajadao.DevolverCantiddad();
-		if(i!=0 && !tipo)
-			resultado=ultvalor-valor;
-		if(i!=0 && tipo)
-			resultado=ultvalor+valor;
-		if(i==0 && !tipo)
-			resultado=i-valor;
-		if(i==0 && tipo)
-			resultado=i+valor;
-		return resultado;
-	}
 
 	@Override
 	public void Guardar(Caja entity) throws Exception {
+		//si es un egreso pone alquiler y cuota es null
+		//(es valido que ingreso llegue con null y se guarde correctamente )
 		if(!entity.isTipo()) {
 			entity.setAlquiler(null);
 			entity.setCuota(null);
 		}
-		entity.setSubTotal(this.CalcularSubTotal(entity.getMonto(), entity.getSubTotal(), entity.isTipo()));  //se calcula el sub total nuevo
 		_cajadao.GuardarEntity(entity);	
 	}
 
 	@Override
 	public Caja Busqueda(Integer id) throws Exception {
-		try {
 			Caja _uno=this.Crear();
 			_uno=_cajadao.BuscarUno(id);
 			return _uno;
-		}
-		catch (BussinessException e) {
-			throw new Exception("Fallo, no se puede hallar el registro"+e.getMessage());
-		}
 	}
 
 	@Override
 	public List<Caja> Listar() throws Exception {
 		_lista.clear();
 		_lista=null;
-		try {
 			_lista=_cajadao.Listar();
 			return _lista;
-		}
-		catch (BussinessException e) {
-			throw new Exception("no se puedo listar los registros de la caja"+e.getMessage());
-		}
 	}
 	/**
 	 * (non-Javadoc)
@@ -216,4 +192,74 @@ public class GestorCaja implements IGestorCaja {
 		throw new NotImplemented();
 	}
 
+	@Override
+	public Caja ObtenerUltimoRegistro() {
+		try{
+			Caja caja=_cajadao.crear();
+			Integer id=_cajadao.ObtenerUltimoIdIngresado();
+			caja=_cajadao.BuscarUno(id);
+			return caja;
+		}
+		catch (Exception e) {
+			throw new RuntimeException("ERROR"+e.toString()); 
+		}
+	}
+	
+	private int CasoBusqueda(Date FechaDesde, Date FechaHasta, String Descripcion,boolean Ingreso, boolean Egreso){		
+		//Casos de filtro por descripcion en toda la caja
+		if(!Descripcion.isEmpty())
+			return 1;
+		//Caso de filtro Egreso y Ingreso todos
+		if((FechaDesde==null || FechaHasta == null)&& (Egreso && Ingreso) && Descripcion.isEmpty())
+			return 2;
+		//Caso de filtro Egresos todos
+		if((FechaDesde==null || FechaHasta == null)&& ( Egreso && !Ingreso) && Descripcion.isEmpty())
+			return 3;
+		//Caso de filtro Ingresos Todos
+		if((FechaDesde==null || FechaHasta == null)&& (!Egreso && Ingreso) && Descripcion.isEmpty())
+			return 4;
+		//Filtro por Rango de fechas en toda la caja
+		if((FechaDesde!=null || FechaHasta != null)&& (Egreso && Ingreso ) && Descripcion.isEmpty())
+			return 5;
+		if((FechaDesde!=null || FechaHasta != null)&& (Egreso && !Ingreso ) && Descripcion.isEmpty())
+			return 5;
+		if((FechaDesde!=null || FechaHasta != null)&& (!Egreso && Ingreso ) && Descripcion.isEmpty())
+			return 5;
+		return 0;
+	}
+
+	@Override
+	public List<Caja> ObtenerRegistroCajasPorParametros(Date FechaDesde, Date FechaHasta, String Descripcion,boolean Ingreso, boolean Egreso) throws Exception {
+		List<Caja> ListaCaja=new ArrayList<Caja>();
+		switch (this.CasoBusqueda(FechaDesde, FechaHasta, Descripcion, Ingreso, Egreso)) {
+		case 0:
+			break;
+		case 1:
+			ListaCaja=_cajadao.BusquedaPorDescripcion(Descripcion,Ingreso,Egreso);
+			break;
+		case 2:
+			ListaCaja=_cajadao.Listar();
+			break;
+		case 3:
+			ListaCaja=_cajadao.ListaTotalEgresos();
+			break;
+		case 4:
+			ListaCaja=_cajadao.ListaTotalIngreso();
+			break;
+		case 5:
+			ListaCaja=_cajadao.ListaPorRangoFecha(FechaDesde, FechaHasta, Ingreso, Egreso);
+			break;
+		default:
+			break;
+		}
+		return ListaCaja;
+	}
+	public void JDateChooserToString(JDateChooser fecha){
+		String fecha2=new String();
+		String formato = fecha.getDateFormatString();
+		Date date = fecha.getDate();
+		SimpleDateFormat sdf = new SimpleDateFormat(formato);
+		String fnacim = String.valueOf(sdf.format(date));
+		
+	}
 }

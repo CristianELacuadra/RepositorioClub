@@ -74,6 +74,8 @@ public class FechaHora {
 			break;
 		} 
 		return i;
+		
+	
 	}
 	public static Calendar HoraActual() {
 		Calendar _calendar= new GregorianCalendar();

@@ -142,4 +142,15 @@ public class GestorSocio implements IGestorSocio{
 			throw new RuntimeException(e);
 		}
 	}
+	@Override
+	public void EstadosMorosos(List<Personas> morosos)throws Exception {
+		 Personas personaMorosa= this.Crear();
+		 for(Personas persona :morosos){
+			 personaMorosa=_SocioDao.BuscarUno(persona.getDni());
+			 personaMorosa.setEstado("Moroso");
+			 personaMorosa.setHabilitado(false);
+			 this.Guardar(personaMorosa);
+		 }
+		
+	}
 }

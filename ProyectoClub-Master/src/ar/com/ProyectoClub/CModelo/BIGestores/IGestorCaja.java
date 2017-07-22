@@ -1,6 +1,9 @@
 package ar.com.ProyectoClub.CModelo.BIGestores;
 
+import java.util.Date;
 import java.util.List;
+
+import com.toedter.calendar.JDateChooser;
 
 import ar.com.ProyectoClub.CModelo.CEntidades.Caja;
 
@@ -14,4 +17,6 @@ public interface IGestorCaja extends IGestorGeneric<Caja> {
 	public List<Caja> ListarEgresoFecha(Integer anio,Integer mes,Integer dia);
 	public List<Caja> ListaringresoFecha(Integer anio,Integer mes,Integer dia);
 	public float DevolverSubtotal();
+	public Caja ObtenerUltimoRegistro();
+	public List<Caja> ObtenerRegistroCajasPorParametros(Date FechaDesde,Date FechaHasta,String Descripcion,boolean Ingreso,boolean Egreso) throws Exception;
 }

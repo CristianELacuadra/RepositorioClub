@@ -12,8 +12,7 @@ public class Cuota implements java.io.Serializable {
 
 	private Integer id;
 	private Personas personas;
-	private Integer mes;
-	private Integer anio;
+    private Date fechaGeneracion;
 	private Date fechaPago;
 	private String descripcion;
 	private float importe;
@@ -23,20 +22,17 @@ public class Cuota implements java.io.Serializable {
 	public Cuota() {
 	}
 
-	public Cuota(Personas personas, Integer mes, Integer anio, String descripcion, float importe, String estado) {
+	public Cuota(Personas personas, Date fechaGeneracion, String descripcion, float importe, String estado) {
 		this.personas = personas;
-		this.mes = mes;
-		this.anio = anio;
+        this.fechaGeneracion=fechaGeneracion;
 		this.descripcion = descripcion;
 		this.importe = importe;
 		this.estado = estado;
 	}
 
-	public Cuota(Personas personas, Integer mes, Integer anio, Date fechaPago, String descripcion, float importe,
-			String estado, Set cajas) {
+	public Cuota(Personas personas, Date fechaGeneracion, Date fechaPago, String descripcion, float importe, String estado, Set cajas) {
 		this.personas = personas;
-		this.mes = mes;
-		this.anio = anio;
+		this.fechaGeneracion=fechaGeneracion;
 		this.fechaPago = fechaPago;
 		this.descripcion = descripcion;
 		this.importe = importe;
@@ -59,21 +55,13 @@ public class Cuota implements java.io.Serializable {
 	public void setPersonas(Personas personas) {
 		this.personas = personas;
 	}
-
-	public Integer getMes() {
-		return this.mes;
+	
+	public Date getFechaGeneracion() {
+		return fechaGeneracion;
 	}
-
-	public void setMes(Integer mes) {
-		this.mes = mes;
-	}
-
-	public Integer getAnio() {
-		return this.anio;
-	}
-
-	public void setAnio(Integer anio) {
-		this.anio = anio;
+	
+	public void setFechaGeneracion(Date fechaGeneracion) {
+		this.fechaGeneracion = fechaGeneracion;
 	}
 
 	public Date getFechaPago() {

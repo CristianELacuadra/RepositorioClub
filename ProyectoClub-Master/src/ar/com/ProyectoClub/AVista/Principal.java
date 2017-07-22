@@ -49,10 +49,18 @@ import java.awt.Window.Type;
 import javax.swing.border.TitledBorder;
 
 import JCDesktopPane.JCDesktopPane;
+import ar.com.ProyectoClub.AVista.ClasesRender.ImagenFondo;
 import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
 import j2Button.j2Button;
 
 import javax.swing.border.CompoundBorder;
+import javax.swing.JLabel;
+import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.CardLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
 public class Principal extends JFrame implements ActionListener{
     
@@ -67,10 +75,17 @@ public class Principal extends JFrame implements ActionListener{
 	public JToolBar jtoolbar1;
 	public JDesktopPane jCDesktopPane1; 
 	
+	public Principal(){
+		initComponents();
+		jCDesktopPane1.setBorder(new ImagenFondo());
+		this.setExtendedState(Principal.MAXIMIZED_BOTH);
+	}
+	
 	@SuppressWarnings("deprecation")
-	public Principal() {
+	private void initComponents()  {
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		
 
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
@@ -211,7 +226,10 @@ public class Principal extends JFrame implements ActionListener{
 			miCoordinador. mostrarVentanaNoSocio();			
 		}
 		if(e.getSource()==btnCaja){
-			miCoordinador.MostrarVentanaCaja();
+			miCoordinador.MostrarVentanaCaja(PantallaCaja.jtdatos);
+		}
+		if(e.getSource()==btnConfig){
+			miCoordinador.MostrarVentnaConfiguracion();
 		}
 		
 		if(e.getSource()==btnSalir){
@@ -223,5 +241,4 @@ public class Principal extends JFrame implements ActionListener{
 		}
 		
 	}
-
 }
