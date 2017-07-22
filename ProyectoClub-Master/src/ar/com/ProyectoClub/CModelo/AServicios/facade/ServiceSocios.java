@@ -35,7 +35,7 @@ public class ServiceSocios implements IServiceSocio {
 			return (gestorsocio.Crear());
 		}
 		catch (Exception e) {
-			throw new RuntimeException("No se pudo instanciar el serivicio debido al siguiente error: "+e.getMessage());
+			throw new RuntimeException("No se pudo instanciar el servicio debido al siguiente error: "+e.getMessage());
 		}
 		
 	}

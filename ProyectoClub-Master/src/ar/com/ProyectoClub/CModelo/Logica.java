@@ -14,7 +14,11 @@ import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceCategoria;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceNoSocio;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceSocios;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceUsuario;
+import ar.com.ProyectoClub.CModelo.AServicios.facade.*;
+import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.*;
+import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
 import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
+import ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles;
 import ar.com.ProyectoClub.CModelo.CEntidades.NoSocioDTO;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 import ar.com.ProyectoClub.CModelo.CEntidades.Usuario;
@@ -31,6 +35,8 @@ public class Logica {
 	private IServiceSocio servicioSocio;
 	private IServiceCategorias serviciocategoria;
 	private IServiceNoSocio serviceNoSocio;
+	private IServiceAlquileres servicioAlquiler;
+	private IServiceInmuebles servicioInmueble;
 	
 	//instancia los servicios
 	
@@ -39,6 +45,8 @@ public class Logica {
 		servicioSocio=new ServiceSocios();
 		serviciocategoria=new ServiceCategoria();
 		serviceNoSocio=new ServiceNoSocio();
+		
+		
 	}
 	public void GuardarSocio(Personas socio){
 		servicioSocio.GuardarSocio(socio);
@@ -118,6 +126,14 @@ public class Logica {
 	
 	public List<Categoria> DevolverListaCategoria(){
 		return serviciocategoria.ListarCategorias();
+	}
+	public Inmuebles CrearInstanciaInmueble() {
+		return servicioInmueble.CrearInmueble();
+		 
+	}
+	public Alquiler CrearInstanciaAlquiler() {
+		
+		return servicioAlquiler.CrearAlquiler();
 	}
 	
 /*

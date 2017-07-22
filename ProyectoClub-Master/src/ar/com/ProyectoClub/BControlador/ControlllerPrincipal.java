@@ -25,7 +25,27 @@ public class ControlllerPrincipal {
 	PantallaBajaSNS miventanaBajaSNS;
 	PantallaCategoriasTodas miVentanaCategorias;
 	PantallaCaja miVentanaCaja;
-
+	//
+	PantallaAlquiler miVentanaAlquiler;
+	PantallaNuevoAlquiler miVentanaNuevoAlquiler;
+	PantallaNuevoInmueble miVentanaNuevoInmueble;
+	PantallaBusquedaAlquiler miVentanaBusquedaAlquiler;
+	PantallaBusquedaInmueble miVentanaBusquedaInmueble;
+	PantallaNuevoInmueble miVentanaModificarInmueble;
+	PantallaNuevoInmueble miVentanaEliminarInmueble;
+	PantallaNuevoInmueble miVentanaRehabilitarInmueble;
+	
+	
+	PantallaDetallesAlquiler miVentanaModificarAlquiler;
+	PantallaDetallesAlquiler miVentanaEliminarAlquiler;
+	PantallaDetallesAlquiler miVentanaPagarAlquiler;
+	
+	/*
+	 miVentanaModificarAlquiler
+	miVentanaEliminarAlquiler
+	miVentanaPagarAlquiler
+	 * */
+	
 	//clase puente entre el modelo y las vistas.
 	ControllerCoordinador miCoordinador;
 
@@ -50,7 +70,22 @@ public class ControlllerPrincipal {
 			miventanaBajaSNS=new PantallaBajaSNS(miVentanaSocios, true);
 			miVentanaCategorias=new PantallaCategoriasTodas(miVentanaSocios, true);
 			miVentanaCaja=new PantallaCaja();
-
+			
+			miVentanaAlquiler=new PantallaAlquiler (miVentanaPrincipal,true);
+			miVentanaNuevoAlquiler=new PantallaNuevoAlquiler (miVentanaAlquiler,true);
+			miVentanaNuevoInmueble=new PantallaNuevoInmueble (miVentanaAlquiler,true,0);
+			miVentanaModificarInmueble=new PantallaNuevoInmueble (miVentanaBusquedaInmueble,true,1);//usan la misma vista
+			miVentanaEliminarInmueble=new PantallaNuevoInmueble (miVentanaBusquedaInmueble,true,2);
+			miVentanaRehabilitarInmueble=new PantallaNuevoInmueble (miVentanaBusquedaInmueble,true,3);
+			miVentanaBusquedaAlquiler=new PantallaBusquedaAlquiler (miVentanaAlquiler,true);
+			miVentanaBusquedaInmueble=new PantallaBusquedaInmueble (miVentanaAlquiler,true);
+			
+			miVentanaModificarAlquiler=new PantallaDetallesAlquiler(miVentanaBusquedaAlquiler,true,0);
+			miVentanaEliminarAlquiler=new PantallaDetallesAlquiler(miVentanaBusquedaAlquiler,true,1);
+			miVentanaPagarAlquiler=new PantallaDetallesAlquiler(miVentanaBusquedaAlquiler,true,2);
+			
+			
+			
 			/*Se establecen las relaciones entre clases*/
 			miLogica.setCoordinador(miCoordinador);
 			miVentanaPrincipal.setCoordinador(miCoordinador);
@@ -64,6 +99,18 @@ public class ControlllerPrincipal {
 			miventanaBajaSNS.setCoordinador(miCoordinador);
 			miVentanaCategorias.setCoordinador(miCoordinador);
 			miVentanaCaja.setCoordinador(miCoordinador);
+			
+			miVentanaAlquiler.setCoordinador(miCoordinador);
+			miVentanaNuevoAlquiler.setCoordinador(miCoordinador);
+			miVentanaNuevoInmueble.setCoordinador(miCoordinador);
+			miVentanaBusquedaAlquiler.setCoordinador(miCoordinador);
+			miVentanaBusquedaInmueble.setCoordinador(miCoordinador);
+			miVentanaModificarInmueble.setCoordinador(miCoordinador);
+			miVentanaEliminarInmueble.setCoordinador(miCoordinador);
+			miVentanaRehabilitarInmueble.setCoordinador(miCoordinador);
+			miVentanaModificarAlquiler.setCoordinador(miCoordinador);
+			miVentanaEliminarAlquiler.setCoordinador(miCoordinador);
+			miVentanaPagarAlquiler.setCoordinador(miCoordinador);
 
 			/*Se establecen relaciones con la clase coordinador*/
 			miCoordinador.setMiLogica(miLogica);
@@ -79,6 +126,21 @@ public class ControlllerPrincipal {
 			miCoordinador.setMiVentanaCategorias(miVentanaCategorias);
 			miCoordinador.setMiVentanaCaja(miVentanaCaja);
 			miVentanaInicio.setVisible(true);
+			
+			miCoordinador.setMiVentanaAlquiler(miVentanaAlquiler);
+			miCoordinador.setMiVentanaNuevoAlquiler(miVentanaNuevoAlquiler);
+			miCoordinador.setMiVentanaNuevoInmueble(miVentanaNuevoInmueble);
+			miCoordinador.setMiVentanaBusquedaAlquiler(miVentanaBusquedaAlquiler);
+			miCoordinador.setMiVentanaBusquedaInmueble(miVentanaBusquedaInmueble);
+			miCoordinador.setMiVentanaModificarInmueble(miVentanaModificarInmueble);
+			miCoordinador.setMiVentanaEliminarInmueble(miVentanaEliminarInmueble);
+			miCoordinador.setMiVentanaRehabilitarInmueble(miVentanaRehabilitarInmueble);
+			miCoordinador.setMiVentanaModificarAlquiler(miVentanaModificarAlquiler);
+			miCoordinador.setMiVentanaEliminarAlquiler(miVentanaEliminarAlquiler);
+			miCoordinador.setMiVentanaPagarAlquiler(miVentanaPagarAlquiler);
+			
+			
+			
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null,"El sistema no puede seguir la ejecucion debido al siguiente error"+e.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);

@@ -27,6 +27,20 @@ public class ControllerCoordinador {
 	private PantallaBajaSNS miVentanaBajaSNS;
 	private PantallaCategoriasTodas miVentanaCategorias;
 	private PantallaCaja miVentanaCaja;
+	//alquiler
+	private PantallaAlquiler miVentanaAlquiler;
+	private PantallaNuevoAlquiler miVentanaNuevoAlquiler;
+	private PantallaBusquedaAlquiler miVentanaBusquedaAlquiler;
+	private PantallaNuevoInmueble miVentanaNuevoInmueble;
+	private PantallaBusquedaInmueble miVentanaBusquedaInmueble;
+	private PantallaNuevoInmueble miVentanaModificarInmueble;
+	private PantallaNuevoInmueble miVentanaEliminarInmueble;
+	private PantallaNuevoInmueble miVentanaRehabilitarInmueble;
+	
+	private PantallaDetallesAlquiler miVentanaModificarAlquiler;
+	private PantallaDetallesAlquiler miVentanaEliminarAlquiler;
+	private PantallaDetallesAlquiler miVentanaPagarAlquiler;
+	
 	
 	public Personas CrearPersona(){
 		return miLogica.CrearInstanciaPersona();
@@ -114,6 +128,88 @@ public class ControllerCoordinador {
 	public void setMiVentanaCaja(PantallaCaja miVentanaCaja) {
 		this.miVentanaCaja = miVentanaCaja;
 	}
+	/*** alquiler   * */
+	public  PantallaAlquiler getMiVentanaAlquiler(){
+		return miVentanaAlquiler;
+	}
+	public void setMiVentanaAlquiler(PantallaAlquiler miVentanaAlquiler){
+		this.miVentanaAlquiler=miVentanaAlquiler;
+	}
+	
+	public  PantallaNuevoAlquiler getMiVentanaNuevoAlquiler(){
+		return miVentanaNuevoAlquiler;
+	}
+	public void setMiVentanaNuevoAlquiler(PantallaNuevoAlquiler miVentanaNuevoAlquiler){
+		this.miVentanaNuevoAlquiler=miVentanaNuevoAlquiler;
+	} 
+	
+	public  PantallaBusquedaAlquiler getMiVentanaBusquedaAlquiler(){
+		return miVentanaBusquedaAlquiler;
+	}
+	public void setMiVentanaBusquedaAlquiler(PantallaBusquedaAlquiler miVentanaBusquedaAlquiler){
+		this.miVentanaBusquedaAlquiler=miVentanaBusquedaAlquiler;
+	}
+	
+	public  PantallaNuevoInmueble getMiVentanaNuevoInmueble(){
+		return miVentanaNuevoInmueble;
+	}
+	public void setMiVentanaNuevoInmueble(PantallaNuevoInmueble miVentanaNuevoInmueble){
+		this.miVentanaNuevoInmueble=miVentanaNuevoInmueble;
+	}
+	
+	public  PantallaBusquedaInmueble getMiVentanaBusquedaInmueble(){
+		return miVentanaBusquedaInmueble;
+	}
+	public void setMiVentanaBusquedaInmueble(PantallaBusquedaInmueble miVentanaBusquedaInmueble){
+		this.miVentanaBusquedaInmueble=miVentanaBusquedaInmueble;
+	}
+	
+	public  PantallaNuevoInmueble getMiVentanaModificarInmueble(){
+		return miVentanaModificarInmueble;
+	}
+	public void setMiVentanaModificarInmueble(PantallaNuevoInmueble miVentanaModificarInmueble){
+		this.miVentanaModificarInmueble=miVentanaModificarInmueble;
+	}
+	
+	public  PantallaNuevoInmueble getMiVentanaEliminarInmueble(){
+		return miVentanaEliminarInmueble;
+	}
+	public void setMiVentanaEliminarInmueble(PantallaNuevoInmueble miVentanaEliminarInmueble){
+		this.miVentanaEliminarInmueble=miVentanaEliminarInmueble;
+	}
+	
+	public  PantallaNuevoInmueble getMiVentanaRehabilitarInmueble(){
+		return miVentanaRehabilitarInmueble;
+	}
+	public void setMiVentanaRehabilitarInmueble(PantallaNuevoInmueble miVentanaRehabilitarInmueble){
+		this.miVentanaRehabilitarInmueble=miVentanaRehabilitarInmueble;
+	}
+	
+	
+	public  PantallaDetallesAlquiler getMiVentanaModificarAlquiler(){
+		return miVentanaModificarAlquiler;
+	}
+	public void setMiVentanaModificarAlquiler(PantallaDetallesAlquiler miVentanaModificarAlquiler){
+		this.miVentanaModificarAlquiler=miVentanaModificarAlquiler;
+	}
+	public  PantallaDetallesAlquiler getMiVentanaEliminarAlquiler(){
+		return miVentanaEliminarAlquiler;
+	}
+	public void setMiVentanaEliminarAlquiler(PantallaDetallesAlquiler miVentanaEliminarAlquiler){
+		this.miVentanaEliminarAlquiler=miVentanaEliminarAlquiler;
+	}
+
+	public  PantallaDetallesAlquiler getMiVentanaPagarAlquiler(){
+		return miVentanaPagarAlquiler;
+	}
+	public void setMiVentanaPagarAlquiler(PantallaDetallesAlquiler miVentanaPagarAlquiler){
+		this.miVentanaPagarAlquiler=miVentanaPagarAlquiler;
+	}
+
+	
+	
+
+
 //////////////////////////////////////////////////////////
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public void CargarDatosPersona(Personas persona){
@@ -560,6 +656,45 @@ public class ControllerCoordinador {
 	public void mostrarVentanaNoSocio() {
 		///------------------------------------------------------------------------completar
 	}
+	public void mostrarVentanaAlquiler(){
+		miVentanaAlquiler.setVisible(true);
+		
+	}
+	public void mostrarVentanaNuevoAlquiler(){
+		miVentanaNuevoAlquiler.setVisible(true);
+	}
+	public void mostrarVentanaBusquedaAlquiler(){
+		miVentanaBusquedaAlquiler.setVisible(true);
+	}
+	public void mostrarVentanaNuevoInmueble(){
+		miVentanaNuevoInmueble.setVisible(true);
+	}
+	public void mostrarVentanaBusquedaInmueble(){
+		miVentanaBusquedaInmueble.setVisible(true);
+	}
+	
+	public void mostrarVentanaModificarInmueble(){
+		miVentanaModificarInmueble.setVisible(true);
+	}
+	public void mostrarVentanaEliminarInmuelble(){
+		miVentanaEliminarInmueble.setVisible(true);
+	}
+	public void mostrarVentanaRehabilitarInmueble(){
+		miVentanaRehabilitarInmueble.setVisible(true);
+	}
+	
+	
+	public void mostrarVentanaModificarAlquiler(){
+		miVentanaModificarAlquiler.setVisible(true);
+	}
+	/*
+	miVentanaModificarAlquiler;
+	miVentanaEliminarAlquiler;
+	miVentanaPagarAlquiler;
+	*/
+	
+	
+	
 	
 	@SuppressWarnings("unchecked")
 	public void mostrarFormularioPersona(boolean tipo ) {
@@ -649,6 +784,33 @@ public class ControllerCoordinador {
 	
 	public void GuardarPersonas(Personas entity){
 		
+	}
+
+	public Inmuebles BuscarInmueble(String text) {
+		
+		return null;
+	}
+
+	public Inmuebles CrearInmueble() {
+		
+		return miLogica.CrearInstanciaInmueble();;
+		//return null;
+	}
+
+	public void listarInmuebles(JTable jtdatos, String text, boolean selected) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Alquiler CrearAlquiler() {
+		
+		return miLogica.CrearInstanciaAlquiler();
+		//return null;
+	}
+
+	public float CalcularPrecioTotal(Alquiler alqui, Personas pers) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 /*

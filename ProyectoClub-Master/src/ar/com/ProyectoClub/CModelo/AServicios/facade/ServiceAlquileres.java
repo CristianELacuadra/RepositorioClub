@@ -1,17 +1,19 @@
 package ar.com.ProyectoClub.CModelo.AServicios.facade;
 
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceAlquileres;
+import ar.com.ProyectoClub.CModelo.BGestores.GestorAlquiler;
+import ar.com.ProyectoClub.CModelo.BGestores.GestorInmueble;
 import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.IAlquilerDAO;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.AlquilerDaoImplHibernate;
 
 public class ServiceAlquileres implements IServiceAlquileres {
-	private IAlquilerDAO _AlquilerDao;
-	private Alquiler _Alquiler;
+	//private IAlquilerDAO _AlquilerDao;
 	
-	public ServiceAlquileres() {
+	
+	public ServiceAlquileres() throws Exception {
 		_AlquilerDao=new AlquilerDaoImplHibernate();
-		_Alquiler=new Alquiler();
+		
 	}
 	
 	@Override
@@ -56,6 +58,11 @@ public class ServiceAlquileres implements IServiceAlquileres {
 		_Alquiler.setActivo(datos.isActivo());
 		return _Alquiler;
 	}
-	
-
+	public Alquiler CrearAlquiler(){
+		try{
+			return (GestorAlquiler.Crear());
+		}catch(Exception e){
+			throw new RuntimeException("No se pudo instanciar el servicio debido al siguiente error: "+e.getMessage());
+		}
+	}
 }

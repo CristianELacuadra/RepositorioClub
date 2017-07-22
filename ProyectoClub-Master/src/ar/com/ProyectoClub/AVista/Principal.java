@@ -213,7 +213,9 @@ public class Principal extends JFrame implements ActionListener{
 		if(e.getSource()==btnCaja){
 			miCoordinador.MostrarVentanaCaja();
 		}
-		
+		if(e.getSource()==btnAlquiler){
+			miCoordinador.mostrarVentanaAlquiler();
+		}
 		if(e.getSource()==btnSalir){
 			int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente deseas salir?", "Aviso", JOptionPane.YES_NO_OPTION);
 			if (opcion == 0) { //The ISSUE is here
