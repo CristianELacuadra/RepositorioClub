@@ -4,17 +4,27 @@ import java.awt.BorderLayout;
 
 
 import javax.swing.*;
-import javax.swing.JTextField;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.SwingConstants;
 import java.awt.Color;
+
+import ar.com.ProyectoClub.AVista.ClasesRender.RowsRenderer;
 import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
+import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.Canvas;
+import java.awt.Checkbox;
+import java.awt.Toolkit;
+import java.awt.SystemColor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 
@@ -33,22 +43,27 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 	private JLabel lblDireccion;
 	private JLabel lblMatricula;
 	private JLabel lblTelefono;
-	public JButton btnBuscar;
 	public JPanel panel_1;
 	private JLabel lblNewLabel_1;
 	private JLabel lblCuotasImpagas; 
 	private JScrollPane scrollPane; 
-	public JTable jtDatosCuota;
-	public JTextPane txtDescrip;
+	public static JTable jtDatosCuota;
+	public JTextField txttotal;
+	public RowsRenderer resaltado;
+	private List<Integer> IdCuotas;
+	public JButton btnCobrar;
 	
 	public PantallaCobranzaCuota(PantallaSocios vtnPantallaSocios,boolean b) {
 		super(vtnPantallaSocios,b);
-		setTitle("Sistema Control Socios-Club Avenida Ejercito");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCobranzaCuota.class.getResource("/ar/com/ProyectoClub/AVista/icon/dollar_money_17872.png")));
+		setTitle("Sistema Club Avenida Ejercito - Control de Cuotas");
 		initComponents();	
 	}
 
 	
 	private void initComponents() {
+		IdCuotas=new ArrayList<Integer>();
+		resaltado=new RowsRenderer(5);
 		txtNsocio = new JTextField();
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -68,13 +83,44 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		lblMatricula= new JLabel("Matricula");
 		txtTel = new JTextField();
 		lblTelefono= new JLabel("N\u00BA Telefono");
-		btnBuscar = new JButton();
 		panel_1 = new JPanel();
 		lblNewLabel_1= new JLabel("FACTURACION DE CUOTAS");
 		lblCuotasImpagas= new JLabel("CUOTAS");
 		scrollPane= new JScrollPane();
 		jtDatosCuota = new JTable();
-		setBounds(100, 100, 1073, 684);
+		
+		jtDatosCuota.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//tomamos fila,columna donde se hizo click
+
+
+		        int column = jtDatosCuota.getColumnModel().getColumnIndexAtX(e.getX());
+		        int row = e.getY()/jtDatosCuota.getRowHeight();
+		        
+				if(column==4){
+					Object value = jtDatosCuota.getValueAt(row, column);
+					if(value.equals(true)){
+						Object valuefecha = jtDatosCuota.getValueAt(row, 2);
+						if(valuefecha.equals("No Presenta Pagos")){
+							IdCuotas.add((Integer) jtDatosCuota.getValueAt(row, 5));
+							btnCobrar.setEnabled(true);
+						}
+						else{
+							for(Integer i : IdCuotas){
+								if(i==(Integer) jtDatosCuota.getValueAt(row, 5))
+								IdCuotas.remove(i);
+							}
+							btnCobrar.setEnabled(false);
+						}
+					}
+					else
+						btnCobrar.setEnabled(false);
+				}
+			}
+		});
+		
+		setBounds(100, 100, 1073, 653);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -155,10 +201,6 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		lblTelefono.setBounds(393, 78, 74, 14);
 		panel.add(lblTelefono);
 		
-		btnBuscar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\Search.png"));
-		btnBuscar.setBounds(970, 137, 57, 33);
-		panel.add(btnBuscar);
-		
 		panel_1.setBounds(0, 11, 1047, 33);
 		contentPane.add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
@@ -175,48 +217,54 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		
 		lblCuotasImpagas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCuotasImpagas.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblCuotasImpagas.setBounds(129, 11, 849, 21);
+		lblCuotasImpagas.setBounds(73, 11, 849, 21);
 		panel_3.add(lblCuotasImpagas);
 		
-		scrollPane.setBounds(10, 43, 1017, 124);
+		scrollPane.setBounds(10, 43, 1017, 275);
 		panel_3.add(scrollPane);
 		
-		JLabel lblNewLabel_2 = new JLabel("DESCRIPCION:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_2.setBounds(10, 205, 101, 14);
-		panel_3.add(lblNewLabel_2);
-		
-		txtDescrip= new JTextPane();
-		txtDescrip.setBackground(new Color(255, 248, 220));
-		txtDescrip.setBounds(110, 205, 264, 154);
-		panel_3.add(txtDescrip);
-		
 		//Panel cuotas
+		jtDatosCuota.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		jtDatosCuota.setModel(new javax.swing.table.DefaultTableModel(
-	            new Object [][] {},
-	            new String [] {
-	                "ID","MES EMISION", "AÑO EMISION", "FECHA PAGO", "IMPORTE"
-	            }
-	        ) {
-	            boolean[] canEdit = new boolean [] {
-	                false,false, false, false,false
-	            };
-
-	            public boolean isCellEditable(int rowIndex, int columnIndex) {
-	                return canEdit [columnIndex];
-	            }
-	        });
+            new Object [][] {
+                {null, null, null, null,null},
+                {null, null, null, null,null},
+                {null, null, null, null,null},
+                {null, null, null, null,null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+		
 		jtDatosCuota.getTableHeader().setReorderingAllowed(false);
 		jtDatosCuota.getColumnModel().getColumn(0).setMaxWidth(60);
 		scrollPane.setViewportView(jtDatosCuota);
-        if (jtDatosCuota.getColumnModel().getColumnCount() > 0) {
-        	jtDatosCuota.getColumnModel().getColumn(0).setResizable(false);
-        	jtDatosCuota.getColumnModel().getColumn(1).setResizable(false);
-        	jtDatosCuota.getColumnModel().getColumn(2).setResizable(false);
-        	jtDatosCuota.getColumnModel().getColumn(3).setResizable(false);
-        	jtDatosCuota.getColumnModel().getColumn(4).setResizable(false);
-        }
-        btnBuscar.addActionListener(this);
+		
+		txttotal = new JTextField();
+		txttotal.setFont(new Font("Arial", Font.PLAIN, 16));
+		txttotal.setBackground(SystemColor.activeCaption);
+		txttotal.setEditable(false);
+		txttotal.setBounds(734, 329, 233, 20);
+		panel_3.add(txttotal);
+		txttotal.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Total importe a pagar :");
+		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 15));
+		lblNewLabel_2.setBounds(574, 329, 159, 17);
+		panel_3.add(lblNewLabel_2);
+		
+		JLabel label = new JLabel("$");
+		label.setFont(new Font("Arial", Font.PLAIN, 15));
+		label.setBounds(987, 332, 19, 17);
+		panel_3.add(label);
+		
+		btnCobrar = new JButton("Cobrar Cuota");
+		btnCobrar.setEnabled(false);
+		btnCobrar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\Ingreso-Plata.png"));
+		btnCobrar.setBounds(20, 329, 168, 31);
+		panel_3.add(btnCobrar);
+		btnCobrar.addActionListener(this);
 	}
 	
 	public void setCoordinador(ControllerCoordinador miCoordinador) {
@@ -225,9 +273,14 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		  if(e.getSource() == btnBuscar){
-			  miCoordinador.mostrarVentanaBusquedaSNS();
-		  }
-		
+		try{
+			if(e.getSource()==btnCobrar){
+				miCoordinador.CobrarCuota(Integer.parseInt(txtdni.getText()),IdCuotas);
+				JOptionPane.showMessageDialog(null,"Se registro el pago con exito","Informacion",JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+		catch (Exception ex) {
+			JOptionPane.showMessageDialog(null,"No se puedo llevar a cabo la transaccion debido al siguiente error: "+ex.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }

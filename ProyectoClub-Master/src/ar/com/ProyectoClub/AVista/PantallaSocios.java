@@ -499,7 +499,7 @@ public class PantallaSocios extends JFrame implements ActionListener,KeyListener
 			if(e.getSource()==btnCobranza){
 				Personas persona=miCoordinador.CrearPersona();
 				persona=miCoordinador.BuscarPersona(Integer.parseInt(txtdni.getText()));
-				miCoordinador.mostrarVentanaCobranza(persona);
+				miCoordinador.mostrarVentanaCobranza(persona,PantallaCobranzaCuota.jtDatosCuota);
 			}
 			if(e.getSource()==btnVolver){
 				this.limpiar();

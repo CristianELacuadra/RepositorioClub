@@ -154,6 +154,7 @@ public class Inicio extends JFrame  implements ActionListener,KeyListener {
 	}
 	
 	private void EntraAlSistema(){
+		try{
 		Usuario usuario=new Usuario();
 		usuario.setNick(textField.getText());
 		usuario.setPassword(passwordField.getText());
@@ -167,6 +168,10 @@ public class Inicio extends JFrame  implements ActionListener,KeyListener {
 		else{
 			JOptionPane.showMessageDialog(null,"Usuario o Contraseña Incorrecta","Acceso al sistema denegado",JOptionPane.ERROR_MESSAGE);
 			this.limpiar();
+		}
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null,"No se puede seguir ejecutando el sistema debido al siguiente error: "+e.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	

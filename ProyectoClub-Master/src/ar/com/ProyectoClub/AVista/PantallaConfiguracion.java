@@ -32,6 +32,8 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 	public JButton btnCancel;
 	public JDateChooser dateProxGeneracion;
 	public JDateChooser dateUltGeneracion;
+	public JButton btnBackup;
+	public JButton btnRestaurar;
 	
 	public PantallaConfiguracion(Principal vtnprincipal,boolean activo) {
 		super(vtnprincipal,activo);
@@ -109,6 +111,26 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 		dateUltGeneracion.setBounds(200, 45, 129, 31);
 		panel_1.add(dateUltGeneracion);
 		
+		JPanel panel_3 = new JPanel();
+		tabbedPane.addTab("Administracion DB", null, panel_3, null);
+		panel_3.setLayout(null);
+		
+		JLabel label_4 = new JLabel();
+		label_4.setBounds(70, 43, 256, 29);
+		label_4.setText("Administracion de BD");
+		label_4.setFont(new Font("Tahoma", Font.BOLD, 24));
+		panel_3.add(label_4);
+		
+		btnRestaurar = new JButton();
+		btnRestaurar.setBounds(48, 176, 81, 23);
+		btnRestaurar.setText("Restaurar");
+		panel_3.add(btnRestaurar);
+		
+		btnBackup = new JButton();
+		btnBackup.setText("BackUp");
+		btnBackup.setBounds(241, 176, 105, 23);
+		panel_3.add(btnBackup);
+		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(PantallaConfiguracion.class.getResource("/ar/com/ProyectoClub/AVista/icon/configuration_250.png")));
 		lblNewLabel.setBounds(323, 11, 106, 70);
@@ -130,6 +152,8 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 		}
 		btnConsultar.addActionListener(this);
 		btnGenerar.addActionListener(this);
+		btnBackup.addActionListener(this);
+		btnRestaurar.addActionListener(this);
 	}
 	
 	public void setCoordinador(ControllerCoordinador miCoordinador) {
@@ -157,10 +181,19 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 			if(e.getSource()==btnCancel){
 				miCoordinador.CerraConfiguracion();
 			}
-		}
+			
+			if(e.getSource()==btnBackup){
+				RespaldarBD copiasegura=new RespaldarBD(this, true);
+		        copiasegura.setVisible(true);
+			}
+			
+			if(e.getSource()==btnRestaurar){
+				RestaurarBD restore= new RestaurarBD(this, true);
+		        restore.setVisible(true);
+			}
+		}		
 		catch (Exception ex) {
-			JOptionPane.showMessageDialog(null,"No se pudo realizar la operacion debido al siguiente error: "+ex.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+			java.util.logging.Logger.getLogger(PantallaConfiguracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
-
 	}
 }
