@@ -120,6 +120,7 @@ public class PantallaNuevoInmueble extends JDialog implements ActionListener,Key
 		panelTxt.setLayout(new GridLayout(0, 1, 302, 40));
 		
 		textNumeroIn = new JTextField();
+		textNumeroIn.setEditable(false);
 		textNumeroIn.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		panelTxt.add(textNumeroIn);
 		textNumeroIn.setColumns(10);
@@ -200,19 +201,19 @@ public class PantallaNuevoInmueble extends JDialog implements ActionListener,Key
 			break;
 		
 		case 1 :
-			btnModificar.setEnabled(true);
+			btnModificar.setEnabled(false);
 			btnModificar.setVisible(true);
 			lblTit.setText("MODIFICAR EL INMUEBLE");
 			break;
 		
 		case 2 :
-			btnEliminar.setEnabled(true);
+			btnEliminar.setEnabled(false);
 			btnEliminar.setVisible(true);
 			lblTit.setText("ELIMINAR O DESHABILITAR EL INMUEBLE");
 			break;
 		
 		case 3:
-			btnRestaurar.setEnabled(true);
+			btnRestaurar.setEnabled(false);
 			btnRestaurar.setVisible(true);
 			lblTit.setText("REHABILITAR EL INMUEBLE");
 			break;
@@ -222,7 +223,7 @@ public class PantallaNuevoInmueble extends JDialog implements ActionListener,Key
 			
 		}
 		
-		//inm=miCoordinador.CrearInmueble();
+		
 		
 		btnAceptar.addActionListener(this);
 		btnModificar.addActionListener(this);
@@ -268,56 +269,69 @@ public class PantallaNuevoInmueble extends JDialog implements ActionListener,Key
 	public Inmuebles cargarDat(){
 		Inmuebles a;
 		a=miCoordinador.CrearInmueble();
-		a.setIdInmueble(Integer.valueOf(textNumeroIn.getText()));
+		//a.setIdInmueble(Integer.valueOf(textNumeroIn.getText()));
 		a.setNombre(textNombreIn.getText());
-		a.setDireccion(textDirecIn.getText());
+		a.setDireccion(textDirecIn.getText().toString());
 		a.setPrecioHora(Float.valueOf(textPrecioHoraIn.getText()));
 		a.setDescripcion(textDescrip.getText());
 			
 	return a;
 }
 	public void limpiar(){
-		textNumeroIn.setText("");;
+		textNumeroIn.setText("");
 		textNombreIn.setText("");
 		textDirecIn.setText("");
 		textPrecioHoraIn.setText("");
 		textDescrip.setText("");
+		inm=null;
+		
 			
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==btnAceptar){
+		try{
+			if(e.getSource()==btnAceptar){
+			Inmuebles inm=miCoordinador.CrearInmueble();
 			inm=cargarDat();
 			inm.setHabilitado(true);
-		//miCoordinador.RegistrarInmueble(inm);
+			miCoordinador.RegistrarInmueble(inm);
 			limpiar();
 			this.dispose();
 			
-		}
+			}
 		
-		if(e.getSource()==btnModificar){
-			mostrarDat(inm);
+			if(e.getSource()==btnModificar){
+			//mostrarDat(inm);
+			inm=miCoordinador.BuscarInmueble(Integer.parseInt(textNombreIn.getText()));
 			inm=cargarDat();
-		//	miCoordinador.ModificarInmueble(Inm);
+			miCoordinador.ModificarInmueble(inm);
 			limpiar();this.dispose();
-		}
+			}
 		
-		if(e.getSource()==btnEliminar){
-		//	miCoordinador.EliminarInmueble(Inm);
+			if(e.getSource()==btnEliminar){
+			//mostrarDat(inm); // carga los datos en la ventana para verlos  usar esta funcion en
+				inm=miCoordinador.BuscarInmueble(Integer.parseInt(textNombreIn.getText()));
+			miCoordinador.EliminarInmueble(inm);
 			limpiar();
 			this.dispose();
-		}
+			}
 		
-		if(e.getSource()==btnRestaurar){
-		//	miCoordinador.RestaurarInmueble(Inm);
+			if(e.getSource()==btnRestaurar){
+				inm=miCoordinador.BuscarInmueble(Integer.parseInt(textNombreIn.getText()));
+			miCoordinador.RestaurarInmueble(inm);
 			limpiar();
 			this.dispose();
-		}
+			}
 		
-		if(e.getSource()==btnCancelar){
-			this.dispose();
-		}
+			if(e.getSource()==btnCancelar){
+				limpiar();
+				this.dispose();
+			}
+		
+		}catch (Exception ex) {
+				JOptionPane.showMessageDialog(null,ex.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+			}
 		
 		
 		

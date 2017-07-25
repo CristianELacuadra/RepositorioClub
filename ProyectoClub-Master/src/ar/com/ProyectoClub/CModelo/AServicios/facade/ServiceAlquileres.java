@@ -3,29 +3,35 @@ package ar.com.ProyectoClub.CModelo.AServicios.facade;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceAlquileres;
 import ar.com.ProyectoClub.CModelo.BGestores.GestorAlquiler;
 import ar.com.ProyectoClub.CModelo.BGestores.GestorInmueble;
+import ar.com.ProyectoClub.CModelo.BIGestores.IGestorAlquiler;
 import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.IAlquilerDAO;
 import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.AlquilerDaoImplHibernate;
 
 public class ServiceAlquileres implements IServiceAlquileres {
-	//private IAlquilerDAO _AlquilerDao;
+	private IAlquilerDAO _AlquilerDao;
+	private  Alquiler _Alquiler;
+	private IGestorAlquiler gestorAlquiler;
 	
-	
-	public ServiceAlquileres() throws Exception {
-		_AlquilerDao=new AlquilerDaoImplHibernate();
-		
+
+	public ServiceAlquileres() {
+		try{
+			gestorAlquiler=new GestorAlquiler();
+			_AlquilerDao=new AlquilerDaoImplHibernate();
+			}
+			catch (Exception e) {
+			    throw new RuntimeException("No se pudo iniciar el servicio debido al siguiente error:"+e.getMessage());
+			}				
 	}
 	
 	@Override
 	public void AltaAlquiler(Alquiler nuevo) {
 		_Alquiler=this.Actualizardatos(nuevo);
 		try {
-			if(_Alquiler.getSociosa()==null && _Alquiler.getNosocio() != null) 
-				_AlquilerDao.GuardarEntity(nuevo);
-			if(_Alquiler.getSociosa()!=null && _Alquiler.getNosocio() == null)
+			if(_Alquiler.getPersonas()!=null)
 				_AlquilerDao.GuardarEntity(nuevo);
 			else {
-				if(_Alquiler.getSociosa()==null && _Alquiler.getNosocio() == null) 
+				if(_Alquiler.getPersonas()==null) 
 					throw new RuntimeException("Error,socio o no socio igual a null");
 			}
 		}
@@ -46,9 +52,7 @@ public class ServiceAlquileres implements IServiceAlquileres {
 	
 	private Alquiler Actualizardatos(Alquiler datos) {
 		Alquiler _Alquiler=new Alquiler();
-		_Alquiler.setSociosa(datos.getSociosa());
 		_Alquiler.setInmuebles(datos.getInmuebles());
-		_Alquiler.setNosocio(datos.getNosocio());
 		_Alquiler.setFechaActual(datos.getFechaActual());
 		_Alquiler.setHoraActual(datos.getHoraActual());
 		_Alquiler.setFechaReserva(datos.getFechaReserva());
@@ -60,9 +64,17 @@ public class ServiceAlquileres implements IServiceAlquileres {
 	}
 	public Alquiler CrearAlquiler(){
 		try{
-			return (GestorAlquiler.Crear());
+			return gestorAlquiler.Crear();
 		}catch(Exception e){
 			throw new RuntimeException("No se pudo instanciar el servicio debido al siguiente error: "+e.getMessage());
 		}
 	}
+	public void GuardarAlquiler(Alquiler alqui){
+		try {
+			gestorAlquiler.Guardar(alqui);
+		} catch (Exception e) {
+			throw new RuntimeException("No se pudo instanciar el servicio debido al siguiente error: "+e.getMessage());
+		}
+	}
+	
 }

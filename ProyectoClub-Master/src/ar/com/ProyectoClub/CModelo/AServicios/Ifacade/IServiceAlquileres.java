@@ -7,6 +7,7 @@ public interface IServiceAlquileres{
 	public void InhabilitarAlquiler(Alquiler nuevo);
 	public void ActualizarAlquiler(Alquiler nuevo);
 	public Alquiler CrearAlquiler();
+	public void GuardarAlquiler(Alquiler alqui);
 	
 	
 	

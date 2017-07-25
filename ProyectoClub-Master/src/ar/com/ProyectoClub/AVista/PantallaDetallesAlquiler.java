@@ -75,7 +75,7 @@ public class PantallaDetallesAlquiler extends JDialog implements ActionListener,
 	public PantallaDetallesAlquiler(javax.swing.JDialog vtn,boolean b,Integer opcion) {
 		super(vtn,b);
 		setResizable(false);
-		setBounds(100, 100, 577, 653);
+		setBounds(100, 100, 585, 653);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaNuevoInmueble.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		getContentPane().setLayout(null);
 		initComponent(opcion);
@@ -87,7 +87,7 @@ public void initComponent(Integer aux){
 	panel = new JPanel();
 	panel.setBorder(UIManager.getBorder("ComboBox.border"));
 	panel.setBackground(Color.RED);
-	panel.setBounds(10, 11, 551, 35);
+	panel.setBounds(10, 11, 559, 35);
 	getContentPane().add(panel);
 	
 	label = new JLabel("");
@@ -210,41 +210,41 @@ public void initComponent(Integer aux){
 	scrollPane.setViewportView(txtObservaciones);
 	
 	btnModificar = new JButton("GUARDAR CAMBIOS");
-	btnModificar.setBounds(426, 78, 131, 42);
+	btnModificar.setBounds(426, 78, 143, 42);
 	getContentPane().add(btnModificar);
 	btnModificar.setEnabled(false);
 	btnModificar.setVisible(false);
 	
 	btnEliminar = new JButton("ELIMINAR");
-	btnEliminar.setBounds(426, 131, 131, 42);
+	btnEliminar.setBounds(426, 131, 143, 42);
 	getContentPane().add(btnEliminar);
 	btnEliminar.setEnabled(false);
 	btnEliminar.setVisible(false);
 	
 	btnPagar = new JButton("PAGAR");
-	btnPagar.setBounds(426, 184, 131, 42);
+	btnPagar.setBounds(426, 184, 143, 42);
 	getContentPane().add(btnPagar);
 	btnPagar.setEnabled(false);
 	btnPagar.setVisible(false);
 	
 	btnVolver = new JButton("VOLVER");
-	btnVolver.setBounds(426, 237, 131, 42);
+	btnVolver.setBounds(426, 237, 143, 42);
 	getContentPane().add(btnVolver);
 	
 	switch(aux){
 	case 0 :
-		btnModificar.setEnabled(true);
+		btnModificar.setEnabled(false);
 		btnModificar.setVisible(true);
 		label.setText("MODIFICAR EL ALQUILER SELECCIONADO");
 		break;
 	case 1 :
-		btnEliminar.setEnabled(true);
+		btnEliminar.setEnabled(false);
 		btnEliminar.setVisible(true);
 		label.setText("ELIMINAR EL ALQUILER SELECCIONADO");
 		break;
 	
 	case 2 :
-		btnPagar.setEnabled(true);
+		btnPagar.setEnabled(false);
 		btnPagar.setVisible(true);
 		label.setText("PAGAR EL ALQUILER SELECCIONADO");
 		break;

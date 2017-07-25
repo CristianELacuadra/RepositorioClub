@@ -32,6 +32,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import org.hibernate.type.NTextType;
+
 import java.awt.Color;
 
 import com.toedter.components.JLocaleChooser;
@@ -39,11 +41,12 @@ import com.toedter.components.JLocaleChooser;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 
 public class PantallaBusquedaInmueble extends JDialog implements ActionListener,KeyListener,MouseListener {
-	private Object auxNum;
+	private Integer auxNum;
 	
 	public JPanel panel;
 	public JPanel panel_1;
@@ -54,7 +57,7 @@ public class PantallaBusquedaInmueble extends JDialog implements ActionListener,
 	private JTextField txtBusquedaPorNombre;
 	public JLabel lblNewLabel;
 	public JLabel lblNewLabel_1;
-	public JCheckBox check;
+	public JCheckBox checkIncluir;
 	public JPanel panelDeOpciones;
 	public JLabel lblOpcionesDisponibles;
 	public JButton btnModificarlo;
@@ -62,6 +65,7 @@ public class PantallaBusquedaInmueble extends JDialog implements ActionListener,
 	public JButton btnRestaurarlo;
 	public JButton btnListar;
 	private ControllerCoordinador miCoordinador; 
+	public Inmuebles _Inm;
 	
 	
 	
@@ -87,27 +91,27 @@ public class PantallaBusquedaInmueble extends JDialog implements ActionListener,
 		panel.setLayout(null);
 		
 		lblNewLabel = new JLabel("FILTROS DE BUSQUEDA:");
-		lblNewLabel.setBounds(10, 11, 127, 14);
+		lblNewLabel.setBounds(10, 11, 162, 14);
 		panel.add(lblNewLabel);
 		
 		lblNewLabel_1 = new JLabel("POR NOMBRE:");
-		lblNewLabel_1.setBounds(10, 36, 70, 14);
+		lblNewLabel_1.setBounds(10, 36, 108, 14);
 		panel.add(lblNewLabel_1);
 		
 		txtBusquedaPorNombre = new JTextField();
-		txtBusquedaPorNombre.setBounds(90, 33, 156, 20);
+		txtBusquedaPorNombre.setBounds(128, 33, 156, 20);
 		panel.add(txtBusquedaPorNombre);
 		txtBusquedaPorNombre.setColumns(10);
 		
-		check = new JCheckBox("INCLUIR INMUEBLES INABILITADOS");
-		check.addMouseListener(new MouseAdapter() {
+		checkIncluir = new JCheckBox("INCLUIR INMUEBLES INABILITADOS");
+		/*checkIncluir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				listado();
 			}
-		});
-		check.setBounds(6, 62, 199, 23);
-		panel.add(check);
+		}); */
+		checkIncluir.setBounds(6, 62, 257, 23);
+		panel.add(checkIncluir);
 		
 		panelDeOpciones = new JPanel();
 		panelDeOpciones.setBackground(Color.LIGHT_GRAY);
@@ -118,23 +122,23 @@ public class PantallaBusquedaInmueble extends JDialog implements ActionListener,
 		panelDeOpciones.setLayout(null);
 		
 		lblOpcionesDisponibles = new JLabel("OPCIONES DISPONIBLES:");
-		lblOpcionesDisponibles.setBounds(1, 1, 124, 45);
+		lblOpcionesDisponibles.setBounds(1, 1, 144, 45);
 		panelDeOpciones.add(lblOpcionesDisponibles);
 		
-		btnModificarlo = new JButton("MODIFICARLO");
+		btnModificarlo = new JButton("MODIFICAR");
 		btnModificarlo.setBounds(1, 51, 124, 35);
 		panelDeOpciones.add(btnModificarlo);
 		
-		btnEliminarlo = new JButton("ELIMINARLO");
+		btnEliminarlo = new JButton("ELIMINAR");
 		btnEliminarlo.setBounds(131, 51, 124, 35);
 		panelDeOpciones.add(btnEliminarlo);
 		
-		btnRestaurarlo = new JButton("RESTAURARLO");
+		btnRestaurarlo = new JButton("RESTAURAR");
 		btnRestaurarlo.setBounds(1, 97, 124, 35);
 		panelDeOpciones.add(btnRestaurarlo);
 		
 		btnListar = new JButton("BUSCAR/LISTAR");
-		btnListar.setBounds(10, 108, 122, 23);
+		btnListar.setBounds(10, 108, 143, 23);
 		panel.add(btnListar);
 		
 		panel_1 = new JPanel();
@@ -163,17 +167,18 @@ public class PantallaBusquedaInmueble extends JDialog implements ActionListener,
 		jScrollPane1.setColumnHeaderView(jtdatos);
 		jtdatos.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
 			},
 			new String[] {
 				"Numero", "Nombre", "Precio por hora", "Direccion"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		});
 		jtdatos.getColumnModel().getColumn(0).setPreferredWidth(54);
 		jtdatos.getColumnModel().getColumn(2).setPreferredWidth(88);
 		jtdatos.getColumnModel().getColumn(3).setPreferredWidth(110);
@@ -187,21 +192,46 @@ public class PantallaBusquedaInmueble extends JDialog implements ActionListener,
     	btnEliminarlo.addActionListener(this);
     	btnRestaurarlo.addActionListener(this);
     	btnListar.addActionListener(this);
-    	
-    	
+    	/*
+    			table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
+				Integer aux;
+				try{
+					aux=table.getSelectedRow();
+					if(aux!=-1){
+						DefaultTableModel modelotabla=(DefaultTableModel) table.getModel();
+						auxAlq=(Integer) modelotabla.getValueAt(aux, 0);
+						//alqui=miCoordinador.BuscarAlquiler(auxAlq);
+										
+					}
+										
+				}catch (HeadlessException ex){
+
+		             JOptionPane.showMessageDialog(null, "Error: "+ex+"\nInténtelo nuevamente", " .::Error En la Operacion::." ,JOptionPane.ERROR_MESSAGE);
+
+		       }     
+			}
+			
+		});
+    	*/
     	jtdatos.addMouseListener(new MouseAdapter(){
-    		
-    		public void mouseClicked(MouseEvent e) {
-    		if(e.getSource()==jtdatos){
-    			jtdatos.setRowSelectionAllowed(true);// selecciona una fila
-    			auxNum = jtdatos.getValueAt(e.getY()/jtdatos.getRowHeight(),0);
-    		//guarda en variable auxiliar el numero de inmueble
+    	public void mouseClicked(MouseEvent e){
+    		Integer _fila;
+    		auxNum=null;
+    		try{
+    			_fila=jtdatos.getSelectedRow();
+    			if(_fila!= -1){
+    				DefaultTableModel modelotabla=(DefaultTableModel) jtdatos.getModel();
+    				auxNum=(Integer) modelotabla.getValueAt(_fila, 0);
+    			}
+    		}catch(Exception ex){
+    			JOptionPane.showMessageDialog(null, "Error: Al seleccionar una fila \nInténtelo nuevamente", " .::Error En la Operacion::." ,JOptionPane.ERROR_MESSAGE);
     		}
     		
-    		}
-    			
+    	}
+    	
+    	
     	});
-	
 	
 	}
 
@@ -237,18 +267,19 @@ public class PantallaBusquedaInmueble extends JDialog implements ActionListener,
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode()==KeyEvent.VK_ENTER){
+			limpiar();
 			listado();
 		}
 		
 	}
 	
 private void listado(){
-	if(check.isSelected()){
-	}
-	if(txtBusquedaPorNombre.getText().isEmpty()){
+	
+	if(checkIncluir.isSelected()){
 	}
 	
-	miCoordinador.listarInmuebles(jtdatos,txtBusquedaPorNombre.getText(),check.isSelected());
+	
+	miCoordinador.listarInmuebles(jtdatos,txtBusquedaPorNombre.getText(),checkIncluir.isSelected());
 }
 
 
@@ -266,55 +297,96 @@ private void listado(){
 		
 	}
 
-
+public void limpiar(){
+	 DefaultTableModel dm = (DefaultTableModel) jtdatos.getModel();
+	 int rowCount = dm.getRowCount();
+	 for (int i = rowCount - 1; i >= 0; i--) {
+	     dm.removeRow(i);
+	 }
+	 jtdatos.setModel(dm);
+	// txtBusquedaPorNombre.setText("");
+	//  checkIncluir.setSelected(false);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		try{
-		if(e.getSource()==btnOk){
-			miCoordinador
-		}
-		
 		if(e.getSource()==btnModificarlo){
-			if(auxNum.equals(null)){
+			try{
+			 if(auxNum.equals(null)){
 				JOptionPane.showMessageDialog(null, 0,
 				"No se selecciono ninguna fila" , JOptionPane.ERROR_MESSAGE);
 				}else{
-					miCoordinador.mostrarVentanaModificarInmueble();
-				}
+					Inmuebles inmu= miCoordinador.BuscarInmueble(auxNum);
+					if(inmu.isHabilitado()==true){
+					miCoordinador.mostrarVentanaModificarInmueble(inmu);
+					}else{
+						JOptionPane.showMessageDialog(null, "El Inmueble esta deshabilitado",
+								"No se puede Modificar", JOptionPane.INFORMATION_MESSAGE);
+					}
+					}
 					
-			
+			}catch(Exception ex){
+				JOptionPane.showMessageDialog(null, 0,
+						"Ocurrio un error con el Boton", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		
 		if(e.getSource()==btnEliminarlo){
-			
-			if(auxNum.equals(null)){
-				JOptionPane.showMessageDialog(null, 0,
-				"No se selecciono ninguna fila" , JOptionPane.ERROR_MESSAGE);
-				} else{
-					miCoordinador.mostrarVentanaEliminarInmuelble();
-				}
-			
+			try{
+				 if(auxNum.equals(null)){
+					JOptionPane.showMessageDialog(null, 0,
+					"No se selecciono ninguna fila" , JOptionPane.ERROR_MESSAGE);
+					}else{
+						Inmuebles inmu= miCoordinador.BuscarInmueble(auxNum);
+						if(inmu.isHabilitado()==true){
+						miCoordinador.mostrarVentanaEliminarInmuelble(inmu);
+						}else{
+							JOptionPane.showMessageDialog(null, "El Inmueble esta deshabilitado",
+									"No se puede Eliminar", JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+						
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(null,"Ocurrio un error con el Boton" ,
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}	
 		}
 		
 		if(e.getSource()==btnRestaurarlo){
-			if(auxNum.equals(null)){
-				JOptionPane.showMessageDialog(null, 0,
-				"No se selecciono ninguna fila" , JOptionPane.ERROR_MESSAGE);
-				}else{
-					miCoordinador.mostrarVentanaRehabilitarInmueble();
-				}
-			
-			
+			try{
+				 if(auxNum.equals(null)){
+					JOptionPane.showMessageDialog(null, 0,
+					"No se selecciono ninguna fila" , JOptionPane.ERROR_MESSAGE);
+					}else{
+						Inmuebles inmu= miCoordinador.BuscarInmueble(auxNum);
+						if(inmu.isHabilitado()==false){
+						
+						miCoordinador.mostrarVentanaRehabilitarInmueble(inmu);
+						}else{
+							JOptionPane.showMessageDialog(null, "El Inmueble esta habilitado",
+									"No se puede Rehabilitar", JOptionPane.INFORMATION_MESSAGE);
+						}
+						
+					}
+						
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(null,"Ocurrio un error con el Boton" ,
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}	
+						
 		}
-		
+		try{
+			if(e.getSource()==btnOk){
+				limpiar();
+				this.dispose();
+			}
 		if(e.getSource()==btnListar){
+			limpiar();
 			listado();
 		}
 		}catch(Exception ext){
 			JOptionPane.showMessageDialog(null, 0,
-					"No se selecciono ninguna fila" , JOptionPane.ERROR_MESSAGE);
+					"Ocurrio un Error...Reintente" , JOptionPane.ERROR_MESSAGE);
 		}
 	
 		

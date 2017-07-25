@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -26,6 +28,8 @@ import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceCuota;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceNoSocio;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceSocios;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceUsuario;
+import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceAlquileres;
+import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceAlquileres;
 import ar.com.ProyectoClub.CModelo.CEntidades.Caja;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.*;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.*;
@@ -51,9 +55,9 @@ public class Logica {
 	private IServiceNoSocio serviceNoSocio;
 	private IServiceCaja serviceCaja;
 	private IServiceCuota serviceCuota;
-	private IServiceAlquileres servicioAlquiler;
-	private IServiceInmuebles servicioInmueble;
-	
+	private IServiceAlquileres serviceAlquiler;
+	private IServiceInmuebles serviceInmueble;
+		
 	//instancia los servicios
 	
 	public Logica() {
@@ -63,6 +67,8 @@ public class Logica {
 		serviciocategoria=new ServiceCategoria();
 		serviceNoSocio=new ServiceNoSocio();
 		serviceCaja=new ServiceCaja();
+		serviceAlquiler=new ServiceAlquileres();
+		serviceInmueble=new ServiceInmueble();
 	}
 	
 	public List<Personas> ListaActivoinactivo(){
@@ -269,12 +275,85 @@ public class Logica {
 		return serviciocategoria.ListarCategorias();
 	}
 	public Inmuebles CrearInstanciaInmueble() {
-		return servicioInmueble.CrearInmueble();
+		return serviceInmueble.CrearInmueble();
 		 
 	}
 	public Alquiler CrearInstanciaAlquiler() {
+		return serviceAlquiler.CrearAlquiler();
+	}
+
+	public void GuardarInmueble(Inmuebles entity) {
+		serviceInmueble.GuardarInmueble(entity);
 		
-		return servicioAlquiler.CrearAlquiler();
+	}
+
+	public void ModificarInmueble(Inmuebles entity) {
+		// TODO Auto-generated method stub
+		serviceInmueble.GuardarInmueble(entity);
+	}
+
+	public void EliminarInmueble(Inmuebles entity) {
+		// TODO Auto-generated method stub
+		//e
+		if(entity.isHabilitado()==true){
+			entity.setHabilitado(false);
+			serviceInmueble.GuardarInmueble(entity);
+		}
+		//servicioSocio.GuardarSocio(socio);
+	}
+
+	public void RestaurarInmueble(Inmuebles entity) {
+		// TODO Auto-generated method stub
+		//e
+		if(entity.isHabilitado()==false){
+			entity.setHabilitado(true);
+			serviceInmueble.GuardarInmueble(entity);
+		//servicioSocio.GuardarSocio(socio);
+		}
+	}
+	
+	public Inmuebles BuscarInmueble(Integer id) {
+		return serviceInmueble.BusquedaInmueble(id);
+		 
+	}
+	
+	public java.util.List<Inmuebles> ListarInmueblesParaAlquiler(){
+	return serviceInmueble.ListarInmuebleHabilitado();
+}
+	
+	public void ListarInmuebles(JTable jtdatos, String text, boolean selected){
+		java.util.List<Inmuebles> listaInmuebles=new ArrayList<Inmuebles>();
+		
+		if(text.isEmpty() && !selected){//si es verdadero incluye todos los inmuebles
+			listaInmuebles=serviceInmueble.ListarInmuebleHabilitado();
+			// solo inmuebles habilitados
+		}else if(selected){
+			listaInmuebles=serviceInmueble.ListarInmueble();
+			//incluir todos habilitados y no habilitados
+			
+		}else if(!text.isEmpty()){
+			listaInmuebles=serviceInmueble.ListarInmuebleFiltrado(text);
+			//listar resultados
+		}
+		
+		DefaultTableModel  modeloT = (DefaultTableModel) jtdatos.getModel();
+		//"Numero", "Nombre", "Precio por hora", "Direccion"
+		Object[] columna = new Object[4];
+		int numr=listaInmuebles.size();
+		for(int i=0;i<numr;i++){
+			columna[0]=listaInmuebles.get(i).getIdInmueble();
+			columna[1]=listaInmuebles.get(i).getNombre();
+			columna[2]=listaInmuebles.get(i).getPrecioHora();
+			columna[3]=listaInmuebles.get(i).getDireccion();
+			modeloT.addRow(columna);
+		}
+		jtdatos.setModel(modeloT);
+			
+	}
+
+	public void GuardarAlquiler(Alquiler alqui) {
+		serviceAlquiler.GuardarAlquiler(alqui);
+		
 	}
 	
 /*
