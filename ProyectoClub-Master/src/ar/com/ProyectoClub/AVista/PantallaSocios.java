@@ -70,9 +70,7 @@ public class PantallaSocios extends JFrame implements ActionListener,KeyListener
 	public static JTextField txtNom;
 	public JButton btnagregar; 
 	public JButton btneliminar;
-	public JButton btnimprimir;
 	public JButton btnCobranza;
-	public JButton btnVolver;
 	public static JDateChooser dateNac;
 	public static JDateChooser dateIngre;
 	public JButton btnBuscar; 
@@ -195,21 +193,11 @@ public class PantallaSocios extends JFrame implements ActionListener,KeyListener
 		btneliminar.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/data_delete.png")));
 		panel_1.add(btneliminar);
 		
-		btnimprimir = new JButton("");
-		btnimprimir.setEnabled(false);
-		btnimprimir.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\Print-iloveimg-resized.png"));
-		panel_1.add(btnimprimir);
-		
 		btnCobranza = new JButton("");
 		btnCobranza.setToolTipText("Cobrar cuota");
 		btnCobranza.setEnabled(false);
 		btnCobranza.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/sale.png")));
 		panel_1.add(btnCobranza);
-		
-		btnVolver= new JButton("");
-		btnVolver.setToolTipText("Volver");
-		btnVolver.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\back_2-iloveimg-resized.png"));
-		panel_1.add(btnVolver);
 		
 		btnEditar = new JButton("");
 		btnEditar.setToolTipText("Editar datos del socio");
@@ -415,8 +403,6 @@ public class PantallaSocios extends JFrame implements ActionListener,KeyListener
 		btnagregar.addActionListener(this);
 		btnCobranza.addActionListener(this);
 		btneliminar.addActionListener(this);
-		btnimprimir.addActionListener(this);
-		btnVolver.addActionListener(this);
 		btnEditar.addActionListener(this);
 		comboCate.addActionListener(this);
 	}
@@ -463,6 +449,14 @@ public class PantallaSocios extends JFrame implements ActionListener,KeyListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try{
+			if(e.getSource()== btneliminar){
+				int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente deseas inhabilitar el socio : "+txtNom.getText()+" "+txtApe.getText()+" ?", "Club Avenida Ejercito - Aviso", JOptionPane.YES_NO_OPTION);
+				if (opcion == 0) { 
+					miCoordinador.InhabilitarSocio(Integer.parseInt(txtdni.getText()));
+					JOptionPane.showMessageDialog(null,"Socio Inhabilitado"," Informacion ",JOptionPane.INFORMATION_MESSAGE);
+					this.limpiar();
+				}
+			}
 			if(e.getSource()==btnVenBuscar){
 				miCoordinador.mostrarVentanaBusquedaSNS();
 			}
@@ -500,10 +494,6 @@ public class PantallaSocios extends JFrame implements ActionListener,KeyListener
 				Personas persona=miCoordinador.CrearPersona();
 				persona=miCoordinador.BuscarPersona(Integer.parseInt(txtdni.getText()));
 				miCoordinador.mostrarVentanaCobranza(persona,PantallaCobranzaCuota.jtDatosCuota);
-			}
-			if(e.getSource()==btnVolver){
-				this.limpiar();
-				dispose();
 			}
 			if(e.getSource()==btnGuardar){
 				int opcion = JOptionPane.showConfirmDialog(null, "¿Desea modificar los datos del socio?", "Club Avenida Ejercito - Aviso", JOptionPane.YES_NO_OPTION);
@@ -573,7 +563,6 @@ public class PantallaSocios extends JFrame implements ActionListener,KeyListener
 		btnEditar.setEnabled(false);
 		btneliminar.setEnabled(false);
 		btnCobranza.setEnabled(false);
-		btnimprimir.setEnabled(false);
 		comboEstadoCivil.setEnabled(true);
 		btnBuscar.setEnabled(true);
 	    txtDom.setEditable(false);

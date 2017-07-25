@@ -8,7 +8,7 @@
             <column name="ID" />
             <generator class="identity" />
         </id>
-        <many-to-one name="personas" class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" fetch="select">
+        <many-to-one name="personas" class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" lazy="false" fetch="join">
             <column name="Dni" not-null="true" />
         </many-to-one>
         <property name="fechaGeneracion" type="date">

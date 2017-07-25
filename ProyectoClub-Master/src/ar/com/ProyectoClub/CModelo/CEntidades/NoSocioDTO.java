@@ -16,6 +16,7 @@ public class  NoSocioDTO {
 	private String apellido;
 	private String telefono;
 	private String domicilio;
+	private Integer DomicilioNro;
 	private Date fecNacimiento;
 	private boolean Habilitado;
 	private boolean essocio; 
@@ -23,7 +24,7 @@ public class  NoSocioDTO {
 	
 	public NoSocioDTO() {}
 	
-	public NoSocioDTO (Integer dni,String nombre,String apellido,String telefono,String domicilio,Date fecNacimiento,boolean habilitado,boolean essocio,String estado){
+	public NoSocioDTO (Integer dni,String nombre,String apellido,String telefono,String domicilio,Date fecNacimiento,boolean habilitado,boolean essocio,String estado,Integer DomicilioNro){
 		this.dni=dni;
 		this.nombre=nombre;
 		this.apellido=apellido;
@@ -33,6 +34,13 @@ public class  NoSocioDTO {
 		this.Habilitado=habilitado;
 		this.essocio=essocio;
 		this.estado=estado;
+		this.DomicilioNro=DomicilioNro;
+	}
+	public Integer getDomicilioNro() {
+		return DomicilioNro;
+	}
+	public void setDomicilioNro(Integer domicilioNro) {
+		DomicilioNro = domicilioNro;
 	}
 	
 	public Integer getDni() {

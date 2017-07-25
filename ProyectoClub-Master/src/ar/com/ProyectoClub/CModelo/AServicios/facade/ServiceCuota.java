@@ -29,7 +29,7 @@ import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 	@Override
 	public void RegistrarPagoCuota(Cuota nueva) {
 		try{
-			
+			gestorcuota.RegistrarPagoCuota(nueva);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -97,6 +97,17 @@ import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e); 
+		}
+	}
+
+	@Override
+	public List<Cuota> ObtenerCuotas(Personas persona) {
+		try{
+			return(gestorcuota.ObtenerCuotasSocio(persona.getDni()));
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e); 
+
 		}
 	}
 

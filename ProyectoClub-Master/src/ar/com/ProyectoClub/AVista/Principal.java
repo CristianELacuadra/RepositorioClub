@@ -223,7 +223,7 @@ public class Principal extends JFrame implements ActionListener{
 		}
 		
 		if (e.getSource()==btnNoSocio) {
-			miCoordinador. mostrarVentanaNoSocio();			
+			miCoordinador.mostrarFormularioPersona(false);	
 		}
 		if(e.getSource()==btnCaja){
 			miCoordinador.MostrarVentanaCaja(PantallaCaja.jtdatos);

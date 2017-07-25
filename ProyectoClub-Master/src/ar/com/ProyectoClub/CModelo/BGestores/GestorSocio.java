@@ -32,7 +32,6 @@ public class GestorSocio implements IGestorSocio{
 	@Override
 	public void Guardar(Personas entity) throws Exception {
 			if(this.NonnullPartnerData(entity)){ //-> antes de guardar verifica si la entidad no trae valores nulos
-				entity.setEssocio(true);
 				_SocioDao.GuardarEntity(entity);
 			}
 			else
@@ -56,23 +55,14 @@ public class GestorSocio implements IGestorSocio{
 	
 	@Override
 	public void habilitar(Personas entity) throws Exception {
-		Personas _uno=this.Crear();
-		_uno=this.Busqueda(entity.getDni());
-		_uno.setHabilitado(entity.isHabilitado());//->habilita al socio al realizar tarea
-		this.Guardar(_uno);//->guarda los datos
+		entity.setHabilitado(false);
+		this.Guardar(entity);//->guarda los datos
 	}
 	
 	@Override
 	public void Inhabilitar(Personas entity) throws Exception {
-		try {
-			Personas _uno=this.Crear();
-			_uno=this.Busqueda(entity.getDni());
-			_uno.setHabilitado(entity.isHabilitado());//Inhabilita al socio a realizar tareas
-			this.Guardar(_uno);//guarda los datos
-		}
-		catch (BussinessException e) {
-			throw new Exception("No se pudo realizar la operacion debido al siguiente error"+e.getMessage());
-		}
+		entity.setHabilitado(false);
+		this.Guardar(entity);//guarda los datos
 	}
 	
 	@Override
@@ -152,5 +142,30 @@ public class GestorSocio implements IGestorSocio{
 			 this.Guardar(personaMorosa);
 		 }
 		
+	}
+	
+	private Personas MapearSocio(Personas persona){
+		Personas personaA=new Personas();
+		personaA.setDni(persona.getDni());
+		personaA.setNroSocio(persona.getNroSocio());
+		personaA.setNombre(persona.getNombre());
+		personaA.setApellido(persona.getApellido());
+		personaA.setDomicilio(persona.getDomicilio());
+		personaA.setTelefono(persona.getTelefono());
+		personaA.setDomicilio(persona.getDomicilio());
+		personaA.setFecNacimiento(persona.getFecNacimiento());
+		personaA.setMatricula(persona.getMatricula());
+		personaA.setSexo(persona.getSexo());
+		personaA.setEstado(persona.getEstado());
+		personaA.setNacionalidad(persona.getNacionalidad());
+		personaA.setEstadoCivil(persona.getEstadoCivil());
+		personaA.setFechaIngreso(persona.getFechaIngreso());
+		personaA.setHabilitado(persona.isHabilitado());
+		personaA.setCategoria(persona.getCategoria());
+		return personaA;
+	}
+	@Override
+	public List<Personas> listarPersonas() throws Exception {
+		return Listar();
 	}
 }

@@ -16,6 +16,7 @@ public interface IServiceCuota {
 	public void RegistrarPagoCuota(Cuota nueva);
 	public Cuota ObtenerUltimaCuota();
 	public List<Cuota> ObtenerCuotasImpagas();
+	public List<Cuota> ObtenerCuotas(Personas persona);
 	
 //	public boolean InsertOrUpdateCuota(Cuota nueva);
 //	//public Cuota Busqueda(Integer id);

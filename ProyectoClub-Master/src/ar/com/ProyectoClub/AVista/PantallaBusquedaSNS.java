@@ -74,6 +74,7 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 		panel = new JPanel();
 		resaltado= new RowsRenderer(6);
 		btnSeleccionar= new JButton();
+		btnSeleccionar.setEnabled(false);
 		rdbSocio= new JRadioButton("Socios");
 		
 		setBounds(100, 100, 717, 445);

@@ -28,7 +28,7 @@ public class RespaldarBD extends javax.swing.JDialog {
     String password="cris709";
     String bd="datosclub";
     String path="";
-    String backup="mysqldump --user="+user+" --password="+password+" -v "+bd+" > "+path;
+    String backup="mysqldump --user="+user+" --password="+password+" -v "+bd;
     private String extension=".sql";
     Runtime rt = Runtime.getRuntime();
     PantallaConfiguracion p;
@@ -181,12 +181,11 @@ public class RespaldarBD extends javax.swing.JDialog {
                 System.out.println(""+path);
                 int c=JOptionPane.showConfirmDialog(p, "Desea Crear una Copia de Seguridad en esta ruta \n"+path, "Mensaje de Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if(c==JOptionPane.YES_OPTION){
-                    backup="mysqldump --opt -u "+user+" -p"+password+" "+bd+"  -r "+path;
-                    rt.exec(backup);
+                backup = "C://xampp//mysql//bin/mysqldump --user=" + user + " --password=" + password + " -v " + bd + " -r "+path;
+                rt.exec(backup);
                     JOptionPane.showMessageDialog(p, "BackUp Creado Correctamente en "+file.getPath());
                     this.dispose();
-                }
-                
+                } 
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage());
             }

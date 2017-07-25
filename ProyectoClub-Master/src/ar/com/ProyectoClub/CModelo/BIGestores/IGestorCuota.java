@@ -12,4 +12,5 @@ public interface IGestorCuota extends IGestorGeneric<Cuota> {
 	public void GeneracionDeCuotas(Date fechaActual,List<Personas> PersonasActivas) throws Exception;
 	public Cuota ObtenerUltimaCuotaIngresado() throws Exception;
 	public List<Cuota> ObtenerCuotasImpagas();
+	public List<Cuota> ObtenerCuotasSocio(Integer dni);
 }

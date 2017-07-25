@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -19,6 +20,8 @@ import javax.swing.table.DefaultTableModel;
 import com.toedter.calendar.JDateChooser;
 
 import ar.com.ProyectoClub.AVista.*;
+import ar.com.ProyectoClub.AVista.ClasesRender.Render;
+import ar.com.ProyectoClub.AVista.ClasesRender.RowsRenderer;
 import ar.com.ProyectoClub.CModelo.Logica;
 import ar.com.ProyectoClub.CModelo.AServicios.FechaHora;
 import ar.com.ProyectoClub.CModelo.CEntidades.*;
@@ -466,7 +469,6 @@ public class ControllerCoordinador {
 		miVentanaSocios.btnEditar.setEnabled(!valor);
 		miVentanaSocios.btneliminar.setEnabled(!valor);
 		miVentanaSocios.btnCobranza.setEnabled(!valor);
-		miVentanaSocios.btnimprimir.setEnabled(!valor);
 		miVentanaSocios.comboEstadoCivil.setEnabled(valor);
 		miVentanaSocios.btnBuscar.setEnabled(valor);
 		miVentanaSocios.txtDom.setEditable(valor);
@@ -497,6 +499,9 @@ public class ControllerCoordinador {
 			 JOptionPane.showMessageDialog(null,"la persona ya se encuentra inhabilitada");
 	}
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void InhabilitarSocio(Integer dni){
+		miLogica.InhabilitarSocio(dni);
+	}
 	public void MostrarVentanaDetallesInhabilitar(Integer dni){
 		String habiilitado=new String();
 		String texto=new String();
@@ -546,8 +551,9 @@ public class ControllerCoordinador {
 		modeloT.addColumn("DETALLE");
 		modeloT.addColumn("");
 		
+		
 		if(dni.isEmpty() && nom.isEmpty() && ape.isEmpty()){
-			listaSocios=miLogica.ListarParcialSocio();
+		   listaSocios=miLogica.ListarParcialSocio();
 		}
 		else{
 			if(!dni.isEmpty()){
@@ -605,7 +611,7 @@ public class ControllerCoordinador {
 		tablaD.getColumnModel().getColumn(6).setMaxWidth(0);
 		tablaD.getColumnModel().getColumn(6).setMinWidth(0);
 		tablaD.getColumnModel().getColumn(6).setPreferredWidth(0);
-		
+		miVentanaBusquedaSNS.btnSeleccionar.setEnabled(true);
 		//tablaD.setDefaultRenderer(Object.class, new JButtonRenderer());
 		tablaD.setDefaultRenderer(Object.class,miVentanaBusquedaSNS.resaltado);
 	}
@@ -722,10 +728,10 @@ public class ControllerCoordinador {
 	public boolean ValidarDatosPersona(Personas persona){
 		boolean retorno=true;
 		//datos obligatorio para ambos
-		if(persona.getDomNro()==0 || persona.getDni()==0 || persona.getNombre()==null || persona.getApellido()==null || persona.getFecNacimiento()==null ||
-				persona.getDomicilio()==null || persona.getTelefono()==null)
-			retorno=false;
-		else{
+	//	if(persona.getDomNro()==0 || persona.getDni()==0 || persona.getNombre()==null || persona.getApellido()==null || persona.getFecNacimiento()==null ||
+	//			persona.getDomicilio()==null || persona.getTelefono()==null)
+	//		retorno=false;
+	//	else{
 			//datos obligatorios para socios
 			if(miFormularioPersona.isEssocio()){
 				if(persona.getMatricula()==0 || persona.getSexo() == null || persona.getNacionalidad()==null ||
@@ -734,7 +740,7 @@ public class ControllerCoordinador {
 
 
 			}
-		}
+		//}
 		return retorno;
 	}
 	
@@ -756,7 +762,9 @@ public class ControllerCoordinador {
 		miVentanaSocios.show();// setVisible(true);
 	}
 	
-	public void CargarDatosCobranza(Personas persona){
+	public void CargarDatosCobranza(Personas persona,JTable tablaD){
+		  
+		  java.util.List<Cuota> cuotasSocio= new ArrayList<Cuota>();
 		   //Datos persona
 			miVentanaCobranza.txtdni.setText(Integer.toString(persona.getDni()));
 			miVentanaCobranza.txtDomi.setText(persona.getDomicilio());
@@ -765,14 +773,65 @@ public class ControllerCoordinador {
 			miVentanaCobranza.txtNyA.setText(persona.getNombre()+" "+persona.getApellido());
 			miVentanaCobranza.txtTel.setText(persona.getTelefono());
 			miVentanaCobranza.txtCat.setText(persona.getCategoria().getNombre());
+			
 			//cuota
-			Cuota cuota=miLogica.CrearInstanciaCuota();
-			//cuota=miLogica.busca
+			boolean[] editable = {false,false,false,false,true,false};
+			
+			tablaD.setDefaultRenderer(Object.class, new Render());
+	      
+			DefaultTableModel modeloT = new DefaultTableModel(new String[]{"MES", "AÑO", "FECHA PAGO", "IMPORTE","",""}, 0) {
+	 
+	            Class[] types = new Class[]{
+	                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Boolean.class,java.lang.Object.class
+	            };
+	 
+	            public Class getColumnClass(int columnIndex) {
+	                return types[columnIndex];
+	            }
+	            
+	            public boolean isCellEditable(int row, int column){
+	                return editable[column];
+	            }
+	        };
+			Object[] columna = new Object[6];
+			
+			cuotasSocio=miLogica.ObtenerCuotasSocios(persona);
+			int numRegistros=cuotasSocio.size();
+			
+			float total=0;
+			Date fechaG= new Date();
+			for (int i = 0; i < numRegistros; i++) {
+				int mm,aaaa;
+				fechaG=cuotasSocio.get(i).getFechaGeneracion();
+				mm=fechaG.getMonth();
+				aaaa=fechaG.getYear();
+				columna[0] = mm+1;
+				columna[1] = aaaa+1900;
+				if(cuotasSocio.get(i).getFechaPago() ==null){
+					columna[2] = "No Presenta Pagos";
+					total+=cuotasSocio.get(i).getImporte();
+				}
+				else
+					columna[2] = cuotasSocio.get(i).getFechaPago();
+				columna[3] = cuotasSocio.get(i).getImporte();
+				columna[4]=false;
+				columna[5] = cuotasSocio.get(i).getId();
+				modeloT.addRow(columna);
+			}
+			tablaD.setModel(modeloT);
+			tablaD.setRowHeight(25); 
+			tablaD.getTableHeader().getColumnModel().getColumn(4).setMaxWidth(30);
+			tablaD.getTableHeader().getColumnModel().getColumn(5).setMaxWidth(0); 
+			
+			miVentanaCobranza.txttotal.setText(String.valueOf(total));
 			miVentanaCobranza.setVisible(true);
 	}
+	public void CobrarCuota(Integer dni,java.util.List<Integer> IdCuotas){
+		miLogica.CobranzaCuotas(dni, IdCuotas);
+	}
 	
-	public void mostrarVentanaCobranza(Personas persona){
-		this.CargarDatosCobranza(persona);
+	public void mostrarVentanaCobranza(Personas persona,JTable tablaD){
+		this.CargarDatosCobranza(persona,tablaD);
 		
 	}
 	public void mostrarVentanaNoSocio() {
@@ -884,16 +943,15 @@ public class ControllerCoordinador {
 		miFormularioPersona.txtNom.setBounds(300, 104, 176, 20);
 		miFormularioPersona.dateFechNac.setBounds(300, 141, 95, 20);
 		miFormularioPersona.txtDom.setBounds(300, 178, 224, 20);
-		miFormularioPersona.txtDom.setBounds(300, 178, 224, 20);
-		miFormularioPersona.txtDomNro.setBounds(350,178,224,20);
+		miFormularioPersona.txtDomNro.setBounds(560,178,60,20);
 		miFormularioPersona.txtTel.setBounds(300, 217, 173, 20);
 		//label
 		miFormularioPersona.lblDni.setBounds(200, 21, 173, 20);
-		miFormularioPersona.lblApe.setBounds(200, 65, 81, 14);
 		miFormularioPersona.lblNom.setBounds(200, 104, 81, 14);
+		miFormularioPersona.lblApe.setBounds(200, 65, 81, 14);
 		miFormularioPersona.lblFechNac.setBounds(200, 141, 80, 14);
 		miFormularioPersona.lblDom.setBounds(200, 178, 81, 14);
-		miFormularioPersona.lblNro.setBounds(340, 178, 81, 14);
+		miFormularioPersona.lblNro.setBounds(530, 178, 81, 14);
 		miFormularioPersona.lblTel.setBounds(200, 217, 81, 14);
 	}
 	

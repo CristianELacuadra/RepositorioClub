@@ -122,13 +122,13 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 		panel_3.add(label_4);
 		
 		btnRestaurar = new JButton();
-		btnRestaurar.setBounds(48, 176, 81, 23);
+		btnRestaurar.setBounds(48, 176, 105, 23);
 		btnRestaurar.setText("Restaurar");
 		panel_3.add(btnRestaurar);
 		
 		btnBackup = new JButton();
 		btnBackup.setText("BackUp");
-		btnBackup.setBounds(241, 176, 105, 23);
+		btnBackup.setBounds(230, 176, 116, 23);
 		panel_3.add(btnBackup);
 		
 		JLabel lblNewLabel = new JLabel("");

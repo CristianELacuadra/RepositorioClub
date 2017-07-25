@@ -65,11 +65,26 @@ public class Logica {
 		serviceCaja=new ServiceCaja();
 	}
 	
+	public List<Personas> ListaActivoinactivo(){
+		List<Personas> lista=new ArrayList<Personas>();
+		
+		for(Personas persona: servicioSocio.ListaPersona()){
+			if(persona.isEssocio())
+				lista.add(persona);
+		}
+		return lista;
+	}
+	
+	public void InhabilitarSocio(Integer dni){
+		Personas persona =servicioSocio.CrearSocio();
+		persona=servicioSocio.BusquedaId(dni);
+		servicioSocio.DeshabilitarSocio(persona);
+	}
 	public Cuota CrearInstanciaCuota(){
 		return serviceCuota.CrearInstanciaCuota();
 	}
 	public List<Cuota> ObtenerCuotasSocios(Personas persona){
-		return null;
+		return serviceCuota.ObtenerCuotas(persona);
 	}
 	public void ProcesoMorosos(){
 		List<Cuota> listaCuotasImpagas=new ArrayList<Cuota>();
@@ -93,6 +108,43 @@ public class Logica {
 			return false;
 	}
 	
+	public void CobranzaCuotas(Integer dni,List<Integer> IdCuotas){
+		//Se obtienen las cuotas para actualizar el pago 
+		List<Cuota> ListaCuotas=new ArrayList<>();
+		for(Integer id:IdCuotas){
+			ListaCuotas.add(serviceCuota.BuscarCuota(id));	
+		}
+		//Regista los pagos
+		for(Cuota cuotas: ListaCuotas){
+			serviceCuota.RegistrarPagoCuota(cuotas);
+		}
+
+		//Actualizo el estado del socio
+		servicioSocio.GuardarSocio(CambiarEstadoSocio(dni));
+
+		//Registro un nuevo ingreso en la caja
+		for(Cuota cuotas: ListaCuotas){
+			serviceCaja.GuardarIngresoEgreso(CuotaIngresaCaja(cuotas));
+		}
+	}
+	private Personas CambiarEstadoSocio(Integer dni){
+		Personas persona= servicioSocio.CrearSocio();
+		persona=servicioSocio.BusquedaId(dni);
+		persona.setEstado("Activo");
+		persona.setHabilitado(true);
+		return persona;
+	}
+	
+	private Caja CuotaIngresaCaja(Cuota cuotas){
+		Caja caja=this.CrearInstanciaCaja();
+		caja.setCuota(cuotas);
+		caja.setDescripcion("pago de cuota socio numero "+cuotas.getPersonas().getNroSocio());
+		caja.setFecha(FechaHora.FechaActual());
+		caja.setHabilitar(true);
+		caja.setMonto(cuotas.getImporte());
+		caja.setTipo(true);
+		return caja;
+	}
 	
 	public Date FechaUltimaGeneracionCuota(){
 		Cuota cuota=serviceCuota.CrearInstanciaCuota();
@@ -125,6 +177,7 @@ public class Logica {
 		EntidadNoSocio.setNombre(persona.getNombre());
 		EntidadNoSocio.setFecNacimiento(persona.getFecNacimiento());
 		EntidadNoSocio.setDomicilio(persona.getDomicilio());
+		EntidadNoSocio.setDomicilioNro(persona.getDomNro());
 		EntidadNoSocio.setTelefono(persona.getTelefono());
 		EntidadNoSocio.setEssocio(false);
 		serviceNoSocio.GuardarNoSocio(EntidadNoSocio);

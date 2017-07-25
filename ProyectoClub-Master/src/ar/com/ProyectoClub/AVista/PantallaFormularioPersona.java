@@ -399,19 +399,25 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			}
 			nuevapersona.setCategoria(nuevaCategoria);
 		}
-		if(miCoordinador.ValidarDatosPersona(nuevapersona)){ 
-			//if(txtApe.getText().isEmpty() || txtDni.getText().isEmpty() || txtNom.getText().isEmpty() || txtDomNro.getText().isEmpty() || txtMatri.getText()) 
-			miCoordinador.GuardarSocioNosocio(nuevapersona, Essocio);
-			this.limpiar();
-			if(Essocio){
-			lblIdSocio.setText(miCoordinador.DevolverUltimoIdSocio().toString());
-			}
-		}
-		else
-		{
+		//para salir del paso
+		if(txtApe.getText().isEmpty() || txtDni.getText().isEmpty() || txtDom.getText().isEmpty() || txtDomNro.getText().isEmpty() || dateFechNac.getDate()==null || txtTel.getText().isEmpty()){
 			JOptionPane.showMessageDialog(null,"Algunos datos son obligatorios, ¡por favor verifique los mismos!","Error al verificar los datos",JOptionPane.ERROR_MESSAGE);
 		}
-			
+		else{
+			if(miCoordinador.ValidarDatosPersona(nuevapersona)){ 
+				//if(txtApe.getText().isEmpty() || txtDni.getText().isEmpty() || txtNom.getText().isEmpty() || txtDomNro.getText().isEmpty() || txtMatri.getText()) 
+				miCoordinador.GuardarSocioNosocio(nuevapersona, Essocio);
+				this.limpiar();
+				if(Essocio){
+					lblIdSocio.setText(miCoordinador.DevolverUltimoIdSocio().toString());
+				}
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null,"Algunos datos son obligatorios, ¡por favor verifique los mismos!","Error al verificar los datos",JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
 	}
 	
 	public void setEssocio(boolean essocio) {

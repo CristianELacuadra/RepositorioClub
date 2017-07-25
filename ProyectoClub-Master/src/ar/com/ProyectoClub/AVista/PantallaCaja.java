@@ -91,26 +91,26 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
-		panel_2.setBounds(834, 36, 443, 44);
+		panel_2.setBounds(834, 12, 443, 68);
 		Panel.add(panel_2);
 		panel_2.setLayout(null);
 		
 		JLabel lblmmaaaa = new JLabel("(MM/AAAA)");
 		lblmmaaaa.setForeground(SystemColor.desktop);
 		lblmmaaaa.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblmmaaaa.setBounds(156, 17, 64, 14);
+		lblmmaaaa.setBounds(149, 43, 64, 14);
 		panel_2.add(lblmmaaaa);
 		
 		JLabel label = new JLabel("(MM/AAAA)");
 		label.setForeground(Color.BLACK);
 		label.setFont(new Font("Arial", Font.PLAIN, 12));
-		label.setBounds(369, 17, 64, 14);
+		label.setBounds(362, 43, 64, 14);
 		panel_2.add(label);
 		
 		dateDesde= new JDateChooser();
 		dateDesde.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		dateDesde.setToolTipText("Seleccione Mes y A\u00F1o");
-		dateDesde.setBounds(17, 17, 129, 20);
+		dateDesde.setBounds(10, 37, 129, 20);
 		panel_2.add(dateDesde);
 		dateDesde.setDateFormatString("MMM-yyyy");
 		
@@ -118,13 +118,23 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		dateHasta.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		dateHasta.setToolTipText("Seleccione Mes y A\u00F1o");
 		dateHasta.setDateFormatString("MMM-yyyy");
-		dateHasta.setBounds(230, 17, 129, 20);
+		dateHasta.setBounds(223, 37, 129, 20);
 		panel_2.add(dateHasta);
+		
+		JLabel lblNewLabel_1 = new JLabel("Fecha Inicio");
+		lblNewLabel_1.setFont(lblNewLabel_1.getFont().deriveFont(lblNewLabel_1.getFont().getStyle() | Font.ITALIC));
+		lblNewLabel_1.setBounds(28, 12, 87, 14);
+		panel_2.add(lblNewLabel_1);
+		
+		JLabel lblFechaFin = new JLabel("Fecha Fin");
+		lblFechaFin.setFont(lblFechaFin.getFont().deriveFont(lblFechaFin.getFont().getStyle() | Font.ITALIC));
+		lblFechaFin.setBounds(244, 12, 87, 14);
+		panel_2.add(lblFechaFin);
 		
 		JLabel lblNewLabel = new JLabel("Filtrando Fecha");
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 		lblNewLabel.setForeground(SystemColor.textHighlightText);
-		lblNewLabel.setBounds(1005, 11, 128, 14);
+		lblNewLabel.setBounds(1005, 0, 128, 14);
 		Panel.add(lblNewLabel);
 		
 		JPanel panel_3 = new JPanel();
@@ -372,6 +382,7 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		dateHasta.setDate(null);
 		chcEgresos.setSelected(true);
 		chckIngresos.setSelected(true);
+		txtSubTotal.setText(null);
 	}
 
 	@Override

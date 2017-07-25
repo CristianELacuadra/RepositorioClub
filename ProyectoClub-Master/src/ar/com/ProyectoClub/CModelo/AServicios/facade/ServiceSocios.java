@@ -331,5 +331,25 @@ public class ServiceSocios implements IServiceSocio {
 	}
 	*/
 
+	@Override
+	public void DeshabilitarSocio(Personas socio) {
+		try{
+			gestorsocio.Inhabilitar(socio);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public List<Personas> ListaPersona() {
+		try{
+			return gestorsocio.listarPersonas();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	
 }

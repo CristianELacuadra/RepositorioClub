@@ -56,7 +56,7 @@
         <property name="essocio" type="boolean">
             <column name="Essocio" not-null="true" />
         </property>
-        <set name="cuotas" table="cuota" inverse="true" lazy="true" fetch="select">
+        <set name="cuotas" table="cuota" inverse="true" lazy="false" fetch="join">
             <key>
                 <column name="Dni" not-null="true" />
             </key>

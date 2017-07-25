@@ -26,20 +26,21 @@ public class GestorNoSocio implements IGestorNosocio {
 
 	@Override
 	public void Guardar(NoSocioDTO entity) throws Exception {
-		if(this.VerificarHabilitado(entity.getDni())) {
+		//if(this.VerificarHabilitado(entity.getDni())) {
 			Personas nuevo=_NosocioDao.crear();
 			nuevo.setDni(entity.getDni());
 			nuevo.setNombre(entity.getNombre());
 			nuevo.setApellido(entity.getApellido());
 			nuevo.setTelefono(entity.getTelefono());
 			nuevo.setDomicilio(entity.getDomicilio());
+			nuevo.setDomNro(entity.getDomicilioNro());
 			nuevo.setFecNacimiento(entity.getFecNacimiento());
 			nuevo.setHabilitado(true);
 			nuevo.setEssocio(false);
 			_NosocioDao.GuardarEntity(nuevo);
-		}
-		else 
-			throw new Exception("Error,Usted possé deudas en este club.Salde las deudas para poder ejercer nuestro servicio");	
+	//	}
+	//	else 
+		//	throw new Exception("Error,Usted possé deudas en este club.Salde las deudas para poder ejercer nuestro servicio");	
 	}
 
 	@Override

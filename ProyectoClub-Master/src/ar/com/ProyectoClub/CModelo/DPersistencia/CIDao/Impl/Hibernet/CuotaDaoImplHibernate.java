@@ -43,7 +43,7 @@ public class CuotaDaoImplHibernate extends GenericDAOImplHibernate<Cuota, Intege
 			 * HQL para recuperar solo datos habilitados
 			 */
 			ListaCuota.clear();
-			ListaCuota = _sessiondehilo.createQuery("SELECT s FROM Cuota s WHERE s.sociosa.dni="+dni).list();	
+			ListaCuota = _sessiondehilo.createQuery("SELECT s FROM Cuota s WHERE s.personas.dni="+ dni +" ORDER BY s.fechaGeneracion " ).list();	
 		    return ListaCuota;
 		}
 		catch(RuntimeException ex){

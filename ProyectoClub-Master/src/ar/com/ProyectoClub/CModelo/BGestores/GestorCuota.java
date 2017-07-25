@@ -63,9 +63,11 @@ public class GestorCuota implements IGestorCuota {
 
 	@Override
 	public void RegistrarPagoCuota(Cuota cuota)throws Exception {
-		cuota.setFechaPago(FechaHora.FechaActual());
-		cuota.setEstado("Saldado");
-		this.Guardar(cuota);
+		Cuota regCuota=this.Crear();
+		regCuota=cuota;
+		regCuota.setFechaPago(FechaHora.FechaActual());
+		regCuota.setEstado("Saldado");
+		this.Guardar(regCuota);
 		
 	}
 	
@@ -83,15 +85,18 @@ public class GestorCuota implements IGestorCuota {
 
 	@Override
 	public void GeneracionDeCuotas(Date fechaActual, List<Personas> PersonasActivas) throws Exception {
-		float precioOrigiCate,porcentajedesc,descuento;
-		Categoria categoria=new Categoria();
-		for(Personas socios : PersonasActivas){
-			categoria=socios.getCategoria();
-			precioOrigiCate=categoria.getMonto();
-			porcentajedesc=categoria.getDescuento();
-			 descuento =(porcentajedesc/100)*precioOrigiCate; //Obtengo el Descuento
-			 float importefinal=precioOrigiCate-descuento; //Importe final
-			 this.Generecion(fechaActual,socios, importefinal);
+		Integer idUltimo=cuotadao.ObtenerUltimoIdIngresado();
+		if(this.Busqueda(idUltimo).getFechaGeneracion().compareTo(fechaActual)!=0){ 
+			float precioOrigiCate,porcentajedesc,descuento;
+			Categoria categoria=new Categoria();
+			for(Personas socios : PersonasActivas){
+				categoria=socios.getCategoria();
+				precioOrigiCate=categoria.getMonto();
+				porcentajedesc=categoria.getDescuento();
+				descuento =(porcentajedesc/100)*precioOrigiCate; //Obtengo el Descuento
+				float importefinal=precioOrigiCate-descuento; //Importe final
+				this.Generecion(fechaActual,socios, importefinal);
+			}
 		}
 	}
 
@@ -108,5 +113,11 @@ public class GestorCuota implements IGestorCuota {
 	@Override
 	public List<Cuota> ObtenerCuotasImpagas() {
 		return cuotadao.ObternerCuotasImpagas();
+	}
+
+
+	@Override
+	public List<Cuota> ObtenerCuotasSocio(Integer dni) {
+		return(cuotadao.ListaCuotaXDNI(dni)); 
 	}
 }
