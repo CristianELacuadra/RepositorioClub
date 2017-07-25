@@ -233,18 +233,18 @@ public void initComponent(Integer aux){
 	
 	switch(aux){
 	case 0 :
-		btnModificar.setEnabled(true);
+		btnModificar.setEnabled(false);
 		btnModificar.setVisible(true);
 		label.setText("MODIFICAR EL ALQUILER SELECCIONADO");
 		break;
 	case 1 :
-		btnEliminar.setEnabled(true);
+		btnEliminar.setEnabled(false);
 		btnEliminar.setVisible(true);
 		label.setText("ELIMINAR EL ALQUILER SELECCIONADO");
 		break;
 	
 	case 2 :
-		btnPagar.setEnabled(true);
+		btnPagar.setEnabled(false);
 		btnPagar.setVisible(true);
 		label.setText("PAGAR EL ALQUILER SELECCIONADO");
 		break;

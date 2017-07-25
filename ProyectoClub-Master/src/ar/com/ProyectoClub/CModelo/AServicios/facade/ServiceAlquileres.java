@@ -11,12 +11,12 @@ import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.AlquilerDao
 public class ServiceAlquileres implements IServiceAlquileres {
 	private IAlquilerDAO _AlquilerDao;
 	private  Alquiler _Alquiler;
-	private IGestorAlquiler gestoralquiler;
+	private IGestorAlquiler gestorAlquiler;
 	
 
 	public ServiceAlquileres() {
 		try{
-			gestoralquiler=new GestorAlquiler();
+			gestorAlquiler=new GestorAlquiler();
 			_AlquilerDao=new AlquilerDaoImplHibernate();
 			}
 			catch (Exception e) {
@@ -64,14 +64,14 @@ public class ServiceAlquileres implements IServiceAlquileres {
 	}
 	public Alquiler CrearAlquiler(){
 		try{
-			return gestoralquiler.Crear();
+			return gestorAlquiler.Crear();
 		}catch(Exception e){
 			throw new RuntimeException("No se pudo instanciar el servicio debido al siguiente error: "+e.getMessage());
 		}
 	}
 	public void GuardarAlquiler(Alquiler alqui){
 		try {
-			gestoralquiler.Guardar(alqui);
+			gestorAlquiler.Guardar(alqui);
 		} catch (Exception e) {
 			throw new RuntimeException("No se pudo instanciar el servicio debido al siguiente error: "+e.getMessage());
 		}

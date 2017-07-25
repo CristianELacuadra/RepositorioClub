@@ -242,10 +242,12 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 							textArea.setText(inm.getNombre());
 							if((pers!=null)&&(inm!=null)&&(textCantidadHoras.getText()!=null)){
 								ResuPrecioTotal.setText(String.valueOf(CalcularPrecioTotal(Integer.parseInt(textCantidadHoras.getText().toString()),pers,inm)));
-							}
 						}
 					}
+					
+					}
 				}
+				
 				
 			}});
 		
@@ -272,13 +274,14 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		 SimpleDateFormat formateador = new SimpleDateFormat("hh:mm:ss");
 		 textHoraA.setText(formateador.format(fecha).toString());
 		 txtNroAlquiler.setText("AUTOMATICO");
-		 inm=null;
-		 pers=null;
-		 alqui=null;
+		 inm=null;//miCoordinador.CrearInmueble();
+		 pers=miCoordinador.CrearPersona();
+		// alqui=null;//miCoordinador.CrearAlquiler();
+		 alqui=miCoordinador.CrearAlquiler();
 		 lblNewLabel.setVisible(false);
 		 chcAlquilerPagado.setSelected(false);
 		 dateFechaReserva.setDate(null);
-		 
+		 txtSNS.setText(null);
 		 
 	}
 	
@@ -310,7 +313,7 @@ public void cargarDatos(){
 		alqui.setPersonas(pers);
 		Date fecha=new Date();
 	
-		alqui.setFechaActual(fecha); //Date.parse(textFechaActual.getText().toString()
+		alqui.setFechaActual(fecha);
 		alqui.setHoraActual(fecha);
 	
 		alqui.setFechaReserva(dateFechaReserva.getDate());
@@ -334,7 +337,6 @@ public float CalcularPrecioTotal(Integer al, Personas per,Inmuebles in ){
 		lblNewLabel.setText("*Precio con descuento por Socio de % "+ per.getCategoria().getDescuento());
 		lblNewLabel.setVisible(true);
 	}
-	
 	return tot;
 }
 
@@ -345,12 +347,11 @@ public float CalcularPrecioTotal(Integer al, Personas per,Inmuebles in ){
 	public void actionPerformed(ActionEvent e) {
 		try{
 			if(e.getSource()==btnBuscarPersona){
-				Personas pers=miCoordinador.CrearPersona();
+				//Personas pers=miCoordinador.CrearPersona();
 				pers=miCoordinador.BuscarPersona(Integer.parseInt(txtSNS.getText()));
 				if((pers==null)||(pers.isHabilitado()==false)){
 					JOptionPane.showMessageDialog(null, "NO SE ENCUENTRA LA PERSONA O NO NO ESTA HABILITADA", "RESULTADO DE BUSQUEDA",JOptionPane.INFORMATION_MESSAGE);
-				
-				}
+				}else {JOptionPane.showMessageDialog(null, "SE ENCONTRO A LA PERSONA", "RESULTADO DE BUSQUEDA",JOptionPane.INFORMATION_MESSAGE);}
 			}
 		}catch(Exception e1){
 			JOptionPane.showMessageDialog(null, "NO SE ENCUENTRA LA PERSONA", "HA OCURRIDO UN ERROR",JOptionPane.ERROR_MESSAGE);
@@ -362,6 +363,8 @@ public float CalcularPrecioTotal(Integer al, Personas per,Inmuebles in ){
 				}else {
 					cargarDatos();
 					miCoordinador.RegistrarNuevoAlquiler(alqui);
+					JOptionPane.showMessageDialog(null, "SE GUARDO CORRECTAMENTE", "ALQUILER GUARDADO",JOptionPane.INFORMATION_MESSAGE);
+					this.dispose();
 					
 				}
 			}

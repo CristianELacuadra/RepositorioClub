@@ -1,6 +1,6 @@
 package ar.com.ProyectoClub.AVista;
 
-import java.awt.EventQueue;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,10 +18,6 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.UIManager;
-
-import java.awt.GridLayout;
-
-import javax.swing.SwingConstants;
 import java.awt.Toolkit;
 import java.awt.Rectangle;
 
@@ -50,7 +46,7 @@ public class PantallaAlquiler extends JDialog implements ActionListener {
 	}
 	
 	private void initComponents(){
-	//	setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	
 		getContentPane().setLayout(null);
 		
 		panel = new JPanel();

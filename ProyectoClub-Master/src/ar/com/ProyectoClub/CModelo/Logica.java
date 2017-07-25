@@ -28,6 +28,8 @@ import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceCuota;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceNoSocio;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceSocios;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceUsuario;
+import ar.com.ProyectoClub.CModelo.AServicios.facade.ServiceAlquileres;
+import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceAlquileres;
 import ar.com.ProyectoClub.CModelo.CEntidades.Caja;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.*;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.*;
@@ -65,7 +67,7 @@ public class Logica {
 		serviciocategoria=new ServiceCategoria();
 		serviceNoSocio=new ServiceNoSocio();
 		serviceCaja=new ServiceCaja();
-	//	serviceAlquiler=new ServiceAlquiler();
+		serviceAlquiler=new ServiceAlquileres();
 		serviceInmueble=new ServiceInmueble();
 	}
 	

@@ -27,7 +27,7 @@ public class GestorAlquiler implements IGestorAlquiler {
 	}
 
 	@Override
-	public Alquiler Crear() throws Exception {
+	public Alquiler Crear() throws BussinessException {
 		return(_AlquilerDao.crear());//->Devuelve nueva instancia de la entidad Alquiler
 	}
 	

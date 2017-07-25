@@ -935,7 +935,7 @@ public class ControllerCoordinador {
 	public Alquiler CrearAlquiler() {
 		
 		return miLogica.CrearInstanciaAlquiler();
-		//return null;
+		
 	}
 
 	public float CalcularPrecioTotal(Alquiler alqui, Personas pers, Inmuebles inm) {

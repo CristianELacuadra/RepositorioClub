@@ -201,19 +201,19 @@ public class PantallaNuevoInmueble extends JDialog implements ActionListener,Key
 			break;
 		
 		case 1 :
-			btnModificar.setEnabled(true);
+			btnModificar.setEnabled(false);
 			btnModificar.setVisible(true);
 			lblTit.setText("MODIFICAR EL INMUEBLE");
 			break;
 		
 		case 2 :
-			btnEliminar.setEnabled(true);
+			btnEliminar.setEnabled(false);
 			btnEliminar.setVisible(true);
 			lblTit.setText("ELIMINAR O DESHABILITAR EL INMUEBLE");
 			break;
 		
 		case 3:
-			btnRestaurar.setEnabled(true);
+			btnRestaurar.setEnabled(false);
 			btnRestaurar.setVisible(true);
 			lblTit.setText("REHABILITAR EL INMUEBLE");
 			break;
@@ -223,7 +223,7 @@ public class PantallaNuevoInmueble extends JDialog implements ActionListener,Key
 			
 		}
 		
-		//inm=miCoordinador.CrearInmueble();
+		
 		
 		btnAceptar.addActionListener(this);
 		btnModificar.addActionListener(this);
