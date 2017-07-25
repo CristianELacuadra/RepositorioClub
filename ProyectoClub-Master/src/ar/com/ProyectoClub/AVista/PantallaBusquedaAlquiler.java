@@ -294,14 +294,14 @@ public class PantallaBusquedaAlquiler extends JDialog implements ActionListener,
 				
 			}
 			if(e.getSource()==btnModificar){
-				
+				miCoordinador.mostrarVentanaModificarAlquiler();
 			}
 			
 			if(e.getSource()==btnPagarUnAlquiler){
-							
+							miCoordinador.mostrarVentanaPagarAlquiler();
 						}
 			if(e.getSource()==btnEliminarUnAlquiler){
-				
+				miCoordinador.mostrarVentanaEliminaralquiler();
 			}
 			if(e.getSource()==btnLimpiar){
 				limpiar();

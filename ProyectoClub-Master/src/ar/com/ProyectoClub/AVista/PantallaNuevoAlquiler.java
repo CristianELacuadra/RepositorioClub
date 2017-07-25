@@ -8,11 +8,14 @@ import javax.swing.JDialog;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
 import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
+import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
 import ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 
@@ -47,13 +50,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import java.awt.SystemColor;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class PantallaNuevoAlquiler extends JDialog implements ActionListener,KeyListener {
 	public JTextField textCantidadHoras;
 	public JTextField txtSNS;
-	public JTextField txtNombreInmueble;
 	private ControllerCoordinador miCoordinador;
 	public JLabel lblNumeroDeAlquiler;
 	public JLabel lblFechaAlcual;
@@ -78,22 +83,24 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 	public JLabel label;
 	public JScrollPane scrollPane;
  	public JTextArea textArea;
+ 	public Integer auxIdInm;
  	public Inmuebles inm;
  	public Personas pers;
  	public Alquiler alqui;
- 	public JButton btnBuscarInmueble;
  	private JTextField txtNroAlquiler;
-
+ 	public JComboBox<String> comboBox;
+ 	public Map<Integer, String> mapInmueble = new HashMap<Integer, String>();
 	
 	
 	public PantallaNuevoAlquiler(PantallaAlquiler vtnPantallaAlquiler,boolean b) {
 		super(vtnPantallaAlquiler,b);
-		getContentPane().setBackground(SystemColor.activeCaptionBorder);
+		getContentPane().setForeground(Color.BLACK);
+		getContentPane().setBackground(UIManager.getColor("Button.light"));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaNuevoAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		setResizable(false);
 		setTitle("NUEVO ALQUILER");
 		initComponents();
-		setBounds(100, 100, 614, 737);
+		setBounds(100, 100, 540, 718);
 
 	}
 	
@@ -103,25 +110,26 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		dateFechaReserva.setBounds(186, 295, 182, 20);
 		
 		btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(434, 218, 119, 23);
+		btnAceptar.setIcon(new ImageIcon(PantallaNuevoAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/apply.png")));
+		btnAceptar.setBounds(410, 129, 119, 48);
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(434, 252, 119, 23);
+		btnCancelar.setBounds(410, 188, 119, 48);
 		
 		lblNewLabel = new JLabel("*Precio con descuento por Socio de %");
-		lblNewLabel.setBounds(378, 489, 184, 14);
+		lblNewLabel.setBounds(186, 518, 184, 14);
 		lblNewLabel.setVisible(false);
 		
 		panelTitulo = new JPanel();
-		panelTitulo.setBounds(10, 11, 633, 35);
+		panelTitulo.setBounds(10, 11, 514, 35);
 		panelTitulo.setBackground(Color.RED);
 		panelTitulo.setBorder(UIManager.getBorder("ComboBox.border"));
 		
 		chcAlquilerPagado = new JCheckBox("ALQUILER PAGADO");
-		chcAlquilerPagado.setBounds(9, 533, 119, 23);
+		chcAlquilerPagado.setBounds(9, 533, 150, 23);
 		chcAlquilerPagado.setToolTipText("Seleccionar cuando se pagar\u00E1 en el momento");
 		
 		btnBuscarPersona = new JButton("Buscar");
-		btnBuscarPersona.setBounds(374, 116, 93, 33);
+		btnBuscarPersona.setBounds(184, 131, 118, 33);
 		btnBuscarPersona.setHorizontalAlignment(SwingConstants.LEFT);
 		btnBuscarPersona.setIcon(new ImageIcon(PantallaNuevoAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
 		
@@ -153,7 +161,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		getContentPane().add(lblFechaAlcual);
 		
 		lblCodSocio = new JLabel("DNI DEL SOCIO O NO-SOCIO");
-		lblCodSocio.setBounds(10, 125, 166, 14);
+		lblCodSocio.setBounds(10, 114, 166, 14);
 		getContentPane().add(lblCodSocio);
 		lblPrecioTotal = new JLabel("PRECIO TOTAL: $");
 		lblPrecioTotal.setBounds(10, 489, 118, 14);
@@ -166,7 +174,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		getContentPane().add(ResuPrecioTotal);
 		
 		txtSNS = new JTextField();
-		txtSNS.setBounds(186, 122, 182, 20);
+		txtSNS.setBounds(186, 111, 182, 20);
 		txtSNS.setColumns(10);
 		getContentPane().add(txtSNS);
 		
@@ -179,18 +187,6 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		comboHoraR.setModel(new DefaultComboBoxModel(new String[] {"6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"}));
 		comboHoraR.setBounds(186, 343, 182, 20);
 		getContentPane().add(comboHoraR);
-		
-		txtNombreInmueble = new JTextField();
-		txtNombreInmueble.setEditable(false);
-		txtNombreInmueble.setBounds(186, 440, 182, 20);
-		txtNombreInmueble.setColumns(10);
-		getContentPane().add(txtNombreInmueble);
-		
-		btnBuscarInmueble = new JButton("Buscar");
-		btnBuscarInmueble.setBounds(374, 432, 93, 33);
-		btnBuscarInmueble.setHorizontalAlignment(SwingConstants.LEFT);
-		btnBuscarInmueble.setIcon(new ImageIcon(PantallaNuevoAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
-		getContentPane().add(btnBuscarInmueble);
 		
 		textHoraA = new JTextField();
 		textHoraA.setEditable(false);
@@ -205,7 +201,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		textFechaActual.setColumns(10);
 		
 		label = new JLabel("OBSERVACIONES:");
-		label.setBounds(10, 612, 101, 14);
+		label.setBounds(10, 574, 118, 14);
 		getContentPane().add(label);
 		getContentPane().add(dateFechaReserva);
 		getContentPane().add(chcAlquilerPagado);
@@ -215,7 +211,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		getContentPane().add(btnBuscarPersona);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(97, 585, 271, 113);
+		scrollPane.setBounds(182, 568, 271, 113);
 		getContentPane().add(scrollPane);
 		
 		textArea = new JTextArea();
@@ -229,11 +225,63 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		getContentPane().add(txtNroAlquiler);
 		txtNroAlquiler.setColumns(10);
 		
-		btnBuscarPersona.addActionListener(this);
-		btnBuscarInmueble.addActionListener(this);
+		comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Seleccione el inmueble"}));
+		comboBox.setBounds(186, 440, 182, 20);
+		getContentPane().add(comboBox);
 		
+		comboBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent ed) {
+				// TODO Auto-generated method stub
+				if(ed.getStateChange()== ItemEvent.DESELECTED){
+					for (Map.Entry<Integer, String> entry : mapInmueble.entrySet()){
+						if(comboBox.getSelectedItem().equals(entry.getValue())){
+							auxIdInm=entry.getKey();
+							inm=miCoordinador.BuscarInmueble(auxIdInm);
+							textArea.setText(inm.getNombre());
+							if((pers!=null)&&(inm!=null)&&(textCantidadHoras.getText()!=null)){
+								ResuPrecioTotal.setText(String.valueOf(CalcularPrecioTotal(Integer.parseInt(textCantidadHoras.getText().toString()),pers,inm)));
+							}
+						}
+					}
+				}
+				
+			}});
+		
+		
+		btnBuscarPersona.addActionListener(this);
+		btnAceptar.addActionListener(this);
+		btnCancelar.addActionListener(this);
+		
+			
 	}
 
+	public void cargarCombo(){
+		comboBox.removeAllItems();
+		comboBox.addItem("Seleccione el inmueble");
+		for (Inmuebles _inm :miCoordinador.ListarInmueblesAlquiler()){
+			comboBox.addItem(_inm.getNombre());
+			mapInmueble.put(_inm.getIdInmueble(), _inm.getNombre());
+		}
+	
+		Date fecha=new Date();
+		 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		 textFechaActual.setText(sdf.format(fecha));   
+		 
+		 SimpleDateFormat formateador = new SimpleDateFormat("hh:mm:ss");
+		 textHoraA.setText(formateador.format(fecha).toString());
+		 txtNroAlquiler.setText("AUTOMATICO");
+		 inm=null;
+		 pers=null;
+		 alqui=null;
+		 lblNewLabel.setVisible(false);
+		 chcAlquilerPagado.setSelected(false);
+		 dateFechaReserva.setDate(null);
+		 
+		 
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -251,58 +299,78 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+@SuppressWarnings("deprecation")
 public void cargarDatos(){
 	alqui=miCoordinador.CrearAlquiler();
-	alqui.setNroAlquiler(Integer.parseInt(txtNroAlquiler.getText().toString()));
-	alqui.setInmuebles(inm);
-	alqui.setPersonas(pers);
-	Date fecha=new Date();
+	//alqui.setNroAlquiler(Integer.parseInt(txtNroAlquiler.getText().toString()));
+	if((pers!=null)&&(inm!=null)&&(dateFechaReserva.getDate()!=null)&&(textCantidadHoras.getText()!=null)){
+		alqui.setInmuebles(inm);
+		alqui.setPersonas(pers);
+		Date fecha=new Date();
 	
-	alqui.setFechaActual(fecha); //Date.parse(textFechaActual.getText().toString()
-	alqui.setHoraActual(fecha);
+		alqui.setFechaActual(fecha); //Date.parse(textFechaActual.getText().toString()
+		alqui.setHoraActual(fecha);
 	
-	alqui.setFechaReserva(dateFechaReserva.getDate());
-	fecha.setHours(Integer.parseInt(comboHoraR.getSelectedItem().toString())); 
-	alqui.setHoraReserva(fecha);
-	alqui.setCantidadHora(Integer.parseInt(textCantidadHoras.getText().toString()));
+		alqui.setFechaReserva(dateFechaReserva.getDate());
+		fecha.setHours(Integer.parseInt(comboHoraR.getSelectedItem().toString())); 
+		alqui.setHoraReserva(fecha);
+		alqui.setCantidadHora(Integer.parseInt(textCantidadHoras.getText().toString()));
 	
-	alqui.setObservaciones(textArea.getText());
-	alqui.setPagoAlquiler(chcAlquilerPagado.isSelected());
-	alqui.setActivo(true);
-	alqui.setPrecioTotal(miCoordinador.CalcularPrecioTotal(alqui,pers));
-	
-	/*
-	 	Date asd=new Date();
-			asd.setHours(Integer.parseInt(horaReserva.getSelectedItem().toString())); 
-	 
-	 */
+		alqui.setObservaciones(textArea.getText());
+		alqui.setPagoAlquiler(chcAlquilerPagado.isSelected());
+		alqui.setActivo(true);
+		alqui.setPrecioTotal(this.CalcularPrecioTotal(Integer.parseInt(textCantidadHoras.getText().toString()),pers,inm));
+	}
 	
 }
+
+public float CalcularPrecioTotal(Integer al, Personas per,Inmuebles in ){
+	float tot=in.getPrecioHora()*al;
+	lblNewLabel.setVisible(false);
+	if((per.isEssocio()==true)&&(per.getEstado()!="MOROSO")){
+		tot= tot*((100-per.getCategoria().getDescuento())/100);
+		lblNewLabel.setText("*Precio con descuento por Socio de % "+ per.getCategoria().getDescuento());
+		lblNewLabel.setVisible(true);
+	}
+	
+	return tot;
+}
+
+
+
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try{
 			if(e.getSource()==btnBuscarPersona){
 				Personas pers=miCoordinador.CrearPersona();
 				pers=miCoordinador.BuscarPersona(Integer.parseInt(txtSNS.getText()));
-				if(pers==null){
-					JOptionPane.showMessageDialog(null, "NO SE ENCUENTRA LA PERSONA", "RESULTADO DE BUSQUEDA",JOptionPane.INFORMATION_MESSAGE);
-				}
+				if((pers==null)||(pers.isHabilitado()==false)){
+					JOptionPane.showMessageDialog(null, "NO SE ENCUENTRA LA PERSONA O NO NO ESTA HABILITADA", "RESULTADO DE BUSQUEDA",JOptionPane.INFORMATION_MESSAGE);
 				
+				}
 			}
-			
-			if(e.getSource()==btnBuscarInmueble){
-				Inmuebles inm=miCoordinador.CrearInmueble();
-				inm=miCoordinador.BuscarInmueble(txtNombreInmueble.getText());
-				if(inm==null){
-					JOptionPane.showMessageDialog(null, "NO SE ENCUENTRA LA PERSONA", "RESULTADO DE BUSQUEDA",JOptionPane.INFORMATION_MESSAGE);
-				}
-				}
-			
 		}catch(Exception e1){
 			JOptionPane.showMessageDialog(null, "NO SE ENCUENTRA LA PERSONA", "HA OCURRIDO UN ERROR",JOptionPane.ERROR_MESSAGE);
 		}
-
-		
+		try{
+			if(e.getSource()==btnAceptar){
+				if((pers==null)||(pers.isHabilitado()==false)){
+					JOptionPane.showMessageDialog(null, "NO SE ELIGIO UNA PERSONA O NO NO ESTA HABILITADA", "NO SE REALIZO NINGUNA BUSQUEDA",JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					cargarDatos();
+					miCoordinador.RegistrarNuevoAlquiler(alqui);
+					
+				}
+			}
+		}catch(Exception e1){
+			JOptionPane.showMessageDialog(null, "REINTENTE LA OPERACION", "HA OCURRIDO UN ERROR",JOptionPane.ERROR_MESSAGE);
+		}
+		if(e.getSource()==btnCancelar){
+			this.dispose();
+		}
 	}
 	
 	public void setCoordinador(ControllerCoordinador miCoordinador) {

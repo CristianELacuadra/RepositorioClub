@@ -783,25 +783,30 @@ public class ControllerCoordinador {
 		
 	}
 	public void mostrarVentanaNuevoAlquiler(){
+		miVentanaNuevoAlquiler.cargarCombo();//carga los componentes obligatorios de la pantalla
 		miVentanaNuevoAlquiler.setVisible(true);
 	}
 	public void mostrarVentanaBusquedaAlquiler(){
 		miVentanaBusquedaAlquiler.setVisible(true);
 	}
 	public void mostrarVentanaNuevoInmueble(){
+		
 		miVentanaNuevoInmueble.setVisible(true);
 	}
 	public void mostrarVentanaBusquedaInmueble(){
 		miVentanaBusquedaInmueble.setVisible(true);
 	}
 	
-	public void mostrarVentanaModificarInmueble(){
+	public void mostrarVentanaModificarInmueble(Inmuebles entity){
+		miVentanaModificarInmueble.mostrarDat(entity);
 		miVentanaModificarInmueble.setVisible(true);
 	}
-	public void mostrarVentanaEliminarInmuelble(){
+	public void mostrarVentanaEliminarInmuelble(Inmuebles entity){
+		miVentanaEliminarInmueble.mostrarDat(entity);
 		miVentanaEliminarInmueble.setVisible(true);
 	}
-	public void mostrarVentanaRehabilitarInmueble(){
+	public void mostrarVentanaRehabilitarInmueble(Inmuebles entity){
+		miVentanaRehabilitarInmueble.mostrarDat(entity);
 		miVentanaRehabilitarInmueble.setVisible(true);
 	}
 	
@@ -809,11 +814,13 @@ public class ControllerCoordinador {
 	public void mostrarVentanaModificarAlquiler(){
 		miVentanaModificarAlquiler.setVisible(true);
 	}
-	/*
-	miVentanaModificarAlquiler;
-	miVentanaEliminarAlquiler;
-	miVentanaPagarAlquiler;
-	*/
+	public void mostrarVentanaEliminaralquiler(){
+		miVentanaEliminarAlquiler.setVisible(true);
+	}
+	public void mostrarVentanaPagarAlquiler(){
+		miVentanaPagarAlquiler.setVisible(true);
+	}
+	
 	
 	
 	
@@ -908,21 +915,22 @@ public class ControllerCoordinador {
 		miLogica.GuardarSocio(entity);
 	}
 
-	public Inmuebles BuscarInmueble(String text) {
-		
-		return null;
+	public Inmuebles BuscarInmueble(Integer id) {
+		return miLogica.BuscarInmueble(id);
 	}
 
 	public Inmuebles CrearInmueble() {
-		
 		return miLogica.CrearInstanciaInmueble();
-		//return null;
 	}
 
 	public void listarInmuebles(JTable jtdatos, String text, boolean selected) {
-		// TODO Auto-generated method stub
-		
+		miLogica.ListarInmuebles(jtdatos, text, selected);
+	
 	}
+	public java.util.List<Inmuebles> ListarInmueblesAlquiler(){
+		return miLogica.ListarInmueblesParaAlquiler();
+	}
+	
 
 	public Alquiler CrearAlquiler() {
 		
@@ -930,9 +938,35 @@ public class ControllerCoordinador {
 		//return null;
 	}
 
-	public float CalcularPrecioTotal(Alquiler alqui, Personas pers) {
+	public float CalcularPrecioTotal(Alquiler alqui, Personas pers, Inmuebles inm) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public void RegistrarInmueble(Inmuebles entity) {
+		entity.setHabilitado(true);
+		miLogica.GuardarInmueble(entity);
+		
+	}
+
+	public void ModificarInmueble(Inmuebles inm) {
+		miLogica.ModificarInmueble(inm);
+		
+	}
+
+	public void EliminarInmueble(Inmuebles inm) {
+		miLogica.EliminarInmueble(inm);
+		
+	}
+
+	public void RestaurarInmueble(Inmuebles inm) {
+		miLogica.RestaurarInmueble(inm);
+		
+	}
+
+	public void RegistrarNuevoAlquiler(Alquiler alqui) {
+		miLogica.GuardarAlquiler(alqui);
+		
 	}
 	
 /*
