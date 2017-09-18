@@ -63,7 +63,7 @@ public class PantallaNuevoInmueble extends JDialog implements ActionListener,Key
 	public PantallaNuevoInmueble(javax.swing.JDialog vtn,boolean b,Integer opcion) {
 		super(vtn,b);
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaNuevoInmueble.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaNuevoInmueble.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		setBounds(100, 100, 540, 550);
 		getContentPane().setLayout(null);
 		
@@ -165,7 +165,7 @@ public class PantallaNuevoInmueble extends JDialog implements ActionListener,Key
 		
 		btnAceptar = new JButton("ACEPTAR");
 		btnAceptar.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAceptar.setIcon(new ImageIcon(PantallaNuevoInmueble.class.getResource("/ar/com/ProyectoClub/AVista/icon/apply.png")));
+		//btnAceptar.setIcon(new ImageIcon(PantallaNuevoInmueble.class.getResource("/ar/com/ProyectoClub/AVista/icon/apply.png")));
 		btnAceptar.setBounds(385, 133, 139, 41);
 		btnAceptar.setEnabled(false);
 		btnAceptar.setVisible(false);

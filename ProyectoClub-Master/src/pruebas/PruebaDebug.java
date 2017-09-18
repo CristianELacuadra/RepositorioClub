@@ -65,44 +65,44 @@ public class PruebaDebug  {
 	      //ListarXFechaReserva();
 		// guardarregistrocaja();
 		//Servicio socio
-		AltaSocio();
+	//	AltaSocio();
 	}
 	
-	private void ListaActivaSocios(){
-		IGestorSocio _GestorSocio=new GestorSocio();
-		try{
-			for(Personas per : _GestorSocio.ListaActivaSocio()) {
-				System.out.print("Dni: "+per.getDni());
-				System.out.print("Nombre: "+per.getNombre());
-				System.out.print("Apellido: "+per.getApellido());
-				System.out.println();
-			}
-		}
-		catch (BussinessException e) {
-			System.out.println("No se ha podido guardar el profesor.Se han producido los siguientes errores:");
-		//	for (BussinessMessage bussinessMessage : e.getBussinessMessages()) {
-		//		System.out.println(bussinessMessage.toString());
-		//	}
-		}
-	}
+//	private void ListaActivaSocios(){
+//		IGestorSocio _GestorSocio=new GestorSocio();
+//		try{
+//			for(Personas per : _GestorSocio.ListaActivaSocio()) {
+//				System.out.print("Dni: "+per.getDni());
+//				System.out.print("Nombre: "+per.getNombre());
+//				System.out.print("Apellido: "+per.getApellido());
+//				System.out.println();
+//			}
+//		}
+//		catch (BussinessException e) {
+//			System.out.println("No se ha podido guardar el profesor.Se han producido los siguientes errores:");
+//		//	for (BussinessMessage bussinessMessage : e.getBussinessMessages()) {
+//		//		System.out.println(bussinessMessage.toString());
+//		//	}
+//		}
+//	}
 	
-	private void InhabilitarHabilitar() {
-		IGestorSocio _GestorSocio=new GestorSocio();
-		try {
-
-			Personas nuevo=_GestorSocio.Crear();
-			nuevo=_GestorSocio.Busqueda(35709368);
-			nuevo.setHabilitado(true);
-			_GestorSocio.habilitar(nuevo);
-
-			nuevo=_GestorSocio.Busqueda(32012354);
-			nuevo.setHabilitado(false);
-			_GestorSocio.Inhabilitar(nuevo);;
-		}
-		catch (Exception e) {
-			e.getMessage();
-		}
-	}
+//	private void InhabilitarHabilitar() {
+//		IGestorSocio _GestorSocio=new GestorSocio();
+//		try {
+//
+//			Personas nuevo=_GestorSocio.Crear();
+//			nuevo=_GestorSocio.Busqueda(35709368);
+//			nuevo.setHabilitado(true);
+//			_GestorSocio.habilitar(nuevo);
+//
+//			nuevo=_GestorSocio.Busqueda(32012354);
+//			nuevo.setHabilitado(false);
+//			_GestorSocio.Inhabilitar(nuevo);;
+//		}
+//		catch (Exception e) {
+//			e.getMessage();
+//		}
+//	}
 	private void BusquedaAlquiler() {
 		IGestorAlquiler _GestorAlquiler=new GestorAlquiler();
 		try {
@@ -121,33 +121,33 @@ public class PruebaDebug  {
 			// TODO: handle exception
 		}
 	}
-	private void GuardarAlquiler() {
-		IGestorAlquiler _GestorAlquiler=new GestorAlquiler();
-		IGestorSocio _GestorSocio=new GestorSocio();
-		
-		try {
-		IinmueblesDAO s= new InmueblesDaoImplHibernate();
-		Alquiler _objalquiler=_GestorAlquiler.Crear();
-		Personas nuevo=_GestorSocio.Crear();
-		nuevo=_GestorSocio.Busqueda(3478964);
-		Inmuebles inmu=s.crear();
-		inmu=s.BuscarUno(1);
-		_objalquiler.setPersonas(nuevo);
-		_objalquiler.setInmuebles(inmu);
-		SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
-		Date fecha=sdf.parse("2017-09-09");
-		Calendar calendario = new GregorianCalendar();
-		_objalquiler.setFechaReserva(fecha);
-		_objalquiler.setHoraReserva(calendario.getTime());
-		_objalquiler.setCantidadHora(3);
-		_objalquiler.setPrecioTotal(2100);
-		//_objalquiler.setActivo(true);
-		_GestorAlquiler.Guardar(_objalquiler);
-		}
-		catch (Exception e) {
-			System.out.println("Error"+e.toString());
-		}
-	}
+//	private void GuardarAlquiler() {
+//		IGestorAlquiler _GestorAlquiler=new GestorAlquiler();
+//		IGestorSocio _GestorSocio=new GestorSocio();
+//		
+//		try {
+//		IinmueblesDAO s= new InmueblesDaoImplHibernate();
+//		Alquiler _objalquiler=_GestorAlquiler.Crear();
+//		Personas nuevo=_GestorSocio.Crear();
+//		nuevo=_GestorSocio.Busqueda(3478964);
+//		Inmuebles inmu=s.crear();
+//		inmu=s.BuscarUno(1);
+//		_objalquiler.setPersonas(nuevo);
+//		_objalquiler.setInmuebles(inmu);
+//		SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+//		Date fecha=sdf.parse("2017-09-09");
+//		Calendar calendario = new GregorianCalendar();
+//		_objalquiler.setFechaReserva(fecha);
+//		_objalquiler.setHoraReserva(calendario.getTime());
+//		_objalquiler.setCantidadHora(3);
+//		_objalquiler.setPrecioTotal(2100);
+//		//_objalquiler.setActivo(true);
+//		_GestorAlquiler.Guardar(_objalquiler);
+//		}
+//		catch (Exception e) {
+//			System.out.println("Error"+e.toString());
+//		}
+//	}
 	
 	@SuppressWarnings("deprecation")
 	private void ListarXFechaReserva() {
@@ -175,50 +175,50 @@ public class PruebaDebug  {
 		}
 	}
 	
-	private void guardarregistrocaja() {
-		IGestorCaja gestorcaja=new GestorCaja();
-		IGestorCuota gestorcouta=new GestorCuota();
-		try {
-		Caja uno=gestorcaja.Crear();
-		//uno.setCuota(gestorcouta.Busqueda(1));
-		//uno.setAlquiler(alquiler);
-		uno.setDescripcion("prueba");
-		uno.setFecha(FechaHora.FechaActual());
-		uno.setMonto(2000);
-		uno.setSubTotal(gestorcaja.DevolverSubtotal());
-		uno.setTipo(false);
-		}
-		catch (Exception e) {
-			System.out.println("Error:"+ e.getMessage());
-		}
-	}
-	private void AltaSocio() {
-		IServiceSocio servicio= new ServiceSocios();
-		IServiceCategorias servicio2=new ServiceCategoria();
-		try {
-		SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
-	    Date fechan=sdf.parse("1991-03-06");
-		Personas nueva=servicio.CrearSocio();
-		nueva.setDni(36123456);
-		nueva.setNombre("Agustin");
-		nueva.setApellido("Caceres");
-		nueva.setTelefono("03434302020");
-		nueva.setDomicilio("brav lll 031");
-		nueva.setFecNacimiento(fechan);
-		nueva.setFechaIngreso(FechaHora.FechaActual());
-		nueva.setNroSocio(servicio.UltimoIdSocio()); //-> cuando venga de la vista ya estara cargada con el ultimo id socio
-		nueva.setMatricula(1012);
-		nueva.setSexo("Masculino");
-		nueva.setEstado("Activo");
-		nueva.setNacionalidad("Argentina");
-		nueva.setEstadoCivil("Soltero");
-		nueva.setHabilitado(true);
-		nueva.setEssocio(true);
-		nueva.setCategoria(servicio2.BuscarCategoria(1));
-		servicio.AltaSocio(nueva);
-		}
-		catch (Exception e) {
-			System.out.println("Error"+e.getMessage());
-		}
-	}
+//	private void guardarregistrocaja() {
+//		IGestorCaja gestorcaja=new GestorCaja();
+//		IGestorCuota gestorcouta=new GestorCuota();
+//		try {
+//		Caja uno=gestorcaja.Crear();
+//		//uno.setCuota(gestorcouta.Busqueda(1));
+//		//uno.setAlquiler(alquiler);
+//		uno.setDescripcion("prueba");
+//		uno.setFecha(FechaHora.FechaActual());
+//		uno.setMonto(2000);
+//		uno.setSubTotal(gestorcaja.DevolverSubtotal());
+//		uno.setTipo(false);
+//		}
+//		catch (Exception e) {
+//			System.out.println("Error:"+ e.getMessage());
+//		}
+//	}
+//	private void AltaSocio() {
+//		IServiceSocio servicio= new ServiceSocios();
+//		IServiceCategorias servicio2=new ServiceCategoria();
+//		try {
+//		SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+//	    Date fechan=sdf.parse("1991-03-06");
+//		Personas nueva=servicio.CrearSocio();
+//		nueva.setDni(36123456);
+//		nueva.setNombre("Agustin");
+//		nueva.setApellido("Caceres");
+//		nueva.setTelefono("03434302020");
+//		nueva.setDomicilio("brav lll 031");
+//		nueva.setFecNacimiento(fechan);
+//		nueva.setFechaIngreso(FechaHora.FechaActual());
+//		nueva.setNroSocio(servicio.UltimoIdSocio()); //-> cuando venga de la vista ya estara cargada con el ultimo id socio
+//		nueva.setMatricula(1012);
+//		nueva.setSexo("Masculino");
+//		nueva.setEstado("Activo");
+//		nueva.setNacionalidad("Argentina");
+//		nueva.setEstadoCivil("Soltero");
+//		nueva.setHabilitado(true);
+//		nueva.setEssocio(true);
+//		nueva.setCategoria(servicio2.BuscarCategoria(1));
+//		servicio.AltaSocio(nueva);
+//		}
+//		catch (Exception e) {
+//			System.out.println("Error"+e.getMessage());
+//		}
+//	}
 }

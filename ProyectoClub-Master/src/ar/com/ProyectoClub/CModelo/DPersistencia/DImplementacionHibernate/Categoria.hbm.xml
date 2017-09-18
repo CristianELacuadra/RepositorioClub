@@ -1,33 +1,31 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 22-feb-2017 9:47:26 by Hibernate Tools 3.5.0.Final -->
-<hibernate-mapping>
-    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Categoria" table="categoria" catalog="datosclub">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 17-sep-2017 22:07:28 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="datosclub" dynamic-insert="false" dynamic-update="false" mutable="true" name="ar.com.ProyectoClub.CModelo.CEntidades.Categoria" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="categoria">
         <id name="idCategoria" type="java.lang.Integer">
-            <column name="ID_Categoria" />
-            <generator class="identity" />
+            <column name="idCATEGORIA"/>
+            <generator class="identity"/>
         </id>
-        <property name="nombre" type="string">
-            <column name="nombre" length="25" not-null="true" />
+        <property generated="never" lazy="false" name="nombre" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="NOMBRE" not-null="true"/>
         </property>
-        <property name="descripcion" type="string">
-            <column name="descripcion" length="100" not-null="true" />
+        <property generated="never" lazy="false" name="descripcion" optimistic-lock="true" type="string" unique="false">
+            <column name="DESCRIPCION" not-null="true"/>
         </property>
-        <property name="monto" type="float">
-            <column name="monto" precision="12" scale="0" not-null="true" />
+        <property generated="never" lazy="false" name="monto" optimistic-lock="true" type="float" unique="false">
+            <column name="MONTO" not-null="true" precision="12" scale="0"/>
         </property>
-        <property name="descuento" type="float">
-            <column name="descuento" precision="12" scale="0" not-null="true" />
+        <property generated="never" lazy="false" name="descuento" optimistic-lock="true" type="float" unique="false">
+            <column name="DESCUENTO" not-null="true" precision="12" scale="0"/>
         </property>
-        <property name="habilitado" type="boolean">
-            <column name="habilitado" not-null="true" />
+        <property generated="never" lazy="false" name="habilitado" optimistic-lock="true" type="byte" unique="false">
+            <column name="HABILITADO" not-null="true"/>
         </property>
-        <set name="personases" table="personas" inverse="true" lazy="false" fetch="join">
-            <key>
-                <column name="Fk_Categoria" />
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="socioses" optimistic-lock="true" sort="unsorted" table="socios">
+            <key on-delete="noaction">
+                <column name="idCATEGORIA" not-null="true"/>
             </key>
-            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" />
+            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Socios" embed-xml="true" not-found="exception"/>
         </set>
     </class>
 </hibernate-mapping>

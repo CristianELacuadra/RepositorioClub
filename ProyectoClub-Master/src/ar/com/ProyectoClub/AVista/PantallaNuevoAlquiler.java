@@ -96,7 +96,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		super(vtnPantallaAlquiler,b);
 		getContentPane().setForeground(Color.BLACK);
 		getContentPane().setBackground(UIManager.getColor("Button.light"));
-		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaNuevoAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaNuevoAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		setResizable(false);
 		setTitle("NUEVO ALQUILER");
 		initComponents();
@@ -110,7 +110,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		dateFechaReserva.setBounds(186, 295, 182, 20);
 		
 		btnAceptar = new JButton("Aceptar");
-		btnAceptar.setIcon(new ImageIcon(PantallaNuevoAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/apply.png")));
+		//btnAceptar.setIcon(new ImageIcon(PantallaNuevoAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/apply.png")));
 		btnAceptar.setBounds(410, 129, 119, 48);
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(410, 188, 119, 48);
@@ -131,7 +131,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		btnBuscarPersona = new JButton("Buscar");
 		btnBuscarPersona.setBounds(184, 131, 118, 33);
 		btnBuscarPersona.setHorizontalAlignment(SwingConstants.LEFT);
-		btnBuscarPersona.setIcon(new ImageIcon(PantallaNuevoAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
+		//btnBuscarPersona.setIcon(new ImageIcon(PantallaNuevoAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
 		
 		JLabel lblNewLabel_1 = new JLabel("REGISTRO DE NUEVO ALQUILER");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));

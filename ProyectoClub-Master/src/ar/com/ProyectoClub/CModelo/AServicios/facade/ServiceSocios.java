@@ -344,11 +344,22 @@ public class ServiceSocios implements IServiceSocio {
 	@Override
 	public List<Personas> ListaPersona() {
 		try{
-			return gestorsocio.listarPersonas();
+			return gestorsocio.Listar();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public long CantidadSociosRegistrados() {
+		try{
+			return gestorsocio.CantidadSociosRegistrados();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		
 	}
 
 	

@@ -1,54 +1,43 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 13-mar-2017 20:16:32 by Hibernate Tools 5.2.0.CR1 -->
-<hibernate-mapping>
-    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" table="alquiler" catalog="datosclub" optimistic-lock="version">
-        <id name="nroAlquiler" type="java.lang.Integer">
-            <column name="Nro_Alquiler" />
-            <generator class="identity" />
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 17-sep-2017 22:07:28 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="datosclub" dynamic-insert="false" dynamic-update="false" mutable="true" name="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="alquiler">
+        <id name="nroalquiler" type="java.lang.Integer">
+            <column name="NROALQUILER"/>
+            <generator class="identity"/>
         </id>
-        <many-to-one name="inmuebles" class="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles" fetch="select">
-            <column name="Id_Inmueble" not-null="true" />
+        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles" embed-xml="true" fetch="select" insert="true" name="inmuebles" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="INMUEBLE" not-null="true"/>
         </many-to-one>
-        <many-to-one name="personas" class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" fetch="select">
-            <column name="FK_Dni" not-null="true" />
+        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" embed-xml="true" fetch="select" insert="true" name="personas" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="DNI" not-null="true"/>
         </many-to-one>
-        <property name="fechaActual" type="date">
-            <column name="Fecha_Actual" length="10" not-null="true" />
-        </property>
-        <property name="horaActual" type="time">
-            <column name="Hora_actual" length="8" not-null="true" />
-        </property>
-        <property name="fechaReserva" type="date">
-            <column name="Fecha_Reserva" length="10" not-null="true" />
-        </property>
-        <property name="horaReserva" type="time">
-            <column name="Hora_Reserva" length="8" not-null="true" />
-        </property>
-        <property name="cantidadHora" type="java.lang.Integer">
-            <column name="Cantidad_Hora" not-null="true" />
-        </property>
-        <property name="precioTotal" type="float">
-            <column name="Precio_Total" precision="12" scale="0" not-null="true" />
-        </property>
-        <property name="PagoAlquiler" type="boolean">
-            <column name="PagoAlquiler" not-null="true" />
-        </property>
-        <property name="observaciones" type="string">
-            <column name="Observaciones" length="65535" not-null="true" />
-        </property>
-        <property name="activo" type="boolean">
-            <column name="activo" not-null="true">
-                <comment>si activo es igual a inactivo entonces se dio de baja teniendo que pagar de igual manera la reserva.si esta activo el alquiler esta reservado esperando a
-                ser completado.si esta en concretado ya puede pasarse a la caja</comment>
+        <property generated="never" lazy="false" name="fechaactual" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="FECHAACTUAL" not-null="true">
+                <comment>FECHAACTUAL al ser date time almacena fecha y hora actual</comment>
             </column>
         </property>
-        <set name="cajas" table="caja" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="Alquiler" />
-            </key>
-            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Caja" />
-        </set>
+        <property generated="never" lazy="false" name="fechareserva" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="FECHARESERVA" not-null="true">
+                <comment>FECHARESERVA al ser datetime guarda fecha y hora</comment>
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="montofaltante" optimistic-lock="true" type="float" unique="false">
+            <column name="MONTOFALTANTE" not-null="true" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="preciototal" optimistic-lock="true" type="float" unique="false">
+            <column name="PRECIOTOTAL" not-null="true" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="pagoalquiler" optimistic-lock="true" type="byte" unique="false">
+            <column name="PAGOALQUILER" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="observaciones" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="OBSERVACIONES" not-null="true">
+                <comment>El texto solo permite 300 caracteres</comment>
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="activo" optimistic-lock="true" type="byte" unique="false">
+            <column name="ACTIVO" not-null="true"/>
+        </property>
     </class>
 </hibernate-mapping>

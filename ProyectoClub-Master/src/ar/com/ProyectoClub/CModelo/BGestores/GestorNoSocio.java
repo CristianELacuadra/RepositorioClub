@@ -35,7 +35,6 @@ public class GestorNoSocio implements IGestorNosocio {
 			nuevo.setDomicilio(entity.getDomicilio());
 			nuevo.setDomNro(entity.getDomicilioNro());
 			nuevo.setFecNacimiento(entity.getFecNacimiento());
-			nuevo.setHabilitado(true);
 			nuevo.setEssocio(false);
 			_NosocioDao.GuardarEntity(nuevo);
 	//	}
@@ -92,19 +91,13 @@ public class GestorNoSocio implements IGestorNosocio {
 		 
 	}
 	@Override
-	public void HabilitarNoSocio(Integer id) throws Exception {
-		NoSocioDTO ObjNosocio=new NoSocioDTO();
-		ObjNosocio=this.Busqueda(id);
-		ObjNosocio.setHabilitado(true);
-		this.Guardar(ObjNosocio);
+	public void HabilitarNoSocio(NoSocioDTO persona) throws Exception {
+		this.Guardar(persona);
 		
 	}
 	@Override
-	public void InabilitarNoSocio(Integer id) throws Exception {
-		NoSocioDTO ObjNosocio=new NoSocioDTO();
-		ObjNosocio=this.Busqueda(id);
-		ObjNosocio.setHabilitado(false);
-		this.Guardar(ObjNosocio);
+	public void InabilitarNoSocio(NoSocioDTO Persona) throws Exception {
+	     this.Guardar(Persona);
 		
 	}
 	private NoSocioDTO PersonaToNoSocioDTO(Personas personas){

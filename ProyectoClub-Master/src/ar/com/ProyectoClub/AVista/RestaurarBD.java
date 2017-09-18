@@ -37,7 +37,7 @@ public class RestaurarBD extends javax.swing.JDialog {
 
     public RestaurarBD(PantallaConfiguracion parent, boolean modal) {
         super(parent, modal);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(RestaurarBD.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+       // setIconImage(Toolkit.getDefaultToolkit().getImage(RestaurarBD.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
         p = parent;
         initComponents();
         this.setLocationRelativeTo(p);

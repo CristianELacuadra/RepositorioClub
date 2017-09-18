@@ -43,16 +43,16 @@ public class PantallaBajaSNS extends JDialog implements ActionListener{
 
 	private void initComponents() {
 		btnbaja= new JButton("BAJA");
-		btnbaja.setIcon(new ImageIcon(PantallaBajaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/down.png")));
+		//btnbaja.setIcon(new ImageIcon(PantallaBajaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/down.png")));
 		btncancelar= new JButton("Cancel");
-		btncancelar.setIcon(new ImageIcon(PantallaBajaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/Delete.png")));
+		//btncancelar.setIcon(new ImageIcon(PantallaBajaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/Delete.png")));
 		rdbtnNoSocio= new JRadioButton("NO SOCIO");
 		rdbtnNoSocio.setEnabled(false);
 		rdbtnSocio= new JRadioButton("SOCIO");
 		rdbtnSocio.setEnabled(false);
 		btnbuscar = new JButton("");
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaBajaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaBajaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		setBounds(100, 100, 493, 331);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -68,7 +68,7 @@ public class PantallaBajaSNS extends JDialog implements ActionListener{
 		}
 		{
 			
-			btnbuscar.setIcon(new ImageIcon(PantallaBajaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
+			//btnbuscar.setIcon(new ImageIcon(PantallaBajaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
 			btnbuscar.setBounds(432, 202, 35, 28);
 			contentPanel.add(btnbuscar);
 		}

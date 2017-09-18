@@ -56,7 +56,7 @@ public class PantallaIngresoEgreso extends JDialog implements ActionListener {
 	
 	public PantallaIngresoEgreso(PantallaCaja miVentanaCaja,boolean activo){
 		super(miVentanaCaja,activo); 
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\images (1)-iloveimg-resized.jpg"));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\images (1)-iloveimg-resized.jpg"));
 		setTitle("Sistema Club Avenida Ejercio-Ingreso\\Egreso de efectivo ");
 		setType(Type.POPUP);
 		setBounds(100, 100, 506, 445);
@@ -134,7 +134,7 @@ public class PantallaIngresoEgreso extends JDialog implements ActionListener {
 		contentPanel.add(lblTipo);
 		
 		JLabel label = new JLabel("Tipo");
-		label.setIcon(new ImageIcon(PantallaIngresoEgreso.class.getResource("/ar/com/ProyectoClub/AVista/icon/dollar_money_17872.png")));
+		//label.setIcon(new ImageIcon(PantallaIngresoEgreso.class.getResource("/ar/com/ProyectoClub/AVista/icon/dollar_money_17872.png")));
 		label.setFont(new Font("Arial", Font.PLAIN, 15));
 		label.setBounds(419, 8, 61, 44);
 		contentPanel.add(label);
@@ -157,13 +157,13 @@ public class PantallaIngresoEgreso extends JDialog implements ActionListener {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnOK = new JButton("Aceptar");
-				btnOK.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\apply-iloveimg-resized.png"));
+				//btnOK.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\apply-iloveimg-resized.png"));
 				buttonPane.add(btnOK);
 				getRootPane().setDefaultButton(btnOK);
 			}
 			{
 				btnCancel = new JButton("Cancelar");
-				btnCancel.setIcon(new ImageIcon(PantallaIngresoEgreso.class.getResource("/ar/com/ProyectoClub/AVista/icon/Delete.png")));
+				//btnCancel.setIcon(new ImageIcon(PantallaIngresoEgreso.class.getResource("/ar/com/ProyectoClub/AVista/icon/Delete.png")));
 				buttonPane.add(btnCancel);
 			}
 		}

@@ -35,7 +35,7 @@ public class RespaldarBD extends javax.swing.JDialog {
    
     public RespaldarBD(PantallaConfiguracion parent, boolean modal) {
         super(parent, modal);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(RespaldarBD.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+     //   setIconImage(Toolkit.getDefaultToolkit().getImage(RespaldarBD.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
         p=parent;
         initComponents();
         this.setLocationRelativeTo(p);

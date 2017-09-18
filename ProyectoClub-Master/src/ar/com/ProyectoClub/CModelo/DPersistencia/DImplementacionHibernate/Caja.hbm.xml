@@ -1,36 +1,25 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 01-feb-2017 12:33:46 by Hibernate Tools 3.5.0.Final -->
-<hibernate-mapping>
-    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Caja" table="caja" catalog="datosclub">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 17-sep-2017 22:07:28 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="datosclub" dynamic-insert="false" dynamic-update="false" mutable="true" name="ar.com.ProyectoClub.CModelo.CEntidades.Caja" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="caja">
         <id name="idCaja" type="java.lang.Integer">
-            <column name="ID_Caja" />
-            <generator class="identity" />
+            <column name="idCAJA"/>
+            <generator class="identity"/>
         </id>
-        <many-to-one name="cuota" class="ar.com.ProyectoClub.CModelo.CEntidades.Cuota" fetch="select">
-            <column name="Cuota" />
+        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Conceptos" embed-xml="true" fetch="select" insert="true" name="conceptos" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="idCONCEPTO" not-null="true"/>
         </many-to-one>
-        <many-to-one name="alquiler" class="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" fetch="select">
-            <column name="Alquiler" />
-        </many-to-one>
-        <property name="fecha" type="date">
-            <column name="fecha" length="10" not-null="true" />
+        <property generated="never" lazy="false" name="fecha" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="FECHA" not-null="true"/>
         </property>
-        <property name="descripcion" type="string">
-            <column name="descripcion" length="65535" not-null="true" />
+        <property generated="never" lazy="false" name="monto" optimistic-lock="true" type="float" unique="false">
+            <column name="MONTO" not-null="true" precision="12" scale="0"/>
         </property>
-        <property name="monto" type="float">
-            <column name="Monto" precision="12" scale="0" not-null="true" />
+        <property generated="never" lazy="false" name="descripcion" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="DESCRIPCION" not-null="true"/>
         </property>
-        <property name="tipo" type="boolean">
-            <column name="Tipo" not-null="true">
-                <comment>Identificador de ingreso o egreso</comment>
-            </column>
-        </property>
-        <property name="habilitar" type="boolean">
-            <column name="Habilitar" not-null="true">
-            </column>
+        <property generated="never" lazy="false" name="habilitar" optimistic-lock="true" type="boolean" unique="false">
+            <column name="HABILITAR" not-null="true"/>
         </property>
     </class>
 </hibernate-mapping>

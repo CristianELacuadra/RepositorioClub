@@ -72,7 +72,7 @@ public class PantallaBusquedaInmueble extends JDialog implements ActionListener,
 
 	public PantallaBusquedaInmueble(PantallaAlquiler vtnPantallaAlquiler,boolean b) {
 		super(vtnPantallaAlquiler,b);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaBusquedaInmueble.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaBusquedaInmueble.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		setResizable(false);
 		setBounds(100, 100, 601, 423);
 		initComponents();

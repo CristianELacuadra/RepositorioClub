@@ -58,7 +58,13 @@ public class Logica {
 	private IServiceAlquileres serviceAlquiler;
 	private IServiceInmuebles serviceInmueble;
 		
+	
+	
 	//instancia los servicios
+	
+	public long CantidadSociosRegistrados(){
+		return servicioSocio.CantidadSociosRegistrados();
+	}
 	
 	public Logica() {
 		serviceCuota=new ServiceCuota();
@@ -69,6 +75,9 @@ public class Logica {
 		serviceCaja=new ServiceCaja();
 		serviceAlquiler=new ServiceAlquileres();
 		serviceInmueble=new ServiceInmueble();
+	}
+	public List<Personas> HistoricosSocios(){
+		return servicioSocio.ListaPersona();
 	}
 	
 	public List<Personas> ListaActivoinactivo(){
@@ -86,6 +95,13 @@ public class Logica {
 		persona=servicioSocio.BusquedaId(dni);
 		servicioSocio.DeshabilitarSocio(persona);
 	}
+	
+	public void InhabilitarNoSocio(Integer dni){
+		NoSocioDTO persona =serviceNoSocio.Crear();
+		persona=serviceNoSocio.BuscarNoSocio(dni);
+		//serviceNoSocio.DeshabilitarNoSocio(dni); .DeshabilitarSocio(persona);
+	}
+	
 	public Cuota CrearInstanciaCuota(){
 		return serviceCuota.CrearInstanciaCuota();
 	}
@@ -353,6 +369,11 @@ public class Logica {
 
 	public void GuardarAlquiler(Alquiler alqui) {
 		serviceAlquiler.GuardarAlquiler(alqui);
+		
+	}
+
+	public void ListarPersonasTodos() {
+		 
 		
 	}
 	

@@ -37,7 +37,7 @@ public class PantallaAlquiler extends JDialog implements ActionListener {
 	public PantallaAlquiler(Principal vtnPrincipal,boolean b) {
 		super(vtnPrincipal,b);
 		setBounds(new Rectangle(50, 50, 490, 553));
-		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		setResizable(false);
 		setTitle("Alquileres e Inmuebles");
 		
@@ -56,7 +56,7 @@ public class PantallaAlquiler extends JDialog implements ActionListener {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
 		
 		lblImagen = new JLabel("");
-		lblImagen.setIcon(new ImageIcon(PantallaAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		//lblImagen.setIcon(new ImageIcon(PantallaAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		panel.add(lblImagen);
 		
 		JLabel lblSeleccioneUnaOperacion = new JLabel("SELECCIONE UNA OPERACION:");
@@ -73,7 +73,7 @@ public class PantallaAlquiler extends JDialog implements ActionListener {
 		
 		btnAltaAlquiler = new JButton("CREAR");
 		btnAltaAlquiler.setBounds(41, 11, 157, 77);
-		btnAltaAlquiler.setIcon(new ImageIcon(PantallaAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/edit_add_10261.png")));
+		//btnAltaAlquiler.setIcon(new ImageIcon(PantallaAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/edit_add_10261.png")));
 		btnAltaAlquiler.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnAltaAlquiler.setToolTipText("REGISTRA UN NUEVO ALQUILER");
 		panelAlquiler.add(btnAltaAlquiler);
@@ -81,7 +81,7 @@ public class PantallaAlquiler extends JDialog implements ActionListener {
 		
 		btnBuscarAlquiler = new JButton("BUSCAR");
 		btnBuscarAlquiler.setBounds(252, 11, 178, 77);
-		btnBuscarAlquiler.setIcon(new ImageIcon(PantallaAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search_find_locate_1542.png")));
+		//btnBuscarAlquiler.setIcon(new ImageIcon(PantallaAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search_find_locate_1542.png")));
 		btnBuscarAlquiler.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnBuscarAlquiler.setToolTipText("Buscar un alquiler");
 		panelAlquiler.add(btnBuscarAlquiler);
@@ -96,7 +96,7 @@ public class PantallaAlquiler extends JDialog implements ActionListener {
 		
 		btnAltaInmueble = new JButton("REGISTRAR");
 		btnAltaInmueble.setBounds(34, 11, 173, 88);
-		btnAltaInmueble.setIcon(new ImageIcon(PantallaAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoInmueble_Add.png")));
+		//btnAltaInmueble.setIcon(new ImageIcon(PantallaAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoInmueble_Add.png")));
 		btnAltaInmueble.setToolTipText("Registrar un nuevo inmueble");
 		btnAltaInmueble.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panelInmueble.add(btnAltaInmueble);
@@ -104,7 +104,7 @@ public class PantallaAlquiler extends JDialog implements ActionListener {
 		
 		btnBuscarInmueble = new JButton("BUSCAR");
 		btnBuscarInmueble.setBounds(248, 11, 186, 88);
-		btnBuscarInmueble.setIcon(new ImageIcon(PantallaAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoInmueble_buscar.png")));
+		//btnBuscarInmueble.setIcon(new ImageIcon(PantallaAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoInmueble_buscar.png")));
 		btnBuscarInmueble.setToolTipText("Buscar los inmuebles que esten registrados");
 		panelInmueble.add(btnBuscarInmueble);
 		btnBuscarInmueble.addActionListener(this);

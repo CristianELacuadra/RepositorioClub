@@ -10,8 +10,10 @@
 	<table-filter match-name="alquiler" match-catalog="datosclub"></table-filter>
 	<table-filter match-name="caja" match-catalog="datosclub"></table-filter>
 	<table-filter match-name="categoria" match-catalog="datosclub"></table-filter>
+	<table-filter match-name="conceptos" match-catalog="datosclub"></table-filter>
 	<table-filter match-name="cuota" match-catalog="datosclub"></table-filter>
 	<table-filter match-name="inmuebles" match-catalog="datosclub"></table-filter>
 	<table-filter match-name="personas" match-catalog="datosclub"></table-filter>
+	<table-filter match-name="socios" match-catalog="datosclub"></table-filter>
 	<table-filter match-name="usuario" match-catalog="datosclub"></table-filter>
 </hibernate-reverse-engineering>

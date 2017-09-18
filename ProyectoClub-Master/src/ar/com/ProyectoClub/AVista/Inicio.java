@@ -50,17 +50,19 @@ public class Inicio extends JFrame  implements ActionListener,KeyListener {
 	
 	private void initComponents() {
 		botCancelar = new JButton();
+		botCancelar.setIcon(new ImageIcon(Inicio.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoSalida32x32.png")));
 		botAceptar = new JButton();
+		botAceptar.setIcon(new ImageIcon(Inicio.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoAceptar.png")));
 		contentPane= new JPanel();
 		textField=new JTextField();
 		passwordField= new JPasswordField();
 		
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Inicio.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Inicio.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoPaloma.png")));
 		setResizable(false);
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 300);
+		setBounds(100, 100, 555, 461);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -74,7 +76,7 @@ public class Inicio extends JFrame  implements ActionListener,KeyListener {
 		panel_1.setVisibleLogo(false);
 		panel_1.setSecondColor(new Color(211, 211, 211));
 		panel_1.setFirstColor(new Color(128, 128, 128));
-		panel_1.setIcon(new ImageIcon(Inicio.class.getResource("/ar/com/ProyectoClub/AVista/icon/closingsession_theoutputnear_cierredesesion_10028.png")));
+	   //panel_1.setIcon(new ImageIcon(Inicio.class.getResource("/ar/com/ProyectoClub/AVista/icon/closingsession_theoutputnear_cierredesesion_10028.png")));
 		panel_1.setSideHexagon(2);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, panel_1, 0, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, panel_1, 0, SpringLayout.WEST, contentPane);
@@ -85,25 +87,25 @@ public class Inicio extends JFrame  implements ActionListener,KeyListener {
 		JLabel labUsuario = new JLabel("Usuario");
 		labUsuario.setForeground(Color.WHITE);
 		labUsuario.setFont(new Font("Tahoma", Font.BOLD, 22));
-		labUsuario.setIcon(new ImageIcon(Inicio.class.getResource("/ar/com/ProyectoClub/AVista/icon/Personal_user_6031.png")));
-		labUsuario.setBounds(20, 20, 194, 80);
+		labUsuario.setIcon(new ImageIcon(Inicio.class.getResource("/ar/com/ProyectoClub/AVista/icon/usuariolbl.png")));
+		labUsuario.setBounds(20, 144, 194, 80);
 		panel_1.add(labUsuario);
 		JLabel labContra = new JLabel("Contrase\u00F1a");
 		labContra.setForeground(Color.WHITE);
 		labContra.setFont(new Font("Tahoma", Font.BOLD, 22));
 	//	ima
 		labContra.setIcon(new ImageIcon(Inicio.class.getResource("/ar/com/ProyectoClub/AVista/icon/key_1564.png")));
-		labContra.setBounds(20, 110, 194, 80);
+		labContra.setBounds(20, 253, 194, 80);
 		panel_1.add(labContra);
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textField.setBounds(224, 46, 250, 31);
+		textField.setBounds(224, 170, 250, 31);
 		textField.addKeyListener(this);
 		panel_1.add(textField);
 		textField.setColumns(10);
 		passwordField = new JPasswordField();
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		passwordField.setBounds(224, 136, 250, 31);
+		passwordField.setBounds(224, 279, 250, 31);
 		passwordField.addKeyListener(this);
 		panel_1.add(passwordField);
 		
@@ -116,7 +118,7 @@ public class Inicio extends JFrame  implements ActionListener,KeyListener {
 		botAceptar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		botAceptar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		botAceptar.setForeground(new Color(0, 0, 0));
-		botAceptar.setBounds(224, 208, 120, 43);
+		botAceptar.setBounds(279, 368, 120, 43);
 		panel_1.add(botAceptar);
 		botCancelar.setText("Salir");
 		botCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -127,8 +129,17 @@ public class Inicio extends JFrame  implements ActionListener,KeyListener {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		botCancelar.setBounds(354, 208, 120, 43);
+		botCancelar.setBounds(409, 368, 120, 43);
 		panel_1.add(botCancelar);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(0, 0, 550, 110);
+		panel_1.add(panel);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon(Inicio.class.getResource("/ar/com/ProyectoClub/AVista/icon/Bienvenidos.png")));
+		panel.add(lblNewLabel);
 	}
 	
 	public void setCoordinador(ControllerCoordinador miCoordinador) {

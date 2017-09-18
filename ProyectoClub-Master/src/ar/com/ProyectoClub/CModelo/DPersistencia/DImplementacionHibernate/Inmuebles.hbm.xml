@@ -1,33 +1,31 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 01-feb-2017 12:33:46 by Hibernate Tools 3.5.0.Final -->
-<hibernate-mapping>
-    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles" table="inmuebles" catalog="datosclub">
-        <id name="idInmueble" type="java.lang.Integer">
-            <column name="ID_Inmueble" />
-            <generator class="identity" />
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 17-sep-2017 22:07:28 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="datosclub" dynamic-insert="false" dynamic-update="false" mutable="true" name="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="inmuebles">
+        <id name="idInmubles" type="java.lang.Integer">
+            <column name="idINMUBLES"/>
+            <generator class="identity"/>
         </id>
-        <property name="descripcion" type="string">
-            <column name="descripcion" length="65535" />
+        <property generated="never" lazy="false" name="nombre" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="NOMBRE" not-null="true"/>
         </property>
-        <property name="precioHora" type="float">
-            <column name="precio_hora" precision="12" scale="0" not-null="true" />
+        <property generated="never" lazy="false" name="dirreccion" optimistic-lock="true" type="string" unique="false">
+            <column length="70" name="DIRRECCION" not-null="true"/>
         </property>
-        <property name="direccion" type="string">
-            <column name="Direccion" length="50" not-null="true" />
+        <property generated="never" lazy="false" name="descripcion" optimistic-lock="true" type="string" unique="false">
+            <column name="DESCRIPCION" not-null="true"/>
         </property>
-        <property name="nombre" type="string">
-            <column name="nombre" length="20" not-null="true" />
+        <property generated="never" lazy="false" name="preciohora" optimistic-lock="true" type="float" unique="false">
+            <column name="PRECIOHORA" not-null="true" precision="12" scale="0"/>
         </property>
-        <property name="habilitado" type="boolean">
-            <column name="habilitado" not-null="true" />
+        <property generated="never" lazy="false" name="habilitado" optimistic-lock="true" type="byte" unique="false">
+            <column name="HABILITADO" not-null="true"/>
         </property>
-        <set name="alquilers" table="alquiler" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="Id_Inmueble" not-null="true" />
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="alquilers" optimistic-lock="true" sort="unsorted" table="alquiler">
+            <key on-delete="noaction">
+                <column name="INMUEBLE" not-null="true"/>
             </key>
-            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" />
+            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" embed-xml="true" not-found="exception"/>
         </set>
     </class>
 </hibernate-mapping>

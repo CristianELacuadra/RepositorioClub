@@ -28,12 +28,12 @@ public class PruebaServiciosJUnit{
 	}
 	
 	//@Test 
-	void PruebaenCuotas() {
-		Cuota nuevo=new Cuota();		
-		nuevo=Cuotaservice.Busqueda(1);
-		nuevo.setDescripcion("HOLA MUNDO");
-		//assertTrue(Cuotaservice.InsertOrUpdateCuota(nuevo));
-	}
+//	void PruebaenCuotas() {
+//		Cuota nuevo=new Cuota();		
+//		nuevo=Cuotaservice.Busqueda(1);
+//		nuevo.setDescripcion("HOLA MUNDO");
+//		//assertTrue(Cuotaservice.InsertOrUpdateCuota(nuevo));
+//	}
 	
 	
 	

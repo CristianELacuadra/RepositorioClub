@@ -13,5 +13,6 @@ public interface IGenericDAO<T,Id extends Serializable > {
 	  void Eliminar(Id id) throws BussinessException ;
       T BuscarUno(Id id) throws BussinessException;
       List<T> Listar() throws BussinessException;
+      int CantidadRegistros(T entity) throws BussinessException;
       
 }

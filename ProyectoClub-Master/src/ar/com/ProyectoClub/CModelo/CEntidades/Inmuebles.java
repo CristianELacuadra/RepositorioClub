@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 11-jul-2017 9:12:03 by Hibernate Tools 5.2.3.Final
+// Generated 17-sep-2017 22:07:28 by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,64 +9,41 @@ import java.util.Set;
  */
 public class Inmuebles implements java.io.Serializable {
 
-	private Integer idInmueble;
-	private String descripcion;
-	private float precioHora;
-	private String direccion;
+	private Integer idInmubles;
 	private String nombre;
-	private boolean habilitado;
+	private String dirreccion;
+	private String descripcion;
+	private float preciohora;
+	private byte habilitado;
 	private Set alquilers = new HashSet(0);
 
 	public Inmuebles() {
 	}
 
-	public Inmuebles(float precioHora, String direccion, String nombre, boolean habilitado) {
-		this.precioHora = precioHora;
-		this.direccion = direccion;
+	public Inmuebles(String nombre, String dirreccion, String descripcion, float preciohora, byte habilitado) {
 		this.nombre = nombre;
+		this.dirreccion = dirreccion;
+		this.descripcion = descripcion;
+		this.preciohora = preciohora;
 		this.habilitado = habilitado;
 	}
 
-	public Inmuebles(String descripcion, float precioHora, String direccion, String nombre, boolean habilitado,
+	public Inmuebles(String nombre, String dirreccion, String descripcion, float preciohora, byte habilitado,
 			Set alquilers) {
-		this.descripcion = descripcion;
-		this.precioHora = precioHora;
-		this.direccion = direccion;
 		this.nombre = nombre;
+		this.dirreccion = dirreccion;
+		this.descripcion = descripcion;
+		this.preciohora = preciohora;
 		this.habilitado = habilitado;
 		this.alquilers = alquilers;
 	}
 
-	public Integer getIdInmueble() {
-		return this.idInmueble;
+	public Integer getIdInmubles() {
+		return this.idInmubles;
 	}
 
-	public void setIdInmueble(Integer idInmueble) {
-		this.idInmueble = idInmueble;
-	}
-
-	public String getDescripcion() {
-		return this.descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-	public float getPrecioHora() {
-		return this.precioHora;
-	}
-
-	public void setPrecioHora(float precioHora) {
-		this.precioHora = precioHora;
-	}
-
-	public String getDireccion() {
-		return this.direccion;
-	}
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setIdInmubles(Integer idInmubles) {
+		this.idInmubles = idInmubles;
 	}
 
 	public String getNombre() {
@@ -77,11 +54,35 @@ public class Inmuebles implements java.io.Serializable {
 		this.nombre = nombre;
 	}
 
-	public boolean isHabilitado() {
+	public String getDirreccion() {
+		return this.dirreccion;
+	}
+
+	public void setDirreccion(String dirreccion) {
+		this.dirreccion = dirreccion;
+	}
+
+	public String getDescripcion() {
+		return this.descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public float getPreciohora() {
+		return this.preciohora;
+	}
+
+	public void setPreciohora(float preciohora) {
+		this.preciohora = preciohora;
+	}
+
+	public byte getHabilitado() {
 		return this.habilitado;
 	}
 
-	public void setHabilitado(boolean habilitado) {
+	public void setHabilitado(byte habilitado) {
 		this.habilitado = habilitado;
 	}
 

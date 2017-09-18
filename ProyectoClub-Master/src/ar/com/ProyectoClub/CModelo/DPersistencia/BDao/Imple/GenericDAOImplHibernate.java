@@ -284,4 +284,61 @@ public class GenericDAOImplHibernate<T,Id extends Serializable> extends SessionT
 	private Class<T> getEntityClass() {
 		return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
+
+
+	@Override
+	public int CantidadRegistros(T entity) throws BussinessException {
+		try {
+			Setsession();
+			SetTransaction();
+			String total = _sessiondehilo.createQuery("COUNT(i) FROM "+ getEntityClass().getName() +" i").toString();
+			_sessiondehilo.getTransaction().commit();
+			return Integer.parseInt(total);
+		} 
+		catch (javax.validation.ConstraintViolationException cve) {
+			try {
+				if (_sessiondehilo.getTransaction().isActive()) {
+					_sessiondehilo.getTransaction().rollback();
+					}
+				} 
+			catch (Exception exc) {
+				LOGGER.log(Level.WARNING,"Falló al hacer un rollback", exc);
+			}
+			throw new BussinessException(cve);
+		} 
+		catch (org.hibernate.exception.ConstraintViolationException cve) {
+			try {
+				if (_sessiondehilo.getTransaction().isActive()) {
+					_sessiondehilo.getTransaction().rollback();
+					}
+				} 
+			catch (Exception exc) {
+				LOGGER.log(Level.WARNING,"Falló al hacer un rollback", exc);
+			}
+			throw new BussinessException(cve);
+		}
+		catch (RuntimeException ex) {
+			try {
+				if (_sessiondehilo.getTransaction().isActive()) {
+					_sessiondehilo.getTransaction().rollback();
+					}
+				} 
+			catch (Exception exc) {
+				LOGGER.log(Level.WARNING,"Falló al hacer un rollback", exc);
+			}
+			throw ex;
+		} 
+		catch (Exception ex) {
+			try {
+				if (_sessiondehilo.getTransaction().isActive()) {
+					_sessiondehilo.getTransaction().rollback();
+				}
+			} 
+			catch (Exception exc) {
+				LOGGER.log(Level.WARNING,"Falló al hacer un rollback", exc);
+			}
+			throw new RuntimeException(ex);
+		}
+
+	}
 }

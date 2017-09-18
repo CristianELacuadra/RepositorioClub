@@ -1,72 +1,44 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 22-feb-2017 12:40:46 by Hibernate Tools 3.5.0.Final -->
-<hibernate-mapping>
-    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Personas" table="personas" catalog="datosclub">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 17-sep-2017 22:07:28 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="datosclub" dynamic-insert="false" dynamic-update="false" mutable="true" name="ar.com.ProyectoClub.CModelo.CEntidades.Personas" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="personas">
         <id name="dni" type="java.lang.Integer">
-            <column name="Dni" />
-            <generator class="assigned" />
+            <column name="DNI"/>
+            <generator class="assigned"/>
         </id>
-        <many-to-one name="categoria" class="ar.com.ProyectoClub.CModelo.CEntidades.Categoria" lazy="false" fetch="join">
-            <column name="Fk_Categoria" />
-        </many-to-one>
-        <property name="nombre" type="string">
-            <column name="Nombre" length="30" not-null="true" />
+        <property generated="never" lazy="false" name="nombre" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="NOMBRE" not-null="true"/>
         </property>
-        <property name="apellido" type="string">
-            <column name="Apellido" length="30" not-null="true" />
+        <property generated="never" lazy="false" name="apellido" optimistic-lock="true" type="string" unique="false">
+            <column length="60" name="APELLIDO" not-null="true"/>
         </property>
-        <property name="telefono" type="string">
-            <column name="Telefono" length="20" not-null="true" />
+        <property generated="never" lazy="false" name="telefono" optimistic-lock="true" type="string" unique="false">
+            <column length="15" name="TELEFONO" not-null="true"/>
         </property>
-        <property name="domicilio" type="string">
-            <column name="Domicilio" length="100" not-null="true" />
+        <property generated="never" lazy="false" name="domicilio" optimistic-lock="true" type="string" unique="false">
+            <column length="100" name="DOMICILIO" not-null="true"/>
         </property>
-        <property name="domNro" type="java.lang.Integer">
-            <column name="domNro" not-null="true" />
+        <property generated="never" lazy="false" name="fechanac" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="FECHANAC" not-null="true"/>
         </property>
-        <property name="fecNacimiento" type="date">
-            <column name="FecNacimiento" length="10" not-null="true" />
+        <property generated="never" lazy="false" name="sexo" optimistic-lock="true" type="string" unique="false">
+            <column length="2" name="SEXO" not-null="true"/>
         </property>
-        <property name="nroSocio" type="java.lang.Integer">
-            <column name="NroSocio" />
+        <property generated="never" lazy="false" name="nacionalidad" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="NACIONALIDAD" not-null="true"/>
         </property>
-        <property name="matricula" type="java.lang.Integer">
-            <column name="Matricula" />
+        <property generated="never" lazy="false" name="estadocivil" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="ESTADOCIVIL" not-null="true"/>
         </property>
-        <property name="sexo" type="string">
-            <column name="Sexo" length="15" />
+        <property generated="never" lazy="false" name="habilitado" optimistic-lock="true" type="byte" unique="false">
+            <column name="HABILITADO" not-null="true"/>
         </property>
-        <property name="estado" type="string">
-            <column name="Estado" length="20" />
-        </property>
-        <property name="nacionalidad" type="string">
-            <column name="Nacionalidad" length="30" />
-        </property>
-        <property name="estadoCivil" type="string">
-            <column name="EstadoCivil" length="20" />
-        </property>
-        <property name="fechaIngreso" type="date">
-            <column name="FechaIngreso" length="10" />
-        </property>
-        <property name="habilitado" type="boolean">
-            <column name="Habilitado" not-null="true" />
-        </property>
-        <property name="essocio" type="boolean">
-            <column name="Essocio" not-null="true" />
-        </property>
-        <set name="cuotas" table="cuota" inverse="true" lazy="false" fetch="join">
-            <key>
-                <column name="Dni" not-null="true" />
+        <one-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Socios" constrained="false" embed-xml="true" name="socios"/>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="alquilers" optimistic-lock="true" sort="unsorted" table="alquiler">
+            <key on-delete="noaction">
+                <column name="DNI" not-null="true"/>
             </key>
-            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Cuota" />
-        </set>
-        <set name="alquilers" table="alquiler" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="FK_Dni" not-null="true" />
-            </key>
-            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" />
+            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" embed-xml="true" not-found="exception"/>
         </set>
     </class>
 </hibernate-mapping>

@@ -27,6 +27,9 @@ public class ControlllerPrincipal {
 	PantallaCaja miVentanaCaja;
 	PantallaIngresoEgreso miVentanaIngresoEgreso;
 	PantallaConfiguracion miVentanaConfiguracion;
+	PantallaPrincipalPersonas miVentanaPrincipalPersonas;
+	PantallaOptionSocioNoSocio miVentanaOptionSocioSNs;
+	
 
 	//
 	PantallaAlquiler miVentanaAlquiler;
@@ -75,6 +78,8 @@ public class ControlllerPrincipal {
 			miVentanaIngresoEgreso=new PantallaIngresoEgreso(miVentanaCaja, true); 
 			miVentanaConfiguracion=new PantallaConfiguracion(miVentanaPrincipal, true);
 			miVentanaCaja=new PantallaCaja();
+			miVentanaPrincipalPersonas= new PantallaPrincipalPersonas();
+			miVentanaOptionSocioSNs= new PantallaOptionSocioNoSocio(miVentanaPrincipal,true);
 			
 			miVentanaAlquiler=new PantallaAlquiler (miVentanaPrincipal,true);
 			miVentanaNuevoAlquiler=new PantallaNuevoAlquiler (miVentanaAlquiler,true);
@@ -106,6 +111,8 @@ public class ControlllerPrincipal {
 			miVentanaCaja.setCoordinador(miCoordinador);
 			miVentanaIngresoEgreso.setCoordinador(miCoordinador);
 			miVentanaConfiguracion.setCoordinador(miCoordinador);
+			miVentanaPrincipalPersonas.setCoordinador(miCoordinador);
+			miVentanaOptionSocioSNs.setCoordinador(miCoordinador);
 			
 			miVentanaAlquiler.setCoordinador(miCoordinador);
 			miVentanaNuevoAlquiler.setCoordinador(miCoordinador);
@@ -134,6 +141,8 @@ public class ControlllerPrincipal {
 			miCoordinador.setMiVentanaCaja(miVentanaCaja);
 			miCoordinador.setMiventanaIngresoEgreso(miVentanaIngresoEgreso);
 			miCoordinador.setMiVentanaConfiguracion(miVentanaConfiguracion);
+			miCoordinador.setMiVentanaPrincipalPersona(miVentanaPrincipalPersonas);
+			miCoordinador.setMiVentanaOptionSNS(miVentanaOptionSocioSNs);
 			miVentanaInicio.setVisible(true);
 			
 			miCoordinador.setMiVentanaAlquiler(miVentanaAlquiler);

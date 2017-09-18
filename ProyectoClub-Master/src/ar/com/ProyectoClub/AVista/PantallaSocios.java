@@ -95,7 +95,7 @@ public class PantallaSocios extends JFrame implements ActionListener,KeyListener
 	public JComboBox comboSexo;
 	
 	public PantallaSocios(Principal vtnPrincipal,boolean b) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		addWindowListener(new WindowAdapter() {			
 			@Override
@@ -123,7 +123,7 @@ public class PantallaSocios extends JFrame implements ActionListener,KeyListener
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search_find_locate_1542.png")));
+	//	lblNewLabel.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search_find_locate_1542.png")));
 		lblNewLabel.setBounds(686, 11, 107, 101);
 		panel.add(lblNewLabel);
 		
@@ -156,7 +156,7 @@ public class PantallaSocios extends JFrame implements ActionListener,KeyListener
 		
 		btnBuscar= new JButton("Buscar");
 		btnBuscar.setVerticalAlignment(SwingConstants.TOP);
-		btnBuscar.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
+		//btnBuscar.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
 		btnBuscar.setBounds(504, 68, 107, 27);
 		panel.add(btnBuscar);
 		
@@ -165,14 +165,14 @@ public class PantallaSocios extends JFrame implements ActionListener,KeyListener
 		panel.add(lblNewLabel_2);
 		
 		btnNewBusqueda = new JButton("Nueva Busqueda");
-		btnNewBusqueda.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\undoarrow_undo_1534-iloveimg-resized.png"));
+		//btnNewBusqueda.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\undoarrow_undo_1534-iloveimg-resized.png"));
 		btnNewBusqueda.setVerticalAlignment(SwingConstants.TOP);
 		btnNewBusqueda.setBounds(22, 11, 225, 28);
 		panel.add(btnNewBusqueda);
 		
 		btnVenBuscar= new JButton("");
 		btnVenBuscar.setToolTipText("Buscar todos los socios registrados en la base de datos");
-		btnVenBuscar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\data_search-iloveimg-resized.png"));
+		//btnVenBuscar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\data_search-iloveimg-resized.png"));
 		btnVenBuscar.setVerticalAlignment(SwingConstants.TOP);
 		btnVenBuscar.setBounds(1303, 108, 34, 28);
 		panel.add(btnVenBuscar);
@@ -184,25 +184,25 @@ public class PantallaSocios extends JFrame implements ActionListener,KeyListener
 		
 		btnagregar= new JButton("");
 		btnagregar.setToolTipText("Agregar un nuevo socio");
-		btnagregar.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/data_add3.png")));
+		//btnagregar.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/data_add3.png")));
 		panel_1.add(btnagregar);
 		
 		btneliminar = new JButton("");
 		btneliminar.setToolTipText("Inhabilitar un Socio");
 		btneliminar.setEnabled(false);
-		btneliminar.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/data_delete.png")));
+		//btneliminar.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/data_delete.png")));
 		panel_1.add(btneliminar);
 		
 		btnCobranza = new JButton("");
 		btnCobranza.setToolTipText("Cobrar cuota");
 		btnCobranza.setEnabled(false);
-		btnCobranza.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/sale.png")));
+		//btnCobranza.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/sale.png")));
 		panel_1.add(btnCobranza);
 		
 		btnEditar = new JButton("");
 		btnEditar.setToolTipText("Editar datos del socio");
 		btnEditar.setEnabled(false);
-		btnEditar.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/data-modify2.png")));
+		//btnEditar.setIcon(new ImageIcon(PantallaSocios.class.getResource("/ar/com/ProyectoClub/AVista/icon/data-modify2.png")));
 		panel_1.add(btnEditar);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

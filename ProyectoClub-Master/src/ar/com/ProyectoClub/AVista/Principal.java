@@ -66,7 +66,6 @@ public class Principal extends JFrame implements ActionListener{
     
 	private ControllerCoordinador miCoordinador; //objeto miCoordinador que permite la relacion entre esta clase y la clase ControllerCoordinador
 	public JPanel contentPane;
-	public j2Button btnNoSocio;
 	public j2Button btnSocios;
 	public j2Button btnAlquiler; 
 	public j2Button btnCaja;
@@ -88,44 +87,29 @@ public class Principal extends JFrame implements ActionListener{
 		
 
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoPaloma.png")));
 		jtoolbar1 = new JToolBar();
 		btnSocios = new j2Button();		
-		btnNoSocio=new j2Button();
 		btnAlquiler = new j2Button();
 		btnCaja = new j2Button();
 		btnConfig = new j2Button();
 		btnSalir = new j2Button();
 		jCDesktopPane1 = new JDesktopPane();
 		
-		btnSocios.setIcon(new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/user_person_people_6100.png")));
+		btnSocios.setIcon(new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/icoSocios.png")));
 		btnSocios.setColor1(new java.awt.Color(0, 0, 0));
 		btnSocios.setColor2(new java.awt.Color(153, 153, 153));
 		btnSocios.setFocusable(false);
         btnSocios.setFuente1(new java.awt.Font("Arial Black", 1, 12));
         btnSocios.setFuente2(new java.awt.Font("Arial", 1, 10));
         btnSocios.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSocios.setTexto1("Socios");
+        btnSocios.setTexto1("socios-no socios ");
         btnSocios.setTexto2("");
         btnSocios.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jtoolbar1.add(btnSocios);
         jtoolbar1.addSeparator();
         
-        btnNoSocio.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/bootloader_users_person_people_6080.png")));
-        btnNoSocio.setColor1(new java.awt.Color(0, 0, 0));
-		btnNoSocio.setColor2(new java.awt.Color(153, 153, 153));
-        btnNoSocio.setEnabled(true);
-        btnNoSocio.setFocusable(false);
-        btnNoSocio.setFuente1(new java.awt.Font("Arial Black", 1, 12));
-        btnNoSocio.setFuente2(new java.awt.Font("Arial", 1, 10));
-        btnNoSocio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnNoSocio.setTexto1("No socios");
-        btnNoSocio.setTexto2("");
-        btnNoSocio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jtoolbar1.add(btnNoSocio);
-        jtoolbar1.addSeparator();
-        
-        btnAlquiler.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/folder_9903.png")));
+        btnAlquiler.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoAlquiler.png")));
         btnAlquiler.setColor1(new java.awt.Color(0, 0, 0));
         btnAlquiler.setColor2(new java.awt.Color(153, 153, 153));
         btnAlquiler.setEnabled(true);
@@ -133,13 +117,13 @@ public class Principal extends JFrame implements ActionListener{
         btnAlquiler.setFuente1(new java.awt.Font("Arial Black", 1, 12));
         btnAlquiler.setFuente2(new java.awt.Font("Arial", 1, 10));
         btnAlquiler.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnAlquiler.setTexto1("Alquiler");
+        btnAlquiler.setTexto1(" Alquiler");
         btnAlquiler.setTexto2("");
         btnAlquiler.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jtoolbar1.add(btnAlquiler);
         jtoolbar1.addSeparator();
         
-        btnCaja.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/dollar_money_17872.png")));       
+        btnCaja.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoCaja.png")));       
         btnCaja.setColor1(new java.awt.Color(0, 0, 0));
         btnCaja.setColor2(new java.awt.Color(153, 153, 153));
         btnCaja.setEnabled(true);
@@ -154,7 +138,7 @@ public class Principal extends JFrame implements ActionListener{
         jtoolbar1.addSeparator();
         
         //btnConfig.setHorizontalTextPosition(SwingConstants.LEFT);
-		btnConfig.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/developer_folder_black_13857.png")));
+		btnConfig.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoConfig.png")));
 		btnConfig.setColor1(new java.awt.Color(0, 0, 0));
 		btnConfig.setColor2(new java.awt.Color(153, 153, 153));
 		btnConfig.setFocusable(false);
@@ -168,7 +152,7 @@ public class Principal extends JFrame implements ActionListener{
         jtoolbar1.addSeparator();
         
         //btnConfig.setHorizontalTextPosition(SwingConstants.LEFT);
-        btnSalir.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/exit_closethesession_close_6317.png")));
+        btnSalir.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoSalida.png")));
         btnSalir.setColor1(new java.awt.Color(0, 0, 0));
         btnSalir.setColor2(new java.awt.Color(153, 153, 153));
         btnSalir.setEnabled(true);
@@ -204,7 +188,6 @@ public class Principal extends JFrame implements ActionListener{
 	        
 	        //atentos a las acciones del usuario
 	        btnSocios.addActionListener(this);
-			btnNoSocio.addActionListener(this);
 			btnAlquiler.addActionListener(this);
 			btnCaja.addActionListener(this);
 			btnConfig.addActionListener(this);
@@ -219,12 +202,9 @@ public class Principal extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==btnSocios) {
-			miCoordinador.mostrarVentanaSocio();
+			miCoordinador.MostrarVentanaOpcionSocioNosocio();
 		}
 		
-		if (e.getSource()==btnNoSocio) {
-			miCoordinador.mostrarFormularioPersona(false);	
-		}
 		if(e.getSource()==btnCaja){
 			miCoordinador.MostrarVentanaCaja(PantallaCaja.jtdatos);
 		}

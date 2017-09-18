@@ -1,36 +1,28 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 22-feb-2017 9:47:26 by Hibernate Tools 3.5.0.Final -->
-<hibernate-mapping>
-    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Cuota" table="cuota" catalog="datosclub">
-        <id name="id" type="java.lang.Integer">
-            <column name="ID" />
-            <generator class="identity" />
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 17-sep-2017 22:07:28 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="datosclub" dynamic-insert="false" dynamic-update="false" mutable="true" name="ar.com.ProyectoClub.CModelo.CEntidades.Cuota" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="cuota">
+        <id name="idCuota" type="java.lang.Integer">
+            <column name="IdCUOTA"/>
+            <generator class="identity"/>
         </id>
-        <many-to-one name="personas" class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" lazy="false" fetch="join">
-            <column name="Dni" not-null="true" />
+        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Socios" embed-xml="true" fetch="select" insert="true" name="socios" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="DNI" not-null="true"/>
         </many-to-one>
-        <property name="fechaGeneracion" type="date">
-            <column name="FechaGeneracion" length="10" />
+        <property generated="never" lazy="false" name="fechageneracion" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="FECHAGENERACION" not-null="true"/>
         </property>
-        <property name="fechaPago" type="date">
-            <column name="Fecha_pago" length="10" />
+        <property generated="never" lazy="false" name="fechapago" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="FECHAPAGO" not-null="true"/>
         </property>
-        <property name="descripcion" type="string">
-            <column name="descripcion" length="100" not-null="true" />
+        <property generated="never" lazy="false" name="descripcion" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="DESCRIPCION" not-null="true"/>
         </property>
-        <property name="importe" type="float">
-            <column name="Importe" precision="12" scale="0" not-null="true" />
+        <property generated="never" lazy="false" name="importe" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="IMPORTE" not-null="true"/>
         </property>
-        <property name="estado" type="string">
-            <column name="Estado" length="25" not-null="true" />
+        <property generated="never" lazy="false" name="estado" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="ESTADO" not-null="true"/>
         </property>
-        <set name="cajas" table="caja" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="Cuota" />
-            </key>
-            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Caja" />
-        </set>
     </class>
 </hibernate-mapping>

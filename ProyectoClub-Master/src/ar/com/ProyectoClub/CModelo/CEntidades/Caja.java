@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 11-jul-2017 9:12:03 by Hibernate Tools 5.2.3.Final
+// Generated 17-sep-2017 22:07:28 by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 
@@ -9,33 +9,20 @@ import java.util.Date;
 public class Caja implements java.io.Serializable {
 
 	private Integer idCaja;
-	private Alquiler alquiler;
-	private Cuota cuota;
+	private Conceptos conceptos;
 	private Date fecha;
-	private String descripcion;
 	private float monto;
-	private boolean tipo;
+	private String descripcion;
 	private boolean habilitar;
 
 	public Caja() {
 	}
 
-	public Caja(Date fecha, String descripcion, float monto, boolean tipo, boolean habilitar) {
+	public Caja(Conceptos conceptos, Date fecha, float monto, String descripcion, boolean habilitar) {
+		this.conceptos = conceptos;
 		this.fecha = fecha;
-		this.descripcion = descripcion;
 		this.monto = monto;
-		this.tipo = tipo;
-		this.habilitar = habilitar;
-	}
-
-	public Caja(Alquiler alquiler, Cuota cuota, Date fecha, String descripcion, float monto, float subTotal,
-			boolean tipo, boolean habilitar) {
-		this.alquiler = alquiler;
-		this.cuota = cuota;
-		this.fecha = fecha;
 		this.descripcion = descripcion;
-		this.monto = monto;
-		this.tipo = tipo;
 		this.habilitar = habilitar;
 	}
 
@@ -47,20 +34,12 @@ public class Caja implements java.io.Serializable {
 		this.idCaja = idCaja;
 	}
 
-	public Alquiler getAlquiler() {
-		return this.alquiler;
+	public Conceptos getConceptos() {
+		return this.conceptos;
 	}
 
-	public void setAlquiler(Alquiler alquiler) {
-		this.alquiler = alquiler;
-	}
-
-	public Cuota getCuota() {
-		return this.cuota;
-	}
-
-	public void setCuota(Cuota cuota) {
-		this.cuota = cuota;
+	public void setConceptos(Conceptos conceptos) {
+		this.conceptos = conceptos;
 	}
 
 	public Date getFecha() {
@@ -71,14 +50,6 @@ public class Caja implements java.io.Serializable {
 		this.fecha = fecha;
 	}
 
-	public String getDescripcion() {
-		return this.descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
 	public float getMonto() {
 		return this.monto;
 	}
@@ -86,13 +57,13 @@ public class Caja implements java.io.Serializable {
 	public void setMonto(float monto) {
 		this.monto = monto;
 	}
-	
-    public boolean isTipo() {
-		return this.tipo;
+
+	public String getDescripcion() {
+		return this.descripcion;
 	}
 
-	public void setTipo(boolean tipo) {
-		this.tipo = tipo;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public boolean isHabilitar() {

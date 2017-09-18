@@ -44,12 +44,14 @@ import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
+import java.awt.Toolkit;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import net.miginfocom.swing.MigLayout;
 
 public class PantallaFormularioPersona extends JDialog implements ActionListener,KeyListener {
 
 	private ControllerCoordinador miCoordinador; //objeto miCoordinador que permite la relacion entre esta clase y la clase ControllerCoordinador
 	public JPanel contentPane;
-	public JDesktopPane jCDesktopPane1; 
 	public JPanel panelTitulo;
 	public  JLabel lblTitulo;
 	public JLabel lblDni;
@@ -65,7 +67,6 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
     public JLabel lblFechNac;
 	public JDateChooser dateFechNac;
 	public JLabel lblDom; 
-	public JPanel panelDatosSocios; 
 	public JLabel lblTel;
 	private JLabel lblMatri;
 	private JLabel lblSexo; 
@@ -75,20 +76,22 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	private JLabel lblFechingreso;
 	private JLabel lblCate; 
 	public JComboBox comboSexo; 
-	public JLabel lblIdSocio; 
-	public JLabel lblNroSocio; 
-	public JButton btnVolver; 
-	public JButton btnRegistrar; 
-	public JButton btnLimpiar;
 	public JComboBox comboCate;
 	public JComboBox cmbEstadoCivil; 
 	public Map<Integer, String> mapCategoria = new HashMap<Integer, String>();
 	private boolean Essocio;
 	public  JTextField txtDomNro;
 	public JLabel lblNro;
+	private JPanel panel_1;
+	private JPanel panel_2;
+	private JPanel panel;
+	public JButton btnVolver;
+	public JButton btnRegistrar;
+	public JButton btnLimpiar;
 
 	public PantallaFormularioPersona(PantallaSocios vtnPantallaPersona,boolean b) {  
 		super(vtnPantallaPersona,b);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaFormularioPersona.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoPaloma.png")));
 		addWindowListener(new WindowAdapter() {			
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -102,11 +105,161 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	private void initComponents(){
 		//Instanciamos los componentes
 		contentPane = new JPanel();
-		jCDesktopPane1 = new JDesktopPane();
-		jCDesktopPane1.setMaximumSize(new Dimension(10, 10));
+		contentPane.setBackground(new Color(255, 255, 255));
 		panelTitulo= new JPanel();
+		panelTitulo.setBounds(15, 15, 796, 31);
+		panelTitulo.setBackground(new Color(0, 191, 255));
+		lblTitulo = new JLabel();
+		//setBounds(100, 100,1129, 978);
+		//contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
+		setContentPane(contentPane);
+		//contentPane.setLayout(null);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(new java.awt.Color(255, 255, 255));
+		panel_1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "DATOS OBLIGATORIOS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+		
+		panel_2 = new JPanel();
+		panel_2.setBackground(new java.awt.Color(255, 255, 255));
+		panel_2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "DATOS OBLIGATORIOS SOCIOS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+		panel_2.setLayout(null);
+		lblMatri= new JLabel();
+		lblMatri.setBounds(10, 27, 69, 14);
+		panel_2.add(lblMatri);
+		
+		
+		lblMatri.setText("MATRICULA");
+		txtMatri = new JTextField();
+		txtMatri.setBounds(108, 24, 103, 20);
+		panel_2.add(txtMatri);
+		lblSexo= new JLabel();
+		lblSexo.setBounds(10, 65, 61, 14);
+		panel_2.add(lblSexo);
+		
+		
+		lblSexo.setText("SEXO");
+		comboSexo= new JComboBox();
+		comboSexo.setBounds(108, 65, 197, 20);
+		panel_2.add(comboSexo);
+		
+		comboSexo.addItem("Seleccione un sexo");
+		comboSexo.addItem("Masculino");
+		comboSexo.addItem("Femenino");
+		txtNacion = new JTextField();
+		txtNacion.setBounds(108, 103, 197, 20);
+		panel_2.add(txtNacion);
+		lblNaciona= new JLabel();
+		lblNaciona.setBounds(10, 103, 88, 14);
+		panel_2.add(lblNaciona);
+		
+		
+		lblNaciona.setText("NACIONALIDAD");
+		lblEstCivil = new JLabel();
+		lblEstCivil.setBounds(10, 217, 98, 14);
+		panel_2.add(lblEstCivil);
+		
+		
+		lblEstCivil.setText("ESTADO CIVIL");
+		cmbEstadoCivil= new JComboBox();
+		cmbEstadoCivil.setBounds(108, 217, 180, 20);
+		panel_2.add(cmbEstadoCivil);
+		
+		
+		cmbEstadoCivil.addItem("Seleccione un estado");
+		cmbEstadoCivil.addItem("Casado/a");
+		cmbEstadoCivil.addItem("Soltero/a");
+		cmbEstadoCivil.addItem("Comprometido/a");
+		cmbEstadoCivil.addItem("Divorciado/a");
+		cmbEstadoCivil.addItem("Viudo/a");
+		lblFechingreso = new JLabel();
+		lblFechingreso.setBounds(10, 179, 88, 14);
+		panel_2.add(lblFechingreso);
+		
+		
+		lblFechingreso.setText("FECHA INGRESO");
+		dateFechIngreso = new JDateChooser();
+		dateFechIngreso.setBounds(108, 179, 129, 20);
+		panel_2.add(dateFechIngreso);
+		lblCate= new JLabel();
+		lblCate.setBounds(10, 141, 69, 14);
+		panel_2.add(lblCate);
+		
+		
+		lblCate.setText("CATEGORIA");
+		comboCate= new JComboBox();
+		comboCate.setBounds(108, 141, 180, 20);
+		panel_2.add(comboCate);
+		comboCate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		comboSexo.repaint();
+		panel_1.setLayout(null);
 		lblDni = new JLabel();
+		lblDni.setBounds(10, 25, 18, 14);
+		panel_1.add(lblDni);
+		
+		
+		lblDni.setText("DNI");
 		txtDni = new JTextField();
+		txtDni.setBounds(101, 22, 173, 20);
+		panel_1.add(txtDni);
+		//
+		lblApe = new JLabel();
+		lblApe.setBounds(10, 60, 81, 14);
+		panel_1.add(lblApe);
+		
+		
+		lblApe.setText("APELLIDO");
+		txtApe = new JTextField();
+		txtApe.setBounds(101, 60, 176, 20);
+		panel_1.add(txtApe);
+		txtNom = new JTextField();
+		txtNom.setBounds(101, 98, 176, 20);
+		panel_1.add(txtNom);
+		lblNom = new JLabel();
+		lblNom.setBounds(10, 98, 70, 14);
+		panel_1.add(lblNom);
+		
+		
+		lblNom.setText("NOMBRES");
+		lblFechNac = new JLabel();
+		lblFechNac.setBounds(10, 212, 121, 14);
+		panel_1.add(lblFechNac);
+		
+		
+		lblFechNac.setText("FECHA NACIMIENTO");
+		dateFechNac = new JDateChooser();
+		dateFechNac.setBounds(126, 212, 95, 20);
+		panel_1.add(dateFechNac);
+		lblDom = new JLabel();
+		lblDom.setBounds(10, 174, 81, 14);
+		panel_1.add(lblDom);
+		
+		
+		lblDom.setText("DOMICILIO");
+		txtDom = new JTextField();
+		txtDom.setBounds(97, 174, 190, 20);
+		panel_1.add(txtDom);
+		
+		txtDomNro = new JTextField();
+		txtDomNro.setBounds(329, 174, 51, 20);
+		panel_1.add(txtDomNro);
+		
+		lblNro = new JLabel();
+		lblNro.setBounds(297, 174, 22, 14);
+		panel_1.add(lblNro);
+		lblNro.setText("NRO");
+		txtTel = new JTextField();
+		txtTel.setBounds(101, 136, 173, 20);
+		panel_1.add(txtTel);
+		lblTel= new JLabel();
+		lblTel.setBounds(10, 136, 81, 14);
+		panel_1.add(lblTel);
+		
+		
+		lblTel.setText("TELEFONO");
 		//evento para que ingrese solo numeros al dni
 		txtDni.addKeyListener(new KeyAdapter() {
 			@Override
@@ -119,240 +272,58 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 				}
 			}
 		});
-		//
-		lblApe = new JLabel();
-		panelTitulo.setBackground(Color.RED);
-		txtApe = new JTextField();
-		lblNom = new JLabel();
-		txtNom = new JTextField();
-		lblFechNac = new JLabel();
-		dateFechNac = new JDateChooser();
-		lblDom = new JLabel();
-		txtDom = new JTextField();
-		txtTel = new JTextField();
-		panelDatosSocios = new JPanel();
-		lblTel= new JLabel();
-		txtMatri = new JTextField();
-		lblMatri= new JLabel();
-		lblSexo= new JLabel();
-		txtNacion = new JTextField();
-		lblNaciona= new JLabel();
-		lblEstCivil = new JLabel();
-		dateFechIngreso = new JDateChooser();
-		comboCate= new JComboBox();
-		comboCate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		comboSexo= new JComboBox();
-		lblFechingreso = new JLabel();
-		lblCate= new JLabel();
-		lblTitulo = new JLabel();
-		btnVolver = new JButton();
-		btnVolver.setVerticalAlignment(SwingConstants.TOP);
-		btnRegistrar = new JButton();
-		btnLimpiar= new JButton();
-		cmbEstadoCivil= new JComboBox();
-		setBounds(100, 100, 957, 556);
-		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-		jCDesktopPane1.setBackground(Color.LIGHT_GRAY);
-		
-		
-
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		layout.setHorizontalGroup(
-			layout.createParallelGroup(Alignment.LEADING)
-				.addComponent(panelTitulo, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
-				.addComponent(jCDesktopPane1, GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
-		);
-		layout.setVerticalGroup(
-			layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup()
-					.addComponent(panelTitulo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(21)
-					.addComponent(jCDesktopPane1, GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE))
-		);
-		getContentPane().setLayout(layout);
-		
-		
-		lblDni.setText("DNI");
-		lblDni.setBounds(10, 11, 43, 14);
-		jCDesktopPane1.add(lblDni);
-		
-		
-		txtDni.setBounds(101, 8, 173, 20);
-		jCDesktopPane1.add(txtDni);
-		
-		
-		lblApe.setText("APELLIDO");
-		lblApe.setBounds(10, 55, 81, 14);
-		jCDesktopPane1.add(lblApe);
-		
-		
-		txtApe.setBounds(101, 52, 176, 20);
-		jCDesktopPane1.add(txtApe);
-		
-		
-		lblNom.setText("NOMBRES");
-		lblNom.setBounds(10, 94, 81, 14);
-		jCDesktopPane1.add(lblNom);
-		
-		
-		txtNom.setBounds(101, 91, 176, 20);
-		jCDesktopPane1.add(txtNom);
-		
-		
-		lblFechNac.setText("FECHA N.");
-		lblFechNac.setBounds(11, 134, 80, 14);
-		jCDesktopPane1.add(lblFechNac);
-		
-		
-		dateFechNac.setBounds(101, 128, 95, 20);
-		jCDesktopPane1.add(dateFechNac);
-		
-		
-		lblDom.setText("DOMICILIO");
-		lblDom.setBounds(10, 168, 81, 14);
-		jCDesktopPane1.add(lblDom);
-		
-		
-		txtDom.setBounds(101, 165, 190, 20);
-		jCDesktopPane1.add(txtDom);
-		
-		
-		lblTel.setText("TELEFONO");
-		lblTel.setBounds(10, 231, 81, 14);
-		jCDesktopPane1.add(lblTel);
-		
-		
-		txtTel.setBounds(101, 228, 173, 20);
-		jCDesktopPane1.add(txtTel);
-		
-		
-		panelDatosSocios.setBackground(Color.LIGHT_GRAY);
-		panelDatosSocios.setLayout(null);
-		panelDatosSocios.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panelDatosSocios.setBounds(377, 0, 419, 354);
-		jCDesktopPane1.add(panelDatosSocios);
-		
-		
-		txtMatri.setBounds(130, 62, 254, 20);
-		panelDatosSocios.add(txtMatri);
-		
-		
-		lblMatri.setText("MATRICULA");
-		lblMatri.setBounds(25, 65, 85, 14);
-		panelDatosSocios.add(lblMatri);
-		
-		
-		lblSexo.setText("SEXO");
-		lblSexo.setBounds(25, 107, 61, 14);
-		panelDatosSocios.add(lblSexo);
-		
-		
-		txtNacion.setBounds(130, 149, 239, 20);
-		panelDatosSocios.add(txtNacion);
-		
-		
-		lblNaciona.setText("NACIONALIDAD");
-		lblNaciona.setBounds(25, 152, 110, 14);
-		panelDatosSocios.add(lblNaciona);
-		
-		
-		lblEstCivil.setText("ESTADO CIVIL");
-		lblEstCivil.setBounds(25, 194, 98, 14);
-		panelDatosSocios.add(lblEstCivil);
-		
-		
-		dateFechIngreso.setBounds(132, 248, 129, 20);
-		panelDatosSocios.add(dateFechIngreso);
-		
-		
-		lblFechingreso.setText("FECHA INGRESO");
-		lblFechingreso.setBounds(25, 254, 138, 14);
-		panelDatosSocios.add(lblFechingreso);
-		
-		
-		comboCate.setBounds(130, 293, 180, 20);
-		panelDatosSocios.add(comboCate);
-		
-		
-		lblCate.setText("CATEGORIA");
-		lblCate.setBounds(25, 296, 69, 14);
-		panelDatosSocios.add(lblCate);
-		
-		
-		comboSexo.setBounds(130, 104, 197, 20);
-		
-		comboSexo.addItem("Seleccione un sexo");
-		comboSexo.addItem("Masculino");
-		comboSexo.addItem("Femenino");
-		comboSexo.repaint();
-		panelDatosSocios.add(comboSexo);
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.RED);
-		panel.setBounds(0, 0, 367, 43);
-		panelDatosSocios.add(panel);
-		lblNroSocio = new JLabel();
-		panel.add(lblNroSocio);
-		
-		
-		lblNroSocio.setText("SOCIO NRO");
-		lblNroSocio.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblIdSocio= new JLabel();
-		panel.add(lblIdSocio);
-		lblIdSocio.setForeground(Color.RED);
-		lblIdSocio.setFont(new Font("Arial", Font.BOLD, 18));
-		
-		
-		lblIdSocio.setText(".....");
-		lblIdSocio.setEnabled(false);
-		
-		
-		cmbEstadoCivil.addItem("Seleccione un estado");
-		cmbEstadoCivil.addItem("Casado/a");
-		cmbEstadoCivil.addItem("Soltero/a");
-		cmbEstadoCivil.addItem("Comprometido/a");
-		cmbEstadoCivil.addItem("Divorciado/a");
-		cmbEstadoCivil.addItem("Viudo/a");
-		cmbEstadoCivil.setBounds(130, 191, 180, 20);
-		panelDatosSocios.add(cmbEstadoCivil);
-		
-		
-		btnVolver.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\Back.png"));
-		btnVolver.setText("VOLVER");
-		btnVolver.setBounds(10, 391, 117, 33);
-		jCDesktopPane1.add(btnVolver);
-		
-		
-		btnRegistrar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\Load.png"));
-		btnRegistrar.setText("REGISTRAR");
-		btnRegistrar.setBounds(625, 391, 142, 33);
-		jCDesktopPane1.add(btnRegistrar);
-		
-		
-		btnLimpiar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\limpiar.png"));
-		btnLimpiar.setText("LIMPIAR");
-		btnLimpiar.setBounds(495, 391, 120, 32);
-		jCDesktopPane1.add(btnLimpiar);
-		
-		lblNro = new JLabel();
-		lblNro.setText("NRO");
-		lblNro.setBounds(301, 168, 22, 14);
-		jCDesktopPane1.add(lblNro);
-		
-		txtDomNro = new JTextField();
-		txtDomNro.setBounds(328, 165, 51, 20);
-		jCDesktopPane1.add(txtDomNro);
 		
 		lblTitulo.setText("REGISTRO PERSONAS");
 		lblTitulo.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		panelTitulo.add(lblTitulo);
+		
+		panel = new JPanel();
+		panel.setBackground(Color.WHITE);
+		panel.setLayout(null);
+		
+		btnRegistrar = new JButton();
+		btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/guardar.png")));
+		btnRegistrar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnRegistrar.setText("Guardar");
+		btnRegistrar.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnRegistrar.setFont(new java.awt.Font("Tahoma", 1, 12));
+		btnRegistrar.setContentAreaFilled(false);
+		btnRegistrar.setBorderPainted(false);
+		btnRegistrar.setBorder(null);
+		btnRegistrar.setBounds(579, 8, 97, 101);
+		btnRegistrar.addActionListener(this);
+		panel.add(btnRegistrar);
+		contentPane.setLayout(new MigLayout("", "[1083px]", "[31px][257px][251px][117px]"));
+		contentPane.add(panelTitulo, "cell 0 0,growx,aligny top");
+		contentPane.add(panel_1, "cell 0 1,grow");
+		contentPane.add(panel_2, "cell 0 2,grow");
+		contentPane.add(panel, "cell 0 3,grow");
+		
+		btnLimpiar = new JButton();
+		btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/limpiar1.png")));
+		btnLimpiar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnLimpiar.setText("Limpiar");
+		btnLimpiar.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnLimpiar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnLimpiar.setContentAreaFilled(false);
+		btnLimpiar.setBorderPainted(false);
+		btnLimpiar.setBorder(null);
+		btnLimpiar.setBounds(463, 11, 89, 95);
+		btnLimpiar.addActionListener(this);
+		panel.add(btnLimpiar);
+		
+		btnVolver = new JButton();
+		btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/impo.png")));
+		btnVolver.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnVolver.setText("Cancelar");
+		btnVolver.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnVolver.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnVolver.setContentAreaFilled(false);
+		btnVolver.setBorderPainted(false);
+		btnVolver.setBorder(null);
+		btnVolver.setBounds(341, 8, 97, 101);
+		panel.add(btnVolver);
 		
 		this.Escuchando();
 		pack();
@@ -375,7 +346,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		nuevapersona.setDomNro(domnro);
 		nuevapersona.setTelefono(txtTel.getText());
 		if(Essocio){
-			nuevapersona.setNroSocio(Integer.parseInt(lblIdSocio.getText()));
+			//nuevapersona.setNroSocio(Integer.parseInt(lblIdSocio.getText()));
 			int matricula= (txtMatri.getText().length()==0) ? 0: Integer.parseInt(txtMatri.getText());
 			nuevapersona.setMatricula(matricula);
 			String sexo= (comboSexo.getSelectedItem().toString().equals("Seleccione un sexo")) ? null: comboSexo.getSelectedItem().toString();
@@ -409,7 +380,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 				miCoordinador.GuardarSocioNosocio(nuevapersona, Essocio);
 				this.limpiar();
 				if(Essocio){
-					lblIdSocio.setText(miCoordinador.DevolverUltimoIdSocio().toString());
+					//lblIdSocio.setText(miCoordinador.DevolverUltimoIdSocio().toString());
 				}
 			}
 			else
@@ -446,9 +417,6 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	}
 	//escuchando al usuario
 	private void Escuchando(){
-		btnLimpiar.addActionListener(this);
-		btnRegistrar.addActionListener(this);
-		btnVolver.addActionListener(this);
 		txtApe.addKeyListener(this);
 		txtNom.addKeyListener(this);
 		txtDni.addKeyListener(this);

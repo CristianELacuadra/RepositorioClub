@@ -69,7 +69,7 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 	
 	public void initComponents () {
 		setTitle("Busqueda Persona");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaBusquedaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaBusquedaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		contentPane = new JPanel();
 		panel = new JPanel();
 		resaltado= new RowsRenderer(6);
@@ -96,7 +96,7 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 		panel_2.add(btnBuscar);
 		chcIncluidos = new JCheckBox();
 		
-		btnBuscar.setIcon(new ImageIcon(PantallaBusquedaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/buscar2.png")));
+		//btnBuscar.setIcon(new ImageIcon(PantallaBusquedaSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/buscar2.png")));
 		
 		chcIncluidos.setText("Incluir inhabilitados");
 		chcIncluidos.setBounds(16, 27, 128, 23);
@@ -213,7 +213,7 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
         
         
         btnSeleccionar.setText("OK");
-        btnSeleccionar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\apply.png"));
+        //btnSeleccionar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\apply.png"));
         btnSeleccionar.setBounds(589, 360, 102, 35);
         contentPane.add(btnSeleccionar);
         
@@ -270,7 +270,7 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 			ape=txtApe.getText();
 		if(!txtNom.getText().isEmpty())
 			nom=txtNom.getText();
-		miCoordinador.Listar(jtdatos,nom,ape,dni,rdbSocio.isSelected());
+		//miCoordinador.Listar(jtdatos,nom,ape,dni,rdbSocio.isSelected());
 	}
     //eventos del mouse
 	@Override

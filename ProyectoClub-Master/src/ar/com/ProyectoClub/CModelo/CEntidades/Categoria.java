@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 11-jul-2017 9:12:03 by Hibernate Tools 5.2.3.Final
+// Generated 17-sep-2017 22:07:28 by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,13 +14,13 @@ public class Categoria implements java.io.Serializable {
 	private String descripcion;
 	private float monto;
 	private float descuento;
-	private boolean habilitado;
-	private Set personases = new HashSet(0);
+	private byte habilitado;
+	private Set socioses = new HashSet(0);
 
 	public Categoria() {
 	}
 
-	public Categoria(String nombre, String descripcion, float monto, float descuento, boolean habilitado) {
+	public Categoria(String nombre, String descripcion, float monto, float descuento, byte habilitado) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.monto = monto;
@@ -28,14 +28,13 @@ public class Categoria implements java.io.Serializable {
 		this.habilitado = habilitado;
 	}
 
-	public Categoria(String nombre, String descripcion, float monto, float descuento, boolean habilitado,
-			Set personases) {
+	public Categoria(String nombre, String descripcion, float monto, float descuento, byte habilitado, Set socioses) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.monto = monto;
 		this.descuento = descuento;
 		this.habilitado = habilitado;
-		this.personases = personases;
+		this.socioses = socioses;
 	}
 
 	public Integer getIdCategoria() {
@@ -78,20 +77,20 @@ public class Categoria implements java.io.Serializable {
 		this.descuento = descuento;
 	}
 
-	public boolean isHabilitado() {
+	public byte getHabilitado() {
 		return this.habilitado;
 	}
 
-	public void setHabilitado(boolean habilitado) {
+	public void setHabilitado(byte habilitado) {
 		this.habilitado = habilitado;
 	}
 
-	public Set getPersonases() {
-		return this.personases;
+	public Set getSocioses() {
+		return this.socioses;
 	}
 
-	public void setPersonases(Set personases) {
-		this.personases = personases;
+	public void setSocioses(Set socioses) {
+		this.socioses = socioses;
 	}
 
 }

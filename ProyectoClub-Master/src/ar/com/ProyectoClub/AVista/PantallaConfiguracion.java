@@ -42,7 +42,7 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 	
 
 	private void initComponents() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaConfiguracion.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaConfiguracion.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		setTitle("Sistema Club Avenida Ejercito - Configuraciones");
 		setBounds(100, 100, 450, 465);
 		getContentPane().setLayout(new BorderLayout());
@@ -132,7 +132,7 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 		panel_3.add(btnBackup);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(PantallaConfiguracion.class.getResource("/ar/com/ProyectoClub/AVista/icon/configuration_250.png")));
+		//lblNewLabel.setIcon(new ImageIcon(PantallaConfiguracion.class.getResource("/ar/com/ProyectoClub/AVista/icon/configuration_250.png")));
 		lblNewLabel.setBounds(323, 11, 106, 70);
 		contentPanel.add(lblNewLabel);
 		

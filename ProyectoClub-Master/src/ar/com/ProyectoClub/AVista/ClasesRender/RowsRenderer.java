@@ -26,8 +26,18 @@ public class RowsRenderer extends DefaultTableCellRenderer  {
 		
 		if(value instanceof JButton){
 			JButton btn=(JButton)value;
-			return btn;
+			btn.setEnabled(true);
+			if(table.getValueAt(row,columna).equals(false) && btn.getName().equals("btnBaja"))
+				btn.setEnabled(false);
+			if(table.getValueAt(row,columna).equals(false) && !btn.getName().equals("btnBaja"))
+				 btn.setEnabled(true);
+			if(table.getValueAt(row,columna).equals(true) && btn.getName().equals("btnHabilitado"))
+				btn.setEnabled(false);
+			if(table.getValueAt(row,columna).equals(true) && !btn.getName().equals("btnHabilitado"))
+				btn.setEnabled(true);
+		    return btn;
 		}
+			
 		
 		if(value instanceof JCheckBox){
 			JCheckBox check=(JCheckBox)value;

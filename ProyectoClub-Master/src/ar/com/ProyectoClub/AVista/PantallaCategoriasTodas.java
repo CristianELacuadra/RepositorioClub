@@ -28,7 +28,7 @@ public class PantallaCategoriasTodas extends JDialog {
 	public PantallaCategoriasTodas(PantallaSocios ventana,boolean value){
 		super(ventana,true);
 		setType(Type.POPUP);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCategoriasTodas.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCategoriasTodas.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		setTitle("Sistema Club Avenida Ejercito - Categorias");
 		initComponents();
 	}

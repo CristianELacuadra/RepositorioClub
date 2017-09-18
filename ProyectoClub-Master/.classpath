@@ -28,5 +28,10 @@
 	<classpathentry kind="lib" path="lib/jgoodies-forms-1.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jgoodies-forms-1.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="lib/AbsoluteLayout.jar"/>
+	<classpathentry kind="lib" path="lib/CustomComboBox - Blue.jar"/>
+	<classpathentry kind="lib" path="lib/edisoncorSX.jar"/>
+	<classpathentry kind="lib" path="lib/JPlaceHolder.jar"/>
+	<classpathentry kind="lib" path="lib/JPlaceHolderPassw.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

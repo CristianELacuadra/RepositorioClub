@@ -18,6 +18,8 @@ import java.awt.event.WindowEvent;
 import java.util.Date;
 
 import javax.swing.JToolBar;
+import javax.swing.ListSelectionModel;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -60,7 +62,7 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 	public JButton btnLimpiar;
 	
 	public PantallaCaja(){
-		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+	//	setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		setTitle("Club Avenida ejercito- Control de Ingresos y de Egresos");
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		addWindowListener(new WindowAdapter() {			
@@ -85,7 +87,7 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		Panel.setLayout(null);
 		
 		btnBuscar = new JButton("Buscar");
-		btnBuscar.setIcon(new ImageIcon(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
+		//btnBuscar.setIcon(new ImageIcon(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
 		btnBuscar.setBounds(1104, 112, 115, 33);
 		Panel.add(btnBuscar);
 		
@@ -162,7 +164,7 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		Panel.add(lblSeleccioneIngresosegresis);
 		
 		JLabel ImgLogo = new JLabel("");
-		ImgLogo.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\images (1)-iloveimg-resized.png"));
+		//ImgLogo.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\images (1)-iloveimg-resized.png"));
 		ImgLogo.setBounds(34, 28, 128, 128);
 		Panel.add(ImgLogo);
 		
@@ -199,11 +201,11 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		btnIngresos= new JButton("Ingreso");
-		btnIngresos.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\dinero-icono-01-iloveimg-resized.png"));
+		//btnIngresos.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\dinero-icono-01-iloveimg-resized.png"));
 		panel_5.add(btnIngresos);
 		
 		btnEgresos= new JButton("Egreso");
-		btnEgresos.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\images-iloveimg-resized.jpg"));
+		//btnEgresos.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\images-iloveimg-resized.jpg"));
 		panel_5.add(btnEgresos);
 		
 		JLabel lblRegistrar = new JLabel("Registrar");
@@ -213,7 +215,7 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		Panel.add(lblRegistrar);
 		
 		btnLimpiar = new JButton("Limpiar");
-		btnLimpiar.setIcon(new ImageIcon(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/limpiar.png")));
+		//btnLimpiar.setIcon(new ImageIcon(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/limpiar.png")));
 		btnLimpiar.setBounds(1237, 112, 115, 33);
 		Panel.add(btnLimpiar);
 		
@@ -242,6 +244,9 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 	                return false;
 	            }
 	        });
+		jtdatos.getTableHeader().setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
+		jtdatos.setDefaultRenderer(Object.class, new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
+		jtdatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtdatos.getTableHeader().setReorderingAllowed(false);
 		scrollPane.setViewportView(jtdatos);
 		

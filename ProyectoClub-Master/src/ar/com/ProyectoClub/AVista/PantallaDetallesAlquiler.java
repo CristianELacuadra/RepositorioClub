@@ -76,7 +76,7 @@ public class PantallaDetallesAlquiler extends JDialog implements ActionListener,
 		super(vtn,b);
 		setResizable(false);
 		setBounds(100, 100, 585, 653);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaNuevoInmueble.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaNuevoInmueble.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		getContentPane().setLayout(null);
 		initComponent(opcion);
 		

@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 11-jul-2017 9:12:03 by Hibernate Tools 5.2.3.Final
+// Generated 17-sep-2017 22:07:28 by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,63 +11,48 @@ import java.util.Set;
 public class Personas implements java.io.Serializable {
 
 	private Integer dni;
-	private Categoria categoria;
 	private String nombre;
 	private String apellido;
 	private String telefono;
 	private String domicilio;
-	private Integer domNro;
-	private Date fecNacimiento;
-	private Integer nroSocio;
-	private Integer matricula;
+	private Date fechanac;
 	private String sexo;
-	private String estado;
 	private String nacionalidad;
-	private String estadoCivil;
-	private Date fechaIngreso;
-	private boolean habilitado;
-	private boolean essocio;
-	private Set cuotas = new HashSet(0);
+	private String estadocivil;
+	private byte habilitado;
+	private Socios socios;
 	private Set alquilers = new HashSet(0);
 
 	public Personas() {
 	}
 
-	public Personas(Integer dni, String nombre, String apellido, String telefono, String domicilio, Integer domNro,
-			Date fecNacimiento, boolean habilitado, boolean essocio) {
+	public Personas(Integer dni, String nombre, String apellido, String telefono, String domicilio, Date fechanac,
+			String sexo, String nacionalidad, String estadocivil, byte habilitado) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.telefono = telefono;
 		this.domicilio = domicilio;
-		this.domNro = domNro;
-		this.fecNacimiento = fecNacimiento;
+		this.fechanac = fechanac;
+		this.sexo = sexo;
+		this.nacionalidad = nacionalidad;
+		this.estadocivil = estadocivil;
 		this.habilitado = habilitado;
-		this.essocio = essocio;
 	}
 
-	public Personas(Integer dni, Categoria categoria, String nombre, String apellido, String telefono, String domicilio,
-			Integer domNro, Date fecNacimiento, Integer nroSocio, Integer matricula, String sexo, String estado,
-			String nacionalidad, String estadoCivil, Date fechaIngreso, boolean habilitado, boolean essocio, Set cuotas,
-			Set alquilers) {
+	public Personas(Integer dni, String nombre, String apellido, String telefono, String domicilio, Date fechanac,
+			String sexo, String nacionalidad, String estadocivil, byte habilitado, Socios socios, Set alquilers) {
 		this.dni = dni;
-		this.categoria = categoria;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.telefono = telefono;
 		this.domicilio = domicilio;
-		this.domNro = domNro;
-		this.fecNacimiento = fecNacimiento;
-		this.nroSocio = nroSocio;
-		this.matricula = matricula;
+		this.fechanac = fechanac;
 		this.sexo = sexo;
-		this.estado = estado;
 		this.nacionalidad = nacionalidad;
-		this.estadoCivil = estadoCivil;
-		this.fechaIngreso = fechaIngreso;
+		this.estadocivil = estadocivil;
 		this.habilitado = habilitado;
-		this.essocio = essocio;
-		this.cuotas = cuotas;
+		this.socios = socios;
 		this.alquilers = alquilers;
 	}
 
@@ -77,14 +62,6 @@ public class Personas implements java.io.Serializable {
 
 	public void setDni(Integer dni) {
 		this.dni = dni;
-	}
-
-	public Categoria getCategoria() {
-		return this.categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
 	}
 
 	public String getNombre() {
@@ -119,36 +96,12 @@ public class Personas implements java.io.Serializable {
 		this.domicilio = domicilio;
 	}
 
-	public Integer getDomNro() {
-		return this.domNro;
+	public Date getFechanac() {
+		return this.fechanac;
 	}
 
-	public void setDomNro(Integer domNro) {
-		this.domNro = domNro;
-	}
-
-	public Date getFecNacimiento() {
-		return this.fecNacimiento;
-	}
-
-	public void setFecNacimiento(Date fecNacimiento) {
-		this.fecNacimiento = fecNacimiento;
-	}
-
-	public Integer getNroSocio() {
-		return this.nroSocio;
-	}
-
-	public void setNroSocio(Integer nroSocio) {
-		this.nroSocio = nroSocio;
-	}
-
-	public Integer getMatricula() {
-		return this.matricula;
-	}
-
-	public void setMatricula(Integer matricula) {
-		this.matricula = matricula;
+	public void setFechanac(Date fechanac) {
+		this.fechanac = fechanac;
 	}
 
 	public String getSexo() {
@@ -159,14 +112,6 @@ public class Personas implements java.io.Serializable {
 		this.sexo = sexo;
 	}
 
-	public String getEstado() {
-		return this.estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
 	public String getNacionalidad() {
 		return this.nacionalidad;
 	}
@@ -175,44 +120,28 @@ public class Personas implements java.io.Serializable {
 		this.nacionalidad = nacionalidad;
 	}
 
-	public String getEstadoCivil() {
-		return this.estadoCivil;
+	public String getEstadocivil() {
+		return this.estadocivil;
 	}
 
-	public void setEstadoCivil(String estadoCivil) {
-		this.estadoCivil = estadoCivil;
+	public void setEstadocivil(String estadocivil) {
+		this.estadocivil = estadocivil;
 	}
 
-	public Date getFechaIngreso() {
-		return this.fechaIngreso;
-	}
-
-	public void setFechaIngreso(Date fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
-	}
-
-	public boolean isHabilitado() {
+	public byte getHabilitado() {
 		return this.habilitado;
 	}
 
-	public void setHabilitado(boolean habilitado) {
+	public void setHabilitado(byte habilitado) {
 		this.habilitado = habilitado;
 	}
 
-	public boolean isEssocio() {
-		return this.essocio;
+	public Socios getSocios() {
+		return this.socios;
 	}
 
-	public void setEssocio(boolean essocio) {
-		this.essocio = essocio;
-	}
-
-	public Set getCuotas() {
-		return this.cuotas;
-	}
-
-	public void setCuotas(Set cuotas) {
-		this.cuotas = cuotas;
+	public void setSocios(Socios socios) {
+		this.socios = socios;
 	}
 
 	public Set getAlquilers() {

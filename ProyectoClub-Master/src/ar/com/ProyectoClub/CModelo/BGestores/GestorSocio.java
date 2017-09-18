@@ -45,13 +45,13 @@ public class GestorSocio implements IGestorSocio{
 			return _uno;
 	}
 
-	@Override
-	public List<Personas> Listar() throws Exception {
-		List<Personas> _list=new ArrayList<Personas>();
-		_list=_SocioDao.HistoricoSocio();
-		return _list;
+//	@Override
+//	public List<Personas> ListarPersona() throws Exception {
+//		List<Personas> _list=new ArrayList<Personas>();
+//		_list=_SocioDao.HistoricoSocio();
+//		return _list;
 
-	}
+//	}
 	
 	@Override
 	public void habilitar(Personas entity) throws Exception {
@@ -164,8 +164,18 @@ public class GestorSocio implements IGestorSocio{
 		personaA.setCategoria(persona.getCategoria());
 		return personaA;
 	}
+	//@Override
+	//public List<Personas> listarPersonas() throws Exception {
+	//	return Listar();
+	//}
 	@Override
-	public List<Personas> listarPersonas() throws Exception {
-		return Listar();
+	public long CantidadSociosRegistrados() throws Exception {
+		 return _SocioDao.TotalPersonasRegistrados(true);
+	}
+	@Override
+	public List<Personas> Listar() throws Exception {
+		List<Personas> _list=new ArrayList<Personas>();
+	   _list=_SocioDao.HistoricoSocio();
+  	   return _list;
 	}
 }

@@ -55,7 +55,7 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 	
 	public PantallaCobranzaCuota(PantallaSocios vtnPantallaSocios,boolean b) {
 		super(vtnPantallaSocios,b);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCobranzaCuota.class.getResource("/ar/com/ProyectoClub/AVista/icon/dollar_money_17872.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCobranzaCuota.class.getResource("/ar/com/ProyectoClub/AVista/icon/dollar_money_17872.png")));
 		setTitle("Sistema Club Avenida Ejercito - Control de Cuotas");
 		initComponents();	
 	}
@@ -261,7 +261,7 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		
 		btnCobrar = new JButton("Cobrar Cuota");
 		btnCobrar.setEnabled(false);
-		btnCobrar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\Ingreso-Plata.png"));
+		//btnCobrar.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\Ingreso-Plata.png"));
 		btnCobrar.setBounds(20, 329, 168, 31);
 		panel_3.add(btnCobrar);
 		btnCobrar.addActionListener(this);

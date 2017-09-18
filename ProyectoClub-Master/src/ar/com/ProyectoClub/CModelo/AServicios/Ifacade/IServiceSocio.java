@@ -21,6 +21,8 @@ public interface IServiceSocio{
 	public void CambiarEstadoMoroso(List<Personas> listaPersonas);
 	public void DeshabilitarSocio(Personas socio);
 	public List<Personas> ListaPersona();
+	public long CantidadSociosRegistrados();
+	
 	//public boolean  ActulizarSocio(Sociosa socio)throws BussinessException;
 	//public boolean validar(Integer id)throws BussinessException;
 	//public List<Sociosa>  ListarSocio()throws BussinessException;//historicos de socios

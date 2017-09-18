@@ -1,6 +1,5 @@
 package ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet;
 
-import ar.com.ProyectoClub.CModelo.CEntidades.NoSocioDTO;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
 import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.Imple.GenericDAOImplHibernate;
@@ -29,11 +28,7 @@ public class PersonaImplHibernate extends GenericDAOImplHibernate<Personas, Inte
 		try {
 			Setsession();
 			SetTransaction();
-			/*
-			 * HQL para recuperar solo datos habilitados
-			 */
-			//List<Personas> lista=_sessiondehilo.createQuery("SELECT s FROM Personas s WHERE s.essocio=true AND s.habilitado=true").list();
-			Query q= _sessiondehilo.createQuery("SELECT s FROM Personas s WHERE s.essocio=true");
+			Query q= _sessiondehilo.createQuery("SELECT s FROM Personas s WHERE s.essocio=true ORDER BY s.nroSocio");
 			//q.setMaxResults(100); //Devuelve un maximo de 100	
 			List<Personas> lista=q.list();
 			_sessiondehilo.getTransaction().commit();
@@ -55,7 +50,7 @@ public class PersonaImplHibernate extends GenericDAOImplHibernate<Personas, Inte
 			/*
 			 * HQL para recuperar solo datos habilitados
 			 */
-			List<Personas> _lista= _sessiondehilo.createQuery("SELECT s FROM Personas s WHERE essocio=true").list();	
+			List<Personas> _lista= _sessiondehilo.createQuery("SELECT s FROM Personas s WHERE essocio=true ORDER BY s.nroSocio").list();	
 			_sessiondehilo.getTransaction().commit();
 			return _lista;
 		}
@@ -110,12 +105,10 @@ public class PersonaImplHibernate extends GenericDAOImplHibernate<Personas, Inte
 	}
 	@Override
 	public List<Personas> HistoricoNoSocio() throws BussinessException {
-		List<NoSocioDTO> _todos=new ArrayList<NoSocioDTO>();
-		NoSocioDTO Objnosocio=new NoSocioDTO();
 		try {
 			Setsession();
 			SetTransaction();
-			List<Personas> _list =_sessiondehilo.createQuery("SELECT query FROM Personas query WHERE essocio=false").list();
+			List<Personas> _list =_sessiondehilo.createQuery("SELECT p FROM Personas p").list();
 			_sessiondehilo.getTransaction().commit();		
 			return _list;
 		}
@@ -123,6 +116,21 @@ public class PersonaImplHibernate extends GenericDAOImplHibernate<Personas, Inte
 			_sessiondehilo.beginTransaction().rollback();
 			_sessiondehilo.close();
 			throw new RuntimeException("Error al realizar la consulta"+e.toString());
+		}
+	}
+	@Override
+	public long TotalPersonasRegistrados(boolean Essocio) throws BussinessException {
+		try{
+			Setsession();
+			SetTransaction();
+			long total= (Long) _sessiondehilo.createQuery("SELECT COUNT(*) FROM Personas p WHERE essocio="+Essocio).uniqueResult();
+			_sessiondehilo.getTransaction().commit();
+			return  0;
+		}
+		catch (Exception e) {
+			_sessiondehilo.beginTransaction().rollback();
+			_sessiondehilo.close();
+			throw new RuntimeException(e);
 		}
 	}
 	

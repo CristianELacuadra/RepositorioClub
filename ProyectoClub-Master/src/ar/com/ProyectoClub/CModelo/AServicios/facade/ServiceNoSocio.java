@@ -42,9 +42,9 @@ public class ServiceNoSocio implements IServiceNoSocio {
 	}
 
 	@Override
-	public void DeshabilitarNoSocio(Integer dni) {
+	public void DeshabilitarNoSocio(NoSocioDTO persona) {
 		try{
-			Igestornosocio.InabilitarNoSocio(dni);
+			Igestornosocio.InabilitarNoSocio(persona);
 		}
 		catch (Exception e) {
 			throw new RuntimeException("ERROR, no se pudo realizar la transaccion debido al siguiente error; "+e.getMessage());
@@ -52,9 +52,9 @@ public class ServiceNoSocio implements IServiceNoSocio {
 	}
 
 	@Override
-	public void HabilitarNoSocio(Integer dni) {
+	public void HabilitarNoSocio(NoSocioDTO persona) {
 		try{
-			Igestornosocio.HabilitarNoSocio(dni);
+			Igestornosocio.HabilitarNoSocio(persona);
 		}
 		catch (Exception e) {
 			throw new RuntimeException("ERROR, no se pudo realizar la transaccion debido al siguiente error: "+e.getMessage());

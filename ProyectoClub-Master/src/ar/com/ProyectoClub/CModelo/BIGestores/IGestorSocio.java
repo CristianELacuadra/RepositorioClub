@@ -12,5 +12,6 @@ public interface IGestorSocio extends IGestorGeneric<Personas> {
 	public List<Personas> FiltrarNombeApellido(String nom,String ape);
 	public void EstadosMorosos(List<Personas> morosos) throws Exception;
 	public void Inhabilitar(Personas entity) throws Exception;
-	public List<Personas> listarPersonas() throws Exception;
+	//public List<Personas> listarPersonas() throws Exception;
+	public long CantidadSociosRegistrados()throws Exception;
 }

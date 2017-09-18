@@ -17,6 +17,7 @@ import javax.swing.JTextPane;
 import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.Font;
+import javax.swing.JLabel;
 
 public class PantallaDetallesInhabilitarSNS extends JDialog implements ActionListener{
     
@@ -27,6 +28,7 @@ public class PantallaDetallesInhabilitarSNS extends JDialog implements ActionLis
     
 	public PantallaDetallesInhabilitarSNS(PantallaBusquedaSNS vtnbusqueda,boolean b) {
 		super(vtnbusqueda,b);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaDetallesInhabilitarSNS.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoPaloma.png")));
 		setTitle("Club Avenida Ejercito - Detalles");
 		initComponents();	
 	}
@@ -34,10 +36,10 @@ public class PantallaDetallesInhabilitarSNS extends JDialog implements ActionLis
 	
 	private void initComponents() {
 		textDetalle= new JTextPane();
-		textDetalle.setFont(new Font("Arial", Font.PLAIN, 15));
-		textDetalle.setBackground(new Color(255, 248, 220));
+		textDetalle.setFont(new Font("Calibri Light", Font.ITALIC, 17));
+		textDetalle.setBackground(new Color(0, 153, 255));
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\logo.png"));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\logo.png"));
 		setBounds(100, 100, 435, 369);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,5 +63,4 @@ public class PantallaDetallesInhabilitarSNS extends JDialog implements ActionLis
 		 
 		
 	}
-
 }

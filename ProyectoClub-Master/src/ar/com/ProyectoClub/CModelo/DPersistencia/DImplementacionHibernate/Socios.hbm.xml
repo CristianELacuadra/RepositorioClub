@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 17-sep-2017 22:07:28 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="datosclub" dynamic-insert="false" dynamic-update="false" mutable="true" name="ar.com.ProyectoClub.CModelo.CEntidades.Socios" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="socios">
+        <id name="dni" type="java.lang.Integer">
+            <column name="DNI"/>
+            <generator class="foreign">
+                <param name="property">personas</param>
+            </generator>
+        </id>
+        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Categoria" embed-xml="true" fetch="select" insert="true" name="categoria" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="idCATEGORIA" not-null="true"/>
+        </many-to-one>
+        <one-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" constrained="true" embed-xml="true" name="personas"/>
+        <property generated="never" lazy="false" name="matricula" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="MATRICULA" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="estado" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="ESTADO" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="fechaingreso" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="FECHAINGRESO" not-null="true"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="cuotas" optimistic-lock="true" sort="unsorted" table="cuota">
+            <key on-delete="noaction">
+                <column name="DNI" not-null="true"/>
+            </key>
+            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Cuota" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>
