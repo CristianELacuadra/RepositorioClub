@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 17-sep-2017 22:07:28 by Hibernate Tools 5.2.3.Final
+// Generated 01-oct-2017 13:17:29 by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 
@@ -13,6 +13,7 @@ public class Alquiler implements java.io.Serializable {
 	private Personas personas;
 	private Date fechaactual;
 	private Date fechareserva;
+	private Date fechapagoalquiler;
 	private float montofaltante;
 	private float preciototal;
 	private byte pagoalquiler;
@@ -22,12 +23,13 @@ public class Alquiler implements java.io.Serializable {
 	public Alquiler() {
 	}
 
-	public Alquiler(Inmuebles inmuebles, Personas personas, Date fechaactual, Date fechareserva, float montofaltante,
-			float preciototal, byte pagoalquiler, String observaciones, byte activo) {
+	public Alquiler(Inmuebles inmuebles, Personas personas, Date fechaactual, Date fechareserva, Date fechapagoalquiler,
+			float montofaltante, float preciototal, byte pagoalquiler, String observaciones, byte activo) {
 		this.inmuebles = inmuebles;
 		this.personas = personas;
 		this.fechaactual = fechaactual;
 		this.fechareserva = fechareserva;
+		this.fechapagoalquiler = fechapagoalquiler;
 		this.montofaltante = montofaltante;
 		this.preciototal = preciototal;
 		this.pagoalquiler = pagoalquiler;
@@ -73,6 +75,14 @@ public class Alquiler implements java.io.Serializable {
 
 	public void setFechareserva(Date fechareserva) {
 		this.fechareserva = fechareserva;
+	}
+
+	public Date getFechapagoalquiler() {
+		return this.fechapagoalquiler;
+	}
+
+	public void setFechapagoalquiler(Date fechapagoalquiler) {
+		this.fechapagoalquiler = fechapagoalquiler;
 	}
 
 	public float getMontofaltante() {

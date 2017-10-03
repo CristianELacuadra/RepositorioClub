@@ -27,7 +27,7 @@ import ar.com.ProyectoClub.AVista.*;
 import ar.com.ProyectoClub.AVista.ClasesRender.Render;
 import ar.com.ProyectoClub.AVista.ClasesRender.RowsRenderer;
 import ar.com.ProyectoClub.CModelo.Logica;
-import ar.com.ProyectoClub.CModelo.AServicios.FechaHora;
+import ar.com.ProyectoClub.CModelo.BNegocio.FechaHora;
 import ar.com.ProyectoClub.CModelo.CEntidades.*;
 import javassist.compiler.ast.Variable;
 

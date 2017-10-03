@@ -11,8 +11,8 @@ import java.awt.event.MouseListener;
 
 import ar.com.ProyectoClub.AVista.ClasesRender.RowsRenderer;
 import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
-import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 import ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles;
+import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;

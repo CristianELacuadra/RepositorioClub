@@ -8,8 +8,8 @@ import java.awt.event.MouseListener;
 
 import ar.com.ProyectoClub.AVista.ClasesRender.RowsRenderer;
 import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
-import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
+import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

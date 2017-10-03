@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 17-sep-2017 22:07:28 by Hibernate Tools 5.2.3.Final
+// Generated 01-oct-2017 13:17:29 by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,13 +14,13 @@ public class Categoria implements java.io.Serializable {
 	private String descripcion;
 	private float monto;
 	private float descuento;
-	private byte habilitado;
+	private boolean habilitado;
 	private Set socioses = new HashSet(0);
 
 	public Categoria() {
 	}
 
-	public Categoria(String nombre, String descripcion, float monto, float descuento, byte habilitado) {
+	public Categoria(String nombre, String descripcion, float monto, float descuento, boolean habilitado) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.monto = monto;
@@ -28,7 +28,8 @@ public class Categoria implements java.io.Serializable {
 		this.habilitado = habilitado;
 	}
 
-	public Categoria(String nombre, String descripcion, float monto, float descuento, byte habilitado, Set socioses) {
+	public Categoria(String nombre, String descripcion, float monto, float descuento, boolean habilitado,
+			Set socioses) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.monto = monto;
@@ -77,11 +78,11 @@ public class Categoria implements java.io.Serializable {
 		this.descuento = descuento;
 	}
 
-	public byte getHabilitado() {
+	public boolean isHabilitado() {
 		return this.habilitado;
 	}
 
-	public void setHabilitado(byte habilitado) {
+	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
 	}
 

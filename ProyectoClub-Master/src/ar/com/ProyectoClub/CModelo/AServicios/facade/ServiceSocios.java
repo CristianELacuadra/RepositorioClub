@@ -4,11 +4,10 @@ package ar.com.ProyectoClub.CModelo.AServicios.facade;
 import java.util.List;
 
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceSocio;
-import ar.com.ProyectoClub.CModelo.BGestores.GestorSocio;
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorSocio;
-
+import ar.com.ProyectoClub.CModelo.BNegocio.GestorSocio;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
-import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
+import ar.com.ProyectoClub.CModelo.DRepository.ExceptionsHibernate.BussinessException;
 
 
 public class ServiceSocios implements IServiceSocio {

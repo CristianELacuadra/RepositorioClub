@@ -1,12 +1,12 @@
 package ar.com.ProyectoClub.CModelo.AServicios.facade;
 
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceAlquileres;
-import ar.com.ProyectoClub.CModelo.BGestores.GestorAlquiler;
-import ar.com.ProyectoClub.CModelo.BGestores.GestorInmueble;
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorAlquiler;
+import ar.com.ProyectoClub.CModelo.BNegocio.GestorAlquiler;
+import ar.com.ProyectoClub.CModelo.BNegocio.GestorInmueble;
 import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.IAlquilerDAO;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.AlquilerDaoImplHibernate;
+import ar.com.ProyectoClub.CModelo.DIRepository.IAlquilerDAO;
+import ar.com.ProyectoClub.CModelo.DRepository.AlquilerDaoImplHibernate;
 
 public class ServiceAlquileres implements IServiceAlquileres {
 	private IAlquilerDAO _AlquilerDao;

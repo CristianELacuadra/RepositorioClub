@@ -5,8 +5,8 @@ import java.util.List;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServicePersonas;
 import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
-import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.IGenericDAO;
-import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.Imple.GenericDAOImplHibernate;
+import ar.com.ProyectoClub.CModelo.DRepository.ExceptionsHibernate.IGenericDAO;
+import ar.com.ProyectoClub.CModelo.DRepository.GenericDaoAndSession.GenericDAOImplHibernate;
 
 public class ServicePersonas extends GenericDAOImplHibernate<Personas, Integer> implements IServicePersonas {
 

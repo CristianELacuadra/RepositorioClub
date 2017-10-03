@@ -3,8 +3,8 @@ package ar.com.ProyectoClub.CModelo.AServicios.facade;
 import java.util.List;
 
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceNoSocio;
-import ar.com.ProyectoClub.CModelo.BGestores.GestorNoSocio;
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorNosocio;
+import ar.com.ProyectoClub.CModelo.BNegocio.GestorNoSocio;
 import ar.com.ProyectoClub.CModelo.CEntidades.NoSocioDTO;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 

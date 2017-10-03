@@ -6,12 +6,12 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceInmuebles;
-import ar.com.ProyectoClub.CModelo.BGestores.GestorInmueble;
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorInmueble;
+import ar.com.ProyectoClub.CModelo.BNegocio.GestorInmueble;
 import ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.IinmueblesDAO;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.InmueblesDaoImplHibernate;
+import ar.com.ProyectoClub.CModelo.DIRepository.IinmueblesDAO;
+import ar.com.ProyectoClub.CModelo.DRepository.InmueblesDaoImplHibernate;
 
 public class ServiceInmueble implements IServiceInmuebles {
 

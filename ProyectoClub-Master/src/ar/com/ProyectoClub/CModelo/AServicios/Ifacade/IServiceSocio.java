@@ -6,7 +6,7 @@ import java.util.Set;
 
 import ar.com.ProyectoClub.CModelo.CEntidades.Cuota;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
-import ar.com.ProyectoClub.CModelo.DPersistencia.BDao.BussinessException;
+import ar.com.ProyectoClub.CModelo.DRepository.ExceptionsHibernate.BussinessException;
 
 
 public interface IServiceSocio{

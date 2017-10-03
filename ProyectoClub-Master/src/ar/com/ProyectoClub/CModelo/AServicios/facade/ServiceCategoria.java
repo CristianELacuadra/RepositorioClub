@@ -8,8 +8,8 @@ import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceCategorias;
 import ar.com.ProyectoClub.CModelo.BGestores.GestorCategoria;
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorCategoria;
 import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.ICategoriaDAO;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.CategoriaDaoImplHibernate;
+import ar.com.ProyectoClub.CModelo.DIRepository.ICategoriaDAO;
+import ar.com.ProyectoClub.CModelo.DRepository.CategoriaDaoImplHibernate;
 
 public class ServiceCategoria implements IServiceCategorias {
     private IGestorCategoria gestorcategoria;

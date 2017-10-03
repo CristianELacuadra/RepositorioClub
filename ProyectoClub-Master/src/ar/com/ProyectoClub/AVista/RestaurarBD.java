@@ -14,8 +14,9 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
-import ar.com.ProyectoClub.CModelo.DPersistencia.DPersistenciaBackupJDBC.MySQL;
-import ar.com.ProyectoClub.CModelo.DPersistencia.DPersistenciaBackupJDBC.Seleccion;
+import ar.com.ProyectoClub.CModelo.DRepository.BackupJDBC.MySQL;
+import ar.com.ProyectoClub.CModelo.DRepository.BackupJDBC.Seleccion;
+
 import java.awt.Toolkit;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;

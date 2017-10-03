@@ -9,11 +9,11 @@ import java.util.List;
 import javax.management.RuntimeErrorException;
 
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IServiceUsuario;
-import ar.com.ProyectoClub.CModelo.BGestores.GestorUsuario;
 import ar.com.ProyectoClub.CModelo.BIGestores.IGestorUsuario;
+import ar.com.ProyectoClub.CModelo.BNegocio.GestorUsuario;
 import ar.com.ProyectoClub.CModelo.CEntidades.Usuario;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.IUsuarioDao;
-import ar.com.ProyectoClub.CModelo.DPersistencia.CIDao.Impl.Hibernet.UsuarioDaoImplHibernate;
+import ar.com.ProyectoClub.CModelo.DIRepository.IUsuarioDao;
+import ar.com.ProyectoClub.CModelo.DRepository.UsuarioDaoImplHibernate;
 
 /**
  * Como los servicios de usuario no involucra otras entidades mas que el mismo usuario, 
