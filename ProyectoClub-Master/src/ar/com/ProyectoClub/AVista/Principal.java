@@ -202,7 +202,7 @@ public class Principal extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==btnSocios) {
-			miCoordinador.MostrarVentanaOpcionSocioNosocio();
+            miCoordinador.MostrarVentanaPrincipalPersona(PantallaPrincipalPersonas.tablaPersona);
 		}
 		
 		if(e.getSource()==btnCaja){

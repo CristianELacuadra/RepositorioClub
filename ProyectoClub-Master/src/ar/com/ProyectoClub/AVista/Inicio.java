@@ -167,20 +167,24 @@ public class Inicio extends JFrame  implements ActionListener,KeyListener {
 	
 	private void EntraAlSistema(){
 		try{
-		Usuario usuario=new Usuario();
-		usuario.setNick(textField.getText());
-		usuario.setPassword(passwordField.getText());
-		if(miCoordinador.validarUsuario(usuario)){
+			String nom,pass;
+			Usuario usuario=miCoordinador.CrearUsuario();
+			nom=textField.getText();
+			pass=passwordField.getText();
+			usuario=miCoordinador.validarUsuario(nom, pass);
+			if(usuario !=null){
+				if(!usuario.getNick().equals(null))
+					miCoordinador.mostrarVentanaPrincipal(usuario);	
+				else					
+					JOptionPane.showMessageDialog(null,"Usuario o Contraseña Incorrecta,Por favor vuelva a intentarlo","Acceso al sistema denegado",JOptionPane.ERROR_MESSAGE);
+			}
+			else
+				JOptionPane.showMessageDialog(null,"Usuario inexistente","Acceso al sistema denegado",JOptionPane.ERROR_MESSAGE);
+
 			//Antes de abrir lanzo la generacion de cuota;
-			miCoordinador.LanzarPrcesoAutGeneracionCuota(); //Lanza Proceso de generacion de cuotas
-			miCoordinador.ProcesarMorosos(); //lanza proceso de generacion de morosos
-			miCoordinador.mostrarVentanaPrincipal(usuario);
-			this.dispose();
-		}
-		else{
-			JOptionPane.showMessageDialog(null,"Usuario o Contraseña Incorrecta","Acceso al sistema denegado",JOptionPane.ERROR_MESSAGE);
+			//miCoordinador.LanzarPrcesoAutGeneracionCuota(); //Lanza Proceso de generacion de cuotas
+			//miCoordinador.ProcesarMorosos(); //lanza proceso de generacion de morosos			
 			this.limpiar();
-		}
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null,"No se puede seguir ejecutando el sistema debido al siguiente error: "+e.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);

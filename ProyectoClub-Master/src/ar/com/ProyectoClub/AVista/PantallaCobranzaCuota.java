@@ -53,7 +53,7 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 	private List<Integer> IdCuotas;
 	public JButton btnCobrar;
 	
-	public PantallaCobranzaCuota(PantallaSocios vtnPantallaSocios,boolean b) {
+	public PantallaCobranzaCuota(PantallaPrincipalPersonas vtnPantallaSocios,boolean b) {
 		super(vtnPantallaSocios,b);
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCobranzaCuota.class.getResource("/ar/com/ProyectoClub/AVista/icon/dollar_money_17872.png")));
 		setTitle("Sistema Club Avenida Ejercito - Control de Cuotas");

@@ -3,7 +3,8 @@ package ar.com.ProyectoClub.BControlador;
 import javax.swing.JOptionPane;
 
 import ar.com.ProyectoClub.AVista.*;
-import ar.com.ProyectoClub.CModelo.Logica;
+import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IService;
+import ar.com.ProyectoClub.CModelo.AServicios.facade.Service;
 /*
  * Esta clase contiene el método main que ejecuta la aplicación, 
  * el método hace un llamado al método iniciar el cual crea las 
@@ -12,23 +13,20 @@ import ar.com.ProyectoClub.CModelo.Logica;
  */
 public class ControlllerPrincipal {
 	//Modelo
-	Logica miLogica;
+	IService miModeloService;
 	//Vistas
 	Principal miVentanaPrincipal;
 	Inicio miVentanaInicio;
-	PantallaSocios miVentanaSocios;
 	PantallaFormularioPersona miFormularioPersona;
 	PantallaBusquedaSNS miVentanaBusquedaSNSElim;
 	PantallaBusquedaSNS miVentanaBusquedaSNSCobr;
-	PantallaDetallesInhabilitarSNS miVentanaDetalllesSNS;
 	PantallaCobranzaCuota miVentanaCobranzaCuota;
-	PantallaBajaSNS miventanaBajaSNS;
 	PantallaCategoriasTodas miVentanaCategorias;
 	PantallaCaja miVentanaCaja;
 	PantallaIngresoEgreso miVentanaIngresoEgreso;
 	PantallaConfiguracion miVentanaConfiguracion;
 	PantallaPrincipalPersonas miVentanaPrincipalPersonas;
-	PantallaOptionSocioNoSocio miVentanaOptionSocioSNs;
+	PantallaDetallesInhabilitarSNS miVentanaDetalllesSNS;
 	
 
 	//
@@ -63,23 +61,20 @@ public class ControlllerPrincipal {
 	private void Iniciar(){
 		try{
 			/*Se instancian las clases*/
-			miLogica=new Logica();
+			miModeloService=new  Service();
 			miVentanaInicio=new Inicio();
 			miVentanaPrincipal=new Principal();
-			miVentanaSocios=new PantallaSocios(miVentanaPrincipal,true); //mi ventana persona depende de ventana principal
-			miFormularioPersona=new PantallaFormularioPersona(miVentanaSocios,true); // mi ventana formulario persona depende de pantalla persona
+			miFormularioPersona=new PantallaFormularioPersona(miVentanaPrincipalPersonas,true); // mi ventana formulario persona depende de pantalla persona
 			miVentanaBusquedaSNSElim=new PantallaBusquedaSNS();
 			miVentanaBusquedaSNSCobr=new PantallaBusquedaSNS(miVentanaCobranzaCuota, true);
-			miVentanaDetalllesSNS=new PantallaDetallesInhabilitarSNS(miVentanaBusquedaSNSCobr, true);
-			miVentanaCobranzaCuota= new PantallaCobranzaCuota(miVentanaSocios,true);
+			miVentanaCobranzaCuota= new PantallaCobranzaCuota(miVentanaPrincipalPersonas,true);
 			miCoordinador= new ControllerCoordinador();
-			miventanaBajaSNS=new PantallaBajaSNS(miVentanaSocios, true);
-			miVentanaCategorias=new PantallaCategoriasTodas(miVentanaSocios, true);
+			miVentanaCategorias=new PantallaCategoriasTodas(miVentanaPrincipalPersonas, true);
 			miVentanaIngresoEgreso=new PantallaIngresoEgreso(miVentanaCaja, true); 
 			miVentanaConfiguracion=new PantallaConfiguracion(miVentanaPrincipal, true);
 			miVentanaCaja=new PantallaCaja();
 			miVentanaPrincipalPersonas= new PantallaPrincipalPersonas();
-			miVentanaOptionSocioSNs= new PantallaOptionSocioNoSocio(miVentanaPrincipal,true);
+			miVentanaDetalllesSNS=new PantallaDetallesInhabilitarSNS(miVentanaBusquedaSNSCobr, true);
 			
 			miVentanaAlquiler=new PantallaAlquiler (miVentanaPrincipal,true);
 			miVentanaNuevoAlquiler=new PantallaNuevoAlquiler (miVentanaAlquiler,true);
@@ -97,22 +92,18 @@ public class ControlllerPrincipal {
 			
 			
 			/*Se establecen las relaciones entre clases*/
-			miLogica.setCoordinador(miCoordinador);
 			miVentanaPrincipal.setCoordinador(miCoordinador);
 			miVentanaInicio.setCoordinador(miCoordinador);
-			miVentanaSocios.setCoordinador(miCoordinador);
 			miFormularioPersona.setCoordinador(miCoordinador);
 			miVentanaBusquedaSNSElim.setCoordinador(miCoordinador);
 			miVentanaBusquedaSNSCobr.setCoordinador(miCoordinador); 
-			miVentanaDetalllesSNS.setCoordinador(miCoordinador);
 			miVentanaCobranzaCuota.setCoordinador(miCoordinador);
-			miventanaBajaSNS.setCoordinador(miCoordinador);
 			miVentanaCategorias.setCoordinador(miCoordinador);
 			miVentanaCaja.setCoordinador(miCoordinador);
 			miVentanaIngresoEgreso.setCoordinador(miCoordinador);
 			miVentanaConfiguracion.setCoordinador(miCoordinador);
 			miVentanaPrincipalPersonas.setCoordinador(miCoordinador);
-			miVentanaOptionSocioSNs.setCoordinador(miCoordinador);
+			miVentanaDetalllesSNS.setCoordinador(miCoordinador);
 			
 			miVentanaAlquiler.setCoordinador(miCoordinador);
 			miVentanaNuevoAlquiler.setCoordinador(miCoordinador);
@@ -127,22 +118,19 @@ public class ControlllerPrincipal {
 			miVentanaPagarAlquiler.setCoordinador(miCoordinador);
 
 			/*Se establecen relaciones con la clase coordinador*/
-			miCoordinador.setMiLogica(miLogica);
+			miCoordinador.setModeloService(miModeloService);
 			miCoordinador.setMiVentanaPrincipal(miVentanaPrincipal);
 			miCoordinador.setMiVentanaInicio(miVentanaInicio);
-			miCoordinador.setMiVentanaSocios(miVentanaSocios);
 			miCoordinador.setMiFormularioPersona(miFormularioPersona);
 			miCoordinador.setMiVentanaBusquedaSNS(miVentanaBusquedaSNSCobr);
 			miCoordinador.setMiVentanaBusquedaSNS(miVentanaBusquedaSNSElim);
-			miCoordinador.setMiVentanaDetallesSNS(miVentanaDetalllesSNS);
 			miCoordinador.setMiVentanaCobranza(miVentanaCobranzaCuota);
-			miCoordinador.setMiVentanaBajaSNS(miventanaBajaSNS);
 			miCoordinador.setMiVentanaCategorias(miVentanaCategorias);
 			miCoordinador.setMiVentanaCaja(miVentanaCaja);
 			miCoordinador.setMiventanaIngresoEgreso(miVentanaIngresoEgreso);
 			miCoordinador.setMiVentanaConfiguracion(miVentanaConfiguracion);
 			miCoordinador.setMiVentanaPrincipalPersona(miVentanaPrincipalPersonas);
-			miCoordinador.setMiVentanaOptionSNS(miVentanaOptionSocioSNs);
+			miCoordinador.setMiVentanaDetallesSNS(miVentanaDetalllesSNS);
 			miVentanaInicio.setVisible(true);
 			
 			miCoordinador.setMiVentanaAlquiler(miVentanaAlquiler);

@@ -11,7 +11,7 @@
         <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Categoria" embed-xml="true" fetch="select" insert="true" name="categoria" not-found="exception" optimistic-lock="true" unique="false" update="true">
             <column name="idCATEGORIA" not-null="true"/>
         </many-to-one>
-        <one-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" constrained="true" embed-xml="true" name="personas"/>
+        <one-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" cascade="all" name="personas"/>
         <property generated="never" lazy="false" name="matricula" optimistic-lock="true" type="java.lang.Integer" unique="false">
             <column name="MATRICULA" not-null="true" unique="true"/>
         </property>

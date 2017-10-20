@@ -25,7 +25,7 @@ public class PantallaCategoriasTodas extends JDialog {
 	private ControllerCoordinador miCoordinador; //objeto miCoordinador que permite la relacion entre esta clase y la clase ControllerCoordinador
 	private final JPanel contentPanel = new JPanel();
 	public static JTable jtdatos;
-	public PantallaCategoriasTodas(PantallaSocios ventana,boolean value){
+	public PantallaCategoriasTodas(PantallaPrincipalPersonas ventana,boolean value){
 		super(ventana,true);
 		setType(Type.POPUP);
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCategoriasTodas.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));

@@ -7,6 +7,7 @@ import java.util.List;
 
 import ar.com.ProyectoClub.CModelo.CEntidades.*;
 import ar.com.ProyectoClub.CModelo.DRepository.ExceptionsHibernate.BussinessException;
+import ar.com.ProyectoClub.CModelo.DRepository.ExceptionsHibernate.BussinessMessage;
 import ar.com.ProyectoClub.CModelo.DRepository.IRepository.IRepository;
 import ar.com.ProyectoClub.CModelo.DRepository.Repository.Repository;
 
@@ -221,8 +222,47 @@ public class Gestor {
 //		this.Guardar(_e);
 //	}
 
+    //Gestion usuario
+    public Usuario CrearUsuario() throws BussinessException{
+    	return repositorio.CrearUsuario();
+    }
+    
+    public Usuario VerificarUsuario(String nick, String pass) throws BussinessException{
+    	Usuario usuario= repositorio.CrearUsuario();
+    	usuario=repositorio.ObtenerUsuarioPorNombre(nick);
+    	if(usuario != null){
+    		if(usuario.getPassword().equals(pass))
+    			return usuario;
+    		else
+    			return new Usuario(null,null,null);
+    	}
+    	return null;
+    }
 	
+    public Usuario ObtenerUsuarioPorNombre(String nombreUsuario){
+    	return repositorio.ObtenerUsuarioPorNombre(nombreUsuario);
+    }
 	//Gestion Persona
+    
+    public Personas ValidarPersona(int dni) throws BussinessException {
+		Personas persona= this.CrearPersona(); 
+    	persona=repositorio.BuscarPersona(dni);
+    	if(persona!= null)
+    		return persona;
+    	return null;
+	}
+    
+    public void GuardarPersona(Personas persona) throws BussinessException {
+		repositorio.GuardarPersona(persona);
+	}
+    
+    public List<Personas> ObtenerPersonas() throws BussinessException {
+    	List<Personas> lista=repositorio.ObtenerPersonas();
+		if(!lista.isEmpty())
+			return lista;
+		return null;
+	}
+    
 	public Personas CrearPersona() throws BussinessException 
 	{
 		return repositorio.CrearPersona();
@@ -237,8 +277,16 @@ public class Gestor {
 	public Personas BuscarPersona(Integer id) throws BussinessException {
 		Personas persona=repositorio.CrearPersona();
 		persona=repositorio.BuscarPersona(id);
-		if(persona != null)
+		if(persona != null){
+			String sexo;
+			if(persona.getSexo().equals("M"))
+				sexo="MASCULINO";
+			else
+				sexo="FEMENINO";
+			persona.setSexo(sexo);			
 			return persona;
+		}
+
 		return null;
 	}
 	
@@ -310,16 +358,78 @@ public class Gestor {
 	}
 	
 	//Gestion Socio
-	public Socios Crear() throws BussinessException 
+	public void InhabilitarSocio(Integer dni) throws BussinessException{
+		Personas persona = repositorio.CrearPersona();
+		persona=repositorio.BuscarPersona(dni);
+		if(persona.isEssocio()){
+			persona.setHabilitado(false);
+			repositorio.GuardarPersona(persona);
+		}
+		else
+			throw new BussinessException(new BussinessMessage(null, "La persona no se encuentra registrada como socio del club"));
+	}
+	
+	public Socios CrearSocio() throws BussinessException 
 	{
 		return repositorio.CrearSocio();
 	}
 	
-	public void GuardarSocio(Socios socio) throws Exception {
+	public void GuardarSocio(Socios socio) throws BussinessException {
 		if(this.PersonaHabilitada(socio.getPersonas().getDni()))
 			repositorio.GuardarSocio(socio);
 		throw new InvalidDnDOperationException("Persona inhabilitada para realizar operacion");
     }
+	
+	public List<Socios> ListarSocio() throws BussinessException{
+		List<Socios> lista=repositorio.ObtenerSocios();
+		if(!lista.isEmpty())
+			return lista;
+		return null;
+	}
+	
+	public Socios ObtenerSocio(Integer dni) throws BussinessException{
+		return repositorio.BuscarSocio(dni);
+	}
+	
+	public List<Socios> ListaActivaSocio() throws BussinessException {
+		List<Socios> listaActivaSocio=new ArrayList<Socios>();
+		List<Socios> listaSocios=repositorio.ObtenerSocios();
+		for(Socios socio: listaSocios)
+		{
+			if(!socio.getEstado().equals("Moroso") && socio.getPersonas().isHabilitado())
+			{
+				listaActivaSocio.add(socio);
+			}
+		}
+		if(!listaActivaSocio.isEmpty())
+			return listaActivaSocio; 
+		return null;
+	}
+//	public List<Socios> ObtnerTresPrimero(Integer id) {
+//		List<Personas> personasList=new ArrayList<Personas>();
+//		int i=0;
+//		try {			
+//			for(Personas personas : this.ListaActivaSocio()) 
+//			{
+//				if(personas.getDni() != id && i<2)
+//					personasList.add(personas);
+//				i++;
+//			}
+//			for(Personas personas : this.ListaActivaSocio()) 
+//			{
+//				if(personas.getDni() == id ) 
+//				{
+//					personasList.add(personas);
+//					break;
+//				}
+//			}
+//			return personasList;
+//		}
+//		catch (Exception e) {
+//			throw new RuntimeException(e);
+//		}
+//	}
+
 	//Gestion Caja
 	public Caja CrearCaja() throws BussinessException
 	{
@@ -477,6 +587,7 @@ public class Gestor {
 			return ListaCaja;
 		return null;
 	}
+	
 //	public void JDateChooserToString(JDateChooser fecha){
 //		String fecha2=new String();
 //		String formato = fecha.getDateFormatString();
@@ -610,5 +721,43 @@ public class Gestor {
 			return cuotassocios;
 		return null;
 	}
+
+	
+	public List<Inmuebles> ObtenerInmuebles() throws BussinessException {
+		return repositorio.ObtenerInmuebles();
+	}
+
+	public List<Inmuebles> ListarInmuebleHabilitado() {
+		try {
+			java.util.List<Inmuebles> listaH =new ArrayList<Inmuebles>();
+			java.util.List<Inmuebles> lista =new ArrayList<Inmuebles>();
+			lista=repositorio.ObtenerInmuebles();
+			int num=lista.size();
+			for(int i=0;i<num;i++){
+				if((lista.get(i).isHabilitado())==true){
+					listaH.add(lista.get(i));
+				}
+				
+			}
+			return listaH;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("No se pudo instanciar el servicio debido a un error: ");
+		}
+	}
+//gestion alquiler
+	public Alquiler CrearAlquiler() throws BussinessException {
+		return repositorio.CrearAlquiler();
+	}
+
+	public void GuardarInmueble(Inmuebles entity) throws BussinessException {
+		repositorio.GuardarInmueble(entity);
+	}
+
+	
+
+	
+
+	
 	
 }

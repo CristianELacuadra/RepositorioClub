@@ -44,7 +44,6 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 													// ControllerCoordinador
 	private javax.swing.JButton actualizar;
 	private app.bolivia.swing.JCTextField buscar;
-	private javax.swing.JButton cargar;
 	private javax.swing.JButton botonBaja;
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JPanel jPanel3;
@@ -95,7 +94,6 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		jPanel3 = new javax.swing.JPanel();
 		registrar = new javax.swing.JButton();
 		actualizar = new javax.swing.JButton();
-		cargar = new javax.swing.JButton();
 		botonBaja = new javax.swing.JButton();
 		botonBaja.setEnabled(false);
 		limpiar = new javax.swing.JButton();
@@ -196,19 +194,6 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/actualizar1.png"))); // NOI18N
 		actualizar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-		cargar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-		cargar.setIcon(new ImageIcon(
-				PantallaPrincipalPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/CargarDatos1.png"))); // NOI18N
-		cargar.setText("Cargar grilla");
-		cargar.setBorder(null);
-		cargar.setBorderPainted(false);
-		cargar.setContentAreaFilled(false);
-		cargar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		cargar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		cargar.setRolloverIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/CargarDatos2.png"))); // NOI18N
-		cargar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
 		botonBaja.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 		botonBaja.setIcon(
 				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/Baja1.png"))); // NOI18N
@@ -249,36 +234,33 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		botonAlta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
 		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-		jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
+		jPanel3Layout.setHorizontalGroup(
+			jPanel3Layout.createParallelGroup(Alignment.LEADING)
 				.addGroup(jPanel3Layout.createSequentialGroup()
-						.addComponent(registrar, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(actualizar).addGap(10)
-						.addComponent(cargar, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED).addComponent(botonBaja)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(botonAlta, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED).addComponent(limpiar).addGap(797)));
-		jPanel3Layout
-				.setVerticalGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
-						.addGroup(jPanel3Layout.createSequentialGroup().addGroup(jPanel3Layout
-								.createParallelGroup(Alignment.LEADING)
-								.addGroup(Alignment.TRAILING,
-										jPanel3Layout.createParallelGroup(Alignment.TRAILING)
-												.addComponent(botonBaja, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
-														95, Short.MAX_VALUE)
-												.addComponent(cargar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
-														GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addGroup(Alignment.LEADING,
-														jPanel3Layout.createParallelGroup(Alignment.LEADING, false)
-																.addComponent(registrar, GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-																.addComponent(actualizar, GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-																.addComponent(limpiar, GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-								.addComponent(botonAlta, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
-								.addContainerGap()));
-		jPanel3Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] { actualizar, botonBaja, limpiar });
+					.addComponent(registrar, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(actualizar)
+					.addGap(18)
+					.addComponent(botonBaja)
+					.addGap(18)
+					.addComponent(botonAlta, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(limpiar)
+					.addGap(872))
+		);
+		jPanel3Layout.setVerticalGroup(
+			jPanel3Layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(jPanel3Layout.createSequentialGroup()
+					.addGroup(jPanel3Layout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(registrar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, jPanel3Layout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(actualizar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(botonBaja, GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+							.addComponent(botonAlta, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+							.addComponent(limpiar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addContainerGap())
+		);
+		jPanel3Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {actualizar, botonBaja, limpiar});
 		jPanel3.setLayout(jPanel3Layout);
 
 		jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -388,8 +370,6 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		getContentPane().setLayout(layout);
 
 		pack();
-
-		cargar.addActionListener(this);
 		registrar.addActionListener(this);
 		limpiar.addActionListener(this);
 	}
@@ -431,8 +411,11 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 				JButton boton = (JButton) value;
 					int dni = (Integer) tablaPersona.getValueAt(fila, 6);				
                     //detalles 
-					if (boton.getName().equals("btnDetalle"))
+					if (boton.getName().equals("btnDetalle")){
+						miCoordinador.LimpiarDetallePersona();
 						miCoordinador.MostrarVentanaDetallesInhabilitar(dni);
+						
+					}
 					//Baja
 					if(boton.getName().equals("btnBaja"))
 					{
@@ -472,11 +455,8 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == cargar) {
-			miCoordinador.CargarGrilla(tablaPersona);
-		}
 		if (e.getSource() == registrar) {
-			miCoordinador.mostrarFormularioPersona(true);
+			miCoordinador.mostrarFormularioPersona();
 		}
 		if (e.getSource() == limpiar) {
 			this.limpiaCampos();

@@ -94,5 +94,7 @@ public interface IRepository  {
 	
 	List<Personas> FiltrarPersonasPorNombreApellido(String Nom,String Ape );
 	long NoSociosRegistrados();
-	boolean VerificarNick(String usuario);
+	Usuario ObtenerUsuarioPorNombre(String nombreUsuario);
+	
+	//List<Socios> ObteneresPrimero();
 }

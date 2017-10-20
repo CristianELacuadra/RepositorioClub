@@ -1,5 +1,6 @@
 package ar.com.ProyectoClub.CModelo.DRepository.Repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
@@ -448,14 +449,30 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	}
 
 	@Override
-	public boolean VerificarNick(String usuario) {
-		String consulta="SELECT u FROM Usuario u WHERE u.nick="+usuario;
-		int registros=(int) _sessiondehilo.createQuery(consulta).uniqueResult();
-		if(registros != 0)
-			return false;
-		else
-			return true;
+	public Usuario ObtenerUsuarioPorNombre(String nombreUsuario) {
+		Usuario usuario= new Usuario();
+		String consulta="SELECT u FROM Usuario u WHERE u.nick= '"+nombreUsuario+"'";
+		usuario= (Usuario) _sessiondehilo.createQuery(consulta).uniqueResult();
+		if(usuario != null)
+			return usuario;
+		return null;
 	}
+
+//	@Override
+//	public List<Socios> ObtenerTresPrimero() {
+//		List<Socios> lista= new ArrayList<Socios>(3);
+//		String consulta=new String();
+//		consulta="SELECT s FROM Socios s ORDER BY fechaingreso DESC";
+//		List<Socios> listaSocio=_sessiondehilo.createQuery(consulta).list();
+//		int i=0;
+//		for(Socios socios: listaSocio)
+//		{
+//			if(i<3){
+//				lista.add(socios);
+//				i++;
+//			}
+//		}
+//	}
 
 	
 
