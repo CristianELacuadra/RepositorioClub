@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 15-oct-2017 16:31:25 by Hibernate Tools 5.2.3.Final
+// Generated 23-oct-2017 18:29:51 by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 
@@ -15,6 +15,7 @@ public class Alquiler implements java.io.Serializable {
 	private Date fechareserva;
 	private Date fechapagoalquiler;
 	private float montofaltante;
+	private Integer cantidadhoras;
 	private float preciototal;
 	private byte pagoalquiler;
 	private String observaciones;
@@ -24,13 +25,15 @@ public class Alquiler implements java.io.Serializable {
 	}
 
 	public Alquiler(Inmuebles inmuebles, Personas personas, Date fechaactual, Date fechareserva, Date fechapagoalquiler,
-			float montofaltante, float preciototal, byte pagoalquiler, String observaciones, byte activo) {
+			float montofaltante, Integer cantidadhoras, float preciototal, byte pagoalquiler, String observaciones,
+			byte activo) {
 		this.inmuebles = inmuebles;
 		this.personas = personas;
 		this.fechaactual = fechaactual;
 		this.fechareserva = fechareserva;
 		this.fechapagoalquiler = fechapagoalquiler;
 		this.montofaltante = montofaltante;
+		this.cantidadhoras = cantidadhoras;
 		this.preciototal = preciototal;
 		this.pagoalquiler = pagoalquiler;
 		this.observaciones = observaciones;
@@ -91,6 +94,14 @@ public class Alquiler implements java.io.Serializable {
 
 	public void setMontofaltante(float montofaltante) {
 		this.montofaltante = montofaltante;
+	}
+
+	public Integer getCantidadhoras() {
+		return this.cantidadhoras;
+	}
+
+	public void setCantidadhoras(Integer cantidadhoras) {
+		this.cantidadhoras = cantidadhoras;
 	}
 
 	public float getPreciototal() {

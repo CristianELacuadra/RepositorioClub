@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 15-oct-2017 16:31:25 by Hibernate Tools 5.2.3.Final
+// Generated 23-oct-2017 18:29:51 by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +11,8 @@ public class Inmuebles implements java.io.Serializable {
 
 	private Integer idInmubles;
 	private String nombre;
-	private String dirreccion;
+	private String direccion;
+	private float senial;
 	private String descripcion;
 	private float preciohora;
 	private boolean habilitado;
@@ -20,18 +21,21 @@ public class Inmuebles implements java.io.Serializable {
 	public Inmuebles() {
 	}
 
-	public Inmuebles(String nombre, String dirreccion, String descripcion, float preciohora, boolean habilitado) {
+	public Inmuebles(String nombre, String direccion, float senial, String descripcion, float preciohora,
+			boolean habilitado) {
 		this.nombre = nombre;
-		this.dirreccion = dirreccion;
+		this.direccion = direccion;
+		this.senial = senial;
 		this.descripcion = descripcion;
 		this.preciohora = preciohora;
 		this.habilitado = habilitado;
 	}
 
-	public Inmuebles(String nombre, String dirreccion, String descripcion, float preciohora, boolean habilitado,
-			Set alquilers) {
+	public Inmuebles(String nombre, String direccion, float senial, String descripcion, float preciohora,
+			boolean habilitado, Set alquilers) {
 		this.nombre = nombre;
-		this.dirreccion = dirreccion;
+		this.direccion = direccion;
+		this.senial = senial;
 		this.descripcion = descripcion;
 		this.preciohora = preciohora;
 		this.habilitado = habilitado;
@@ -54,12 +58,20 @@ public class Inmuebles implements java.io.Serializable {
 		this.nombre = nombre;
 	}
 
-	public String getDirreccion() {
-		return this.dirreccion;
+	public String getDireccion() {
+		return this.direccion;
 	}
 
-	public void setDirreccion(String dirreccion) {
-		this.dirreccion = dirreccion;
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public float getSenial() {
+		return this.senial;
+	}
+
+	public void setSenial(float senial) {
+		this.senial = senial;
 	}
 
 	public String getDescripcion() {

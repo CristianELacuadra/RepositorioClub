@@ -308,6 +308,8 @@ public class ControllerCoordinador {
 		for(int i=0;i<miFormularioPersona.comboCate.getItemCount();i++){
 			miFormularioPersona.comboCate.removeItemAt(i);
 		}
+		miFormularioPersona.comboCate.addItem("Seleccione una categoria");
+		
 		for(Categoria categoria : modeloService.DevolverListaCategoria()){
 			miFormularioPersona.comboCate.addItem(categoria.getNombre()); //Cargo Categorias y sus id
 			miFormularioPersona.mapCategoria.put(categoria.getIdCategoria(), categoria.getNombre());
@@ -324,25 +326,6 @@ public class ControllerCoordinador {
 	@SuppressWarnings("unchecked")
 	public void mostrarVentanaBusquedaSNS() {
 		miVentanaBusquedaSNS.setVisible(true);
-	}
-	
-	private void PosicionarBotonesNSocio(){
-		//textbox
-		miFormularioPersona.txtDni.setBounds(300, 21, 173, 20);
-		miFormularioPersona.txtApe.setBounds(300, 65, 176, 20);
-		miFormularioPersona.txtNom.setBounds(300, 104, 176, 20);
-		miFormularioPersona.dateFechNac.setBounds(300, 141, 95, 20);
-		miFormularioPersona.txtDom.setBounds(300, 178, 224, 20);
-		miFormularioPersona.txtDomNro.setBounds(560,178,60,20);
-		miFormularioPersona.txtTel.setBounds(300, 217, 173, 20);
-		//label
-		miFormularioPersona.lblDni.setBounds(200, 21, 173, 20);
-		miFormularioPersona.lblNom.setBounds(200, 104, 81, 14);
-		miFormularioPersona.lblApe.setBounds(200, 65, 81, 14);
-		miFormularioPersona.lblFechNac.setBounds(200, 141, 80, 14);
-		miFormularioPersona.lblDom.setBounds(200, 178, 81, 14);
-		miFormularioPersona.lblNro.setBounds(530, 178, 81, 14);
-		miFormularioPersona.lblTel.setBounds(200, 217, 81, 14);
 	}
 
 
@@ -815,7 +798,7 @@ public class ControllerCoordinador {
 			columna[0]=listaInmuebles.get(i).getIdInmubles();
 			columna[1]=listaInmuebles.get(i).getNombre();
 			columna[2]=listaInmuebles.get(i).getPreciohora();
-			columna[3]=listaInmuebles.get(i).getDirreccion();
+			columna[3]=listaInmuebles.get(i).getDireccion();
 			modeloT.addRow(columna);
 		}
 		jtdatos.setModel(modeloT);

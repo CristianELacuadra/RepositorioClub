@@ -150,7 +150,7 @@ public class ControlllerPrincipal {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null,"El sistema no puede seguir la ejecucion debido al siguiente error"+e.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
+
 		}
 	}
 }

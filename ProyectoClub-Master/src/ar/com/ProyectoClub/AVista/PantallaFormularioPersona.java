@@ -38,6 +38,10 @@ import java.awt.Dialog.ModalExclusionType;
 import java.awt.Window.Type;
 import javax.swing.UIManager;
 import javax.swing.ImageIcon;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PantallaFormularioPersona extends JDialog implements ActionListener,KeyListener {
 
@@ -71,7 +75,6 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	public Map<Integer, String> mapCategoria = new HashMap<Integer, String>();
 	private boolean Essocio;
 	public  JTextField txtDomNro;
-	public JLabel lblNro;
 	private JPanel panelDatosObli;
 	private JPanel panel_3;
 	public JButton btnVolver;
@@ -87,6 +90,9 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	private JRadioButton rdbMasculino;
 	private JButton btnValidar;
 	private JLabel lblEstado;
+	private JPanel panel;
+	private JTextField txtCateg;
+	private JTextField txtEstdoCiv;
 	
 
 	public PantallaFormularioPersona(PantallaPrincipalPersonas vtnPantallaPersona,boolean b) {  
@@ -147,7 +153,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		lblFechingreso = new JLabel();
 		lblFechingreso.setBounds(22, 88, 95, 14);
 		PanelDatosSocio.add(lblFechingreso);
-		
+
 		
 		lblFechingreso.setText("FECHA INGRESO");
 		dateFechIngreso = new JDateChooser();
@@ -162,7 +168,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		lblCate.setText("CATEGORIA");
 		comboCate= new JComboBox();
 		comboCate.setEnabled(false);
-		comboCate.setBounds(98, 55, 180, 20);
+		comboCate.setBounds(234, 55, 211, 20);
 		PanelDatosSocio.add(comboCate);
 		comboCate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -201,14 +207,14 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		lblNom.setText("NOMBRES");
 		lblFechNac = new JLabel();
-		lblFechNac.setBounds(20, 191, 117, 14);
+		lblFechNac.setBounds(20, 191, 129, 14);
 		panelDatosObli.add(lblFechNac);
 		
 		
 		lblFechNac.setText("FECHA NACIMIENTO");
 		dateFechNac = new JDateChooser();
 		dateFechNac.setEnabled(false);
-		dateFechNac.setBounds(129, 191, 117, 20);
+		dateFechNac.setBounds(159, 191, 117, 20);
 		panelDatosObli.add(dateFechNac);
 		lblDom = new JLabel();
 		lblDom.setBounds(20, 153, 81, 14);
@@ -223,13 +229,8 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		txtDomNro = new JTextField();
 		txtDomNro.setEnabled(false);
-		txtDomNro.setBounds(833, 171, 51, 20);
+		txtDomNro.setBounds(388, 150, 51, 20);
 		panelDatosObli.add(txtDomNro);
-		
-		lblNro = new JLabel();
-		lblNro.setBounds(792, 174, 41, 14);
-		panelDatosObli.add(lblNro);
-		lblNro.setText("NRO");
 		txtTel = new JTextField();
 		txtTel.setEnabled(false);
 		txtTel.setBounds(83, 112, 251, 20);
@@ -257,7 +258,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		lblTitulo.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		panelTitulo.add(lblTitulo);
-		contentPane.setLayout(new MigLayout("", "[722.00px]", "[56.00px][31.00][426.00px][126.00px][27.00px]"));
+		contentPane.setLayout(new MigLayout("", "[722.00px]", "[32.00px][25.00][399.00px][126.00px][27.00px]"));
 		contentPane.add(panelTitulo, "cell 0 0,growx");
 		
 		
@@ -267,27 +268,27 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		lblEstado.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
 		contentPane.add(panelDatosObli, "cell 0 2,grow");
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel_4.setBackground(Color.WHITE);
-		panel_4.setBounds(20, 231, 364, 33);
-		panelDatosObli.add(panel_4);
-		panel_4.setLayout(null);
+		panel = new JPanel();
+		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panel.setBackground(Color.WHITE);
+		panel.setBounds(20, 231, 364, 33);
+		panelDatosObli.add(panel);
+		panel.setLayout(null);
 		lblSexo= new JLabel();
 		lblSexo.setBounds(10, 9, 50, 14);
-		panel_4.add(lblSexo);
+		panel.add(lblSexo);
 		
 		
 		lblSexo.setText("SEXO");
 		
 		rdbFemenino.setText("FEMENINO");
 		rdbFemenino.setBounds(84, 5, 85, 23);
-		panel_4.add(rdbFemenino);
+		panel.add(rdbFemenino);
 		rdbFemenino.setBackground(Color.WHITE);
 		
 		rdbMasculino.setText("MASCULINO");
-		rdbMasculino.setBounds(174, 5, 90, 23);
-		panel_4.add(rdbMasculino);
+		rdbMasculino.setBounds(174, 5, 109, 23);
+		panel.add(rdbMasculino);
 		rdbMasculino.setBackground(Color.WHITE);
 		lblNaciona= new JLabel();
 		lblNaciona.setBounds(20, 286, 88, 14);
@@ -298,7 +299,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		lblNaciona.setText("NACIONALIDAD");
 		txtNacion = new JTextField();
 		txtNacion.setEnabled(false);
-		txtNacion.setBounds(102, 283, 251, 20);
+		txtNacion.setBounds(133, 283, 251, 20);
 		panelDatosObli.add(txtNacion);
 		lblEstCivil = new JLabel();
 		lblEstCivil.setBounds(20, 319, 98, 14);
@@ -308,7 +309,17 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		lblEstCivil.setText("ESTADO CIVIL");
 		cmbEstadoCivil= new JComboBox();
 		cmbEstadoCivil.setEnabled(false);
-		cmbEstadoCivil.setBounds(102, 316, 180, 20);
+		cmbEstadoCivil.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(!cmbEstadoCivil.getSelectedItem().equals("Seleccione un estado")){
+					System.out.println("hola");
+				}
+					
+			}
+		});
+		
+		cmbEstadoCivil.setBounds(275, 316, 180, 20);
 		panelDatosObli.add(cmbEstadoCivil);
 		
 		
@@ -335,7 +346,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		rdbtnSi.setEnabled(false);
 		rdbtnSi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtMatri.setEnabled(true);
+				BotonesSocioHabilitado(true);
 			}
 		});
 		rdbtnSi.setBackground(Color.WHITE);
@@ -344,10 +355,9 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		rdbtnNo = new JRadioButton("NO");
 		rdbtnNo.setEnabled(false);
-		rdbtnNo.setSelected(true);
 		rdbtnNo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				txtMatri.setEnabled(false);
+				BotonesSocioHabilitado(false);
 			}
 		});
 		rdbtnNo.setBackground(Color.WHITE);
@@ -356,7 +366,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		contentPane.add(PanelDatosSocio, "cell 0 3,grow");
 		
 		btnVolver = new JButton();
-		btnVolver.setBounds(420, 11, 80, 92);
+		btnVolver.setBounds(455, 10, 80, 92);
 		PanelDatosSocio.add(btnVolver);
 		btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/impo.png")));
 		btnVolver.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -368,7 +378,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		btnVolver.setBorder(null);
 		
 		btnLimpiar = new JButton();
-		btnLimpiar.setBounds(510, 11, 89, 91);
+		btnLimpiar.setBounds(534, 10, 89, 91);
 		PanelDatosSocio.add(btnLimpiar);
 		btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/limpiar1.png")));
 		btnLimpiar.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -390,6 +400,11 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		btnRegistrar.setContentAreaFilled(false);
 		btnRegistrar.setBorderPainted(false);
 		btnRegistrar.setBorder(null);
+		
+		txtCateg = new JTextField();
+		txtCateg.setEditable(false);
+		txtCateg.setBounds(98, 55, 126, 20);
+		PanelDatosSocio.add(txtCateg);
 		btnRegistrar.addActionListener(this);
 		btnLimpiar.addActionListener(this);
 		grupoEssocio.add(rdbtnNo);
@@ -407,8 +422,18 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		JLabel lblPresioneElSiguiente = new JLabel();
 		lblPresioneElSiguiente.setText("Presione el siguiente boton para validar");
-		lblPresioneElSiguiente.setBounds(379, 25, 210, 14);
+		lblPresioneElSiguiente.setBounds(379, 25, 241, 14);
 		panelDatosObli.add(lblPresioneElSiguiente);
+		
+		txtEstdoCiv = new JTextField();
+		txtEstdoCiv.setEditable(false);
+		txtEstdoCiv.setBounds(103, 316, 146, 20);
+		panelDatosObli.add(txtEstdoCiv);
+		
+		JLabel lblNro = new JLabel();
+		lblNro.setText("NRO");
+		lblNro.setBounds(347, 153, 37, 14);
+		panelDatosObli.add(lblNro);
 		
 		this.Escuchando();
 		pack();
@@ -511,6 +536,9 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	}
 	//escuchando al usuario
 	private void Escuchando(){
+		cmbEstadoCivil.addActionListener(this);
+		rdbtnSi.addActionListener(this);
+		rdbtnNo.addKeyListener(this);
 		txtApe.addKeyListener(this);
 		txtNom.addKeyListener(this);
 		txtDni.addKeyListener(this);
@@ -525,11 +553,25 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	//Eventos
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==cmbEstadoCivil){
+			if(cmbEstadoCivil.getSelectedItem().toString() != "Seleccione un estado")
+				txtEstdoCiv.setText(cmbEstadoCivil.getSelectedItem().toString());
+			else
+				txtEstdoCiv.setText("");
+		}
+		
+		if(e.getSource()==cmbEstadoCivil){
+			if(cmbEstadoCivil.getSelectedItem().toString() != "Seleccione una categoria")
+				txtCateg.setText(cmbEstadoCivil.getSelectedItem().toString());
+			else
+				txtCateg.setText("");
+		}
+		
 		if(e.getSource() == btnRegistrar){
 			if(ValidarDatos()){
 				this.CargaYGuardarDatos();
 			}
-			
+
 		}
 		if(e.getSource()==btnValidar){
 			this.ValidarDatosIngresados();
@@ -540,15 +582,47 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		if(e.getSource() == btnVolver){
 			this.limpiar();
 			this.dispose();
-			
+
 		}
+	}
+
+	private void BotonesSocioHabilitado(boolean valor) {
+		
+		txtMatri.setEnabled(valor);
+		comboCate.setEnabled(valor);
+		dateFechIngreso.setEnabled(valor);
+		txtCateg.setEnabled(valor);
+		
+	}
+	private void HabilitarBotonoes(boolean valor){
+
+		txtApe.setEnabled(valor);
+		txtDni.setEnabled(valor);
+		txtDom.setEnabled(valor);
+		txtDomNro.setEnabled(valor);
+		txtMatri.setEnabled(valor);
+		txtNacion.setEnabled(valor);
+		txtNom.setEnabled(valor);
+		txtTel.setEnabled(valor);
+		rdbFemenino.setEnabled(valor);
+		rdbMasculino.setEnabled(valor);
+		cmbEstadoCivil.setEnabled(valor);
+		txtMatri.setEnabled(valor);
+		rdbtnNo.setEnabled(valor);
+		rdbtnSi.setEnabled(valor);
+		dateFechIngreso.setEnabled(valor);
+		dateFechNac.setEnabled(valor);
+		cmbEstadoCivil.setEnabled(valor);
+		comboCate.setEnabled(valor);
 	}
 
 	private void ValidarDatosIngresados() {
 		if(!txtDni.getText().isEmpty()){
 			Personas persona=miCoordinador.CrearPersona();
 			persona=miCoordinador.ValidarPersona(Integer.parseInt(txtDni.getText()));
+			this.HabilitarBotonoes(true);
 			if(persona != null){
+				txtMatri.setEnabled(false); //No se puede moficar la matricula
 				lblEstado.setText("ESTADO: PERSONA YA REGISTRADA");
 				txtApe.setText(persona.getApellido());
 				txtNom.setText(persona.getNombre());
@@ -558,32 +632,41 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 				txtDom.setText(divisor[0]);
 				txtDomNro.setText(divisor[1]);
 				dateFechNac.setDate(persona.getFechanac());
+				txtNacion.setText(persona.getNacionalidad());
 				if(!persona.getSexo().equals("M"))
 					rdbFemenino.setSelected(true); 
 				else
 					rdbMasculino.setSelected(true);
-				cmbEstadoCivil.setSelectedItem(persona.getEstadocivil());
+				txtEstdoCiv.setText(persona.getEstadocivil());
+				//si es socio
 				if(persona.isEssocio()){
 					rdbtnSi.setSelected(true);
 					txtMatri.setText(persona.getSocios().getMatricula().toString());
-				}
-				rdbtnNo.setSelected(true);
-				
+					dateFechIngreso.setDate(persona.getSocios().getFechaingreso());
+					txtCateg.setText(persona.getSocios().getCategoria().getIdCategoria()+"-"+persona.getSocios().getCategoria().getNombre());
 
+				}
+				else
+					rdbtnNo.setSelected(true);
+				
 			}
 		}
 		else
 			JOptionPane.showMessageDialog(null,"El numero de documento es obligatorio","Error",JOptionPane.ERROR_MESSAGE);
 
 	}
+	//Depende si se cieere o si busca bloquea o no
+	
+
 
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent e) {	
 		try{
 			if(e.getKeyCode() == KeyEvent.VK_ENTER){
 				if(ValidarDatos())
 					this.CargaYGuardarDatos();
 			}
+
 		}
 		catch (Exception ex) {
 			JOptionPane.showMessageDialog(null,"ERROR,Contacte con el administrador" , ex.getMessage(), JOptionPane.WARNING_MESSAGE);
