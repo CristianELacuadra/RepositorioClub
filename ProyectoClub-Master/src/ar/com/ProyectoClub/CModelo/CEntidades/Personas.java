@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 23-oct-2017 18:29:51 by Hibernate Tools 5.2.3.Final
+// Generated 12-nov-2017 13:20:02 by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -20,7 +20,6 @@ public class Personas implements java.io.Serializable {
 	private String nacionalidad;
 	private String estadocivil;
 	private boolean habilitado;
-	private boolean essocio;
 	private Socios socios;
 	private Set alquilers = new HashSet(0);
 
@@ -28,7 +27,7 @@ public class Personas implements java.io.Serializable {
 	}
 
 	public Personas(Integer dni, String nombre, String apellido, String telefono, String domicilio, Date fechanac,
-			String sexo, String nacionalidad, String estadocivil, boolean habilitado, boolean essocio) {
+			String sexo, String nacionalidad, String estadocivil, boolean habilitado) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -39,12 +38,10 @@ public class Personas implements java.io.Serializable {
 		this.nacionalidad = nacionalidad;
 		this.estadocivil = estadocivil;
 		this.habilitado = habilitado;
-		this.essocio = essocio;
 	}
 
 	public Personas(Integer dni, String nombre, String apellido, String telefono, String domicilio, Date fechanac,
-			String sexo, String nacionalidad, String estadocivil, boolean habilitado, boolean essocio, Socios socios,
-			Set alquilers) {
+			String sexo, String nacionalidad, String estadocivil, boolean habilitado, Socios socios, Set alquilers) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -55,7 +52,6 @@ public class Personas implements java.io.Serializable {
 		this.nacionalidad = nacionalidad;
 		this.estadocivil = estadocivil;
 		this.habilitado = habilitado;
-		this.essocio = essocio;
 		this.socios = socios;
 		this.alquilers = alquilers;
 	}
@@ -138,14 +134,6 @@ public class Personas implements java.io.Serializable {
 
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
-	}
-
-	public boolean isEssocio() {
-		return this.essocio;
-	}
-
-	public void setEssocio(boolean essocio) {
-		this.essocio = essocio;
 	}
 
 	public Socios getSocios() {

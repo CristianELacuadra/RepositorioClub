@@ -71,7 +71,6 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	private JLabel lblFechingreso;
 	private JLabel lblCate; 
 	public JComboBox comboCate;
-	public JComboBox cmbEstadoCivil; 
 	public Map<Integer, String> mapCategoria = new HashMap<Integer, String>();
 	private boolean Essocio;
 	public  JTextField txtDomNro;
@@ -104,6 +103,12 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			@Override
 			public void windowClosing(WindowEvent e) {
 				limpiar();
+//				miCoordinador.CargarGrilla(PantallaPrincipalPersonas.tablaPersona);
+//				int itemCount = comboCate.getItemCount();
+//
+//			    for(int i=0;i<itemCount;i++){
+//			        comboCate.removeItemAt(0);
+//			     }
 			}
 		});
 		initComponents();
@@ -113,7 +118,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	private void initComponents(){
 		//Instanciamos los componentes
 		lblEstado= new JLabel();
-		lblEstado.setForeground(Color.RED);
+		lblEstado.setForeground(Color.BLACK);
 		btnValidar= new JButton();
 		rdbMasculino = new JRadioButton();
 		rdbMasculino.setEnabled(false);
@@ -146,7 +151,6 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		lblMatri.setText("MATRICULA");
 		txtMatri = new JTextField();
-		txtMatri.setEditable(false);
 		txtMatri.setEnabled(false);
 		txtMatri.setBounds(98, 24, 103, 20);
 		PanelDatosSocio.add(txtMatri);
@@ -307,28 +311,6 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		
 		lblEstCivil.setText("ESTADO CIVIL");
-		cmbEstadoCivil= new JComboBox();
-		cmbEstadoCivil.setEnabled(false);
-		cmbEstadoCivil.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(!cmbEstadoCivil.getSelectedItem().equals("Seleccione un estado")){
-					System.out.println("hola");
-				}
-					
-			}
-		});
-		
-		cmbEstadoCivil.setBounds(275, 316, 180, 20);
-		panelDatosObli.add(cmbEstadoCivil);
-		
-		
-		cmbEstadoCivil.addItem("Seleccione un estado");
-		cmbEstadoCivil.addItem("Casado/a");
-		cmbEstadoCivil.addItem("Soltero/a");
-		cmbEstadoCivil.addItem("Comprometido/a");
-		cmbEstadoCivil.addItem("Divorciado/a");
-		cmbEstadoCivil.addItem("Viudo/a");
 		
 		panel_5 = new JPanel();
 		panel_5.setLayout(null);
@@ -425,15 +407,15 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		lblPresioneElSiguiente.setBounds(379, 25, 241, 14);
 		panelDatosObli.add(lblPresioneElSiguiente);
 		
-		txtEstdoCiv = new JTextField();
-		txtEstdoCiv.setEditable(false);
-		txtEstdoCiv.setBounds(103, 316, 146, 20);
-		panelDatosObli.add(txtEstdoCiv);
-		
 		JLabel lblNro = new JLabel();
 		lblNro.setText("NRO");
 		lblNro.setBounds(347, 153, 37, 14);
 		panelDatosObli.add(lblNro);
+		
+		txtEstdoCiv = new JTextField();
+		txtEstdoCiv.setEnabled(false);
+		txtEstdoCiv.setBounds(99, 316, 117, 20);
+		panelDatosObli.add(txtEstdoCiv);
 		
 		this.Escuchando();
 		pack();
@@ -445,68 +427,78 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	}
 	
 	private void CargaYGuardarDatos(){
+		try{
 		Personas nuevapersona=miCoordinador.CrearPersona();
-		int dni= (txtDni.getText().length()==0) ? 0: Integer.parseInt(txtDni.getText());
+		int dni= Integer.parseInt(txtDni.getText().replaceAll("\\s*$",""));
 		nuevapersona.setDni(dni);
 		nuevapersona.setNombre(txtNom.getText());
 		nuevapersona.setApellido(txtApe.getText());
 		nuevapersona.setFechanac(dateFechNac.getDate());
-		nuevapersona.setDomicilio(txtDom.getText()+" N: "+txtDomNro.getText());
+		String domicilio=txtDom.getText()+"- "+txtDomNro.getText();
+		nuevapersona.setDomicilio(domicilio.replaceAll("\\s",""));
 		nuevapersona.setTelefono(txtTel.getText());
 		nuevapersona.setNacionalidad(txtNacion.getText());
-		String estadoCivil= (cmbEstadoCivil.getSelectedItem().toString().equals("Seleccione un estado")) ? null: cmbEstadoCivil.getSelectedItem().toString();
+		String estadoCivil=txtEstdoCiv.getText(); 
+		//(cmbEstadoCivil.getSelectedItem().toString().equals("Seleccione un estado")) ? null: cmbEstadoCivil.getSelectedItem().toString();
 		nuevapersona.setEstadocivil(estadoCivil);
-		nuevapersona.setFechanac(dateFechNac.getDate());
 		String sexo=new String();
 		if(rdbMasculino.isSelected())
 			sexo="M";
 		if(rdbFemenino.isSelected())
 			sexo="F";
 		nuevapersona.setSexo(sexo);
-		
+		nuevapersona.setHabilitado(true);
 		if(rdbtnSi.isSelected()){
+			nuevapersona.setEssocio(true);
 			Socios socio= miCoordinador.CrearSocio();
-			socio.setPersonas(nuevapersona);
-			int matricula= (txtMatri.getText().length()==0) ? 0: Integer.parseInt(txtMatri.getText());
-			socio.setMatricula(matricula);
-			socio.setFechaingreso(dateFechIngreso.getDate());
+			socio.setDni(nuevapersona.getDni());
 			socio.setEstado("Activo");
+			socio.setFechaingreso(dateFechIngreso.getDate());
+			socio.setMatricula(Integer.parseInt(txtMatri.getText()));
 			Categoria nuevaCategoria=miCoordinador.CrearCategoria();
-			//mapCategoria viene cargado desde el controlador con los id y nombre de las categorias
-			for ( Map.Entry<Integer, String> entry : mapCategoria.entrySet() ){ //recorre las categorias
-				if(comboCate.getSelectedItem().equals(entry.getValue())){ //Compara nombres
-					nuevaCategoria=miCoordinador.BuscarCategoria(entry.getKey()); //busca la categoria con el key del map 
-					break;
-				}
-			}
+			String[] id = txtCateg.getText().split("-");
+			nuevaCategoria= miCoordinador.BuscarCategoria(Integer.parseInt(id[0]));
 			socio.setCategoria(nuevaCategoria);
-			//llamo al metodo guardar socio
-			this.limpiar();
+			socio.setPersonas(nuevapersona);
+			nuevapersona.setSocios(socio);
+			//mapCategoria viene cargado desde el controlador con los id y nombre de las categorias
+			//for ( Map.Entry<Integer, String> entry : mapCategoria.entrySet() ){ //recorre las categorias
+			//	if(comboCate.getSelectedItem().equals(entry.getValue())){ //Compara nombres
+			//		nuevaCategoria=miCoordinador.BuscarCategoria(entry.getKey()); //busca la categoria con el key del map 
+			//		break;
+			//	}
+			//	}		
 		}
-		else{
-		//llamo al metodo guardar no socio(Persona)
-			this.limpiar();
+		miCoordinador.GuardarPersona(nuevapersona);
+		JOptionPane.showMessageDialog(null,"Persona registrada con exito","Mensaje",JOptionPane.INFORMATION_MESSAGE);
+		this.limpiar();
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null,e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	
 
 
 			
 		
 	public boolean ValidarDatos(){
 		boolean retorno=false;
-		if(txtApe.getText().isEmpty() || txtDni.getText().isEmpty() || txtDom.getText().isEmpty() || txtDomNro.getText().isEmpty() || dateFechNac.getDate()==null 
-				|| txtTel.getText().isEmpty() || txtNacion.getText().isEmpty() || cmbEstadoCivil.getSelectedItem().toString().equals("Seleccione un estado") 
-				|| dateFechNac.getDate() == null || (!rdbFemenino.isSelected() && !rdbMasculino.isSelected())){
-			JOptionPane.showMessageDialog(null,"Algunos datos son obligatorios, ¡por favor verifique los mismos!","Error al verificar los datos",JOptionPane.ERROR_MESSAGE);
-		}
-		else{
+		if(!txtDni.getText().isEmpty() && !txtApe.getText().isEmpty() && !txtNom.getText().isEmpty() && !txtDom.getText().isEmpty() 
+				   && !txtDomNro.getText().isEmpty() && !dateFechNac.getDate().equals(null) 
+				   && !txtTel.getText().isEmpty() && !txtNacion.getText().isEmpty() && !txtEstdoCiv.getText().isEmpty()
+			 	   && (!rdbFemenino.isSelected() || !rdbMasculino.isSelected()))
+		{
 			if(rdbtnSi.isSelected()){
-				if(!txtMatri.getText().isEmpty() && !comboCate.getSelectedItem().equals(("SELECCIONE CATEGORIA")) && dateFechIngreso.getDate() != null)
+				if(!txtMatri.getText().isEmpty() && !txtCateg.getText().isEmpty()  && !dateFechIngreso.getDate().equals(null))
 					retorno=true; 
 			}
 			else
 				retorno=true; 
 		}
+		else
+			JOptionPane.showMessageDialog(null,"Algunos datos son obligatorios, ¡por favor verifique los mismos!","Error al verificar los datos",JOptionPane.ERROR_MESSAGE);
+		
 		return retorno;
 	}
    
@@ -527,16 +519,19 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		txtDom.setText(null);
 		txtTel.setText(null);
 		txtMatri.setText(null);
-		cmbEstadoCivil.setSelectedItem("Seleccione un estado");
+		txtCateg.setText(null);
+		txtEstdoCiv.setText(null);
 		comboCate.setSelectedItem("Seleccione una categoria");
 		txtNacion.setText(null);
 		dateFechIngreso.setCalendar(null);
 		txtDomNro.setText(null);
+		lblEstado.setText("ESTADO");
+		lblEstado.setForeground(Color.black);
 		
 	}
 	//escuchando al usuario
 	private void Escuchando(){
-		cmbEstadoCivil.addActionListener(this);
+		comboCate.addActionListener(this);
 		rdbtnSi.addActionListener(this);
 		rdbtnNo.addKeyListener(this);
 		txtApe.addKeyListener(this);
@@ -553,16 +548,10 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	//Eventos
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==cmbEstadoCivil){
-			if(cmbEstadoCivil.getSelectedItem().toString() != "Seleccione un estado")
-				txtEstdoCiv.setText(cmbEstadoCivil.getSelectedItem().toString());
-			else
-				txtEstdoCiv.setText("");
-		}
 		
-		if(e.getSource()==cmbEstadoCivil){
-			if(cmbEstadoCivil.getSelectedItem().toString() != "Seleccione una categoria")
-				txtCateg.setText(cmbEstadoCivil.getSelectedItem().toString());
+		if(e.getSource()==comboCate){
+			if(comboCate.getSelectedItem().toString() != "Seleccione una categoria")
+				txtCateg.setText(comboCate.getSelectedItem().toString());
 			else
 				txtCateg.setText("");
 		}
@@ -606,14 +595,13 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		txtTel.setEnabled(valor);
 		rdbFemenino.setEnabled(valor);
 		rdbMasculino.setEnabled(valor);
-		cmbEstadoCivil.setEnabled(valor);
-		txtMatri.setEnabled(valor);
+		txtEstdoCiv.setEnabled(valor);
 		rdbtnNo.setEnabled(valor);
 		rdbtnSi.setEnabled(valor);
 		dateFechIngreso.setEnabled(valor);
 		dateFechNac.setEnabled(valor);
-		cmbEstadoCivil.setEnabled(valor);
 		comboCate.setEnabled(valor);
+		txtCateg.setEnabled(valor);
 	}
 
 	private void ValidarDatosIngresados() {
@@ -622,8 +610,8 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			persona=miCoordinador.ValidarPersona(Integer.parseInt(txtDni.getText()));
 			this.HabilitarBotonoes(true);
 			if(persona != null){
-				txtMatri.setEnabled(false); //No se puede moficar la matricula
 				lblEstado.setText("ESTADO: PERSONA YA REGISTRADA");
+				lblEstado.setForeground(Color.RED);
 				txtApe.setText(persona.getApellido());
 				txtNom.setText(persona.getNombre());
 				txtTel.setText(persona.getTelefono());
@@ -639,16 +627,23 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 					rdbMasculino.setSelected(true);
 				txtEstdoCiv.setText(persona.getEstadocivil());
 				//si es socio
-				if(persona.isEssocio()){
+				if(persona.getSocios() != null ){
 					rdbtnSi.setSelected(true);
+					BotonesSocioHabilitado(true);
 					txtMatri.setText(persona.getSocios().getMatricula().toString());
 					dateFechIngreso.setDate(persona.getSocios().getFechaingreso());
 					txtCateg.setText(persona.getSocios().getCategoria().getIdCategoria()+"-"+persona.getSocios().getCategoria().getNombre());
 
 				}
-				else
+				else{
 					rdbtnNo.setSelected(true);
-				
+					BotonesSocioHabilitado(false);
+				}
+			}
+			else
+			{
+				lblEstado.setText("ESTADO:PERSONA NO REGISTRADA");
+				lblEstado.setForeground(Color.GREEN);
 			}
 		}
 		else

@@ -3,6 +3,10 @@ package ar.com.ProyectoClub.BControlador;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -276,17 +280,18 @@ public class ControllerCoordinador {
 		persona=modeloService.BuscarPersona(dni);
 		
 		habiilitado= persona.isHabilitado() ? "SI" : "NO";
-		Essocio=persona.isEssocio() ? "SI" : "NO";
-		
+		Essocio=persona.getSocios() != null ? "SI" : "NO";
+		String[] partes = persona.getDomicilio().split("-");
+		String domicilio=partes[0]+" Nº "+partes[1];
 
-		textoPersona ="Domicilio: "+persona.getDomicilio()+'\n'+""
+		textoPersona ="Domicilio: "+domicilio+'\n'+""
 				+"Fecha de nacimiento: "+(new SimpleDateFormat("dd-MM-yyyy").format(persona.getFechanac()))+'\n'+""
 				+"Sexo: "+persona.getSexo()+'\n'+""
 				+"Nacionalidad: "+persona.getNacionalidad()+'\n'+""
 				+"Estado Civil: "+persona.getEstadocivil()+'\n'+""
 				+"Habilitado: "+habiilitado+'\n'+"";
 		miVentanaDetallesSNS.textDetalle.setText(textoPersona);
-		if(persona.isEssocio()){
+		if(persona.getSocios() != null){
 			textoSocio = "Matricula: "+persona.getSocios().getMatricula()+'\n'+""
 					+"Estado: "+persona.getSocios().getEstado()+'\n'+""	
 					+"Fecha de Ingreso: "+(new SimpleDateFormat("dd-MM-yyyy").format(persona.getSocios().getFechaingreso()))+'\n'+"";
@@ -295,14 +300,15 @@ public class ControllerCoordinador {
 		miVentanaDetallesSNS.setVisible(true);
 	}
 	
-	public void GuardarPersonas(Socios socio){
-		modeloService.GuardarSocio(socio);
+	public void GuardarPersona(Personas personas){
+		modeloService.GuardarPersona(personas);
 	}
 
 	public void MostrarVentanaPrincipalPersona(JTable tabla){
 		miVentanaPrincipalPersona.setVisible(true);	
 		this.CargarGrilla(tabla);
 	}
+	@SuppressWarnings("unchecked")
 	public void mostrarFormularioPersona(){
 		//Limpia el combo de categoria y lo vuelve agragar
 		for(int i=0;i<miFormularioPersona.comboCate.getItemCount();i++){
@@ -311,7 +317,7 @@ public class ControllerCoordinador {
 		miFormularioPersona.comboCate.addItem("Seleccione una categoria");
 		
 		for(Categoria categoria : modeloService.DevolverListaCategoria()){
-			miFormularioPersona.comboCate.addItem(categoria.getNombre()); //Cargo Categorias y sus id
+			miFormularioPersona.comboCate.addItem(categoria.getIdCategoria()+"-"+categoria.getNombre()); //Cargo Categorias y sus id
 			miFormularioPersona.mapCategoria.put(categoria.getIdCategoria(), categoria.getNombre());
 		}
 		miFormularioPersona.setVisible(true);
@@ -340,8 +346,8 @@ public class ControllerCoordinador {
 	}
 
 
-	public void InhabilitarSocio(Integer dni){
-		modeloService.InhabilitarSocio(dni);
+	public void InhabilitarPersona(Integer dni){
+		modeloService.InhabilitarPersona(dni);
 	}
 
 	private void BusquedaSocios(JTable tabla){
@@ -350,11 +356,11 @@ public class ControllerCoordinador {
 	@SuppressWarnings("serial")
 	public void CargarGrilla(JTable tabla){
 		
-		boolean[] editable= { false,true,false,false,false,false,false,false,false,false };
+		boolean[] editable= { false,false,true,false,false,false,false,false,false,false,false };
 		DefaultTableModel  modeloT = new DefaultTableModel(){
 			
 			Class[] type= new Class[]{
-					java.lang.Object.class,java.lang.Boolean.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,
+					java.lang.Object.class,java.lang.Object.class,java.lang.Boolean.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,
 					java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class
 			};
 			public Class getColumnClass(int columnIndex){
@@ -365,10 +371,12 @@ public class ControllerCoordinador {
 				return editable[colum];
 			}
 		};
-		Object[] columna = new Object[10];
+		Object[] columna = new Object[12];
 		
 		tabla.setModel(modeloT);
 		modeloT.addColumn("");
+		modeloT.addColumn("");
+		modeloT.addColumn("  ");
 		modeloT.addColumn("  ");
 		modeloT.addColumn("  ");
 		modeloT.addColumn("  ");
@@ -383,31 +391,39 @@ public class ControllerCoordinador {
         int numRegistros=listaPersona.size();// devuelve un rango de 100 socios
         if(numRegistros>0){
         	
-        	for (int i = 0; i < numRegistros; i++) {			
+        	for (int i = 0; i < numRegistros; i++) {
         		columna[0] = listaPersona.get(i).isHabilitado();
-        		columna[1]=  false;//miVentanaPrincipalPersona.ChkNosocio;
-        		columna[2] = miVentanaPrincipalPersona.btnHabiitado;
-        		columna[3] = miVentanaPrincipalPersona.btnBaja;
-        		columna[4] = miVentanaPrincipalPersona.btnDetalles;
-        		columna[5]=  miVentanaPrincipalPersona.btnEditar;
-        		columna[6] = listaPersona.get(i).getDni();
-        		columna[7] = listaPersona.get(i).getNombre()+" "+listaPersona.get(i).getApellido();
-        		columna[8] = listaPersona.get(i).getTelefono();
-        		columna[9] = listaPersona.get(i).getDomicilio();
+        		columna[1] = (listaPersona.get(i).getSocios() != null && !listaPersona.get(i).getSocios().isBaja())? true:false;
+        		columna[2]=  false;//miVentanaPrincipalPersona.ChkNosocio;
+        		columna[3] = miVentanaPrincipalPersona.btnHabiitado;
+        		columna[4] = miVentanaPrincipalPersona.btnBaja;
+        		columna[5] = miVentanaPrincipalPersona.btnDetalles;
+        		columna[6]=  miVentanaPrincipalPersona.btnEditar;
+        		columna[7] =miVentanaPrincipalPersona.btnCuotas;
+        		columna[8] = listaPersona.get(i).getDni();
+        		columna[9] = listaPersona.get(i).getNombre()+" "+listaPersona.get(i).getApellido();
+        		columna[10] = listaPersona.get(i).getTelefono();
+        		//Saco el - del nombre de domicilio y su numero
+        		String[] partes =listaPersona.get(i).getDomicilio().split("-");
+        		String domicilio=partes[0]+" "+partes[1];
+        		columna[11] = domicilio;
         		modeloT.addRow(columna);
         	}
         	tabla.setRowHeight(25);
         	tabla.getColumnModel().getColumn(0).setMinWidth(0);
         	tabla.getColumnModel().getColumn(0).setMaxWidth(0);
-        	tabla.getColumnModel().getColumn(1).setMaxWidth(30);
-        	tabla.getColumnModel().getColumn(2).setMaxWidth(60);
+        	tabla.getColumnModel().getColumn(1).setMinWidth(0);
+        	tabla.getColumnModel().getColumn(1).setMaxWidth(0);
+        	tabla.getColumnModel().getColumn(2).setMaxWidth(30);
         	tabla.getColumnModel().getColumn(3).setMaxWidth(60);
         	tabla.getColumnModel().getColumn(4).setMaxWidth(60);
         	tabla.getColumnModel().getColumn(5).setMaxWidth(60);
-        	tabla.getColumnModel().getColumn(6).setMaxWidth(200);
-        	tabla.getColumnModel().getColumn(7).setMaxWidth(400);
+        	tabla.getColumnModel().getColumn(6).setMaxWidth(60);
+        	tabla.getColumnModel().getColumn(7).setMaxWidth(60);
         	tabla.getColumnModel().getColumn(8).setMaxWidth(200);
-        	tabla.getColumnModel().getColumn(9).setMaxWidth(600);
+        	tabla.getColumnModel().getColumn(9).setMaxWidth(400);
+        	tabla.getColumnModel().getColumn(10).setMaxWidth(200);
+        	tabla.getColumnModel().getColumn(11).setMaxWidth(600);
         	tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);
         }
 	}
@@ -444,13 +460,17 @@ public class ControllerCoordinador {
 	//---------------------------------------------------------------------------------------------------------------------------------------------------
 	//Gestion Cuotas
 	//---------------------------------------------------------------------------------------------------------------------------------------------------
-	public void CobrarCuota(Integer dni,java.util.List<Integer> IdCuotas){
-		//miLogica.CobranzaCuotas(dni, IdCuotas);
+	public void RegistrarPagoCuotaSocio(List<Cuota> cuotas) {
+		modeloService.RegistrarPagoCuotaSocio(cuotas);
 	}
+		
 
-	public void CargarDatosCobranza(Socios socio,JTable tabla){
+	@SuppressWarnings("unchecked")
+	public void CargarDatosCobranza(Integer dni,JTable tabla){
 
-		java.util.List<Cuota> cuotasSocio= new ArrayList<Cuota>();
+		java.util.Set<Cuota> cuotasSocio= new HashSet<Cuota>();
+		Socios socio = modeloService.CrearInstanciaSocio();
+		socio= modeloService.BuscarSocio(dni);
 		//Datos persona
 		miVentanaCobranza.txtdni.setText(Integer.toString(socio.getDni()));
 		miVentanaCobranza.txtDomi.setText(socio.getPersonas().getDomicilio());
@@ -460,63 +480,76 @@ public class ControllerCoordinador {
 		miVentanaCobranza.txtCat.setText(socio.getCategoria().getNombre());
 
 		//cuota
-		boolean[] editable = {false,false,false,false,true,false};
+		boolean[] editable = {false,true,false,false,false,false};
 
 		tabla.setDefaultRenderer(Object.class, new Render());
 
-		DefaultTableModel modeloT = new DefaultTableModel(new String[]{"MES", "AÑO", "FECHA PAGO", "IMPORTE","",""}, 0) {
+		DefaultTableModel  modeloT = new DefaultTableModel(){
 
-			Class[] types = new Class[]{
-					java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Boolean.class,java.lang.Object.class
+			Class[] type= new Class[]{
+					java.lang.Object.class,java.lang.Boolean.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class
 			};
-
-			public Class getColumnClass(int columnIndex) {
-				return types[columnIndex];
+			public Class getColumnClass(int columnIndex){
+				return type[columnIndex];
 			}
 
-			public boolean isCellEditable(int row, int column){
-				return editable[column];
+			public boolean isCellEditable(int row,int colum){  
+				return editable[colum];
 			}
 		};
 		Object[] columna = new Object[6];
 
-		cuotasSocio= modeloService.ObtenerCuotasSocio(socio.getDni());
-		int numRegistros=cuotasSocio.size();
-
-		float total=0;
-		Date fechaG= new Date();
-		for (int i = 0; i < numRegistros; i++) {
-			int mm,aaaa;
-			fechaG=cuotasSocio.get(i).getFechageneracion();
-			mm=fechaG.getMonth();
-			aaaa=fechaG.getYear();
-			columna[0] = mm+1;
-			columna[1] = aaaa+1900;
-			if(cuotasSocio.get(i).getFechapago()==null){
-				columna[2] = "No Presenta Pagos";
-				total+=cuotasSocio.get(i).getImporte();
-			}
-			else
-				columna[2] = cuotasSocio.get(i).getFechapago();
-			columna[3] = cuotasSocio.get(i).getImporte();
-			columna[4]=false;
-			columna[5] = 1;//cuotasSocio.get(i).getId();
-			modeloT.addRow(columna);
-		}
 		tabla.setModel(modeloT);
-		tabla.setRowHeight(25); 
-		tabla.getTableHeader().getColumnModel().getColumn(4).setMaxWidth(30);
-		tabla.getTableHeader().getColumnModel().getColumn(5).setMaxWidth(0); 
+		modeloT.addColumn("");
+		modeloT.addColumn("");
+		modeloT.addColumn("MES");
+		modeloT.addColumn("AÑIO");
+		modeloT.addColumn("FECHA PAGO");
+		modeloT.addColumn("IMPORTE");
 
+		//Paso las cuotas del socio
+		cuotasSocio= socio.getCuotas();
+		float total=0;
+		if(!socio.getCuotas().isEmpty())
+		{
+			Iterator<Cuota> it= socio.getCuotas().iterator();
+			while(it.hasNext()){  		   
+				Cuota cuota=it.next();
+				if(cuota.getFechapago()==null){
+					columna[0]= cuota.getIdCuota();
+					columna[1]=false;
+					columna[2]=cuota.getFechageneracion().getMonth()+1;
+					columna[3]= cuota.getFechageneracion().getYear()+1900;
+					columna[4] ="";
+					columna[5]=cuota.getImporte();
+					total =0; //cuota.getImporte();
+					modeloT.addRow(columna);	   
+				}
+			}
+		}
+		tabla.setRowHeight(25);
+		tabla.getColumnModel().getColumn(0).setMinWidth(0);
+		tabla.getColumnModel().getColumn(0).setMaxWidth(0);
+		tabla.getColumnModel().getColumn(1).setMaxWidth(40);
+		tabla.getColumnModel().getColumn(2).setMaxWidth(150);
+		tabla.getColumnModel().getColumn(3).setMaxWidth(150);
+		tabla.getColumnModel().getColumn(4).setMaxWidth(200);
+		tabla.getColumnModel().getColumn(5).setMaxWidth(260);
+		tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);
 		miVentanaCobranza.txttotal.setText(String.valueOf(total));
 		miVentanaCobranza.setVisible(true);
-	}
-
-	public void mostrarVentanaCobranza(Socios socio,JTable tabla){
-		this.CargarDatosCobranza(socio,tabla);
 
 	}
 
+	public void mostrarVentanaCobranza(Integer dni,JTable tabla){
+		this.CargarDatosCobranza(dni,tabla);
+
+	}
+
+	public List<Cuota> BuscarCuotas(List<Integer> id){
+		return(modeloService.ObtenerCuotasPorid(id));
+	}
+	
 //	@SuppressWarnings("deprecation")
 //	public void ConsultarUltimaGeneracionCuota(){
 //		Date fechaGene= new Date();
@@ -828,11 +861,7 @@ public class ControllerCoordinador {
 	}
 
 	
-
-	
-
-	
-
+	}
 //	public void ModificarInmueble(Inmuebles inm) {
 //		miLogica.ModificarInmueble(inm);
 //
@@ -869,4 +898,4 @@ public class ControllerCoordinador {
 		miLogica.validarEliminacion(codigo);
 	}
 	 */
-}
+

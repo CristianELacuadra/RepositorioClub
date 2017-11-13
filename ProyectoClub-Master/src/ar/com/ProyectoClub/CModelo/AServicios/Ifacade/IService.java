@@ -14,7 +14,7 @@ public interface IService {
 	Personas BuscarPersona(Integer dni);
 	//contrato socio
 	List<Socios> ListarSocios();
-	void InhabilitarSocio(Integer dni);
+	void InhabilitarPersona(Integer dni);
 	void GuardarSocio(Socios socio);
 	Socios CrearInstanciaSocio();
 	Socios BuscarSocio(Integer dni);
@@ -42,4 +42,9 @@ public interface IService {
 	//contrato alquiler
 	Alquiler CrearInstanciaAlquiler();
 	Personas ValidarPersona(int dni);
+	void GuardarPersona(Personas personas);
+	//cuotas
+	List<Cuota> ObtenerCuotasPorid(List<Integer> id);
+	void RegistrarPagoCuotaSocio(List<Cuota> cuotas);
+
 }

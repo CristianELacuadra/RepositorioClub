@@ -1,19 +1,52 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 08-oct-2017 13:35:26 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="datosclub" dynamic-insert="false" dynamic-update="false" mutable="true" name="ar.com.ProyectoClub.CModelo.CEntidades.Usuario" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="usuario">
-        <id name="idUsuario" type="java.lang.Integer">
-            <column name="idUSUARIO"/>
-            <generator class="identity"/>
-        </id>
-        <property generated="never" lazy="false" name="nick" optimistic-lock="true" type="string" unique="false">
-            <column length="45" name="NICK" not-null="true"/>
-        </property>
-        <property generated="never" lazy="false" name="password" optimistic-lock="true" type="string" unique="false">
-            <column length="11" name="PASSWORD" not-null="true"/>
-        </property>
-        <property generated="never" lazy="false" name="tipousuario" optimistic-lock="true" type="string" unique="false">
-            <column length="45" name="TIPOUSUARIO" not-null="true"/>
-        </property>
-    </class>
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- Generated 25-oct-2017 19:40:09 by Hibernate Tools 5.2.3.Final -->
+<hibernate-mapping>
+
+<class
+    name="ar.com.ProyectoClub.CModelo.CEntidades.Usuario"
+    table="usuario"
+    catalog="datosclub"
+    optimistic-lock="version"
+>
+
+	<id 
+        name="idUsuario"
+        type="java.lang.Integer"
+    >
+    
+<column name="idUSUARIO" />
+	    <generator class="identity" />
+    </id>
+
+
+
+
+    <property
+        name="nick"
+	    type="string"
+    >
+<column name="NICK" length="45" not-null="true" />
+  </property>
+
+    <property
+        name="password"
+	    type="string"
+    >
+<column name="PASSWORD" length="11" not-null="true" />
+  </property>
+
+    <property
+        name="tipousuario"
+	    type="string"
+    >
+<column name="TIPOUSUARIO" length="45" not-null="true" />
+  </property>
+
+
+</class>
+
 </hibernate-mapping>

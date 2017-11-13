@@ -35,6 +35,8 @@ public class RowsRenderer extends DefaultTableCellRenderer  {
 				btn.setEnabled(false);
 			if(table.getValueAt(row,columna).equals(true) && !btn.getName().equals("btnHabilitado"))
 				btn.setEnabled(true);
+			if(!table.getValueAt(row,1).equals(true) && btn.getName().equals("btnCuotas"))
+				btn.setEnabled(false);
 		    return btn;
 		}
 			

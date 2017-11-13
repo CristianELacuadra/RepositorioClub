@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 23-oct-2017 18:29:51 by Hibernate Tools 5.2.3.Final
+// Generated 12-nov-2017 13:20:02 by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 
@@ -13,13 +13,21 @@ public class Cuota implements java.io.Serializable {
 	private Date fechageneracion;
 	private Date fechapago;
 	private String descripcion;
-	private Integer importe;
+	private float importe;
 	private String estado;
 
 	public Cuota() {
 	}
 
-	public Cuota(Socios socios, Date fechageneracion, Date fechapago, String descripcion, Integer importe,
+	public Cuota(Socios socios, Date fechageneracion, String descripcion, float importe, String estado) {
+		this.socios = socios;
+		this.fechageneracion = fechageneracion;
+		this.descripcion = descripcion;
+		this.importe = importe;
+		this.estado = estado;
+	}
+
+	public Cuota(Socios socios, Date fechageneracion, Date fechapago, String descripcion, float importe,
 			String estado) {
 		this.socios = socios;
 		this.fechageneracion = fechageneracion;
@@ -69,11 +77,11 @@ public class Cuota implements java.io.Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public Integer getImporte() {
+	public float getImporte() {
 		return this.importe;
 	}
 
-	public void setImporte(Integer importe) {
+	public void setImporte(float importe) {
 		this.importe = importe;
 	}
 

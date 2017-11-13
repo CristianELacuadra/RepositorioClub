@@ -104,13 +104,23 @@ public class Service implements IService {
 	 * @throws
 	 */
 	@Override
+	public void GuardarPersona(Personas personas) {
+		try {
+			gestor.GuardarPersona(personas);
+		} 
+		catch (Exception e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
+			throw new RuntimeException("Error al insertar el dato: "+e.getMessage());
+		}
+		
+	}
+	@Override
 	public Personas ValidarPersona(int dni) {
 		try {
 			return gestor.ValidarPersona(dni);
 		} 
 		catch (BussinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
 			throw new RuntimeException("Error al buscar el dato:",e.getCause());
 		}
@@ -177,9 +187,9 @@ public class Service implements IService {
 	}
 	
 	@Override
-	public void InhabilitarSocio(Integer dni) {
+	public void InhabilitarPersona(Integer dni) {
 		try {
-			gestor.InhabilitarSocio(dni);
+			gestor.InhabilitarPersona(dni);
 		} 
 		catch (BussinessException e) {
 			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e.getMessage());
@@ -342,6 +352,33 @@ public class Service implements IService {
 			throw new RuntimeException("No se pudo instanciar el servicio debido a un error: "+e.getMessage());
 		}
 	}
+
+	//cuotas
+	@Override
+	public List<Cuota> ObtenerCuotasPorid(List<Integer> id) {
+		try{
+			return (gestor.ObtenerCuotasPorid(id));
+		}
+		catch (Exception e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e);
+			throw new RuntimeException("ERROR: ",e.getCause());
+		}
+	}
+
+	@Override
+	public void RegistrarPagoCuotaSocio(List<Cuota> cuotas) {
+		try{
+			for(Cuota cuota : cuotas)
+				gestor.GuardarCuota(cuota);
+		}
+		catch (Exception e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e);
+			throw new RuntimeException("ERROR: ",e.getCause());
+		}
+
+	}
+
+	
 
 	
 

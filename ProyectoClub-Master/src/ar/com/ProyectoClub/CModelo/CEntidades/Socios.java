@@ -1,5 +1,5 @@
 package ar.com.ProyectoClub.CModelo.CEntidades;
-// Generated 23-oct-2017 18:29:51 by Hibernate Tools 5.2.3.Final
+// Generated 12-nov-2017 13:20:02 by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -14,28 +14,32 @@ public class Socios implements java.io.Serializable {
 	private Categoria categoria;
 	private Personas personas;
 	private Integer matricula;
-	private String estado;
 	private Date fechaingreso;
+	private String estado;
+	private boolean baja;
 	private Set cuotas = new HashSet(0);
 
 	public Socios() {
 	}
 
-	public Socios(Categoria categoria, Personas personas, Integer matricula, String estado, Date fechaingreso) {
+	public Socios(Categoria categoria, Personas personas, Integer matricula, Date fechaingreso, String estado,
+			boolean baja) {
 		this.categoria = categoria;
 		this.personas = personas;
 		this.matricula = matricula;
-		this.estado = estado;
 		this.fechaingreso = fechaingreso;
+		this.estado = estado;
+		this.baja = baja;
 	}
 
-	public Socios(Categoria categoria, Personas personas, Integer matricula, String estado, Date fechaingreso,
-			Set cuotas) {
+	public Socios(Categoria categoria, Personas personas, Integer matricula, Date fechaingreso, String estado,
+			boolean baja, Set cuotas) {
 		this.categoria = categoria;
 		this.personas = personas;
 		this.matricula = matricula;
-		this.estado = estado;
 		this.fechaingreso = fechaingreso;
+		this.estado = estado;
+		this.baja = baja;
 		this.cuotas = cuotas;
 	}
 
@@ -71,6 +75,14 @@ public class Socios implements java.io.Serializable {
 		this.matricula = matricula;
 	}
 
+	public Date getFechaingreso() {
+		return this.fechaingreso;
+	}
+
+	public void setFechaingreso(Date fechaingreso) {
+		this.fechaingreso = fechaingreso;
+	}
+
 	public String getEstado() {
 		return this.estado;
 	}
@@ -79,12 +91,12 @@ public class Socios implements java.io.Serializable {
 		this.estado = estado;
 	}
 
-	public Date getFechaingreso() {
-		return this.fechaingreso;
+	public boolean isBaja() {
+		return this.baja;
 	}
 
-	public void setFechaingreso(Date fechaingreso) {
-		this.fechaingreso = fechaingreso;
+	public void setBaja(boolean baja) {
+		this.baja = baja;
 	}
 
 	public Set getCuotas() {

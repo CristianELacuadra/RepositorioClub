@@ -21,11 +21,11 @@
         <property generated="never" lazy="false" name="habilitado" optimistic-lock="true" type="boolean" unique="false">
             <column name="HABILITADO" not-null="true"/>
         </property>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="socioses" optimistic-lock="true" sort="unsorted" table="socios">
+        <set embed-xml="true" fetch="select" cascade="all" inverse="true"  mutable="true" name="socioses" optimistic-lock="true" sort="unsorted" table="socios">
             <key on-delete="noaction">
                 <column name="idCATEGORIA" not-null="true"/>
             </key>
-            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Socios" embed-xml="true" not-found="exception"/>
+            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Socios"  embed-xml="true" not-found="exception" />
         </set>
     </class>
 </hibernate-mapping>

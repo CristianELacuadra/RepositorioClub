@@ -9,28 +9,25 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
-
 import ar.com.ProyectoClub.AVista.ClasesRender.RowsRenderer;
 import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
-import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
+import ar.com.ProyectoClub.CModelo.CEntidades.Cuota;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import java.awt.Canvas;
-import java.awt.Checkbox;
-import java.awt.Toolkit;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.awt.Toolkit;
 
 public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 
 	private ControllerCoordinador miCoordinador;
 	private JPanel contentPane;
-	public static JTextField txtNsocio;
 	public static JTextField txtdni;
 	public static JTextField txtNyA;
 	public static JTextField txtCat;
@@ -55,6 +52,7 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 	
 	public PantallaCobranzaCuota(PantallaPrincipalPersonas vtnPantallaSocios,boolean b) {
 		super(vtnPantallaSocios,b);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCobranzaCuota.class.getResource("/ar/com/ProyectoClub/AVista/icon/transaccion.png")));
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCobranzaCuota.class.getResource("/ar/com/ProyectoClub/AVista/icon/dollar_money_17872.png")));
 		setTitle("Sistema Club Avenida Ejercito - Control de Cuotas");
 		initComponents();	
@@ -64,10 +62,8 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 	private void initComponents() {
 		IdCuotas=new ArrayList<Integer>();
 		resaltado=new RowsRenderer(5);
-		txtNsocio = new JTextField();
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		JLabel lblNewLabel = new JLabel("N\u00BA Socio");
 		JLabel lblDni = new JLabel("N\u00BADocumento");
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -92,31 +88,7 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		jtDatosCuota.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//tomamos fila,columna donde se hizo click
-
-
-		        int column = jtDatosCuota.getColumnModel().getColumnIndexAtX(e.getX());
-		        int row = e.getY()/jtDatosCuota.getRowHeight();
-		        
-				if(column==4){
-					Object value = jtDatosCuota.getValueAt(row, column);
-					if(value.equals(true)){
-						Object valuefecha = jtDatosCuota.getValueAt(row, 2);
-						if(valuefecha.equals("No Presenta Pagos")){
-							IdCuotas.add((Integer) jtDatosCuota.getValueAt(row, 5));
-							btnCobrar.setEnabled(true);
-						}
-						else{
-							for(Integer i : IdCuotas){
-								if(i==(Integer) jtDatosCuota.getValueAt(row, 5))
-								IdCuotas.remove(i);
-							}
-							btnCobrar.setEnabled(false);
-						}
-					}
-					else
-						btnCobrar.setEnabled(false);
-				}
+				AccionesTabla(e);
 			}
 		});
 		
@@ -129,15 +101,6 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		panel.setBounds(10, 55, 1037, 181);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
-		lblNewLabel.setBounds(10, 39, 55, 14);
-		panel.add(lblNewLabel);
-		
-		txtNsocio.setBackground(Color.RED);
-		txtNsocio.setEditable(false);
-		txtNsocio.setBounds(61, 36, 55, 20);
-		panel.add(txtNsocio);
-		txtNsocio.setColumns(10);
 		
 		lblDni.setBounds(10, 81, 83, 14);
 		panel.add(lblDni);
@@ -183,13 +146,13 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		txtDomi.setBounds(64, 153, 380, 20);
 		panel.add(txtDomi);
 		
-		lblMatricula.setBounds(157, 39, 55, 14);
+		lblMatricula.setBounds(30, 39, 55, 14);
 		panel.add(lblMatricula);
 		
 		txtMatri.setEditable(false);
 		txtMatri.setColumns(10);
 		txtMatri.setBackground(Color.RED);
-		txtMatri.setBounds(222, 36, 106, 20);
+		txtMatri.setBounds(89, 36, 135, 20);
 		panel.add(txtMatri);
 		
 		txtTel.setEditable(false);
@@ -267,6 +230,45 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		btnCobrar.addActionListener(this);
 	}
 	
+	private void AccionesTabla(MouseEvent e) {
+		Float total,importe;
+		int columna = jtDatosCuota.getColumnModel().getColumnIndexAtX(e.getX());
+		int fila = e.getY() / jtDatosCuota.getRowHeight();
+		if (fila < jtDatosCuota.getRowCount() && fila >= 0 && columna < jtDatosCuota.getColumnCount() && columna >= 0) {
+			Object value = jtDatosCuota.getValueAt(fila, columna);
+			if(value instanceof java.lang.Boolean){
+				//tomo el ultimo total registrado
+				total =Float.parseFloat(txttotal.getText());
+				if(((java.lang.Boolean) value).booleanValue())//jtDatosCuota.getValueAt(i, 1).equals(true))
+				{
+					//tomo el ultimo total registrado
+					//importe a sumar
+					importe= (float) jtDatosCuota.getValueAt(fila, 5);
+					total=total+importe;
+				}
+				else
+				{
+					//importe a sumar
+					importe= (Float) jtDatosCuota.getValueAt(fila, 5);
+					//Total
+					total-=importe;
+				}
+				txttotal.setText(String.valueOf(total));
+				
+				//Recorro las filas, si al menos uno esta marcado se habilita el boton
+				for (int i = 0; i < jtDatosCuota.getRowCount(); i++) {
+					if(jtDatosCuota.getValueAt(i, columna).equals(true)){
+						btnCobrar.setEnabled(true);
+						break;
+					}
+					else
+						btnCobrar.setEnabled(false);
+				}
+			}
+
+		}
+	}
+	
 	public void setCoordinador(ControllerCoordinador miCoordinador) {
 		this.miCoordinador=miCoordinador;
 	}
@@ -275,12 +277,41 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try{
 			if(e.getSource()==btnCobrar){
-				miCoordinador.CobrarCuota(Integer.parseInt(txtdni.getText()),IdCuotas);
+				//miCoordinador.CobrarCuota(Integer.parseInt(txtdni.getText()),IdCuotas);
+				List<Cuota> listaCuota=tomarDatosCuota();
+				RegistrarPagoCuotas(listaCuota);
 				JOptionPane.showMessageDialog(null,"Se registro el pago con exito","Informacion",JOptionPane.INFORMATION_MESSAGE);
+				miCoordinador.CargarDatosCobranza(Integer.parseInt(txtdni.getText()), jtDatosCuota);
 			}
 		}
 		catch (Exception ex) {
 			JOptionPane.showMessageDialog(null,"No se puedo llevar a cabo la transaccion debido al siguiente error: "+ex.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+
+	private void RegistrarPagoCuotas(List<Cuota> cuotas) {
+		miCoordinador.RegistrarPagoCuotaSocio(cuotas);			
+	}
+
+
+	private List<Cuota> tomarDatosCuota() {
+			List<Integer> IdsCuotas=new ArrayList<>();
+			List<Cuota> cuotas= new ArrayList<>();
+			for (int i = 0; i < jtDatosCuota.getRowCount(); i++) {
+				if(jtDatosCuota.getValueAt(i, 1).equals(true))
+					//Obtengo los id de cuota y lo agrego a mi lista
+					IdsCuotas.add((Integer)jtDatosCuota.getValueAt(i,0));
+			}
+			//Traigo las cuotas del socio marcadas  
+			for(Cuota cuota : miCoordinador.BuscarCuotas(IdsCuotas)){
+				cuota.setFechapago(new Date());
+				cuota.setDescripcion("Pago cuota Socio: "+cuota.getSocios().getDni());
+				cuota.setEstado("Pago");
+				cuotas.add(cuota);
+			}
+			if(!cuotas.isEmpty())
+				return cuotas;
+			return null;
 	}
 }

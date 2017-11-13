@@ -3,6 +3,7 @@ package ar.com.ProyectoClub.CModelo.BNegocio;
 import java.awt.dnd.InvalidDnDOperationException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import ar.com.ProyectoClub.CModelo.CEntidades.*;
@@ -253,8 +254,11 @@ public class Gestor {
 	}
     
     public void GuardarPersona(Personas persona) throws BussinessException {
-		repositorio.GuardarPersona(persona);
-	}
+    	if(this.PersonaHabilitada(persona.getDni()))
+    		repositorio.GuardarPersona(persona);
+    	else
+    	throw new InvalidDnDOperationException("Persona inhabilitada para realizar operacion");
+    }
     
     public List<Personas> ObtenerPersonas() throws BussinessException {
     	List<Personas> lista=repositorio.ObtenerPersonas();
@@ -296,24 +300,31 @@ public class Gestor {
 	 * @throws BussinessException
 	 */
 	public List<Personas> ObtenerNoSocios() throws BussinessException {	
-		  List<Personas> listaPersonas=repositorio.ObtenerPersonas();
-		  List<Personas> listaNoSocios=new ArrayList<Personas>();
-		  if(!listaPersonas.isEmpty())
-		  {
-			  for(Personas persona: listaPersonas)
-			  {
-				  if(!persona.isEssocio())
-					  listaNoSocios.add(persona);  				  
-			  }
-			  return listaNoSocios;
-		  }
-		  return null;
+		List<Personas> listaPersonas=repositorio.ObtenerPersonas();
+		//Recorro mi collection
+		for (Iterator<Personas> iter = listaPersonas.listIterator(); iter.hasNext(); ) {
+			Personas persona = iter.next();
+			//remuevo los socios que no esten dado de baja
+			if (persona.getSocios() != null && !persona.getSocios().isBaja()){
+				iter.remove();
+			}
+		}
+		
+		//los socios que esten dado de baja se toma como no socio
+		for(Personas persona : listaPersonas){
+			if(persona.getSocios() != null && persona.getSocios().isBaja())
+				persona.setSocios(null);			
+		}
+		
+		if(!listaPersonas.isEmpty())
+			return listaPersonas;
+		return null;
 	}
 	
-	public void InhabilitarPersona(Personas persona) throws BussinessException {
+	public void InhabilitarPersona(Integer dni) throws BussinessException {
+		Personas persona= repositorio.BuscarPersona(dni);
 		persona.setHabilitado(false);
 		repositorio.GuardarPersona(persona);
-
 	}
 	
 	public void habilitarPersona(Personas persona) throws BussinessException {
@@ -338,8 +349,8 @@ public class Gestor {
 	private boolean PersonaHabilitada(Integer dni) throws BussinessException{
 		Personas persona=repositorio.BuscarPersona(dni);
 		if(persona != null){
-			//Valido para socio
-			if(persona.isEssocio()){
+			//Valido para socio(si es socio y no esta dado de baja)
+			if(persona.getSocios() != null && !persona.getSocios().isBaja()){
 				//Inhabilitado:
 				//si el socio se dio de baja != moroso return true
 				//si el socio es es moroso == moroso return false
@@ -356,19 +367,7 @@ public class Gestor {
 		}
 		return true;
 	}
-	
-	//Gestion Socio
-	public void InhabilitarSocio(Integer dni) throws BussinessException{
-		Personas persona = repositorio.CrearPersona();
-		persona=repositorio.BuscarPersona(dni);
-		if(persona.isEssocio()){
-			persona.setHabilitado(false);
-			repositorio.GuardarPersona(persona);
-		}
-		else
-			throw new BussinessException(new BussinessMessage(null, "La persona no se encuentra registrada como socio del club"));
-	}
-	
+
 	public Socios CrearSocio() throws BussinessException 
 	{
 		return repositorio.CrearSocio();
@@ -377,6 +376,7 @@ public class Gestor {
 	public void GuardarSocio(Socios socio) throws BussinessException {
 		if(this.PersonaHabilitada(socio.getPersonas().getDni()))
 			repositorio.GuardarSocio(socio);
+		else
 		throw new InvalidDnDOperationException("Persona inhabilitada para realizar operacion");
     }
 	
@@ -702,6 +702,16 @@ public class Gestor {
 		return cuota;
 	}
 	
+	public List<Cuota> ObtenerCuotasPorid(List<Integer> listaId) throws BussinessException {
+		List<Cuota> cuotas=new ArrayList<Cuota>();
+		for(Integer idCuota : listaId)
+			cuotas.add(repositorio.BuscarCuota(idCuota));
+		if(!cuotas.isEmpty())
+			return cuotas;
+		return null;
+					
+	}
+	
 	public List<Cuota> ObtenerCuotasXEstado(String estado) throws BussinessException {
 		List<Cuota> listacuota=repositorio.ObtenerCuotas();
 		List<Cuota> listadocuotas=new ArrayList<Cuota>();
@@ -753,6 +763,8 @@ public class Gestor {
 	public void GuardarInmueble(Inmuebles entity) throws BussinessException {
 		repositorio.GuardarInmueble(entity);
 	}
+
+	
 
 	
 

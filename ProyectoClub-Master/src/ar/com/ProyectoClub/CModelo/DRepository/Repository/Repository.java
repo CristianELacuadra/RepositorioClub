@@ -390,7 +390,7 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cuota> ListaCuotaSocio(Integer dni) {
-		String query="SELECT s.cuotas FROM Socios s WHERE s.dni="+ dni; 
+		String query="SELECT c FROM Cuota c WHERE c. dni="+ dni; 
 		List<Cuota> listacouta=_sessiondehilo.createQuery(query).list();
 		if(!listacouta.isEmpty())
 			return listacouta;

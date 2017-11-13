@@ -39,10 +39,6 @@ import javax.swing.JRadioButton;
 public class PantallaPrincipalPersonas extends JFrame implements ActionListener {
 
 	private ControllerCoordinador miCoordinador; // objeto miCoordinador que
-													// permite la relacion entre
-													// esta clase y la clase
-													// ControllerCoordinador
-	private javax.swing.JButton actualizar;
 	private app.bolivia.swing.JCTextField buscar;
 	private javax.swing.JButton botonBaja;
 	private javax.swing.JPanel jPanel1;
@@ -60,6 +56,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 	public static JButton btnBaja;
 	public static JButton btnHabiitado;
 	public static JButton btnEditar;
+	public static JButton btnCuotas;
 	public JPanel panelSNS;
 	public ButtonGroup GrupoSNS;
 	public static JRadioButton checkTodos;
@@ -93,7 +90,6 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		});
 		jPanel3 = new javax.swing.JPanel();
 		registrar = new javax.swing.JButton();
-		actualizar = new javax.swing.JButton();
 		botonBaja = new javax.swing.JButton();
 		botonBaja.setEnabled(false);
 		limpiar = new javax.swing.JButton();
@@ -113,7 +109,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 				"C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\icon-Detalles.png"));
 		btnBaja = new JButton();
 		btnBaja.setName("btnBaja");
-		btnBaja.setToolTipText("Deshabilitar");
+		btnBaja.setToolTipText("Inhabilitar");
 		btnBaja.setText("");
 		btnBaja.setIcon(new ImageIcon(
 				"C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\icon-Usuario.png"));
@@ -125,12 +121,21 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		btnHabiitado.setIcon(new ImageIcon(
 				"C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\Ico-UsuHabilitado.png"));
 		btnHabiitado.setEnabled(false);
+		
 		btnEditar = new JButton();
 		btnEditar.setName("btnEditar");
 		btnEditar.setToolTipText("Editar datos");
 		btnEditar.setText("");
 		btnEditar.setIcon(new ImageIcon(
 				"C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\usuarioEditar.png"));
+		
+		btnCuotas= new JButton();
+		btnCuotas.setName("btnCuotas");
+		btnCuotas.setToolTipText("Ver Cuotas Socio");
+		btnCuotas.setText("");
+		btnCuotas.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\Vercuotas.png"));
+		btnCuotas.setEnabled(false);
+		
 		GrupoSNS=new ButtonGroup();
 		checkTodos= new JRadioButton();
 		checkSocios=new JRadioButton();
@@ -181,19 +186,6 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		registrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		registrar.addActionListener(this);
 
-		actualizar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-		actualizar.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/actualizar.png"))); // NOI18N
-		actualizar.setText("Actualizar");
-		actualizar.setBorder(null);
-		actualizar.setBorderPainted(false);
-		actualizar.setContentAreaFilled(false);
-		actualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		actualizar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		actualizar.setRolloverIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/actualizar1.png"))); // NOI18N
-		actualizar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
 		botonBaja.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 		botonBaja.setIcon(
 				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/Baja1.png"))); // NOI18N
@@ -238,29 +230,25 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 			jPanel3Layout.createParallelGroup(Alignment.LEADING)
 				.addGroup(jPanel3Layout.createSequentialGroup()
 					.addComponent(registrar, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(actualizar)
 					.addGap(18)
 					.addComponent(botonBaja)
 					.addGap(18)
 					.addComponent(botonAlta, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(limpiar)
-					.addGap(872))
+					.addGap(979))
 		);
 		jPanel3Layout.setVerticalGroup(
 			jPanel3Layout.createParallelGroup(Alignment.LEADING)
 				.addGroup(jPanel3Layout.createSequentialGroup()
-					.addGroup(jPanel3Layout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(registrar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, jPanel3Layout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(actualizar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(botonBaja, GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-							.addComponent(botonAlta, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-							.addComponent(limpiar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addGroup(jPanel3Layout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(registrar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(botonBaja, GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+						.addComponent(botonAlta, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+						.addComponent(limpiar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addContainerGap())
 		);
-		jPanel3Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {actualizar, botonBaja, limpiar});
+		jPanel3Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {botonBaja, limpiar});
 		jPanel3.setLayout(jPanel3Layout);
 
 		jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -409,12 +397,16 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 
 				((JButton) value).doClick();
 				JButton boton = (JButton) value;
-					int dni = (Integer) tablaPersona.getValueAt(fila, 6);				
+					int dni = (Integer) tablaPersona.getValueAt(fila, 8);				
                     //detalles 
 					if (boton.getName().equals("btnDetalle")){
 						miCoordinador.LimpiarDetallePersona();
 						miCoordinador.MostrarVentanaDetallesInhabilitar(dni);
 						
+					}
+					if (boton.getName().equals("btnCuotas")){
+						miCoordinador.mostrarVentanaCobranza(dni ,PantallaCobranzaCuota.jtDatosCuota);
+						//miCoordinador.MostrarVentanaDetallesInhabilitar(dni);
 					}
 					//Baja
 					if(boton.getName().equals("btnBaja"))
@@ -423,11 +415,10 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 								new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/seguro.png"))) == JOptionPane.YES_OPTION) 
 						{
 							//dar de baja
-							
-							//actualizar
+							miCoordinador.InhabilitarPersona(dni);
 
 						}
-				}
+					}
 			}
 			//CheckBox seleccionado
 			if(value instanceof java.lang.Boolean){

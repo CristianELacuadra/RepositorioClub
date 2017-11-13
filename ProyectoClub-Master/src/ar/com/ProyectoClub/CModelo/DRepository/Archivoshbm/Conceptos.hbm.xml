@@ -1,22 +1,59 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 27-sep-2017 20:45:10 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="datosclub" dynamic-insert="false" dynamic-update="false" mutable="true" name="ar.com.ProyectoClub.CModelo.CEntidades.Conceptos" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="conceptos">
-        <id name="idConcepto" type="java.lang.Integer">
-            <column name="idCONCEPTO"/>
-            <generator class="identity"/>
-        </id>
-        <property generated="never" lazy="false" name="nombre" optimistic-lock="true" type="string" unique="false">
-            <column length="45" name="NOMBRE" not-null="true"/>
-        </property>
-        <property generated="never" lazy="false" name="tipo" optimistic-lock="true" type="string" unique="false">
-            <column length="2" name="TIPO" not-null="true"/>
-        </property>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="cajas" optimistic-lock="true" sort="unsorted" table="caja">
-            <key on-delete="noaction">
-                <column name="idCONCEPTO" not-null="true"/>
-            </key>
-            <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Caja" embed-xml="true" not-found="exception"/>
-        </set>
-    </class>
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- Generated 25-oct-2017 19:40:09 by Hibernate Tools 5.2.3.Final -->
+<hibernate-mapping>
+
+<class
+    name="ar.com.ProyectoClub.CModelo.CEntidades.Conceptos"
+    table="conceptos"
+    catalog="datosclub"
+    optimistic-lock="version"
+>
+
+	<id 
+        name="idConcepto"
+        type="java.lang.Integer"
+    >
+    
+<column name="idCONCEPTO" />
+	    <generator class="identity" />
+    </id>
+
+
+
+
+    <property
+        name="nombre"
+	    type="string"
+    >
+<column name="NOMBRE" length="45" not-null="true" />
+  </property>
+
+    <property
+        name="tipo"
+	    type="string"
+    >
+<column name="TIPO" length="2" not-null="true" />
+  </property>
+
+
+	<set name="cajas"
+table="caja"
+	inverse="true"
+	lazy="true"	 		
+	 fetch="select"
+	>
+		<key
+		> 
+<column name="idCONCEPTO" not-null="true" />
+		</key>
+<one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Caja"
+/>
+	</set>
+
+</class>
+
 </hibernate-mapping>
