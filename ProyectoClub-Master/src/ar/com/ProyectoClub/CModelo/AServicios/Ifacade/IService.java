@@ -20,10 +20,13 @@ public interface IService {
 	Socios BuscarSocio(Integer dni);
 	//contrato caja
 	Caja CrearInstanciaCaja();
-	List<Caja> ObtenerRegistrosDeCaja();
+	long ObtenerRegistrosDeCaja();
 	void GuardarRegistroCaja(Caja registro);
 	Caja UltimoRegistroCaja();
 	List<Caja> ObtenerCajasPorParamatros(Date FechaDesde, Date FechaHasta, String Descripcion,boolean Ingreso, boolean Egreso);
+	List<Conceptos> ObtenerConceptos();
+	Conceptos CrearInstanciaConcepto();
+	Conceptos BuscarConcepto(Integer id);
     //contrato usuario
 	Usuario CrearUsuario();
 	Usuario ValidarUsuario(String nombreUsuario,String PassUsuario);

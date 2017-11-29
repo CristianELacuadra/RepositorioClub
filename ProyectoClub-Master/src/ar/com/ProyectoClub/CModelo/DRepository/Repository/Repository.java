@@ -3,8 +3,12 @@ package ar.com.ProyectoClub.CModelo.DRepository.Repository;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.hibernate.Query;
 
+import ar.com.ProyectoClub.CModelo.AServicios.facade.Service;
 import ar.com.ProyectoClub.CModelo.CEntidades.*;
 import ar.com.ProyectoClub.CModelo.DRepository.ClassParameterized.*;
 import ar.com.ProyectoClub.CModelo.DRepository.ExceptionsHibernate.BussinessException;
@@ -285,24 +289,22 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	 * devuelve lista de alquileres
 	 **/
 	@Override
-	public List<Alquiler> BusquedaAlquilerXFecha(Date fechainicial, Date fechafin)
+	public List<Alquiler> BusquedaAlquilerXFecha(Date fechainicial, Date fechafin) throws BussinessException 
 	{
-		try {
+		Setsession();
+		SetTransaction();
 			String QUERY = "SELECT a from Alquiler a where a.fechaReserva between :start and :end "; //Query rango de fecha
 			Query _query = _sessiondehilo.createQuery(QUERY);
 			_query.setParameter("start", fechainicial); //parametro inicial
 			_query.setParameter("end", fechafin); //parametro final
 			return _query.list(); //return lista alquileres		
-		}
-		catch (Exception e) {
-			_sessiondehilo.close();
-			throw new RuntimeException(e);
-		}
 	}
 
 	@Override
-	public long DevolverTotalRegistrosCaja() 
+	public long DevolverTotalRegistrosCaja() throws BussinessException 
 	{
+		Setsession();
+		SetTransaction();
 		String consulta="SELECT count(caja) from Caja caja";
 		long i= (Long) _sessiondehilo.createQuery(consulta).uniqueResult();
 		if(i != 0)
@@ -313,8 +315,10 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	//este metodo hay fijarse en el gestor para dividir rango de fecha ingresos y rango de fecha egresos
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Caja> ListaCajaPorRangoFecha(Date FechaDesde, Date FechaHasta) 
+	public List<Caja> ListaCajaPorRangoFecha(Date FechaDesde, Date FechaHasta) throws BussinessException 
 	{
+		Setsession();
+		SetTransaction();
 		String consulta="SELECT c FROM Caja c WHERE c.fecha BETWEEN :start AND :end ";
 		Query query = _sessiondehilo.createQuery(consulta);
 		query.setParameter("start", FechaDesde);
@@ -328,8 +332,10 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	//este metodo sera llamado por 2 metodos en el gestor para dividir los ingresos por un lado e egresos por otro lado
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Caja> ListaCajaPoranio(Integer anio) 
+	public List<Caja> ListaCajaPoranio(Integer anio) throws BussinessException 
 	{
+		Setsession();
+		SetTransaction();
 		String query="SELECT c FROM Caja c WHERE YEAR(c.fecha)="+anio;
 		List<Caja> listaCaja=_sessiondehilo.createQuery(query).list();
 		if(!listaCaja.isEmpty())
@@ -339,7 +345,9 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Caja> ListaCajaPormes(Integer anio, Integer mes) {
+	public List<Caja> ListaCajaPormes(Integer anio, Integer mes) throws BussinessException {
+		Setsession();
+		SetTransaction();
 		String query="SELECT c FROM Caja c WHERE month(c.fecha)="+mes+"and YEAR(c.fecha)="+anio;
 		List<Caja> listaCaja= _sessiondehilo.createQuery(query).list();
 		if(!listaCaja.isEmpty() )
@@ -348,7 +356,9 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	}
 
 	@Override
-	public Integer ObtenerUltimoIdIngresadoCaja() {
+	public Integer ObtenerUltimoIdIngresadoCaja() throws BussinessException {
+		Setsession();
+		SetTransaction();
 		Integer IdCaja= (Integer) _sessiondehilo.createQuery("SELECT MAX (q.idCaja) FROM Caja q").uniqueResult();
 		if(IdCaja != 0)
 			return IdCaja;
@@ -357,7 +367,9 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Caja> BusquedaPorDescripcionCaja(String Descripcion) {
+	public List<Caja> BusquedaPorDescripcionCaja(String Descripcion) throws BussinessException {
+		Setsession();
+		SetTransaction();
 		String consulta="SELECT c FROM Caja c WHERE c.descripcion LIKE '%"+Descripcion+"%'"; //filtro por descripcion			
 		List<Caja> listacaja =_sessiondehilo.createQuery(consulta).list();
 		if(listacaja.isEmpty())
@@ -369,17 +381,21 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Caja> ListaTotalEgresos() {
-			String consulta="SELECT c.cajas FROM Conceptos c WHERE c.tipo='E'";
-			List<Caja> listcaja= _sessiondehilo.createQuery(consulta).list();
-			if(!listcaja.isEmpty())
-				return listcaja;
-			return null;
+	public List<Caja> ListaTotalEgresos() throws BussinessException{
+		Setsession();
+		SetTransaction();
+		String consulta="SELECT c.cajas FROM Conceptos c WHERE c.tipo='E'";
+		List<Caja> listcaja= _sessiondehilo.createQuery(consulta).list();
+		if(!listcaja.isEmpty())
+			return listcaja;
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Caja> ListaTotalIngreso() {
+	public List<Caja> ListaTotalIngreso() throws BussinessException {
+		Setsession();
+		SetTransaction();
 		String consulta="SELECT c.cajas FROM Conceptos c WHERE c.tipo='I'";
 		List<Caja> listcaja=_sessiondehilo.createQuery(consulta).list();
 		if(!listcaja.isEmpty())
@@ -389,7 +405,9 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Cuota> ListaCuotaSocio(Integer dni) {
+	public List<Cuota> ListaCuotaSocio(Integer dni) throws BussinessException {
+		Setsession();
+		SetTransaction();
 		String query="SELECT c FROM Cuota c WHERE c. dni="+ dni; 
 		List<Cuota> listacouta=_sessiondehilo.createQuery(query).list();
 		if(!listacouta.isEmpty())
@@ -399,7 +417,9 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Cuota> ListaCuotaMes(int mes, int anio) {
+	public List<Cuota> ListaCuotaMes(int mes, int anio) throws BussinessException {
+		Setsession();
+		SetTransaction();
 		String query="SELECT c FROM Cuota c WHERE MONTH(c.fechageneracion)="+mes+" and  YEAR(c.fechageneracion)="+anio;
 		List<Cuota> listacouta=_sessiondehilo.createQuery(query).list();
 		if(!listacouta.isEmpty())			
@@ -408,7 +428,9 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	}
 
 	@Override
-	public Integer ObtenerUltimoIdIngresadoCuota() {
+	public Integer ObtenerUltimoIdIngresadoCuota() throws BussinessException {
+		Setsession();
+		SetTransaction();
 		Integer UltimoId= (Integer) _sessiondehilo.createQuery("SELECT MAX (c.id) FROM Cuota c").uniqueResult();
 		if(UltimoId !=0)
 			return UltimoId;
@@ -417,7 +439,9 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Cuota> ObternerCuotasImpagas() {
+	public List<Cuota> ObternerCuotasImpagas() throws BussinessException {
+		Setsession();
+		SetTransaction();
 		List<Cuota> listacuota=_sessiondehilo.createQuery("SELECT c  from Cuota c where c.fechaPago IS NULL").list();
 		if(!listacuota.isEmpty())
 			return listacuota;
@@ -425,7 +449,9 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	}
 
 	@Override
-	public List<Personas> FiltrarPersonasPorNombreApellido(String Nom, String Ape) {
+	public List<Personas> FiltrarPersonasPorNombreApellido(String Nom, String Ape) throws BussinessException {
+		Setsession();
+		SetTransaction();
 		String consulta=new String();
 		if(!Nom.isEmpty() && Ape.isEmpty())
 			consulta="SELECT p FROM Personas p WHERE nombre LIKE '%"+Nom+"%'"; //filtro por nombre
@@ -441,21 +467,33 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	}
 	
 	@Override
-	public long NoSociosRegistrados() {
-		long total= (Long) _sessiondehilo.createQuery("SELECT COUNT(*) FROM Personas p WHERE p.essocio=false").uniqueResult();
-		if(total != 0)
-			return  total;
-		return 0;
+	public long NoSociosRegistrados() throws BussinessException {
+			Setsession();
+			SetTransaction();
+			long total= (Long) _sessiondehilo.createQuery("SELECT COUNT(*) FROM Personas p WHERE p.essocio=false").uniqueResult();
+			if(total != 0)
+				return  total;
+			return 0;
 	}
 
 	@Override
-	public Usuario ObtenerUsuarioPorNombre(String nombreUsuario) {
-		Usuario usuario= new Usuario();
-		String consulta="SELECT u FROM Usuario u WHERE u.nick= '"+nombreUsuario+"'";
-		usuario= (Usuario) _sessiondehilo.createQuery(consulta).uniqueResult();
-		if(usuario != null)
-			return usuario;
-		return null;
+	public Usuario ObtenerUsuarioPorNombre(String nombreUsuario) throws BussinessException {
+			Setsession();
+			SetTransaction();
+			Usuario usuario= new Usuario();
+			String consulta="SELECT u FROM Usuario u WHERE u.nick= '"+nombreUsuario+"'";
+			usuario= (Usuario) _sessiondehilo.createQuery(consulta).uniqueResult();
+			if(usuario != null)
+				return usuario;
+			return null;
+	}
+
+	@Override
+	public long ObtenertotalRegistradoCaja() throws BussinessException {
+			Setsession();
+			SetTransaction();
+			long total= (Long) _sessiondehilo.createQuery("SELECT COUNT(*) FROM Caja c").uniqueResult();
+			return total;
 	}
 
 //	@Override

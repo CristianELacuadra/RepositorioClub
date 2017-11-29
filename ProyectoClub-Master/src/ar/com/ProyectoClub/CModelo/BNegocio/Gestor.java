@@ -240,7 +240,7 @@ public class Gestor {
     	return null;
     }
 	
-    public Usuario ObtenerUsuarioPorNombre(String nombreUsuario){
+    public Usuario ObtenerUsuarioPorNombre(String nombreUsuario) throws BussinessException{
     	return repositorio.ObtenerUsuarioPorNombre(nombreUsuario);
     }
 	//Gestion Persona
@@ -338,8 +338,9 @@ public class Gestor {
 	 * @param nom
 	 * @param ape
 	 * @return list<Personas>
+	 * @throws BussinessException 
 	 */
-	public List<Personas> FiltrarPersonasNombeApellido(String nom, String ape) {
+	public List<Personas> FiltrarPersonasNombeApellido(String nom, String ape) throws BussinessException {
 		List<Personas> listafiltrada= repositorio.FiltrarPersonasPorNombreApellido(nom, ape);
 		if(!listafiltrada.isEmpty())
 			return listafiltrada;
@@ -436,6 +437,10 @@ public class Gestor {
 		return repositorio.CrearCaja();
 	}
 	
+	public Conceptos CrearInstanciaConcepto() throws BussinessException {
+		return repositorio.CrearConcepto();
+	}
+	
 	public void GuardarRegistroCaja(Caja caja) throws BussinessException {
 		repositorio.GuardarCaja(caja);
 	}
@@ -473,22 +478,27 @@ public class Gestor {
 		return null;
 	}
 	
-	public List<Caja> TotalEgresos() {
+	public List<Caja> TotalEgresos() throws BussinessException {
 		return repositorio.ListaTotalEgresos();
 	}
 	
-	public List<Caja> TotalIngresos() {
+	public List<Caja> TotalIngresos() throws BussinessException {
 		return repositorio.ListaTotalIngreso();
 	}
 	
-	public List<Caja> ListarCajaPorAnio(Integer anio) {
+	public long ObtenerTotalRegistradosCaja() throws BussinessException {
+		return repositorio.ObtenertotalRegistradoCaja();
+		
+	}
+	
+	public List<Caja> ListarCajaPorAnio(Integer anio) throws BussinessException {
 		if(anio < 1900 || anio== null)
 			throw new IllegalArgumentException("formato de año no reconocido");
 		else
 			return repositorio.ListaCajaPoranio(anio);
 	}
 	
-	public List<Caja> ListarCajaMesAnio(Integer anio, Integer mes) {
+	public List<Caja> ListarCajaMesAnio(Integer anio, Integer mes) throws BussinessException {
 		if(anio!=null || mes!=null) { //motodo para validar fecha
 			if(anio>1900 && mes<=12)
 			   return repositorio.ListaCajaPormes(anio, mes);
@@ -499,7 +509,7 @@ public class Gestor {
 			throw new IllegalArgumentException("Datos ingresado nulos");
 	}
 	
-	public List<Caja> ListarCajaRangoFecha(Date fechaInicio,Date fechaFin) {
+	public List<Caja> ListarCajaRangoFecha(Date fechaInicio,Date fechaFin) throws BussinessException {
 		if(fechaInicio!=null && fechaFin!=null)//motodo para validar fecha
 				return repositorio.ListaCajaPorRangoFecha(fechaInicio, fechaFin);
 		else
@@ -583,9 +593,7 @@ public class Gestor {
 		default:
 			break;
 		}
-		if(!ListaCaja.isEmpty())
-			return ListaCaja;
-		return null;
+		return ListaCaja;
 	}
 	
 //	public void JDateChooserToString(JDateChooser fecha){
@@ -647,6 +655,7 @@ public class Gestor {
 			return listacuota;
 		return null;
 	}
+	
 	
 	/**
 	 * CambiarEstadoCuota
@@ -725,7 +734,7 @@ public class Gestor {
 		return null;
 	}
 	
-	public List<Cuota> ObtenerCuotasDelSocio(Integer dni) {
+	public List<Cuota> ObtenerCuotasDelSocio(Integer dni) throws BussinessException {
 		List<Cuota>cuotassocios=repositorio.ListaCuotaSocio(dni);
 		if(!cuotassocios.isEmpty())
 			return cuotassocios;
@@ -763,6 +772,22 @@ public class Gestor {
 	public void GuardarInmueble(Inmuebles entity) throws BussinessException {
 		repositorio.GuardarInmueble(entity);
 	}
+
+	
+	public List<Conceptos> ObtenerConceptos() throws BussinessException {
+		List<Conceptos> lista=repositorio.ObtenerConceptos();
+		if(!lista.isEmpty())
+			return lista;
+		return null;
+	}
+
+	public Conceptos BuscarConcepto(Integer id) throws BussinessException {
+		return repositorio.BuscarConceptos(id);
+	}
+
+	
+
+	
 
 	
 

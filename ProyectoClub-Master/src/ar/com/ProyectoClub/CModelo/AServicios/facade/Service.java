@@ -10,6 +10,7 @@ import ar.com.ProyectoClub.CModelo.BNegocio.Gestor;
 import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
 import ar.com.ProyectoClub.CModelo.CEntidades.Caja;
 import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
+import ar.com.ProyectoClub.CModelo.CEntidades.Conceptos;
 import ar.com.ProyectoClub.CModelo.CEntidades.Cuota;
 import ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
@@ -28,6 +29,7 @@ public class Service implements IService {
 		}
 	}
 
+	//Contrato Caja
 	/**
 	 * Se propaga la excepcion para que la capa de presentacion la muestre al usuario
 	 */
@@ -37,22 +39,56 @@ public class Service implements IService {
 			return gestor.CrearCaja();
 		}
 		catch (BussinessException e) {
-			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, e);
-			throw new RuntimeException("Error al crear la instancia",e.getCause());
+			Logger.getLogger(Service.class.getName()).log(Level.CONFIG, null, e);
+			throw new RuntimeException("Error: ",e.getCause());
 		}
 	}
 
-	
 	@Override
-	public List<Caja> ObtenerRegistrosDeCaja() {
-		// TODO Auto-generated method stub
-		return null;
+	public Conceptos CrearInstanciaConcepto() {
+		try {
+			return gestor.CrearInstanciaConcepto();
+		}
+		catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.CONFIG, null, e);
+			throw new RuntimeException("Error: ",e.getCause());
+		}
+	}
+
+	@Override
+	public Conceptos BuscarConcepto(Integer id) {
+		try {
+			return gestor.BuscarConcepto(id);
+		} 
+		catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.INFO, "Mensaje Critico", e);
+			throw new RuntimeException("Error: ",e.getCause());
+		}
+	}
+
+	@Override
+	public long ObtenerRegistrosDeCaja() {
+		try {
+			return gestor.ObtenerTotalRegistradosCaja();
+		} catch (BussinessException e) {
+			//loggeo el error mostrando la localizacion y su causa
+			Logger.getLogger(Service.class.getName()).log(Level.INFO, "Mensaje Critico",e.getBussinessMessages()+" Cause : "+e.getCause());
+			//propago hacia el cliente el mensaje de error 
+			throw new RuntimeException("Error: "+e.getBussinessMessages());
+		}
 	}
 
 	@Override
 	public void GuardarRegistroCaja(Caja registro) {
-		// TODO Auto-generated method stub
-
+		try {
+			gestor.GuardarRegistroCaja(registro);
+		} 
+		catch (BussinessException e) {
+			//loggeo el error mostrando la localizacion y su causa
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico",e.getBussinessMessages()+" Cause : "+e.getCause());
+			//propago hacia el cliente el mensaje de error 
+			throw new RuntimeException("Error: "+e.getBussinessMessages());
+		}
 	}
 
 	@Override
@@ -64,11 +100,29 @@ public class Service implements IService {
 	@Override
 	public List<Caja> ObtenerCajasPorParamatros(Date FechaDesde, Date FechaHasta, String Descripcion, boolean Ingreso,
 			boolean Egreso) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return gestor.ObtenerRegistroCajasPorParametros(FechaDesde, FechaHasta, Descripcion, Ingreso, Egreso);
+		} 
+		catch (BussinessException e) {
+			//loggeo el error mostrando la localizacion y su causa
+			Logger.getLogger(Service.class.getName()).log(Level.INFO, "Mensaje Critico",e.getBussinessMessages()+" Cause : "+e.getCause());
+			//propago hacia el cliente el mensaje de error 
+			throw new RuntimeException("Error al buscar el dato:"+e.getBussinessMessages());
+		}
 	}
 
-	
+	@Override
+	public List<Conceptos> ObtenerConceptos() {
+		try {
+			return gestor.ObtenerConceptos();
+		} 
+		catch (BussinessException e) {
+			//loggeo el error mostrando la localizacion y su causa
+			Logger.getLogger(Service.class.getName()).log(Level.INFO, "Mensaje Critico",e.getBussinessMessages()+" Cause : "+e.getCause());
+			//propago hacia el cliente el mensaje de error 
+			throw new RuntimeException("Error: "+e.getBussinessMessages());
+		}
+	}
 	
 	//Contrato usuario
 	@Override
@@ -76,10 +130,12 @@ public class Service implements IService {
 		try{
 			return gestor.CrearUsuario();
 		}
-		catch (Exception e) {
-			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, e);
+		catch (BussinessException e) {
+			//loggeo el error mostrando la localizacion y su causa
+			Logger.getLogger(Service.class.getName()).log(Level.CONFIG , "Mensaje Critico",e.getBussinessMessages()+" Cause : "+e.getCause());
+			//propago hacia el cliente el mensaje de error 
+			throw new RuntimeException("Error: "+e.getBussinessMessages());
 		}
-		return null;
 	}
 	
 	@Override
@@ -87,9 +143,11 @@ public class Service implements IService {
 		try{
 			return gestor.VerificarUsuario(nombreUsuario, PassUsuario);
 		}
-		catch (Exception ex) {
-			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, ex.getCause());
-			throw new RuntimeException(ex.getMessage());
+		catch (BussinessException e) {
+			//loggeo el error mostrando la localizacion y su causa
+			Logger.getLogger(Service.class.getName()).log(Level.INFO, "Mensaje Critico",e.getBussinessMessages()+" Cause : "+e.getCause());
+			//propago hacia el cliente el mensaje de error 
+			throw new RuntimeException("Error: "+e.getBussinessMessages());
 		}
 	}
 	@Override
@@ -170,7 +228,14 @@ public class Service implements IService {
 	//Gestion Socio
 	@Override
 	public List<Cuota> ObtenerCuotasSocio(Integer dni) {
-		return	gestor.ObtenerCuotasDelSocio(dni);
+		try {
+			return	gestor.ObtenerCuotasDelSocio(dni);
+		} catch (BussinessException e) {
+			//loggeo el error mostrando la localizacion y su causa
+			Logger.getLogger(Service.class.getName()).log(Level.INFO , "Mensaje Critico",e.getBussinessMessages()+" Cause : "+e.getCause());
+			//propago hacia el cliente el mensaje de error 
+			throw new RuntimeException("Error: "+e.getBussinessMessages());
+		}
 	}
 
 	
@@ -377,6 +442,11 @@ public class Service implements IService {
 		}
 
 	}
+
+	
+	
+	
+	
 
 	
 

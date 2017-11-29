@@ -449,7 +449,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		nuevapersona.setSexo(sexo);
 		nuevapersona.setHabilitado(true);
 		if(rdbtnSi.isSelected()){
-			nuevapersona.setEssocio(true);
+			//nuevapersona.setEssocio(true);
 			Socios socio= miCoordinador.CrearSocio();
 			socio.setDni(nuevapersona.getDni());
 			socio.setEstado("Activo");

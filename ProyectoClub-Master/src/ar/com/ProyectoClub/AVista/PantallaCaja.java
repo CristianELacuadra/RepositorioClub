@@ -53,15 +53,14 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 	public JCheckBox chcEgresos;
 	public JButton btnBuscar;
 	public JCheckBox chckIngresos;
-	public JLabel lblUsuario;
 	public JLabel lblBuscarPorDescripcion;
 	public JButton btnIngresos;
-	public JButton btnEgresos;
 	public JDateChooser dateDesde;
 	public JDateChooser dateHasta;
 	public JButton btnLimpiar;
 	
 	public PantallaCaja(){
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\icoCaja.png"));
 	//	setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/logo.png")));
 		setTitle("Club Avenida ejercito- Control de Ingresos y de Egresos");
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -163,21 +162,10 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		lblSeleccioneIngresosegresis.setBounds(854, 91, 189, 14);
 		Panel.add(lblSeleccioneIngresosegresis);
 		
-		JLabel ImgLogo = new JLabel("");
-		//ImgLogo.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\images (1)-iloveimg-resized.png"));
-		ImgLogo.setBounds(34, 28, 128, 128);
-		Panel.add(ImgLogo);
-		
-		lblUsuario = new JLabel("New label");
-		lblUsuario.setForeground(Color.WHITE);
-		lblUsuario.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblUsuario.setBounds(10, 12, 297, 14);
-		Panel.add(lblUsuario);
-		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(Color.WHITE);
 		panel_4.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel_4.setBounds(207, 28, 605, 44);
+		panel_4.setBounds(162, 28, 650, 44);
 		Panel.add(panel_4);
 		panel_4.setLayout(null);
 		
@@ -196,23 +184,21 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel_5.setBackground(Color.WHITE);
-		panel_5.setBounds(411, 101, 275, 55);
+		panel_5.setBounds(10, 28, 128, 106);
 		Panel.add(panel_5);
 		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		btnIngresos= new JButton("Ingreso");
-		//btnIngresos.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\dinero-icono-01-iloveimg-resized.png"));
+		btnIngresos= new JButton();
+		btnIngresos.setBounds(615, 11, 97, 91);
+		btnIngresos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/Registrar.png")));
+		btnIngresos.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnIngresos.setText("Registrar");
+		btnIngresos.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnIngresos.setFont(new java.awt.Font("Tahoma", 1, 12));
+		btnIngresos.setContentAreaFilled(false);
+		btnIngresos.setBorderPainted(false);
+		btnIngresos.setBorder(null);
 		panel_5.add(btnIngresos);
-		
-		btnEgresos= new JButton("Egreso");
-		//btnEgresos.setIcon(new ImageIcon("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\images-iloveimg-resized.jpg"));
-		panel_5.add(btnEgresos);
-		
-		JLabel lblRegistrar = new JLabel("Registrar");
-		lblRegistrar.setForeground(Color.WHITE);
-		lblRegistrar.setFont(new Font("Arial", Font.PLAIN, 17));
-		lblRegistrar.setBounds(516, 72, 73, 26);
-		Panel.add(lblRegistrar);
 		
 		btnLimpiar = new JButton("Limpiar");
 		//btnLimpiar.setIcon(new ImageIcon(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/limpiar.png")));
@@ -270,7 +256,6 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		btnBuscar.addActionListener(this);
 		btnLimpiar.addActionListener(this);
 		txtBuscador.addKeyListener(this);
-		btnEgresos.addActionListener(this);
 		btnIngresos.addActionListener(this);
 	}
 	
@@ -396,15 +381,8 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 			if(e.getSource()==btnBuscar)
 				ValidarEntradas();
 			
-			if(e.getSource()==btnEgresos){
-				PantallaIngresoEgreso.setEsIngreso(false);
-				miCoordinador.MostrarVentanaIngresoEgreso();
-			}
-			
-			if(e.getSource()==btnIngresos){
-				PantallaIngresoEgreso.setEsIngreso(true);
-				miCoordinador.MostrarVentanaIngresoEgreso();
-			}
+			if(e.getSource()==btnIngresos)
+				miCoordinador.MostrarVentanaIngresoEgreso();			
 			
 			if(e.getSource() == btnLimpiar){
 				this.Limpiar();			

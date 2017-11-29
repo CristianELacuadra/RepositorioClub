@@ -1,5 +1,6 @@
 package mainProject;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,11 +31,25 @@ public class MainPruebaModulos {
 //	     for(Caja u: cajas)
 //	     System.out.println(u.getDescripcion());
 	     
-
-//       Personas persona=repositorioprueba.CrearPersona();
-//       Categoria categoria=repositorioprueba.CrearCategoria();
-//       categoria=repositorioprueba.BuscarCategoria(1);
-//       persona=repositorioprueba.BuscarPersona(33698745);
+       List<Socios> socios= repositorioprueba.ObtenerSocios();      
+       Personas persona=repositorioprueba.CrearPersona();
+       Categoria categoria=repositorioprueba.CrearCategoria();
+       List<Caja> caja =new ArrayList<Caja>();
+    	caja=repositorioprueba.ObtenerCajas();
+    	try{
+    		Conceptos conceptos=new Conceptos();
+    		for(Caja cjs : caja){
+    			conceptos=cjs.getConceptos();
+    			System.out.println(cjs.getConceptos().getTipo());
+    		}
+    	}
+    	catch (Exception e)
+    	{
+			System.out.println(e.getMessage());
+		}
+       categoria=repositorioprueba.BuscarCategoria(1);
+       List<Personas> personasdd =new ArrayList<Personas>();
+    		   personasdd=repositorioprueba.ObtenerPersonas();
 //       if(!persona.getSocios().equals(null)){
 //    	   persona.setSocios(null);
 //    	   repositorioprueba.GuardarPersona(persona);
@@ -48,9 +63,9 @@ public class MainPruebaModulos {
 //        	 System.out.println("hola");
 //         }
 	     
-	     for(Personas persona: gestor.ObtenerNoSocios()){
-	    	 System.out.println(persona.getDni());
-	     }
+	    // for(Personas persona: gestor.ObtenerNoSocios()){
+	    //	 System.out.println(persona.getDni());
+	     //}
 //   
 //       socio.setEstado("Activo");
 //       socio.setFechaingreso(new Date());

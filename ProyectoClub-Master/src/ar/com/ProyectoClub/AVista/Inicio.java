@@ -173,8 +173,10 @@ public class Inicio extends JFrame  implements ActionListener,KeyListener {
 			pass=passwordField.getText();
 			usuario=miCoordinador.validarUsuario(nom, pass);
 			if(usuario !=null){
-				if(!usuario.getNick().equals(null))
+				if(!usuario.getNick().equals(null)){
 					miCoordinador.mostrarVentanaPrincipal(usuario);	
+					dispose();
+				}
 				else					
 					JOptionPane.showMessageDialog(null,"Usuario o Contraseña Incorrecta,Por favor vuelva a intentarlo","Acceso al sistema denegado",JOptionPane.ERROR_MESSAGE);
 			}

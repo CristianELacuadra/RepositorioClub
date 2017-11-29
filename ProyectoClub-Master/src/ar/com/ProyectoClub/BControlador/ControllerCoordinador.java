@@ -1,5 +1,6 @@
 package ar.com.ProyectoClub.BControlador;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -613,11 +614,20 @@ public class ControllerCoordinador {
 	//Gestion Caja
 	//---------------------------------------------------------------------------------------------------------------------------------------------------	
 
+	public Conceptos BuscarConcepto(Integer id) {
+		return modeloService.BuscarConcepto(id);
+	}
+	
+	public Conceptos CrearConcepto() {
+		return modeloService.CrearInstanciaConcepto();
+	}
+	@SuppressWarnings("unchecked")
 	public void MostrarVentanaIngresoEgreso(){
-		if(miventanaIngresoEgreso.isEsIngreso())
-			miventanaIngresoEgreso.txtTipo.setText("Ingreso");
-		else
-			miventanaIngresoEgreso.txtTipo.setText("Egreso");
+		miventanaIngresoEgreso.comboTipo.addItem("Seleccione el tipo de ingreso");
+		for(Conceptos conceptos : modeloService.ObtenerConceptos()){
+			miventanaIngresoEgreso.comboTipo.addItem(conceptos.getTipo()+"-"+conceptos.getNombre()); //Cargo conceptos y sus id
+			miventanaIngresoEgreso.mapConceptos.put (conceptos.getIdConcepto(), conceptos.getTipo());
+		}
 		miventanaIngresoEgreso.setVisible(true);
 	}
 
@@ -635,7 +645,6 @@ public class ControllerCoordinador {
 
 	public void MostrarVentanaCaja(JTable tabla){
 		miVentanaCaja.show();
-		miVentanaCaja.lblUsuario.setText(miVentanaPrincipal.getTitle());
 		miVentanaCaja.chcEgresos.setSelected(true);
 		miVentanaCaja.chckIngresos.setSelected(true);
 		tabla.setRowHeight(25);
@@ -652,13 +661,10 @@ public class ControllerCoordinador {
 
 	private boolean ValidarUltimoIngreso(){
 		//me fijo si esta vacia la caja
-		int total= modeloService.ObtenerRegistrosDeCaja().size();
-		if(total==0){
+		long total= modeloService.ObtenerRegistrosDeCaja();
+		if(total==0)
 			return false;
-		}
 		else
-			//miVentanaCaja.txtIngrPlata.setEnabled(false);
-			//miVentanaCaja.btnIngresoMonto.setEnabled(false);
 			return true;
 
 	}
@@ -670,6 +676,7 @@ public class ControllerCoordinador {
 		else{
 			java.util.List<Caja> cajas=new ArrayList<Caja>();
 			float SubTotal=0;
+			DecimalFormat df = new DecimalFormat("#.##");
 			DefaultTableModel  modeloT = new DefaultTableModel(){
 				public boolean isCellEditable(int row,int colum){  //la filas de mi tabla no pueden ser editable
 					return false;
@@ -683,21 +690,26 @@ public class ControllerCoordinador {
 			modeloT.addColumn("TIPO");
 			modeloT.addColumn("MONTO");
 			cajas=modeloService.ObtenerCajasPorParamatros(FechaDesde, FechaHasta, Descripcion, Ingreso, Egreso);
-			int numRegistros=cajas.size();
-			for (int i = 0; i < numRegistros; i++) {
-				columna[0] = cajas.get(i).getFecha();
-				columna[1] = cajas.get(i).getDescripcion();
-				if(cajas.get(i).getConceptos().getTipo().equals("I")){
-					columna[2] = "I";
-					SubTotal += cajas.get(i).getMonto(); //suma el subtotal
+			if(cajas != null){
+				int numRegistros=cajas.size();
+				for (int i = 0; i < numRegistros; i++) {
+					columna[0] = cajas.get(i).getFecha();
+					columna[1] = cajas.get(i).getDescripcion();
+					if(cajas.get(i).getConceptos().getTipo().equals("I")){
+						columna[2] = "I";
+						SubTotal += cajas.get(i).getMonto(); //suma el subtotal
+					}
+					else{
+						columna[2]="E";
+						SubTotal -= cajas.get(i).getMonto();//resta el subtotal
+					}
+					columna[3]= String.valueOf(cajas.get(i).getMonto()); 
+					modeloT.addRow(columna);
 				}
-				else{
-					columna[2]="E";
-					SubTotal -= cajas.get(i).getMonto();//resta el subtotal
-				}
-				columna[3]= String.valueOf(cajas.get(i).getMonto()); 
-				modeloT.addRow(columna);
 			}
+			else
+				JOptionPane.showMessageDialog(null,"No se han encontrado coincidencias","Information",JOptionPane.INFORMATION_MESSAGE);
+
 			//fecha
 			tabla.getColumnModel().getColumn(0).setMaxWidth(110);
 			//descripcion
@@ -706,7 +718,8 @@ public class ControllerCoordinador {
 			tabla.getColumnModel().getColumn(2).setMaxWidth(90);
 			//importe
 			tabla.getColumnModel().getColumn(3).setMaxWidth(150);
-			miVentanaCaja.txtSubTotal.setText(String.valueOf(SubTotal));
+			miVentanaCaja.txtSubTotal.setText(String.valueOf(df.format(SubTotal)));
+
 		}
 	}
 
@@ -859,6 +872,10 @@ public class ControllerCoordinador {
 		modeloService.GuardarInmueble(entity);
 
 	}
+
+	
+
+	
 
 	
 	}

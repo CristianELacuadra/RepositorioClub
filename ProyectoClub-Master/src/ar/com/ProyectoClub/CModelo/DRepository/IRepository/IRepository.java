@@ -77,24 +77,25 @@ public interface IRepository  {
 	void EliminarSocio     (Integer id) throws BussinessException;
 	void EliminarUsuario   (Integer id) throws BussinessException;
 	//Consultas
-	List<Alquiler> BusquedaAlquilerXFecha(Date fechainicial,Date fechafin);
-	long DevolverTotalRegistrosCaja();
-	List<Caja> ListaCajaPorRangoFecha(Date FechaDesde,Date FechaHasta);
-	List<Caja> ListaCajaPoranio(Integer anio);
-	List<Caja> ListaCajaPormes(Integer anio,Integer mes);
-	Integer    ObtenerUltimoIdIngresadoCaja();
-	List<Caja> BusquedaPorDescripcionCaja(String Descripcion);
-	List<Caja> ListaTotalEgresos();
-	List<Caja> ListaTotalIngreso();
+	List<Alquiler> BusquedaAlquilerXFecha(Date fechainicial,Date fechafin) throws BussinessException;
+	long DevolverTotalRegistrosCaja() throws BussinessException;
+	List<Caja> ListaCajaPorRangoFecha(Date FechaDesde,Date FechaHasta) throws BussinessException;
+	List<Caja> ListaCajaPoranio(Integer anio)throws BussinessException;
+	List<Caja> ListaCajaPormes(Integer anio,Integer mes) throws BussinessException;
+	Integer    ObtenerUltimoIdIngresadoCaja() throws BussinessException;
+	List<Caja> BusquedaPorDescripcionCaja(String Descripcion) throws BussinessException;
+	List<Caja> ListaTotalEgresos() throws BussinessException;
+	List<Caja> ListaTotalIngreso() throws BussinessException;
 	
-	List<Cuota> ListaCuotaSocio(Integer dni);
-	List<Cuota> ListaCuotaMes(int mes,int anio);
-	Integer ObtenerUltimoIdIngresadoCuota();
-	List<Cuota> ObternerCuotasImpagas();
+	List<Cuota> ListaCuotaSocio(Integer dni) throws BussinessException ;
+	List<Cuota> ListaCuotaMes(int mes,int anio) throws BussinessException;
+	Integer ObtenerUltimoIdIngresadoCuota() throws BussinessException;
+	List<Cuota> ObternerCuotasImpagas() throws BussinessException;
 	
-	List<Personas> FiltrarPersonasPorNombreApellido(String Nom,String Ape );
-	long NoSociosRegistrados();
-	Usuario ObtenerUsuarioPorNombre(String nombreUsuario);
+	List<Personas> FiltrarPersonasPorNombreApellido(String Nom,String Ape ) throws BussinessException ;
+	long NoSociosRegistrados() throws BussinessException;
+	Usuario ObtenerUsuarioPorNombre(String nombreUsuario) throws BussinessException;
+	long ObtenertotalRegistradoCaja() throws BussinessException;
 	
 	//List<Socios> ObteneresPrimero();
 }
