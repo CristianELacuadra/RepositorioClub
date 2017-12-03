@@ -321,8 +321,8 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 		SetTransaction();
 		String consulta="SELECT c FROM Caja c WHERE c.fecha BETWEEN :start AND :end ";
 		Query query = _sessiondehilo.createQuery(consulta);
-		query.setParameter("start", FechaDesde);
-		query.setParameter(":end", FechaHasta);
+		query.setDate("start", FechaDesde);
+		query.setDate("end", FechaHasta);
 		List<Caja> listcaja=query.list();
 		if(!listcaja.isEmpty())
 			return listcaja;

@@ -107,7 +107,7 @@ public class Service implements IService {
 			//loggeo el error mostrando la localizacion y su causa
 			Logger.getLogger(Service.class.getName()).log(Level.INFO, "Mensaje Critico",e.getBussinessMessages()+" Cause : "+e.getCause());
 			//propago hacia el cliente el mensaje de error 
-			throw new RuntimeException("Error al buscar el dato:"+e.getBussinessMessages());
+			throw new RuntimeException("Error "+e.getBussinessMessages());
 		}
 	}
 
@@ -156,6 +156,16 @@ public class Service implements IService {
 	}
 	
     //Contrato Perosna
+	@Override
+	public void HabilitarPersona(int dni) {
+		try {
+			gestor.habilitarPersona(dni);
+		} catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.INFO, "Mensaje Critico", e.getCause());
+			throw new RuntimeException("Error: "+e.getBussinessMessages());
+		}
+		
+	}
 	/**
 	 * ValidarPersona valida si el dni ingredo se encuentra registrado en la
 	 * base de datos, si esta lo devuelta si no null
@@ -295,6 +305,31 @@ public class Service implements IService {
 		}
 	}
     //contrato Categoria
+	
+	@Override
+	public void habilitarInhabilitarCategoria(int id) {
+		try {
+			gestor.HabiliInhabiCategoria(id);
+		} catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e.getLocalizedMessage());
+			throw new RuntimeException("Error :"+ e.getBussinessMessages());
+		}
+		
+	}
+	
+	@Override
+	public void GuardarCategoria(Categoria categoria) {
+		try {
+			gestor.GuardarCaegoria(categoria);
+		} 
+		catch (BussinessException e) {
+			//loggeo el error mostrando la localizacion y su causa
+			Logger.getLogger(Service.class.getName()).log(Level.INFO, "Mensaje Critico",e.getBussinessMessages()+" Cause : "+e.getCause());
+			//propago hacia el cliente el mensaje de error 
+			throw new RuntimeException("Error "+e.getBussinessMessages());
+		}
+
+	}
 	@Override
 	public Categoria CrearInstanciaCategoria() {
 		try {
@@ -442,6 +477,12 @@ public class Service implements IService {
 		}
 
 	}
+
+	
+
+	
+
+	
 
 	
 	

@@ -21,12 +21,12 @@ public class ControlllerPrincipal {
 	PantallaBusquedaSNS miVentanaBusquedaSNSElim;
 	PantallaBusquedaSNS miVentanaBusquedaSNSCobr;
 	PantallaCobranzaCuota miVentanaCobranzaCuota;
-	PantallaCategoriasTodas miVentanaCategorias;
 	PantallaCaja miVentanaCaja;
 	PantallaIngresoEgreso miVentanaIngresoEgreso;
 	PantallaConfiguracion miVentanaConfiguracion;
 	PantallaPrincipalPersonas miVentanaPrincipalPersonas;
 	PantallaDetallesInhabilitarSNS miVentanaDetalllesSNS;
+	PantallaConfiguracionCategoria  miVentanaConfCategoria;
 	
 
 	//
@@ -69,12 +69,12 @@ public class ControlllerPrincipal {
 			miVentanaBusquedaSNSCobr=new PantallaBusquedaSNS(miVentanaCobranzaCuota, true);
 			miVentanaCobranzaCuota= new PantallaCobranzaCuota(miVentanaPrincipalPersonas,true);
 			miCoordinador= new ControllerCoordinador();
-			miVentanaCategorias=new PantallaCategoriasTodas(miVentanaPrincipalPersonas, true);
 			miVentanaIngresoEgreso=new PantallaIngresoEgreso(miVentanaCaja, true); 
 			miVentanaConfiguracion=new PantallaConfiguracion(miVentanaPrincipal, true);
 			miVentanaCaja=new PantallaCaja();
 			miVentanaPrincipalPersonas= new PantallaPrincipalPersonas();
 			miVentanaDetalllesSNS=new PantallaDetallesInhabilitarSNS(miVentanaBusquedaSNSCobr, true);
+			miVentanaConfCategoria = new PantallaConfiguracionCategoria(miVentanaConfiguracion,true);
 			
 			miVentanaAlquiler=new PantallaAlquiler (miVentanaPrincipal,true);
 			miVentanaNuevoAlquiler=new PantallaNuevoAlquiler (miVentanaAlquiler,true);
@@ -98,12 +98,12 @@ public class ControlllerPrincipal {
 			miVentanaBusquedaSNSElim.setCoordinador(miCoordinador);
 			miVentanaBusquedaSNSCobr.setCoordinador(miCoordinador); 
 			miVentanaCobranzaCuota.setCoordinador(miCoordinador);
-			miVentanaCategorias.setCoordinador(miCoordinador);
 			miVentanaCaja.setCoordinador(miCoordinador);
 			miVentanaIngresoEgreso.setCoordinador(miCoordinador);
 			miVentanaConfiguracion.setCoordinador(miCoordinador);
 			miVentanaPrincipalPersonas.setCoordinador(miCoordinador);
 			miVentanaDetalllesSNS.setCoordinador(miCoordinador);
+			miVentanaConfCategoria.setCoordinador(miCoordinador);
 			
 			miVentanaAlquiler.setCoordinador(miCoordinador);
 			miVentanaNuevoAlquiler.setCoordinador(miCoordinador);
@@ -125,13 +125,12 @@ public class ControlllerPrincipal {
 			miCoordinador.setMiVentanaBusquedaSNS(miVentanaBusquedaSNSCobr);
 			miCoordinador.setMiVentanaBusquedaSNS(miVentanaBusquedaSNSElim);
 			miCoordinador.setMiVentanaCobranza(miVentanaCobranzaCuota);
-			miCoordinador.setMiVentanaCategorias(miVentanaCategorias);
 			miCoordinador.setMiVentanaCaja(miVentanaCaja);
 			miCoordinador.setMiventanaIngresoEgreso(miVentanaIngresoEgreso);
 			miCoordinador.setMiVentanaConfiguracion(miVentanaConfiguracion);
 			miCoordinador.setMiVentanaPrincipalPersona(miVentanaPrincipalPersonas);
 			miCoordinador.setMiVentanaDetallesSNS(miVentanaDetalllesSNS);
-			miVentanaInicio.setVisible(true);
+			miCoordinador.setMiVentanaConfCategoria(miVentanaConfCategoria);
 			
 			miCoordinador.setMiVentanaAlquiler(miVentanaAlquiler);
 			miCoordinador.setMiVentanaNuevoAlquiler(miVentanaNuevoAlquiler);
@@ -144,6 +143,7 @@ public class ControlllerPrincipal {
 			miCoordinador.setMiVentanaModificarAlquiler(miVentanaModificarAlquiler);
 			miCoordinador.setMiVentanaEliminarAlquiler(miVentanaEliminarAlquiler);
 			miCoordinador.setMiVentanaPagarAlquiler(miVentanaPagarAlquiler);
+			miVentanaInicio.setVisible(true);
 			
 			
 			

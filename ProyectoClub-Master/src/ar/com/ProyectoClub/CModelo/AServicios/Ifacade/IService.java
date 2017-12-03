@@ -49,5 +49,8 @@ public interface IService {
 	//cuotas
 	List<Cuota> ObtenerCuotasPorid(List<Integer> id);
 	void RegistrarPagoCuotaSocio(List<Cuota> cuotas);
+	void GuardarCategoria(Categoria categoria);
+	void habilitarInhabilitarCategoria(int id);
+	void HabilitarPersona(int dni);
 
 }

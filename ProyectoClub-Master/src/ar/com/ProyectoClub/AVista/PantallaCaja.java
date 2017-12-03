@@ -92,34 +92,34 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
-		panel_2.setBounds(834, 12, 443, 68);
+		panel_2.setBounds(834, 12, 487, 68);
 		Panel.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lblmmaaaa = new JLabel("(MM/AAAA)");
+		JLabel lblmmaaaa = new JLabel("(dd/mm/aaaa)");
 		lblmmaaaa.setForeground(SystemColor.desktop);
 		lblmmaaaa.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblmmaaaa.setBounds(149, 43, 64, 14);
+		lblmmaaaa.setBounds(149, 43, 92, 14);
 		panel_2.add(lblmmaaaa);
 		
-		JLabel label = new JLabel("(MM/AAAA)");
-		label.setForeground(Color.BLACK);
-		label.setFont(new Font("Arial", Font.PLAIN, 12));
-		label.setBounds(362, 43, 64, 14);
-		panel_2.add(label);
+		JLabel lblddmmaaaa = new JLabel("(dd/mm/aaaa)");
+		lblddmmaaaa.setForeground(Color.BLACK);
+		lblddmmaaaa.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblddmmaaaa.setBounds(390, 43, 87, 14);
+		panel_2.add(lblddmmaaaa);
 		
 		dateDesde= new JDateChooser();
 		dateDesde.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		dateDesde.setToolTipText("Seleccione Mes y A\u00F1o");
-		dateDesde.setBounds(10, 37, 129, 20);
+		dateDesde.setBounds(10, 43, 129, 20);
 		panel_2.add(dateDesde);
-		dateDesde.setDateFormatString("MMM-yyyy");
+		//dateDesde.setDateFormatString("MMM-yyyy");
 		
 		dateHasta= new JDateChooser();
 		dateHasta.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		dateHasta.setToolTipText("Seleccione Mes y A\u00F1o");
-		dateHasta.setDateFormatString("MMM-yyyy");
-		dateHasta.setBounds(223, 37, 129, 20);
+		//dateHasta.setDateFormatString("MMM-yyyy");
+		dateHasta.setBounds(251, 43, 129, 20);
 		panel_2.add(dateHasta);
 		
 		JLabel lblNewLabel_1 = new JLabel("Fecha Inicio");
@@ -129,7 +129,7 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		
 		JLabel lblFechaFin = new JLabel("Fecha Fin");
 		lblFechaFin.setFont(lblFechaFin.getFont().deriveFont(lblFechaFin.getFont().getStyle() | Font.ITALIC));
-		lblFechaFin.setBounds(244, 12, 87, 14);
+		lblFechaFin.setBounds(280, 12, 87, 14);
 		panel_2.add(lblFechaFin);
 		
 		JLabel lblNewLabel = new JLabel("Filtrando Fecha");
@@ -333,12 +333,12 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 	}
 	
 	public void LimpiarTabla(){
-        DefaultTableModel tb = (DefaultTableModel) jtdatos.getModel();
-        int a = jtdatos.getRowCount()-1;
-        for (int i = a; i >= 0; i--) {           
-        tb.removeRow(tb.getRowCount()-1);
-        } 
-    }
+		DefaultTableModel tb = (DefaultTableModel) jtdatos.getModel();
+		int a = jtdatos.getRowCount()-1;
+		for (int i = a; i >= 0; i--) {           
+			tb.removeRow(tb.getRowCount()-1);
+		} 
+	}
 	
 	private void ValidarEntradas(){
 		Date cmbFechaDes=new Date();
@@ -352,9 +352,8 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 				//toma la fecha como parametro
 				cmbFechaDes=dateDesde.getDate();
 				cmbFechaHas=dateHasta.getDate();
-				if(!ValidarDescripcion()){
-					descripcion=txtBuscador.getText();
-				}
+				if(!ValidarDescripcion())
+					descripcion=txtBuscador.getText();				
 				miCoordinador.BuscarCajaParametros(cmbFechaDes,cmbFechaHas, descripcion, Ingreso, Egreso,jtdatos);
 			}
 		}

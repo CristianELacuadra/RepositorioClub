@@ -363,11 +363,6 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 	}
 
 	public void limpiaCampos() {
-		DefaultTableModel modelo = (DefaultTableModel) tablaPersona.getModel();
-		int filas = tablaPersona.getRowCount();
-		for (int i = 0; i < filas; i++) {
-			modelo.removeRow(0);
-		}
 		buscar.setText("");
 	}
 
@@ -416,6 +411,17 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 						{
 							//dar de baja
 							miCoordinador.InhabilitarPersona(dni);
+							miCoordinador.CargarGrilla(tablaPersona);
+
+						}
+					}
+					if(boton.getName().equals("btnHabilitado"))
+					{
+						if (JOptionPane.showConfirmDialog(this, "¿Seguro que desea Habilitar esta Persona?", "Categorias", JOptionPane.YES_NO_OPTION, 0,
+	        					new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/seguro.png"))) == JOptionPane.YES_OPTION) {
+							//dar de baja
+							miCoordinador.HabilitarPersona(dni);
+							miCoordinador.CargarGrilla(tablaPersona);
 
 						}
 					}

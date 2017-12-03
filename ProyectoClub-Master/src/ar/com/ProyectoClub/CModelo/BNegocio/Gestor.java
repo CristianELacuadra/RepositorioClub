@@ -2,6 +2,7 @@ package ar.com.ProyectoClub.CModelo.BNegocio;
 
 import java.awt.dnd.InvalidDnDOperationException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -327,7 +328,9 @@ public class Gestor {
 		repositorio.GuardarPersona(persona);
 	}
 	
-	public void habilitarPersona(Personas persona) throws BussinessException {
+	public void habilitarPersona(int dni) throws BussinessException {
+		Personas persona=repositorio.CrearPersona();
+		persona=repositorio.BuscarPersona(dni);
 		persona.setHabilitado(true);
 		repositorio.GuardarPersona(persona);
 	}
@@ -559,6 +562,7 @@ public class Gestor {
 		return 0;
 	}
 	
+	
 	/**
 	 * ObtenerRegistroCajasPorParametros Obtiene diferentes listas de objetos caja dependiendo de los parametros 
 	 * que se recien en la firma
@@ -572,7 +576,7 @@ public class Gestor {
 	 */
 	public List<Caja> ObtenerRegistroCajasPorParametros(Date FechaDesde, Date FechaHasta, String Descripcion,boolean Ingreso, boolean Egreso) throws BussinessException{
 		List<Caja> ListaCaja=new ArrayList<Caja>();
-		switch (this.CasoBusqueda(FechaDesde, FechaHasta, Descripcion, Ingreso, Egreso)) {
+		switch (this.CasoBusqueda(FechaDesde,FechaHasta, Descripcion, Ingreso, Egreso)) {
 		case 0:
 			break;
 		case 1:
@@ -783,6 +787,20 @@ public class Gestor {
 
 	public Conceptos BuscarConcepto(Integer id) throws BussinessException {
 		return repositorio.BuscarConceptos(id);
+	}
+
+	
+	public void HabiliInhabiCategoria(int id) throws BussinessException {
+		//Busco la categoria
+		Categoria categoria= repositorio.CrearCategoria();
+		categoria=	repositorio.BuscarCategoria(id);
+		if(categoria != null){
+			if(categoria.isHabilitado())
+				categoria.setHabilitado(false);
+			else
+				categoria.setHabilitado(true);
+			repositorio.GuardarCategoria(categoria);
+		}
 	}
 
 	
