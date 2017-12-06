@@ -641,6 +641,28 @@ public class Gestor {
 	}
 	
 	//Gestion Cuota
+	private boolean ComprobarCuota() throws BussinessException{
+		int id=repositorio.ObtenerUltimoIdIngresadoCaja();
+		if(id != -1){ // tabla contiene datos
+			Cuota cuota=repositorio.BuscarCuota(id); 
+			int mescuota=FechaHora.obtenerMes(cuota.getFechageneracion()); //llamo al metodo estatico de fecha hora y obtengo el mes
+			int mesactual=FechaHora.obtenerMes(new Date());
+			if(mescuota != mesactual)
+				return true; //<-mes y anio distito de la ultima
+			else
+				return false;
+		}
+		else
+			return true; //<- la tabla esta vacia
+	}
+	public void GenerarCuotas() throws BussinessException {
+		int id=repositorio.ObtenerUltimoIdIngresadoCaja();// obtengo el ultimo id
+		Cuota cuota=repositorio.BuscarCuota(id); // busco la cuota 
+		
+		repositorio.ObtenerCategorias();
+		
+	}
+	
 	public Cuota CrearRegistroCuota() throws BussinessException {
 		return repositorio.CrearCuota();
 	}
@@ -802,6 +824,8 @@ public class Gestor {
 			repositorio.GuardarCategoria(categoria);
 		}
 	}
+
+	
 
 	
 

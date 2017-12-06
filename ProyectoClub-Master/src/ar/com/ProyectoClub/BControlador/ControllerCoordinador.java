@@ -261,6 +261,12 @@ public class ControllerCoordinador {
 	//METODOS 
 	//Gestion Socio-NoSocio
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void ObtenerPersonaNomApe(String nom, String ape) {
+		List<Personas> listaPersonas= modeloService.ObtenerPersonaNomApe(nom,ape);
+		if(!listaPersonas.isEmpty())
+			CargarGrilla(PantallaPrincipalPersonas.tablaPersona, listaPersonas);
+	}
+
 	public void HabilitarPersona(int dni) {
 		modeloService.HabilitarPersona(dni);
 		
@@ -412,6 +418,79 @@ public class ControllerCoordinador {
         		columna[10] = listaPersona.get(i).getTelefono();
         		//Saco el - del nombre de domicilio y su numero
         		String[] partes =listaPersona.get(i).getDomicilio().split("-");
+        		String domicilio=partes[0]+" "+partes[1];
+        		columna[11] = domicilio;
+        		modeloT.addRow(columna);
+        	}
+        	tabla.setRowHeight(25);
+        	tabla.getColumnModel().getColumn(0).setMinWidth(0);
+        	tabla.getColumnModel().getColumn(0).setMaxWidth(0);
+        	tabla.getColumnModel().getColumn(1).setMinWidth(0);
+        	tabla.getColumnModel().getColumn(1).setMaxWidth(0);
+        	tabla.getColumnModel().getColumn(2).setMaxWidth(30);
+        	tabla.getColumnModel().getColumn(3).setMaxWidth(60);
+        	tabla.getColumnModel().getColumn(4).setMaxWidth(60);
+        	tabla.getColumnModel().getColumn(5).setMaxWidth(60);
+        	tabla.getColumnModel().getColumn(6).setMaxWidth(60);
+        	tabla.getColumnModel().getColumn(7).setMaxWidth(60);
+        	tabla.getColumnModel().getColumn(8).setMaxWidth(200);
+        	tabla.getColumnModel().getColumn(9).setMaxWidth(400);
+        	tabla.getColumnModel().getColumn(10).setMaxWidth(200);
+        	tabla.getColumnModel().getColumn(11).setMaxWidth(600);
+        	tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);
+        }
+	}
+	@SuppressWarnings("serial")
+	public void CargarGrilla(JTable tabla,List<Personas> listaPersonas){
+		
+		boolean[] editable= { false,false,true,false,false,false,false,false,false,false,false };
+		DefaultTableModel  modeloT = new DefaultTableModel(){
+			
+			Class[] type= new Class[]{
+					java.lang.Object.class,java.lang.Object.class,java.lang.Boolean.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,
+					java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class
+			};
+			public Class getColumnClass(int columnIndex){
+				return type[columnIndex];
+			}
+			
+			public boolean isCellEditable(int row,int colum){  
+				return editable[colum];
+			}
+		};
+		Object[] columna = new Object[12];
+		
+		tabla.setModel(modeloT);
+		modeloT.addColumn("");
+		modeloT.addColumn("");
+		modeloT.addColumn("  ");
+		modeloT.addColumn("  ");
+		modeloT.addColumn("  ");
+		modeloT.addColumn("  ");
+		modeloT.addColumn("  ");
+		modeloT.addColumn("  ");
+		modeloT.addColumn("DNI");
+		modeloT.addColumn("NOMBRE Y APELLIDO");
+		modeloT.addColumn("TELEFONO");
+		modeloT.addColumn("DOMICILIO");
+
+        int numRegistros=listaPersonas.size();// devuelve un rango de 100 socios
+        if(numRegistros>0){
+        	
+        	for (int i = 0; i < numRegistros; i++) {
+        		columna[0] = listaPersonas.get(i).isHabilitado();
+        		columna[1] = (listaPersonas.get(i).getSocios() != null && !listaPersonas.get(i).getSocios().isBaja())? true:false;
+        		columna[2]=  false;//miVentanaPrincipalPersona.ChkNosocio;
+        		columna[3] = miVentanaPrincipalPersona.btnHabiitado;
+        		columna[4] = miVentanaPrincipalPersona.btnBaja;
+        		columna[5] = miVentanaPrincipalPersona.btnDetalles;
+        		columna[6]=  miVentanaPrincipalPersona.btnEditar;
+        		columna[7] =miVentanaPrincipalPersona.btnCuotas;
+        		columna[8] = listaPersonas.get(i).getDni();
+        		columna[9] = listaPersonas.get(i).getNombre()+" "+listaPersonas.get(i).getApellido();
+        		columna[10] = listaPersonas.get(i).getTelefono();
+        		//Saco el - del nombre de domicilio y su numero
+        		String[] partes =listaPersonas.get(i).getDomicilio().split("-");
         		String domicilio=partes[0]+" "+partes[1];
         		columna[11] = domicilio;
         		modeloT.addRow(columna);
@@ -910,6 +989,8 @@ public class ControllerCoordinador {
 		modeloService.GuardarInmueble(entity);
 
 	}
+
+	
 
 	
 

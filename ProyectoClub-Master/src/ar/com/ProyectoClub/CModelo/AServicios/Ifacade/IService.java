@@ -52,5 +52,7 @@ public interface IService {
 	void GuardarCategoria(Categoria categoria);
 	void habilitarInhabilitarCategoria(int id);
 	void HabilitarPersona(int dni);
+	List<Socios> ControlCuotaSocio();
+	List<Personas> ObtenerPersonaNomApe(String nom, String ape);
 
 }

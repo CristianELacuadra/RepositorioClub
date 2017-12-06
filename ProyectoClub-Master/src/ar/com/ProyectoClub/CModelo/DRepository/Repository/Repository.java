@@ -372,7 +372,7 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 		SetTransaction();
 		String consulta="SELECT c FROM Caja c WHERE c.descripcion LIKE '%"+Descripcion+"%'"; //filtro por descripcion			
 		List<Caja> listacaja =_sessiondehilo.createQuery(consulta).list();
-		if(listacaja.isEmpty())
+		if(!listacaja.isEmpty())
 			return listacaja;
 		return null;						
 	}
@@ -431,10 +431,14 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	public Integer ObtenerUltimoIdIngresadoCuota() throws BussinessException {
 		Setsession();
 		SetTransaction();
-		Integer UltimoId= (Integer) _sessiondehilo.createQuery("SELECT MAX (c.id) FROM Cuota c").uniqueResult();
-		if(UltimoId !=0)
+		String query="SELECT COUNT(*) FROM Cuota c";
+		long total= (Long)_sessiondehilo.createQuery(query) .uniqueResult();
+		if(total != 0){
+			Integer UltimoId= (Integer) _sessiondehilo.createQuery("SELECT MAX (c.id) FROM Cuota c").uniqueResult();
 			return UltimoId;
-		return 0;
+		}
+		else return -1;
+
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -495,6 +499,8 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 			long total= (Long) _sessiondehilo.createQuery("SELECT COUNT(*) FROM Caja c").uniqueResult();
 			return total;
 	}
+
+	
 
 //	@Override
 //	public List<Socios> ObtenerTresPrimero() {

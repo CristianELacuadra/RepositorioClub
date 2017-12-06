@@ -157,6 +157,17 @@ public class Service implements IService {
 	
     //Contrato Perosna
 	@Override
+	public List<Personas> ObtenerPersonaNomApe(String nom, String ape) {
+		try {
+			return gestor.FiltrarPersonasNombeApellido(nom, ape);
+		} catch (BussinessException e) {
+			//loggeo el error mostrando la localizacion y su causa
+			Logger.getLogger(Service.class.getName()).log(Level.INFO, "Mensaje Critico",e.getBussinessMessages()+" Cause : "+e.getCause());
+			//propago hacia el cliente el mensaje de error 
+			throw new RuntimeException("Error: "+e.getBussinessMessages());
+		}
+	}
+	@Override
 	public void HabilitarPersona(int dni) {
 		try {
 			gestor.habilitarPersona(dni);
@@ -477,6 +488,21 @@ public class Service implements IService {
 		}
 
 	}
+
+	@Override
+	public List<Socios> ControlCuotaSocio() {
+		try{
+			//Genero las cuotas
+			gestor.GenerarCuotas();
+			return null;
+		}
+		catch (Exception e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e);
+			throw new RuntimeException("ERROR: ",e.getCause());
+		}
+	}
+
+	
 
 	
 
