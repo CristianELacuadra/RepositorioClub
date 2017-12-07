@@ -2,6 +2,7 @@ package ar.com.ProyectoClub.CModelo.BNegocio;
 
 import java.awt.dnd.InvalidDnDOperationException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -327,7 +328,9 @@ public class Gestor {
 		repositorio.GuardarPersona(persona);
 	}
 	
-	public void habilitarPersona(Personas persona) throws BussinessException {
+	public void habilitarPersona(int dni) throws BussinessException {
+		Personas persona=repositorio.CrearPersona();
+		persona=repositorio.BuscarPersona(dni);
 		persona.setHabilitado(true);
 		repositorio.GuardarPersona(persona);
 	}
@@ -559,6 +562,7 @@ public class Gestor {
 		return 0;
 	}
 	
+	
 	/**
 	 * ObtenerRegistroCajasPorParametros Obtiene diferentes listas de objetos caja dependiendo de los parametros 
 	 * que se recien en la firma
@@ -572,7 +576,7 @@ public class Gestor {
 	 */
 	public List<Caja> ObtenerRegistroCajasPorParametros(Date FechaDesde, Date FechaHasta, String Descripcion,boolean Ingreso, boolean Egreso) throws BussinessException{
 		List<Caja> ListaCaja=new ArrayList<Caja>();
-		switch (this.CasoBusqueda(FechaDesde, FechaHasta, Descripcion, Ingreso, Egreso)) {
+		switch (this.CasoBusqueda(FechaDesde,FechaHasta, Descripcion, Ingreso, Egreso)) {
 		case 0:
 			break;
 		case 1:
@@ -637,6 +641,28 @@ public class Gestor {
 	}
 	
 	//Gestion Cuota
+	private boolean ComprobarCuota() throws BussinessException{
+		int id=repositorio.ObtenerUltimoIdIngresadoCaja();
+		if(id != -1){ // tabla contiene datos
+			Cuota cuota=repositorio.BuscarCuota(id); 
+			int mescuota=FechaHora.obtenerMes(cuota.getFechageneracion()); //llamo al metodo estatico de fecha hora y obtengo el mes
+			int mesactual=FechaHora.obtenerMes(new Date());
+			if(mescuota != mesactual)
+				return true; //<-mes y anio distito de la ultima
+			else
+				return false;
+		}
+		else
+			return true; //<- la tabla esta vacia
+	}
+	public void GenerarCuotas() throws BussinessException {
+		int id=repositorio.ObtenerUltimoIdIngresadoCaja();// obtengo el ultimo id
+		Cuota cuota=repositorio.BuscarCuota(id); // busco la cuota 
+		
+		repositorio.ObtenerCategorias();
+		
+	}
+	
 	public Cuota CrearRegistroCuota() throws BussinessException {
 		return repositorio.CrearCuota();
 	}
@@ -801,6 +827,22 @@ public class Gestor {
 			return lista;
 		return null;
 	}
+	
+
+	
+	public void HabiliInhabiCategoria(int id) throws BussinessException {
+		//Busco la categoria
+		Categoria categoria= repositorio.CrearCategoria();
+		categoria=	repositorio.BuscarCategoria(id);
+		if(categoria != null){
+			if(categoria.isHabilitado())
+				categoria.setHabilitado(false);
+			else
+				categoria.setHabilitado(true);
+			repositorio.GuardarCategoria(categoria);
+		}
+	}
+
 	
 
 	

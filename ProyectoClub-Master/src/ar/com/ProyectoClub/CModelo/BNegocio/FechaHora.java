@@ -1,5 +1,6 @@
 package ar.com.ProyectoClub.CModelo.BNegocio;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -78,7 +79,56 @@ public class FechaHora {
 	
 	}
 	public static Calendar HoraActual() {
+
 		Calendar _calendar= new GregorianCalendar();
 		return _calendar;
 	}
+	
+	/**
+	 * suma o resta la fecha deacuero al parametro(dias menos a 0 resta,dias mayor a 0 suma)
+	 * @param fecha
+	 * @param dias
+	 * @return fecha modificada
+	 */
+	public Date sumarRestarDiasFecha(Date fecha, int dias){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha); // Configuramos la fecha que se recibe
+		calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0
+
+		return calendar.getTime(); // Devuelve el objeto Date con los nuevos días añadidos
+
+	}
+	
+	/**
+	 * Obtiene el mes de la fecha pasada como parametro
+	 * @param date
+	 * @return Entero mes
+	 */
+	public static int obtenerMes(Date date){
+		if (null == date)
+			return 0;
+
+		else{
+			String formato="MM";
+			SimpleDateFormat dateFormat = new SimpleDateFormat(formato);
+			return Integer.parseInt(dateFormat.format(date));
+		}
+
+	}
+	
+/**
+ * Obtiene el añio de la fecha pasada como parametros	
+ * @param date
+ * @return int anio
+ */
+	public static int obtenerAnio(Date date){
+		if (null == date)
+			return 0;
+		else{
+			String formato="yyyy";
+			SimpleDateFormat dateFormat = new SimpleDateFormat(formato);
+			return Integer.parseInt(dateFormat.format(date));
+		}
+	}
+	
 }

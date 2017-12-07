@@ -3,6 +3,7 @@ package ar.com.ProyectoClub.AVista;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
@@ -59,10 +60,8 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 	public static JButton btnCuotas;
 	public JPanel panelSNS;
 	public ButtonGroup GrupoSNS;
-	public static JRadioButton checkTodos;
-	public JRadioButton checkSocios;
-	public JRadioButton checkNoSocio;
-
+	public static JRadioButton checkApe;
+	public JRadioButton chckNom;
 	public PantallaPrincipalPersonas() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				PantallaPrincipalPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoPaloma.png")));
@@ -95,7 +94,8 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		limpiar = new javax.swing.JButton();
 		jPanel4 = new javax.swing.JPanel();
 		buscar = new app.bolivia.swing.JCTextField();
-		buscar.setBounds(20, 40, 180, 32);
+		buscar.setToolTipText("Ingrese Nombre o Apellido segun el filtro que haya seleccionado");
+		buscar.setBounds(20, 40, 205, 32);
 		codigoL1 = new javax.swing.JLabel();
 		codigoL1.setBounds(10, 30, 250, 52);
 		botonAlta = new JButton();
@@ -137,9 +137,6 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		btnCuotas.setEnabled(false);
 		
 		GrupoSNS=new ButtonGroup();
-		checkTodos= new JRadioButton();
-		checkSocios=new JRadioButton();
-		checkNoSocio=new JRadioButton();
 		
 
 		// setClosable(true);
@@ -224,6 +221,15 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		botonAlta.setRolloverIcon(
 				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/Alta2.png"))); // NOI18N
 		botonAlta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		
+		JButton btnControlCuotas = new JButton();
+		btnControlCuotas.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnControlCuotas.setText("Control Morosos");
+		btnControlCuotas.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnControlCuotas.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnControlCuotas.setContentAreaFilled(false);
+		btnControlCuotas.setBorderPainted(false);
+		btnControlCuotas.setBorder(null);
 
 		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
 		jPanel3Layout.setHorizontalGroup(
@@ -236,7 +242,9 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 					.addComponent(botonAlta, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(limpiar)
-					.addGap(979))
+					.addGap(18)
+					.addComponent(btnControlCuotas)
+					.addGap(858))
 		);
 		jPanel3Layout.setVerticalGroup(
 			jPanel3Layout.createParallelGroup(Alignment.LEADING)
@@ -247,6 +255,9 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 						.addComponent(botonAlta, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
 						.addComponent(limpiar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addContainerGap())
+				.addGroup(jPanel3Layout.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(btnControlCuotas, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
 		);
 		jPanel3Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {botonBaja, limpiar});
 		jPanel3.setLayout(jPanel3Layout);
@@ -258,27 +269,20 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		jPanel4.setLayout(null);
 
 		buscar.setBackground(new java.awt.Color(34, 102, 145));
-		buscar.setBorder(null);
-		buscar.setForeground(new java.awt.Color(255, 255, 255));
-		buscar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-		buscar.setOpaque(false);
-		buscar.setPhColor(new java.awt.Color(255, 255, 255));
-		buscar.setPlaceholder("BUSCAR");
+        buscar.setBorder(null);
+        buscar.setForeground(new java.awt.Color(255, 255, 255));
+        buscar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buscar.setOpaque(false);
+        buscar.setPhColor(new java.awt.Color(255, 255, 255));
+        buscar.setPlaceholder("Ingrese Nombre o Apellido ");
+        buscar.addActionListener(this);
 
 		jPanel4.add(buscar);
 
 		codigoL1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		codigoL1.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/buscarL.png"))); // NOI18N
+				new ImageIcon(PantallaPrincipalPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/PanelEntrada.png"))); // NOI18N
 		jPanel4.add(codigoL1);
-		
-		panelSNS = new JPanel();
-		panelSNS.setBounds(270, 11, 240, 87);
-		panelSNS.setBackground(Color.WHITE);
-		panelSNS.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(),
-				"Seleccione un metodo de busqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-				javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12)));
-		panelSNS.setLayout(null);
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1Layout.setHorizontalGroup(
@@ -286,12 +290,9 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 				.addGroup(jPanel1Layout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-						.addGroup(jPanel1Layout.createSequentialGroup()
-							.addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 582, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(panelSNS, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE))
 						.addComponent(jScrollPane1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1433, Short.MAX_VALUE)
-						.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 808, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		jPanel1Layout.setVerticalGroup(
@@ -299,55 +300,48 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 				.addGroup(jPanel1Layout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panelSNS, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
 					.addGap(51))
 		);
+		checkApe= new JRadioButton();
+		checkApe.setSelected(true);
+		chckNom=new JRadioButton();
 		
-		checkTodos.setText("Todos");
-		checkTodos.setBackground(Color.WHITE);
-		checkTodos.setBounds(19, 22, 109, 23);
-		GrupoSNS.add(checkTodos);
-		panelSNS.add(checkTodos);
-		
-		checkSocios.setText("Socios");
-		checkSocios.setBackground(Color.WHITE);
-		checkSocios.setBounds(19, 53, 109, 23);
-		GrupoSNS.add(checkSocios);
-		panelSNS.add(checkSocios);
-		
-		checkNoSocio.setText("Todos");
-		checkNoSocio.setBackground(Color.WHITE);
-		checkNoSocio.setBounds(19, 90, 109, 23);
-		GrupoSNS.add(checkNoSocio);
-		panelSNS.add(checkNoSocio);
-
-		JPanel jPanel = new JPanel();
-		jPanel.setBounds(270, 11, 240, 87);
-		jPanel4.add(jPanel);
-		jPanel.setBackground(Color.WHITE);
-		jPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(),
-				"FILTRO BUSQUEDA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+		panelSNS = new JPanel();
+		jPanel4.add(panelSNS);
+		panelSNS.setBounds(435, 11, 244, 95);
+		panelSNS.setBackground(Color.WHITE);
+		panelSNS.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(),
+				"Seleccione un metodo de busqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
 				javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12)));
-		jPanel.setLayout(null);
-
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Numero documento");
-		chckbxNewCheckBox
-				.setFont(chckbxNewCheckBox.getFont().deriveFont(chckbxNewCheckBox.getFont().getStyle() | Font.BOLD));
-		chckbxNewCheckBox.setBackground(Color.WHITE);
-		chckbxNewCheckBox.setBounds(6, 20, 146, 23);
-		jPanel.add(chckbxNewCheckBox);
-
-		JCheckBox chckbxApellidoYNombre = new JCheckBox("Apellido y Nombre");
-		chckbxApellidoYNombre.setFont(
-				chckbxApellidoYNombre.getFont().deriveFont(chckbxApellidoYNombre.getFont().getStyle() | Font.BOLD));
-		chckbxApellidoYNombre.setBackground(Color.WHITE);
-		chckbxApellidoYNombre.setBounds(6, 46, 127, 23);
-		jPanel.add(chckbxApellidoYNombre);
+		panelSNS.setLayout(null);
+		
+		checkApe.setText("APELLIDO");
+		checkApe.setBackground(Color.WHITE);
+		checkApe.setBounds(19, 22, 109, 23);
+		GrupoSNS.add(checkApe);
+		panelSNS.add(checkApe);
+		
+		chckNom.setText("NOMBRE");
+		chckNom.setBackground(Color.WHITE);
+		chckNom.setBounds(19, 53, 109, 23);
+		GrupoSNS.add(chckNom);
+		panelSNS.add(chckNom);
+		
+		JButton btnDfs = new JButton();
+		btnDfs.setVerticalTextPosition(SwingConstants.TOP);
+		btnDfs.setHorizontalAlignment(SwingConstants.LEFT);
+		btnDfs.setIcon(null);
+		btnDfs.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnDfs.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnDfs.setContentAreaFilled(false);
+		btnDfs.setBorderPainted(false);
+		btnDfs.setBorder(null);
+		btnDfs.setBounds(270, 40, 75, 32);
+		jPanel4.add(btnDfs);
 		jPanel1.setLayout(jPanel1Layout);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -361,14 +355,19 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		registrar.addActionListener(this);
 		limpiar.addActionListener(this);
 	}
-
-	public void limpiaCampos() {
-		DefaultTableModel modelo = (DefaultTableModel) tablaPersona.getModel();
-		int filas = tablaPersona.getRowCount();
-		for (int i = 0; i < filas; i++) {
-			modelo.removeRow(0);
-		}
+	
+	private void limpiaCampos() {
+		 if (tablaPersona.getSelectedRow() > -1) 
+			 tablaPersona.removeRowSelectionInterval(tablaPersona.getSelectedRow(), tablaPersona.getSelectedRow());
 		buscar.setText("");
+	}
+	
+	public void LimpiarTabla(){
+		DefaultTableModel tb = (DefaultTableModel) tablaPersona.getModel();
+		int a = tablaPersona.getRowCount()-1;
+		for (int i = a; i >= 0; i--) {           
+			tb.removeRow(tb.getRowCount()-1);
+		} 
 	}
 
 	public void selecionaFila(String id) {
@@ -416,6 +415,17 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 						{
 							//dar de baja
 							miCoordinador.InhabilitarPersona(dni);
+							miCoordinador.CargarGrilla(tablaPersona);
+
+						}
+					}
+					if(boton.getName().equals("btnHabilitado"))
+					{
+						if (JOptionPane.showConfirmDialog(this, "¿Seguro que desea Habilitar esta Persona?", "Categorias", JOptionPane.YES_NO_OPTION, 0,
+	        					new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/seguro.png"))) == JOptionPane.YES_OPTION) {
+							//dar de baja
+							miCoordinador.HabilitarPersona(dni);
+							miCoordinador.CargarGrilla(tablaPersona);
 
 						}
 					}
@@ -446,11 +456,41 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == registrar) {
-			miCoordinador.mostrarFormularioPersona();
+		try{
+			if (e.getSource() == registrar) {
+				miCoordinador.mostrarFormularioPersona();
+			}
+			if (e.getSource() == limpiar) {
+				this.limpiaCampos();
+			}
+			if(e.getSource()==buscar){
+                 this.BusquedaPersona();
+			}
 		}
-		if (e.getSource() == limpiar) {
-			this.limpiaCampos();
+		catch (Exception ex) {
+			JOptionPane.showMessageDialog(null,"¡ERROR!"+e.toString(),"Atencion", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	private void BusquedaPersona() {
+		if(!buscar.getText().isEmpty())
+		{
+			LimpiarTabla();
+			String nom=new String();
+			String ape=new String();
+			if(chckNom.isSelected()){
+				nom = buscar.getText().trim();
+				ape = "";
+			}
+			else{
+				if(checkApe.isSelected()){
+					nom = "";
+					ape = buscar.getText().trim();
+				}
+			}
+			miCoordinador.ObtenerPersonaNomApe(nom,ape);
+		}
+		else
+			miCoordinador.CargarGrilla(tablaPersona);
 	}
 }

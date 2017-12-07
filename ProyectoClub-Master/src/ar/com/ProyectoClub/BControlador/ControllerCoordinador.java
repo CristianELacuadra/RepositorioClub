@@ -29,26 +29,14 @@ public class ControllerCoordinador {
 	private PantallaFormularioPersona miFormularioPersona;
 	private PantallaBusquedaSNS miVentanaBusquedaSNS;
 	private PantallaCobranzaCuota miVentanaCobranza;
-	private PantallaCategoriasTodas miVentanaCategorias;
 	private PantallaCaja miVentanaCaja;
 	private PantallaIngresoEgreso miventanaIngresoEgreso;
 	private PantallaConfiguracion miVentanaConfiguracion;
 	private PantallaPrincipalPersonas miVentanaPrincipalPersona;
 	private PantallaDetallesInhabilitarSNS miVentanaDetallesSNS;
+	private PantallaConfiguracionCategoria miVentanaConfCategoria ;
 
-	//alquiler
-	//private PantallaNuevoAlquiler miVentanaNuevoAlquiler;
-	//private PantallaBusquedaAlquiler miVentanaBusquedaAlquiler;
-	//private PantallaNuevoInmueble miVentanaNuevoInmueble;
-	//private PantallaBusquedaInmueble miVentanaBusquedaInmueble;
-//	private PantallaNuevoInmueble miVentanaModificarInmueble;
-//	private PantallaNuevoInmueble miVentanaEliminarInmueble;
-//	private PantallaNuevoInmueble miVentanaRehabilitarInmueble;
-
-//	private PantallaDetallesAlquiler miVentanaModificarAlquiler;
-//	private PantallaDetallesAlquiler miVentanaEliminarAlquiler;
-//	private PantallaDetallesAlquiler miVentanaPagarAlquiler;
-	
+	//ALQUILER
 	private PantallaAlquilerPrincipal miVentanaAlquilerPrincipal;
 	private PantallaNuevoAlquiler miVentanaNuevoAlquiler;
 	
@@ -132,13 +120,6 @@ public class ControllerCoordinador {
 		this.miVentanaCobranza = miVentanaCobranza;
 	}
 
-	public PantallaCategoriasTodas getMiVentanaCategorias() {
-		return miVentanaCategorias;
-	}
-
-	public void setMiVentanaCategorias(PantallaCategoriasTodas miVentanaCategorias) {
-		this.miVentanaCategorias = miVentanaCategorias;
-	}
 
 	public PantallaCaja getMiVentanaCaja() {
 		return miVentanaCaja;
@@ -174,13 +155,32 @@ public class ControllerCoordinador {
 	public void setMiVentanaPrincipalPersona(PantallaPrincipalPersonas miVentanaPrincipalPersona) {
 		this.miVentanaPrincipalPersona = miVentanaPrincipalPersona;
 	}
-
+	public PantallaConfiguracionCategoria getMiVentanaConfCategoria() {
+		return miVentanaConfCategoria;
+	}
 	
+	public void setMiVentanaConfCategoria(PantallaConfiguracionCategoria miVentanaConfCategoria) {
+		this.miVentanaConfCategoria = miVentanaConfCategoria;
+	}
+	
+
+//github.com/CristianELacuadra/RepositorioClub.git
 
 	//////////////////////////////////////////////////////////
 	//METODOS 
 	//Gestion Socio-NoSocio
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public void ObtenerPersonaNomApe(String nom, String ape) {
+		List<Personas> listaPersonas= modeloService.ObtenerPersonaNomApe(nom,ape);
+		if(!listaPersonas.isEmpty())
+			CargarGrilla(PantallaPrincipalPersonas.tablaPersona, listaPersonas);
+	}
+
+	public void HabilitarPersona(int dni) {
+		modeloService.HabilitarPersona(dni);
+		
+	}
+
 	public Personas ValidarPersona(int dni) {
 		return modeloService.ValidarPersona(dni);
 		
@@ -236,10 +236,11 @@ public class ControllerCoordinador {
 			miFormularioPersona.comboCate.removeItemAt(i);
 		}
 		miFormularioPersona.comboCate.addItem("Seleccione una categoria");
-		
 		for(Categoria categoria : modeloService.DevolverListaCategoria()){
-			miFormularioPersona.comboCate.addItem(categoria.getIdCategoria()+"-"+categoria.getNombre()); //Cargo Categorias y sus id
-			miFormularioPersona.mapCategoria.put(categoria.getIdCategoria(), categoria.getNombre());
+			if(categoria.isHabilitado()){ //si esta habilitada la categoria
+				miFormularioPersona.comboCate.addItem(categoria.getIdCategoria()+"-"+categoria.getNombre()); //Cargo Categorias y sus id
+				miFormularioPersona.mapCategoria.put(categoria.getIdCategoria(), categoria.getNombre());
+			}
 		}
 		miFormularioPersona.setVisible(true);
 	}
@@ -326,6 +327,79 @@ public class ControllerCoordinador {
         		columna[10] = listaPersona.get(i).getTelefono();
         		//Saco el - del nombre de domicilio y su numero
         		String[] partes =listaPersona.get(i).getDomicilio().split("-");
+        		String domicilio=partes[0]+" "+partes[1];
+        		columna[11] = domicilio;
+        		modeloT.addRow(columna);
+        	}
+        	tabla.setRowHeight(25);
+        	tabla.getColumnModel().getColumn(0).setMinWidth(0);
+        	tabla.getColumnModel().getColumn(0).setMaxWidth(0);
+        	tabla.getColumnModel().getColumn(1).setMinWidth(0);
+        	tabla.getColumnModel().getColumn(1).setMaxWidth(0);
+        	tabla.getColumnModel().getColumn(2).setMaxWidth(30);
+        	tabla.getColumnModel().getColumn(3).setMaxWidth(60);
+        	tabla.getColumnModel().getColumn(4).setMaxWidth(60);
+        	tabla.getColumnModel().getColumn(5).setMaxWidth(60);
+        	tabla.getColumnModel().getColumn(6).setMaxWidth(60);
+        	tabla.getColumnModel().getColumn(7).setMaxWidth(60);
+        	tabla.getColumnModel().getColumn(8).setMaxWidth(200);
+        	tabla.getColumnModel().getColumn(9).setMaxWidth(400);
+        	tabla.getColumnModel().getColumn(10).setMaxWidth(200);
+        	tabla.getColumnModel().getColumn(11).setMaxWidth(600);
+        	tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);
+        }
+	}
+	@SuppressWarnings("serial")
+	public void CargarGrilla(JTable tabla,List<Personas> listaPersonas){
+		
+		boolean[] editable= { false,false,true,false,false,false,false,false,false,false,false };
+		DefaultTableModel  modeloT = new DefaultTableModel(){
+			
+			Class[] type= new Class[]{
+					java.lang.Object.class,java.lang.Object.class,java.lang.Boolean.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,
+					java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class
+			};
+			public Class getColumnClass(int columnIndex){
+				return type[columnIndex];
+			}
+			
+			public boolean isCellEditable(int row,int colum){  
+				return editable[colum];
+			}
+		};
+		Object[] columna = new Object[12];
+		
+		tabla.setModel(modeloT);
+		modeloT.addColumn("");
+		modeloT.addColumn("");
+		modeloT.addColumn("  ");
+		modeloT.addColumn("  ");
+		modeloT.addColumn("  ");
+		modeloT.addColumn("  ");
+		modeloT.addColumn("  ");
+		modeloT.addColumn("  ");
+		modeloT.addColumn("DNI");
+		modeloT.addColumn("NOMBRE Y APELLIDO");
+		modeloT.addColumn("TELEFONO");
+		modeloT.addColumn("DOMICILIO");
+
+        int numRegistros=listaPersonas.size();// devuelve un rango de 100 socios
+        if(numRegistros>0){
+        	
+        	for (int i = 0; i < numRegistros; i++) {
+        		columna[0] = listaPersonas.get(i).isHabilitado();
+        		columna[1] = (listaPersonas.get(i).getSocios() != null && !listaPersonas.get(i).getSocios().isBaja())? true:false;
+        		columna[2]=  false;//miVentanaPrincipalPersona.ChkNosocio;
+        		columna[3] = miVentanaPrincipalPersona.btnHabiitado;
+        		columna[4] = miVentanaPrincipalPersona.btnBaja;
+        		columna[5] = miVentanaPrincipalPersona.btnDetalles;
+        		columna[6]=  miVentanaPrincipalPersona.btnEditar;
+        		columna[7] =miVentanaPrincipalPersona.btnCuotas;
+        		columna[8] = listaPersonas.get(i).getDni();
+        		columna[9] = listaPersonas.get(i).getNombre()+" "+listaPersonas.get(i).getApellido();
+        		columna[10] = listaPersonas.get(i).getTelefono();
+        		//Saco el - del nombre de domicilio y su numero
+        		String[] partes =listaPersonas.get(i).getDomicilio().split("-");
         		String domicilio=partes[0]+" "+partes[1];
         		columna[11] = domicilio;
         		modeloT.addRow(columna);
@@ -498,11 +572,27 @@ public class ControllerCoordinador {
 	//---------------------------------------------------------------------------------------------------------------------------------------------------
 	//Gestion Categorias
 	//---------------------------------------------------------------------------------------------------------------------------------------------------
+	public void HabilitarInhabilitarCategoria(int id) {
+		modeloService.habilitarInhabilitarCategoria(id);
+
+	}	
 	public java.util.List<Categoria> ListarCategorias(){
 		return modeloService.DevolverListaCategoria();
 	}
+	
+	
+	public void MostarVentanaConfCategoria(JTable tabla) {
+		this.CargarGrillaCategoria(tabla);
+		miVentanaConfCategoria.setVisible(true);
+	}
 
-	public void MostrarPantallaCategorias(JTable tabla){
+	public void GuardarCategoria(Categoria categoria) {
+		modeloService.GuardarCategoria(categoria);
+		
+	}
+     
+	public void CargarGrillaCategoria(JTable tabla){
+
 		java.util.List<Categoria> categorias=new ArrayList<Categoria>();
 		DefaultTableModel  modeloT = new DefaultTableModel(){
 			public boolean isCellEditable(int row,int colum){  //la filas de mi tabla no pueden ser editable
@@ -510,26 +600,44 @@ public class ControllerCoordinador {
 			}
 		};
 
-		Object[] columna = new Object[2];
+		Object[] columna = new Object[7];
 		tabla.setModel(modeloT);
+		modeloT.addColumn("");
+		modeloT.addColumn("");
 		modeloT.addColumn("ID");
 		modeloT.addColumn("NOMBRES");
+		modeloT.addColumn("MONTO");
+		modeloT.addColumn("DESCUENTO");
+		modeloT.addColumn("DESCRIPCION");
 		categorias=modeloService.DevolverListaCategoria();
 
 		int numRegistros=categorias.size();
 		for (int i = 0; i < numRegistros; i++) {
-			if(categorias.get(i).isHabilitado()){
-				columna[0] = categorias.get(i).getIdCategoria();
-				columna[1] = categorias.get(i).getNombre();
-				modeloT.addRow(columna);
-			}
+			columna[0] = categorias.get(i).isHabilitado();
+			columna[1] = miVentanaConfCategoria.btnEditar;
+			columna[2] = categorias.get(i).getIdCategoria();
+			columna[3] = categorias.get(i).getNombre();
+			columna[4] = categorias.get(i).getMonto();
+			columna[5] = categorias.get(i).getDescuento();
+			columna[6] = categorias.get(i).getDescripcion();
+			modeloT.addRow(columna);
 		}
+		//Estilo Tabla
+		tabla.getTableHeader().setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
+		tabla.setDefaultRenderer(Object.class,new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
+		//Dimentsion tabla
 		tabla.setRowHeight(25);
-		tabla.getColumnModel().getColumn(0).setMaxWidth(50);
-		//tabla.getColumnModel().getColumn(1).setMaxWidth(750);
-		miVentanaCategorias.setVisible(true);
+		tabla.getColumnModel().getColumn(0).setMinWidth(0);
+		tabla.getColumnModel().getColumn(0).setMaxWidth(0);
+		tabla.getColumnModel().getColumn(1).setMaxWidth(30);
+    	tabla.getColumnModel().getColumn(2).setMaxWidth(30);
+    	tabla.getColumnModel().getColumn(3).setMaxWidth(150);
+    	tabla.getColumnModel().getColumn(4).setMaxWidth(100);
+    	tabla.getColumnModel().getColumn(5).setMaxWidth(120);
+    	tabla.getColumnModel().getColumn(6).setMaxWidth(450);
+    	//acciones tabla
+    	tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);
 	}
-
 	//---------------------------------------------------------------------------------------------------------------------------------------------------
 	//Gestion Caja
 	//---------------------------------------------------------------------------------------------------------------------------------------------------	
@@ -648,8 +756,6 @@ public class ControllerCoordinador {
 	//---------------------------------------------------------------------------------------------------------------------------------------------------
 
 	public void CerraConfiguracion(){
-		miVentanaConfiguracion.dateProxGeneracion.setDate(null);
-		miVentanaConfiguracion.dateUltGeneracion.setDate(null);
 		miVentanaConfiguracion.dispose();
 	}
 	public void MostrarVentnaConfiguracion(){
@@ -661,7 +767,7 @@ public class ControllerCoordinador {
 	//---------------------------------------------------------------------------------------------------------------------------------------------------	
 	public void mostrarVentanaPrincipal(Usuario usuario) {
 		miVentanaPrincipal.setTitle("USUARIO: "+usuario.getNick()+"  TIPO: "+usuario.getTipousuario());
-		if(usuario.getTipousuario().equals("Administrador"))
+		if(usuario.getTipousuario().equals("ADMINISTRADOR"))
 			miVentanaPrincipal.btnConfig.setEnabled(true);
 		else
 			miVentanaPrincipal.btnConfig.setEnabled(false);
@@ -870,6 +976,16 @@ public class ControllerCoordinador {
 	}else
 		mensajes("Ocurrio un error inesperado, \n reintente", 0);
 	
+	
+
+	
+	
+
+	
+	
+
+	
+
 	
 	}
 	

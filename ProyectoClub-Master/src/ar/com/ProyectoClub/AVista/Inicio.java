@@ -19,17 +19,13 @@ import java.awt.TextField;
 import java.awt.ComponentOrientation;
 import java.awt.Rectangle;
 import java.awt.Color;
-import javax.swing.DebugGraphics;
 import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import java.awt.Cursor;
-import javax.swing.SwingConstants;
 import java.awt.Toolkit;
 
 
@@ -168,25 +164,28 @@ public class Inicio extends JFrame  implements ActionListener,KeyListener {
 	private void EntraAlSistema(){
 		try{
 			String nom,pass;
-			Usuario usuario=miCoordinador.CrearUsuario();
 			nom=textField.getText();
 			pass=passwordField.getText();
-			usuario=miCoordinador.validarUsuario(nom, pass);
-			if(usuario !=null){
-				if(!usuario.getNick().equals(null)){
-					miCoordinador.mostrarVentanaPrincipal(usuario);	
-					dispose();
+			if(nom.isEmpty() || pass.isEmpty())
+				JOptionPane.showMessageDialog(this, "Los campos son obligatorios", "Acceso", 0, new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/info.png")));
+			else{
+				Usuario usuario=miCoordinador.CrearUsuario();
+				usuario=miCoordinador.validarUsuario(nom, pass);
+				if(usuario !=null){
+					if(!usuario.getNick().equals(null)){
+						miCoordinador.mostrarVentanaPrincipal(usuario);	
+						dispose();
+					}
+					else					
+						JOptionPane.showMessageDialog(null,"Usuario o Contraseña Incorrecta,Por favor vuelva a intentarlo","Acceso al sistema denegado",JOptionPane.ERROR_MESSAGE);
 				}
-				else					
-					JOptionPane.showMessageDialog(null,"Usuario o Contraseña Incorrecta,Por favor vuelva a intentarlo","Acceso al sistema denegado",JOptionPane.ERROR_MESSAGE);
+				else
+					JOptionPane.showMessageDialog(null,"Usuario inexistente","Acceso al sistema denegado",JOptionPane.ERROR_MESSAGE);
+				this.limpiar();
 			}
-			else
-				JOptionPane.showMessageDialog(null,"Usuario inexistente","Acceso al sistema denegado",JOptionPane.ERROR_MESSAGE);
-
 			//Antes de abrir lanzo la generacion de cuota;
 			//miCoordinador.LanzarPrcesoAutGeneracionCuota(); //Lanza Proceso de generacion de cuotas
 			//miCoordinador.ProcesarMorosos(); //lanza proceso de generacion de morosos			
-			this.limpiar();
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null,"No se puede seguir ejecutando el sistema debido al siguiente error: "+e.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);

@@ -21,12 +21,12 @@ public class ControlllerPrincipal {
 	PantallaBusquedaSNS miVentanaBusquedaSNSElim;
 	PantallaBusquedaSNS miVentanaBusquedaSNSCobr;
 	PantallaCobranzaCuota miVentanaCobranzaCuota;
-	PantallaCategoriasTodas miVentanaCategorias;
 	PantallaCaja miVentanaCaja;
 	PantallaIngresoEgreso miVentanaIngresoEgreso;
 	PantallaConfiguracion miVentanaConfiguracion;
 	PantallaPrincipalPersonas miVentanaPrincipalPersonas;
 	PantallaDetallesInhabilitarSNS miVentanaDetalllesSNS;
+	PantallaConfiguracionCategoria  miVentanaConfCategoria;
 	
 
 	
@@ -56,13 +56,16 @@ public class ControlllerPrincipal {
 			miVentanaBusquedaSNSCobr=new PantallaBusquedaSNS(miVentanaCobranzaCuota, true);
 			miVentanaCobranzaCuota= new PantallaCobranzaCuota(miVentanaPrincipalPersonas,true);
 			miCoordinador= new ControllerCoordinador();
-			miVentanaCategorias=new PantallaCategoriasTodas(miVentanaPrincipalPersonas, true);
 			miVentanaIngresoEgreso=new PantallaIngresoEgreso(miVentanaCaja, true); 
 			miVentanaConfiguracion=new PantallaConfiguracion(miVentanaPrincipal, true);
 			miVentanaCaja=new PantallaCaja();
 			miVentanaPrincipalPersonas= new PantallaPrincipalPersonas();
 			miVentanaDetalllesSNS=new PantallaDetallesInhabilitarSNS(miVentanaBusquedaSNSCobr, true);
+//<<<<<<< HEAD
 		
+//=======
+			miVentanaConfCategoria = new PantallaConfiguracionCategoria(miVentanaConfiguracion,true);
+//>>>>>>> branch 'master' of https://github.com/CristianELacuadra/RepositorioClub.git
 			
 			
 			miVentanaAlquilerPrincipal=new PantallaAlquilerPrincipal();
@@ -77,12 +80,12 @@ public class ControlllerPrincipal {
 			miVentanaBusquedaSNSElim.setCoordinador(miCoordinador);
 			miVentanaBusquedaSNSCobr.setCoordinador(miCoordinador); 
 			miVentanaCobranzaCuota.setCoordinador(miCoordinador);
-			miVentanaCategorias.setCoordinador(miCoordinador);
 			miVentanaCaja.setCoordinador(miCoordinador);
 			miVentanaIngresoEgreso.setCoordinador(miCoordinador);
 			miVentanaConfiguracion.setCoordinador(miCoordinador);
 			miVentanaPrincipalPersonas.setCoordinador(miCoordinador);
 			miVentanaDetalllesSNS.setCoordinador(miCoordinador);
+			miVentanaConfCategoria.setCoordinador(miCoordinador);
 			
 			
 			
@@ -98,13 +101,12 @@ public class ControlllerPrincipal {
 			miCoordinador.setMiVentanaBusquedaSNS(miVentanaBusquedaSNSCobr);
 			miCoordinador.setMiVentanaBusquedaSNS(miVentanaBusquedaSNSElim);
 			miCoordinador.setMiVentanaCobranza(miVentanaCobranzaCuota);
-			miCoordinador.setMiVentanaCategorias(miVentanaCategorias);
 			miCoordinador.setMiVentanaCaja(miVentanaCaja);
 			miCoordinador.setMiventanaIngresoEgreso(miVentanaIngresoEgreso);
 			miCoordinador.setMiVentanaConfiguracion(miVentanaConfiguracion);
 			miCoordinador.setMiVentanaPrincipalPersona(miVentanaPrincipalPersonas);
 			miCoordinador.setMiVentanaDetallesSNS(miVentanaDetalllesSNS);
-			miVentanaInicio.setVisible(true);
+			miCoordinador.setMiVentanaConfCategoria(miVentanaConfCategoria);
 			
 			
 			
@@ -112,18 +114,10 @@ public class ControlllerPrincipal {
 			miCoordinador.setMiVentanaNuevoAlquiler(miVentanaNuevoAlquiler);
 			
 			
-		/*	miCoordinador.setMiVentanaAlquiler(miVentanaAlquiler);
-			miCoordinador.setMiVentanaNuevoAlquiler(miVentanaNuevoAlquiler);
-			miCoordinador.setMiVentanaNuevoInmueble(miVentanaNuevoInmueble);
-			miCoordinador.setMiVentanaBusquedaAlquiler(miVentanaBusquedaAlquiler);
-			miCoordinador.setMiVentanaBusquedaInmueble(miVentanaBusquedaInmueble);
-			miCoordinador.setMiVentanaModificarInmueble(miVentanaModificarInmueble);
-			miCoordinador.setMiVentanaEliminarInmueble(miVentanaEliminarInmueble);
-			miCoordinador.setMiVentanaRehabilitarInmueble(miVentanaRehabilitarInmueble);
-			miCoordinador.setMiVentanaModificarAlquiler(miVentanaModificarAlquiler);
-			miCoordinador.setMiVentanaEliminarAlquiler(miVentanaEliminarAlquiler);
-			miCoordinador.setMiVentanaPagarAlquiler(miVentanaPagarAlquiler);
-			*/
+
+			miVentanaInicio.setVisible(true);
+			
+//github.com/CristianELacuadra/RepositorioClub.git
 			
 			
 		}
