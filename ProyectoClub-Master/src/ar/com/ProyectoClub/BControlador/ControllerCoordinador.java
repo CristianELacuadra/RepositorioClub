@@ -8,11 +8,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import ar.com.ProyectoClub.AVista.*;
 import ar.com.ProyectoClub.AVista.ClasesRender.Render;
+import ar.com.ProyectoClub.AVista.ClasesRender.RowsRende;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IService;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.Service;
 import ar.com.ProyectoClub.CModelo.CEntidades.*;
@@ -34,19 +37,26 @@ public class ControllerCoordinador {
 	private PantallaDetallesInhabilitarSNS miVentanaDetallesSNS;
 
 	//alquiler
-	private PantallaAlquiler miVentanaAlquiler;
+	//private PantallaNuevoAlquiler miVentanaNuevoAlquiler;
+	//private PantallaBusquedaAlquiler miVentanaBusquedaAlquiler;
+	//private PantallaNuevoInmueble miVentanaNuevoInmueble;
+	//private PantallaBusquedaInmueble miVentanaBusquedaInmueble;
+//	private PantallaNuevoInmueble miVentanaModificarInmueble;
+//	private PantallaNuevoInmueble miVentanaEliminarInmueble;
+//	private PantallaNuevoInmueble miVentanaRehabilitarInmueble;
+
+//	private PantallaDetallesAlquiler miVentanaModificarAlquiler;
+//	private PantallaDetallesAlquiler miVentanaEliminarAlquiler;
+//	private PantallaDetallesAlquiler miVentanaPagarAlquiler;
+	
+	private PantallaAlquilerPrincipal miVentanaAlquilerPrincipal;
 	private PantallaNuevoAlquiler miVentanaNuevoAlquiler;
-	private PantallaBusquedaAlquiler miVentanaBusquedaAlquiler;
-	private PantallaNuevoInmueble miVentanaNuevoInmueble;
-	private PantallaBusquedaInmueble miVentanaBusquedaInmueble;
-	private PantallaNuevoInmueble miVentanaModificarInmueble;
-	private PantallaNuevoInmueble miVentanaEliminarInmueble;
-	private PantallaNuevoInmueble miVentanaRehabilitarInmueble;
-
-	private PantallaDetallesAlquiler miVentanaModificarAlquiler;
-	private PantallaDetallesAlquiler miVentanaEliminarAlquiler;
-	private PantallaDetallesAlquiler miVentanaPagarAlquiler;
-
+	
+	
+	
+	
+	
+	
 	public ControllerCoordinador() {
 		modeloService=new Service();
 	}
@@ -165,97 +175,7 @@ public class ControllerCoordinador {
 		this.miVentanaPrincipalPersona = miVentanaPrincipalPersona;
 	}
 
-	/*** alquiler   * */
-
-	public  PantallaAlquiler getMiVentanaAlquiler(){
-		return miVentanaAlquiler;
-	}
-
-	public void setMiVentanaAlquiler(PantallaAlquiler miVentanaAlquiler){
-		this.miVentanaAlquiler=miVentanaAlquiler;
-	}
-
-
-	public  PantallaNuevoAlquiler getMiVentanaNuevoAlquiler(){
-		return miVentanaNuevoAlquiler;
-	}
-
-	public void setMiVentanaNuevoAlquiler(PantallaNuevoAlquiler miVentanaNuevoAlquiler){
-		this.miVentanaNuevoAlquiler=miVentanaNuevoAlquiler;
-	} 
-
-
-	public  PantallaBusquedaAlquiler getMiVentanaBusquedaAlquiler(){
-		return miVentanaBusquedaAlquiler;
-	}
-
-	public void setMiVentanaBusquedaAlquiler(PantallaBusquedaAlquiler miVentanaBusquedaAlquiler){
-		this.miVentanaBusquedaAlquiler=miVentanaBusquedaAlquiler;
-	}
-
-	public  PantallaNuevoInmueble getMiVentanaNuevoInmueble(){
-		return miVentanaNuevoInmueble;
-	}
-
-	public void setMiVentanaNuevoInmueble(PantallaNuevoInmueble miVentanaNuevoInmueble){
-		this.miVentanaNuevoInmueble=miVentanaNuevoInmueble;
-	}
-
-	public  PantallaBusquedaInmueble getMiVentanaBusquedaInmueble(){
-		return miVentanaBusquedaInmueble;
-	}
-
-	public void setMiVentanaBusquedaInmueble(PantallaBusquedaInmueble miVentanaBusquedaInmueble){
-		this.miVentanaBusquedaInmueble=miVentanaBusquedaInmueble;
-	}
-
-	public  PantallaNuevoInmueble getMiVentanaModificarInmueble(){
-		return miVentanaModificarInmueble;
-	}
-
-	public void setMiVentanaModificarInmueble(PantallaNuevoInmueble miVentanaModificarInmueble){
-		this.miVentanaModificarInmueble=miVentanaModificarInmueble;
-	}
-
-	public  PantallaNuevoInmueble getMiVentanaEliminarInmueble(){
-		return miVentanaEliminarInmueble;
-	}
-
-	public void setMiVentanaEliminarInmueble(PantallaNuevoInmueble miVentanaEliminarInmueble){
-		this.miVentanaEliminarInmueble=miVentanaEliminarInmueble;
-	}
-
-	public  PantallaNuevoInmueble getMiVentanaRehabilitarInmueble(){
-		return miVentanaRehabilitarInmueble;
-	}
-
-	public void setMiVentanaRehabilitarInmueble(PantallaNuevoInmueble miVentanaRehabilitarInmueble){
-		this.miVentanaRehabilitarInmueble=miVentanaRehabilitarInmueble;
-	}
-
-	public  PantallaDetallesAlquiler getMiVentanaModificarAlquiler(){
-		return miVentanaModificarAlquiler;
-	}
-
-	public void setMiVentanaModificarAlquiler(PantallaDetallesAlquiler miVentanaModificarAlquiler){
-		this.miVentanaModificarAlquiler=miVentanaModificarAlquiler;
-	}
-	public  PantallaDetallesAlquiler getMiVentanaEliminarAlquiler(){
-		return miVentanaEliminarAlquiler;
-	}
-
-	public void setMiVentanaEliminarAlquiler(PantallaDetallesAlquiler miVentanaEliminarAlquiler){
-		this.miVentanaEliminarAlquiler=miVentanaEliminarAlquiler;
-	}
-
-	public  PantallaDetallesAlquiler getMiVentanaPagarAlquiler(){
-		return miVentanaPagarAlquiler;
-	}
-
-	public void setMiVentanaPagarAlquiler(PantallaDetallesAlquiler miVentanaPagarAlquiler){
-		this.miVentanaPagarAlquiler=miVentanaPagarAlquiler;
-	}
-
+	
 
 	//////////////////////////////////////////////////////////
 	//METODOS 
@@ -764,54 +684,56 @@ public class ControllerCoordinador {
 		return modeloService.ObtenerUsuarioPorNombre(nomUsuario);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
+//set y get de pantallas
+	/*** alquiler   * */
 
-
-
-
-	public void mostrarVentanaAlquiler(){
-		miVentanaAlquiler.setVisible(true);
-
-	}
-	public void mostrarVentanaNuevoAlquiler(){
-		miVentanaNuevoAlquiler.cargarCombo();//carga los componentes obligatorios de la pantalla
-		miVentanaNuevoAlquiler.setVisible(true);
-	}
-	public void mostrarVentanaBusquedaAlquiler(){
-		miVentanaBusquedaAlquiler.setVisible(true);
-	}
-	public void mostrarVentanaNuevoInmueble(){
-
-		miVentanaNuevoInmueble.setVisible(true);
-	}
-	public void mostrarVentanaBusquedaInmueble(){
-		miVentanaBusquedaInmueble.setVisible(true);
+	public  PantallaAlquilerPrincipal getMiVentanaAlquilerPrincipal(){
+		return miVentanaAlquilerPrincipal;
 	}
 
-	public void mostrarVentanaModificarInmueble(Inmuebles entity){
-		miVentanaModificarInmueble.mostrarDat(entity);
-		miVentanaModificarInmueble.setVisible(true);
-	}
-	public void mostrarVentanaEliminarInmuelble(Inmuebles entity){
-		miVentanaEliminarInmueble.mostrarDat(entity);
-		miVentanaEliminarInmueble.setVisible(true);
-	}
-	public void mostrarVentanaRehabilitarInmueble(Inmuebles entity){
-		miVentanaRehabilitarInmueble.mostrarDat(entity);
-		miVentanaRehabilitarInmueble.setVisible(true);
+	public void setMiVentanaAlquilerPrincipal(PantallaAlquilerPrincipal miVentanaAlquilerPrincipal){
+		this.miVentanaAlquilerPrincipal=miVentanaAlquilerPrincipal;
 	}
 
-
-	public void mostrarVentanaModificarAlquiler(){
-		miVentanaModificarAlquiler.setVisible(true);
-	}
-	public void mostrarVentanaEliminaralquiler(){
-		miVentanaEliminarAlquiler.setVisible(true);
-	}
-	public void mostrarVentanaPagarAlquiler(){
-		miVentanaPagarAlquiler.setVisible(true);
+    // VENTANA 
+	public  PantallaNuevoAlquiler getMiVentanaNuevoAlquiler(){
+		return miVentanaNuevoAlquiler;
 	}
 
+	public void setMiVentanaNuevoAlquiler(PantallaNuevoAlquiler miVentanaNuevoAlquiler){
+		this.miVentanaNuevoAlquiler=miVentanaNuevoAlquiler;
+	} 
+
+
+	
+	
+	
+	
+	
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------------
+		// Pantalla Alquileres principal
+			/** panel inmueble**/
+		//---------------------------------------------------------------------------------------------------------------------------------------------------
+
+	
+	public void mostrarVentanaAlquilerPrincipal(){
+		miVentanaAlquilerPrincipal.setVisible(true);
+	}
+	
+	
+	
+		
+	
 	public Inmuebles BuscarInmueble(Integer id) {
 		return modeloService.BuscarInmueble(id);
 	}
@@ -821,30 +743,28 @@ public class ControllerCoordinador {
 	}
 
 	
-	public void ListarInmuebles(JTable jtdatos, String text, boolean selected){
+	public void ListarInmuebles(JTable jtdatos, boolean selected){
 		java.util.List<Inmuebles> listaInmuebles=new ArrayList<Inmuebles>();
 		
-		if(text.isEmpty() && !selected){//si es verdadero incluye todos los inmuebles
+		if(!selected){//si es verdadero incluye todos los inmuebles
 			listaInmuebles=modeloService.ListarInmuebleHabilitado();
 			// solo inmuebles habilitados
-		}else if(selected){
-			listaInmuebles=modeloService.ListarInmueble();
-			//incluir todos habilitados y no habilitados
-			
-		}else if(!text.isEmpty()){
-			listaInmuebles=modeloService.ListarInmuebleFiltrado(text);
-			//listar resultados
-		}
+			}else if(selected){
+				listaInmuebles=modeloService.ListarInmueble();
+				//incluir todos habilitados y no habilitados
+				
+				}
 		
 		DefaultTableModel  modeloT = (DefaultTableModel) jtdatos.getModel();
-		//"Numero", "Nombre", "Precio por hora", "Direccion"
+		//"Numero", "Nombre", "Precio por hora", "SEÑA"
 		Object[] columna = new Object[4];
 		int numr=listaInmuebles.size();
 		for(int i=0;i<numr;i++){
 			columna[0]=listaInmuebles.get(i).getIdInmubles();
 			columna[1]=listaInmuebles.get(i).getNombre();
 			columna[2]=listaInmuebles.get(i).getPreciohora();
-			columna[3]=listaInmuebles.get(i).getDireccion();
+			columna[3]=listaInmuebles.get(i).getSenial();
+			columna[4]=listaInmuebles.get(i).isHabilitado();
 			modeloT.addRow(columna);
 		}
 		jtdatos.setModel(modeloT);
@@ -854,10 +774,11 @@ public class ControllerCoordinador {
 	public java.util.List<Inmuebles> ListarInmueblesAlquiler(){
 		return modeloService.ListarInmueblesParaAlquiler();
 	}
+	
+	
 
 
 	public Alquiler CrearAlquiler() {
-
 		return  modeloService.CrearInstanciaAlquiler();
 
 	}
@@ -867,52 +788,302 @@ public class ControllerCoordinador {
 		return 0;
 	}
 
+	
 	public void RegistrarInmueble(Inmuebles entity) {
 		entity.setHabilitado(true);
 		modeloService.GuardarInmueble(entity);
+// sirve para los dos guardar o actualizar
+		// id vacio
+	}
 
+	public void panelRegInmDesHabilitar(){
+		miVentanaAlquilerPrincipal.texInmNombre.setEnabled(false);
+		miVentanaAlquilerPrincipal.texInmDireccion.setEnabled(false);
+		miVentanaAlquilerPrincipal.texInmPrecioHora.setEnabled(false);
+		miVentanaAlquilerPrincipal.texInmSe.setEnabled(false);
+		miVentanaAlquilerPrincipal.texInmDescrip.setEnabled(false);
+	}
+	
+	
+	public void panelRegInmHabilitar(){
+		miVentanaAlquilerPrincipal.texInmNombre.setEnabled(true);
+		miVentanaAlquilerPrincipal.texInmDireccion.setEnabled(true);
+		miVentanaAlquilerPrincipal.texInmPrecioHora.setEnabled(true);
+		miVentanaAlquilerPrincipal.texInmSe.setEnabled(true);
+		miVentanaAlquilerPrincipal.texInmDescrip.setEnabled(true);
 	}
 
 	
+	public void limpiarPanelRegInm(){
+	 	miVentanaAlquilerPrincipal.texInmNombre.setText(null);
+		miVentanaAlquilerPrincipal.texInmDireccion.setText(null);
+		miVentanaAlquilerPrincipal.texInmPrecioHora.setText(null);
+		miVentanaAlquilerPrincipal.texInmSe.setText(null);
+		miVentanaAlquilerPrincipal.texInmDescrip.setText(null);
+	}
+	public boolean validarPanelRegInm(Inmuebles ent){
+		// validar y tambien validad id si esta vacio
+		// no se fija si idInmueble esta vacio lo hace en el boton
+		return true;
+	}
+	public void botonCancelarHabilitarInm(){
+		miVentanaAlquilerPrincipal.bEliminarI.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/remove11_10189.png")));
+		miVentanaAlquilerPrincipal.botCanhab=true;
+		miVentanaAlquilerPrincipal.bEliminarI.setText("Cancelar");
+		miVentanaAlquilerPrincipal.bEliminarI.setEnabled(true);
+	}
+	public void botonCancelarDeshabilitarInm(){
+		miVentanaAlquilerPrincipal.bEliminarI.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/borrarT1.png")));
+		miVentanaAlquilerPrincipal.botCanhab=false;
+		miVentanaAlquilerPrincipal.bEliminarI.setText("Eliminar");
+		miVentanaAlquilerPrincipal.bEliminarI.setEnabled(false);
+	}
+	
+	public void botonCancelarInm(){
+		if(0== mensajeOpciones("Pregunta", "¿Deseas cancelar? \n perdera toda la informacion que no guardo", 3)){
+			miVentanaAlquilerPrincipal.inmuebleEnt=null;
+			miVentanaAlquilerPrincipal.cargarDatosInmueble(miVentanaAlquilerPrincipal.inmuebleEnt);
+			botonCancelarDeshabilitarInm();
+			panelRegInmDesHabilitar();
+			miVentanaAlquilerPrincipal.bRegistrarI.setSelected(false);
+			
+			//revisari si faltan funciones
+			
+			/** el boton cancelar tambien se habilita cuando se actualiza/modifica un inmueble.
+			 * 
+			 */
+		}
+	}
+	public int soloNumeros(int num){
+		if(num<2){}
+		
+		
+		return num;
+	}
+	
+	public void botonEliminarInm(Inmuebles inm){
+		// accion del boton eliminar-- es una actualizacion
+	if(!inm.getIdInmubles().equals(null)){
+		inm.setHabilitado(false);
+		modeloService.GuardarInmueble(inm);	
+		mensajes("Se Deshabilito correctamente el inmueble, ", 1);
+	}else
+		mensajes("Ocurrio un error inesperado, \n reintente", 0);
+	
+	
+	}
+	
+	public void botonRestaurarInm(Inmuebles inm){
+		
+		if(!inm.getIdInmubles().equals(null)){
+			inm.setHabilitado(true);
+			modeloService.GuardarInmueble(inm);	
+			mensajes("Se habilito correctamente el inmueble, ", 1);
+		}else
+			mensajes("Ocurrio un error inesperado, \n reintente", 0);
+		
+		
+		}
+		
+	
+	public void deshabilitarBotonesInm(){
+	miVentanaAlquilerPrincipal.bActualizarI.setEnabled(false);;
+	miVentanaAlquilerPrincipal.bEliminarI.setEnabled(false);
+	miVentanaAlquilerPrincipal.bRestaurarI.setEnabled(false);
+	}
+	
+	public void habilitarBotonesInm(boolean inmHabil){
+		miVentanaAlquilerPrincipal.bActualizarI.setEnabled(true);
+		if(inmHabil){
+			miVentanaAlquilerPrincipal.bEliminarI.setEnabled(true);
+		}else{
+			miVentanaAlquilerPrincipal.bRestaurarI.setEnabled(true);
+		}
+		
+		
+		
+	}
+	
+	
+	
+	public void GuardarActualizarAlquiler(Alquiler alqui) {
+			modeloService.GuardarAlquiler(alqui);
+}
 
+	public void ListarAlquileres(JTable tableAlq) {
+		try{
+		java.util.List<Alquiler> listaAlquiler= new ArrayList<Alquiler>();
+	
+		listaAlquiler=modeloService.ListarAlquileres();
+		
+		DefaultTableModel  modeloT = (DefaultTableModel) tableAlq.getModel();
+		
+		Object[] columna = new Object[4];//tableAlq
+		int numr=listaAlquiler.size();
+		for(int i=0;i<numr;i++){
+			columna[0]=listaAlquiler.get(i).getActivo();
+			columna[1]=miVentanaAlquilerPrincipal.btnDet;
+			columna[2]=miVentanaAlquilerPrincipal.btnMod;
+			columna[3]=miVentanaAlquilerPrincipal.btnPag;
+			columna[4]=miVentanaAlquilerPrincipal.btnEli;
+			columna[5]=listaAlquiler.get(i).getNroalquiler();
+			columna[6]=listaAlquiler.get(i).getPersonas().getApellido();
+			columna[7]=listaAlquiler.get(i).getPersonas().getNombre();
+			columna[8]=listaAlquiler.get(i).getInmuebles().getNombre();
+			columna[9]=listaAlquiler.get(i).getFechaactual();
+			//new SimpleDateFormat("dd-MM-yyyy").format(listaAlquiler.get(i).getFechaactual();)
+			columna[10]=listaAlquiler.get(i).getFechareserva();
+			//new SimpleDateFormat("dd-MM-yyyy").format(listaAlquiler.get(i).getFechareserva();)
+			columna[11]=listaAlquiler.get(i).getCantidadhoras();
+			columna[12]=listaAlquiler.get(i).getMontofaltante();
+			columna[13]=listaAlquiler.get(i).getPagoalquiler();
+			
+			
+			modeloT.addRow(columna);
+		
+		}
+		tableAlq.getColumnModel().getColumn(0).setMinWidth(0);
+		tableAlq.getColumnModel().getColumn(0).setMaxWidth(0);
+
+		tableAlq.getColumnModel().getColumn(1).setMaxWidth(60);
+		tableAlq.getColumnModel().getColumn(2).setMaxWidth(60);
+		tableAlq.getColumnModel().getColumn(3).setMaxWidth(60);
+		tableAlq.setDefaultRenderer(Object.class, new RowsRende(0));
+	//	tableAlq.setModel(modeloT);
+			
+		miVentanaAlquilerPrincipal.ocultarColumnaTable(0, false);
+		miVentanaAlquilerPrincipal.ocultarColumnaTable(13, false);
+		
+		}catch(Exception e){
+			mensajes("OCURRIO ERROR CUANDO SE CARGABAN LOS ALQUILERES",0);
+			//ocurio un error
+		}
+			
+		
+	}
+		
+		
+		
+		
+		
+	public boolean buscarAlquilerInmuebleFecha(Inmuebles inm, Date a){
+		java.util.List<Alquiler> listaAlquiler= new ArrayList<Alquiler>();
+		listaAlquiler=modeloService.ListarAlquileresRealizados(inm, a);
+	
+	if (listaAlquiler.isEmpty()){
+		return listaAlquiler.isEmpty();
+	}else{
+		//funcion cuando no esta vacia
+		//para agregar un listado 
+		
+		return listaAlquiler.isEmpty();
+	}
+	
+	
+	
+	}
+	
+	public Alquiler buscarAlquiler(Integer numAlquiler) {
+	
+		return modeloService.buscarAlquiler(numAlquiler);
+	
+	}
+	
+		
+	
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/***FUNCIONES DE  MENSAJES
+	  */
+	public void mensajes(String mensaje, int tip){
+	//	tip 0: error;
+	//	1: informacion; 
+	//	2:advertencia 
+	//	3:pregunta 
+	//	defecto: cuadro solo
+		
+		switch(tip){
+		case 0:
+			JOptionPane.showMessageDialog(null,mensaje,"Error",JOptionPane.ERROR_MESSAGE);
+			break;
+		case 1:
+			JOptionPane.showMessageDialog(null, mensaje ,"Información",JOptionPane.INFORMATION_MESSAGE);
+			break;
+		case 2:
+			JOptionPane.showMessageDialog(null, mensaje ,"Advertencia",JOptionPane.WARNING_MESSAGE);
+			break;
+			
+		case 3:JOptionPane.showMessageDialog(null, mensaje, "¿Pregunta?",JOptionPane.QUESTION_MESSAGE);
+			break;
+			
+			default:
+				JOptionPane.showMessageDialog(null, mensaje/*,JOptionPane.PLAIN_MESSAGE*/);
+				break;
+		}
+	}
+	
 	
 
+	public int mensajeOpciones(String titulo,String mensaje,int tip){
+	if(tip<0 || tip>3){
+		tip=-1;
+	}
+	// YES_OPTION=0
+	// NO_OPTION	1
+	//CANCEL_OPTION	2
+	// CLOSED_OPTION	-1
 	
+	//	ERROR_MESSAGE	0
+	//INFORMATION_MESSAGE	1
+//	WARNING_MESSAGE	2
+	// QUESTION_MESSAGE	3
+	
+	//	PLAIN_MESSAGE	-1
+	int num= JOptionPane.showConfirmDialog(null
+			,mensaje
+			,titulo
+			,JOptionPane.YES_NO_OPTION
+			,tip);	
+		return num;
 	}
-//	public void ModificarInmueble(Inmuebles inm) {
-//		miLogica.ModificarInmueble(inm);
-//
-//	}
-//
-//	public void EliminarInmueble(Inmuebles inm) {
-//		miLogica.EliminarInmueble(inm);
-//
-//	}
-//
-//	public void RestaurarInmueble(Inmuebles inm) {
-//		miLogica.RestaurarInmueble(inm);
-//
-//	}
-//
-//	public void RegistrarNuevoAlquiler(Alquiler alqui) {
-//		miLogica.GuardarAlquiler(alqui);
-//
-//	}
-
-	/*
-	public void registrarPersona(PersonaVo miPersona) {
-		miLogica.validarRegistro(miPersona);
+	
+	
+	
+	public void mostrarVentanaNuevoAlquiler(){
+		miVentanaNuevoAlquiler.setVisible(true);
+		//miVentanaNuevoAlquiler.limpiar();
 	}
-
-	public PersonaVo buscarPersona(String codigoPersona) {
-		return miLogica.validarConsulta(codigoPersona);
+	public void mostrarVentanaNuevoAlquiler(int nroAlqui) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void modificarPersona(PersonaVo miPersona) {
-		miLogica.validarModificacion(miPersona);
+	public void eliminarAlquiler(int nroAlqui) {
+		// TODO Auto-generated method stub
+		
 	}
-	public void eliminarPersona(String codigo) {
-		miLogica.validarEliminacion(codigo);
+
+	public void modificarAlquiler(int nroAlqui) {
+		// TODO Auto-generated method stub
+		
 	}
-	 */
+
+	public void pagarAlquiler(int nroAlqui) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
+
+
 

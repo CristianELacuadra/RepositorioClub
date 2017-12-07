@@ -785,6 +785,24 @@ public class Gestor {
 		return repositorio.BuscarConceptos(id);
 	}
 
+	public void GuardarAlquiler(Alquiler alqui) throws BussinessException {
+		repositorio.GuardarAlquiler(alqui);
+	}
+
+	public Alquiler buscarAlquiler(Integer numAlquiler) throws BussinessException {
+			return repositorio.BuscarAlquiler(numAlquiler);
+		 
+	}
+
+	public List<Alquiler> listarAlquileres() throws BussinessException {
+		// TODO Auto-generated method stub
+		List<Alquiler> lista= repositorio.ObtenerAlquileres();
+		if(!lista.isEmpty())
+			return lista;
+		return null;
+	}
+	
+
 	
 
 	

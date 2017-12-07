@@ -2,6 +2,7 @@ package ar.com.ProyectoClub.CModelo.AServicios.Ifacade;
 
 import java.util.Date;
 import java.util.List;
+
 import ar.com.ProyectoClub.CModelo.CEntidades.*;
 
 public interface IService {
@@ -46,8 +47,18 @@ public interface IService {
 	Alquiler CrearInstanciaAlquiler();
 	Personas ValidarPersona(int dni);
 	void GuardarPersona(Personas personas);
+	
+	void GuardarAlquiler(Alquiler alqui);//33 falta
+	List<Alquiler> ListarAlquileres();
+	List<Alquiler> ListarAlquileresRealizados(Inmuebles inm, Date a);
+	Alquiler buscarAlquiler(Integer numAlquiler);
+	
 	//cuotas
 	List<Cuota> ObtenerCuotasPorid(List<Integer> id);
 	void RegistrarPagoCuotaSocio(List<Cuota> cuotas);
+	
+	
+	
+	
 
 }
