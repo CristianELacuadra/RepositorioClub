@@ -1,11 +1,17 @@
 package ar.com.ProyectoClub.CModelo.BNegocio;
 
 import java.awt.dnd.InvalidDnDOperationException;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import ar.com.ProyectoClub.CModelo.CEntidades.*;
 import ar.com.ProyectoClub.CModelo.DRepository.ExceptionsHibernate.BussinessException;
@@ -223,6 +229,8 @@ public class Gestor {
 //		_e.setHabilitado(true);
 //		this.Guardar(_e);
 //	}
+    
+   
 
     //Gestion usuario
     public Usuario CrearUsuario() throws BussinessException{
@@ -255,12 +263,24 @@ public class Gestor {
 	}
     
     public void GuardarPersona(Personas persona) throws BussinessException {
-    	if(this.PersonaHabilitada(persona.getDni()))
-    		repositorio.GuardarPersona(persona);
-    	else
-    	throw new InvalidDnDOperationException("Persona inhabilitada para realizar operacion");
+    	try{
+    		if(this.PersonaHabilitada(persona.getDni())){
+    			repositorio.GuardarPersona(persona);
+    			if(persona.getSocios() != null){
+    				repositorio.GuardarSocio(persona.getSocios());
+    				if(!persona.getSocios().isBaja())
+    					this.ArmarPrimerCuota(persona.getSocios());
+
+    			}
+    		}
+    		else
+    			throw new InvalidDnDOperationException("Persona inhabilitada para realizar operacion");
+    	}
+    	catch (Exception e) {
+    		throw new RuntimeException(e.getMessage());
+    	}
     }
-    
+
     public List<Personas> ObtenerPersonas() throws BussinessException {
     	List<Personas> lista=repositorio.ObtenerPersonas();
 		if(!lista.isEmpty())
@@ -377,9 +397,12 @@ public class Gestor {
 		return repositorio.CrearSocio();
 	}
 	
+	
+	
 	public void GuardarSocio(Socios socio) throws BussinessException {
-		if(this.PersonaHabilitada(socio.getPersonas().getDni()))
+		if(this.PersonaHabilitada(socio.getPersonas().getDni())){	
 			repositorio.GuardarSocio(socio);
+		}
 		else
 		throw new InvalidDnDOperationException("Persona inhabilitada para realizar operacion");
     }
@@ -641,6 +664,29 @@ public class Gestor {
 	}
 	
 	//Gestion Cuota
+	
+	private void ArmarPrimerCuota(Socios socio) throws Exception{
+		Cuota cuota=repositorio.CrearCuota();
+		cuota.setDescripcion(socio.getPersonas().getNombre()+ " "+ socio.getPersonas());
+		cuota.setSocios(socio);
+		cuota.setFechageneracion(new Date());
+		cuota.setImporte(CalcularImporteCuota(socio.getCategoria()));
+		cuota.setEstado("Debe");
+		repositorio.GuardarCuota(cuota);
+	}
+	
+	private float CalcularImporteCuota(Categoria categoria) throws Exception{
+		//leo el precio fijo en el archivo
+		float importeBase=this.LeerPrecioCuota();
+		//Calculo Precio
+		float total=importeBase+categoria.getMonto();
+		//retorno el total con descuento de porcentaje categoria
+		return((total*categoria.getDescuento())/100);
+	}
+	
+	public float ObtenerPrecioCuota() throws Exception {
+		return this.LeerPrecioCuota();
+	}
 	private boolean ComprobarCuota() throws BussinessException{
 		int id=repositorio.ObtenerUltimoIdIngresadoCaja();
 		if(id != -1){ // tabla contiene datos
@@ -655,7 +701,8 @@ public class Gestor {
 		else
 			return true; //<- la tabla esta vacia
 	}
-	public void GenerarCuotas() throws BussinessException {
+	
+    public void GenerarCuotas() throws BussinessException {
 		int id=repositorio.ObtenerUltimoIdIngresadoCaja();// obtengo el ultimo id
 		Cuota cuota=repositorio.BuscarCuota(id); // busco la cuota 
 		
@@ -682,6 +729,13 @@ public class Gestor {
 		return null;
 	}
 	
+	 private float LeerPrecioCuota() throws Exception{
+		 File archivo= new File("src/ar/com/ProyectoClub/Configuraciones/Archivo_Precio_Cuota.txt");
+		 BufferedReader leer= new BufferedReader(new FileReader(archivo));
+		 String linea=leer.readLine();
+		 float precioCuota= Float.parseFloat(linea);
+		 return precioCuota;
+	 }
 	
 	/**
 	 * CambiarEstadoCuota
@@ -842,6 +896,12 @@ public class Gestor {
 			repositorio.GuardarCategoria(categoria);
 		}
 	}
+
+	public Inmuebles CrearInmuble() throws BussinessException {
+		return repositorio.CrearInmueble();
+	}
+
+	
 
 	
 

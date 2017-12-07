@@ -193,6 +193,7 @@ public class Service implements IService {
 			throw new RuntimeException("Error al insertar el dato: "+e.getMessage());
 		}
 		
+
 	}
 	@Override
 	public Personas ValidarPersona(int dni) {
@@ -396,8 +397,12 @@ public class Service implements IService {
 	}
 	@Override
 	public Inmuebles CrearInstanciaInmueble() {
-		// TODO Auto-generated method stub
-		return null;
+			try {
+				return gestor.CrearInmuble();
+			} catch (BussinessException e) {
+				Logger.getLogger(Service.class.getName()).log(Level.CONFIG, null, e);
+				throw new RuntimeException("Error: ",e.getCause());
+			}
 	}
 
 	@Override
@@ -493,12 +498,22 @@ public class Service implements IService {
 	public List<Socios> ControlCuotaSocio() {
 		try{
 			//Genero las cuotas
-			gestor.GenerarCuotas();
-			return null;
+			return null;// gestor.GenerarCuotas();
 		}
 		catch (Exception e) {
 			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e);
 			throw new RuntimeException("ERROR: ",e.getCause());
+		}
+	}
+
+	
+	@Override
+	public float ObtenerPrecioCuota() {
+		try {
+			return gestor.ObtenerPrecioCuota();
+		} catch (Exception e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Advertencia", e.getCause());
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 

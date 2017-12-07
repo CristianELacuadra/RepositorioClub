@@ -131,7 +131,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		addWindowListener(new WindowAdapter() {			
 			@Override
 			public void windowClosing(WindowEvent e) {
-				limpiar();
+				//limpiar();
 				setVisible(false);
 			}
 		});

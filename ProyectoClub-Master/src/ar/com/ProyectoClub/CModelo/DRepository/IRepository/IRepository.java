@@ -96,6 +96,7 @@ public interface IRepository  {
 	long NoSociosRegistrados() throws BussinessException;
 	Usuario ObtenerUsuarioPorNombre(String nombreUsuario) throws BussinessException;
 	long ObtenertotalRegistradoCaja() throws BussinessException;
+	Inmuebles CrearInmueble() throws BussinessException;
 	
 	//List<Socios> ObteneresPrimero();
 }

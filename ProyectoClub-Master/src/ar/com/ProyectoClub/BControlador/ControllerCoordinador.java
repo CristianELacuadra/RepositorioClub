@@ -758,7 +758,24 @@ public class ControllerCoordinador {
 	public void CerraConfiguracion(){
 		miVentanaConfiguracion.dispose();
 	}
+
+	public void CargarPrecioCuota(){
+		try {
+			//Mostrar Precio Cuota
+			Float valor= modeloService.ObtenerPrecioCuota();
+			String variable=String.valueOf(valor);
+			String[] precio = variable.split("\\.");
+			miVentanaConfiguracion.txtEntero.setText(precio[0]);
+			miVentanaConfiguracion.txtDecimal.setText(precio[1]);		
+		} 
+		catch (Exception e) {
+			
+			JOptionPane.showMessageDialog(null,"Advertencia: "+e.getMessage(),"Advertencia",JOptionPane.INFORMATION_MESSAGE);
+		}	
+	}
+	
 	public void MostrarVentnaConfiguracion(){
+		this.CargarPrecioCuota();
 		miVentanaConfiguracion.setVisible(true);
 	}
 

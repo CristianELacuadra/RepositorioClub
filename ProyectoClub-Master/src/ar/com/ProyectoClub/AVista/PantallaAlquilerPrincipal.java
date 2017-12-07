@@ -156,8 +156,11 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 			}
 		});
 		initComponents();
-		RecargarPanelAlquiler();
-	
+
+
+
+		//RecargarPanelAlquiler(); /// revisar
+//github.com/CristianELacuadra/RepositorioClub.git
 	}
 	
 	public void initComponents(){
@@ -337,7 +340,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		dateChooser_1.getCalendarButton().setToolTipText("HASTA");
 		
 		lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
+		
 		//
 		
 		
@@ -714,7 +717,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		//tableAlq.setRowHeight(25);
 		 
 		lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
+		//lblNewLabel.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
 		lblNewLabel.setBounds(219, 30, 29, 33);
 		panelFiltro.add(lblNewLabel);
 		
@@ -745,8 +748,12 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		
 		panelInmuebles.setLayout(gl_panelInmuebles);
 		
-	//	inmuebleEnt=miCoordinador.CrearInmueble();
-	//	alquilerEnt=miCoordinador.CrearAlquiler();
+
+		inmuebleEnt= new Inmuebles(); // miCoordinador.CrearInmueble();
+		alquilerEnt= new Alquiler(); //miCoordinador.CrearAlquiler();
+//github.com/CristianELacuadra/RepositorioClub.git
+		
+		
 		// acciones b inmueble
 		bRegistrarI.addActionListener(this);
 		bActualizarI.addActionListener(this);
@@ -848,27 +855,16 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		}
 	}
 	public void LimpiarTablaAlquileres(){
-		try{
-		DefaultTableModel dm = (DefaultTableModel) tableAlq.getModel();
-		 int rowCount = dm.getRowCount();
-		 for (int i = rowCount - 1; i >= 0; i--) {
-		     dm.removeRow(i);
-		 }
-		 tableAlq.setModel(dm);
-		 
-		}catch(Exception ex){
-			miCoordinador.mensajes("Error de Limpieza de datos", 0);
-		}
-		 
+		DefaultTableModel tb = (DefaultTableModel) tableAlq.getModel();
+		int a = tableAlq.getRowCount()-1;
+		for (int i = a; i >= 0; i--) {           
+			tb.removeRow(tb.getRowCount()-1);
+		} 
 	}
 	public void RecargarPanelAlquiler(){
 		try{
 			LimpiarTablaAlquileres();
 			miCoordinador.ListarAlquileres(tableAlq);
-			
-			
-			
-			
 		}catch(Exception ex){
 			miCoordinador.mensajes("Error al recargar la pagina", 0);
 		}

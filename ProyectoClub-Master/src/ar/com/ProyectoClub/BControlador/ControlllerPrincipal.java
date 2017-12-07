@@ -61,11 +61,9 @@ public class ControlllerPrincipal {
 			miVentanaCaja=new PantallaCaja();
 			miVentanaPrincipalPersonas= new PantallaPrincipalPersonas();
 			miVentanaDetalllesSNS=new PantallaDetallesInhabilitarSNS(miVentanaBusquedaSNSCobr, true);
-//<<<<<<< HEAD
-		
-//=======
 			miVentanaConfCategoria = new PantallaConfiguracionCategoria(miVentanaConfiguracion,true);
-//>>>>>>> branch 'master' of https://github.com/CristianELacuadra/RepositorioClub.git
+
+			
 			
 			
 			miVentanaAlquilerPrincipal=new PantallaAlquilerPrincipal();
