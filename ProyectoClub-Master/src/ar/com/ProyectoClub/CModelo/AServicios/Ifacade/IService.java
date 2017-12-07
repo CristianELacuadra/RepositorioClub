@@ -54,5 +54,6 @@ public interface IService {
 	void HabilitarPersona(int dni);
 	List<Socios> ControlCuotaSocio();
 	List<Personas> ObtenerPersonaNomApe(String nom, String ape);
+	float ObtenerPrecioCuota();
 
 }

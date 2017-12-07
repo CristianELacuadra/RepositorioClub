@@ -454,6 +454,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			socio.setDni(nuevapersona.getDni());
 			socio.setEstado("Activo");
 			socio.setFechaingreso(dateFechIngreso.getDate());
+			socio.setBaja(false);
 			socio.setMatricula(Integer.parseInt(txtMatri.getText()));
 			Categoria nuevaCategoria=miCoordinador.CrearCategoria();
 			String[] id = txtCateg.getText().split("-");

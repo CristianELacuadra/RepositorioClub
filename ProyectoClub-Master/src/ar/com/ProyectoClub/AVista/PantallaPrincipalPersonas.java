@@ -48,6 +48,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JButton limpiar;
 	private JButton botonAlta;
+	private JButton btnControlCuotas;
 	private javax.swing.JButton registrar;
 	public static javax.swing.JTable tablaPersona;
 	private javax.swing.JLabel codigoL1;
@@ -99,6 +100,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		codigoL1 = new javax.swing.JLabel();
 		codigoL1.setBounds(10, 30, 250, 52);
 		botonAlta = new JButton();
+		btnControlCuotas= new JButton();
 		botonAlta.setEnabled(false);
 		resaltado = new RowsRenderer(0);
 		btnDetalles = new JButton();
@@ -222,9 +224,9 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/Alta2.png"))); // NOI18N
 		botonAlta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		
-		JButton btnControlCuotas = new JButton();
+		btnControlCuotas.setIcon(new ImageIcon(PantallaPrincipalPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/IcoMorosos.png")));
 		btnControlCuotas.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnControlCuotas.setText("Control Morosos");
+		btnControlCuotas.setText("Control Cuotas");
 		btnControlCuotas.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnControlCuotas.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnControlCuotas.setContentAreaFilled(false);
@@ -242,9 +244,9 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 					.addComponent(botonAlta, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(limpiar)
-					.addGap(18)
+					.addGap(29)
 					.addComponent(btnControlCuotas)
-					.addGap(858))
+					.addGap(847))
 		);
 		jPanel3Layout.setVerticalGroup(
 			jPanel3Layout.createParallelGroup(Alignment.LEADING)
@@ -253,11 +255,9 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 						.addComponent(registrar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(botonBaja, GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
 						.addComponent(botonAlta, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-						.addComponent(limpiar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(limpiar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnControlCuotas, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
-				.addGroup(jPanel3Layout.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(btnControlCuotas, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
 		);
 		jPanel3Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {botonBaja, limpiar});
 		jPanel3.setLayout(jPanel3Layout);
@@ -465,6 +465,9 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 			}
 			if(e.getSource()==buscar){
                  this.BusquedaPersona();
+			}
+			if(e.getSource()==btnControlCuotas){
+               
 			}
 		}
 		catch (Exception ex) {

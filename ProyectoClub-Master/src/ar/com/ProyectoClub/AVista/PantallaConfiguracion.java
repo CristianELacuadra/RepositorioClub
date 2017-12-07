@@ -21,6 +21,10 @@ import javax.swing.JTextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import com.toedter.calendar.JDateChooser;
 
 public class PantallaConfiguracion extends JDialog implements  ActionListener {
@@ -31,9 +35,13 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 	public JButton btnBackup;
 	public JButton btnRestaurar;
 	public JButton btnIr;
+	public JTextField txtEntero;
+	public JTextField txtDecimal;
+    private JButton btnGuardar;
 	
 	public PantallaConfiguracion(Principal vtnprincipal,boolean activo) {
 		super(vtnprincipal,activo);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaConfiguracion.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoConfig.png")));
 		initComponents();
 	}
 	
@@ -50,6 +58,9 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(5, 59, 424, 329);
 		contentPanel.add(tabbedPane);
+		
+		btnGuardar=new JButton();
+		btnGuardar.setText("Guardar");
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Administracion DB", null, panel_3, null);
@@ -87,6 +98,39 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 		btnIr.setBounds(329, 75, 51, 23);
 		panel_4.add(btnIr);
 		
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		tabbedPane.addTab("Precio Cuota", null, panel, null);
+		
+		txtEntero = new JTextField();
+		txtEntero.setBounds(182, 33, 61, 20);
+		panel.add(txtEntero);
+		txtEntero.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Fijar Precio Cuota:");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_2.setBounds(26, 33, 141, 17);
+		panel.add(lblNewLabel_2);
+		
+		JLabel label = new JLabel("$");
+		label.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label.setBounds(329, 33, 16, 17);
+		panel.add(label);
+		
+		txtDecimal = new JTextField();
+		txtDecimal.setColumns(10);
+		txtDecimal.setBounds(258, 33, 61, 20);
+		panel.add(txtDecimal);
+		
+		JLabel label_1 = new JLabel(",");
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label_1.setBounds(246, 33, 16, 17);
+		panel.add(label_1);
+		
+		btnGuardar.setBounds(309, 253, 89, 23);
+		panel.add(btnGuardar);
+		btnGuardar.addActionListener(this);
+		
 		JLabel lblNewLabel = new JLabel("");
 		//lblNewLabel.setIcon(new ImageIcon(PantallaConfiguracion.class.getResource("/ar/com/ProyectoClub/AVista/icon/configuration_250.png")));
 		lblNewLabel.setBounds(323, 11, 106, 70);
@@ -119,6 +163,7 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try{
 			if(e.getSource()==btnCancel){
+				Limpiar();
 				miCoordinador.CerraConfiguracion();
 			}
 			
@@ -134,9 +179,41 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 			if(e.getSource()==btnIr){
 				miCoordinador.MostarVentanaConfCategoria(PantallaConfiguracionCategoria.tablaCategoria);
 			}
+			
+			if(e.getSource()==btnGuardar){
+				this.GuardarConfiguracion();
+			}
 		}		
 		catch (Exception ex) {
 			java.util.logging.Logger.getLogger(PantallaConfiguracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
+	}
+
+
+	private void Limpiar() {
+		txtDecimal.setText(null);
+		txtEntero.setText(null);
+	}
+
+
+	private void GuardarConfiguracion() {
+		if(!txtEntero.getText().isEmpty()){
+			String parEntera= txtEntero.getText();
+			String parDecimal = !txtDecimal.getText().isEmpty() ?txtDecimal.getText() : "00";
+			try {
+				FileWriter permiteEscrito= new FileWriter("src/ar/com/ProyectoClub/Configuraciones/Archivo_Precio_Cuota.txt");
+				String texto=parEntera.trim()+"."+parDecimal.trim();
+				PrintWriter imprime= new PrintWriter(permiteEscrito);
+				imprime.print(texto);
+				permiteEscrito.close();
+				JOptionPane.showMessageDialog(null,"El precio de la cuota se cargo corectamente","Mensaje",JOptionPane.INFORMATION_MESSAGE);
+			} 
+			catch (IOException e) {
+				JOptionPane.showMessageDialog(null,e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		else
+			JOptionPane.showMessageDialog(null,"Valor Entero Obligatorio","Advertencia",JOptionPane.ERROR_MESSAGE);
+		
 	}
 }
