@@ -500,6 +500,11 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 			return total;
 	}
 
+	@Override
+	public Inmuebles CrearInmueble() throws BussinessException {
+		return InmuebleDao.crear();
+	}
+
 	
 
 //	@Override

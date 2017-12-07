@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IService;
 import ar.com.ProyectoClub.CModelo.BNegocio.Gestor;
 import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
@@ -396,8 +397,12 @@ public class Service implements IService {
 	}
 	@Override
 	public Inmuebles CrearInstanciaInmueble() {
-		// TODO Auto-generated method stub
-		return null;
+			try {
+				return gestor.CrearInmuble();
+			} catch (BussinessException e) {
+				Logger.getLogger(Service.class.getName()).log(Level.CONFIG, null, e);
+				throw new RuntimeException("Error: ",e.getCause());
+			}
 	}
 
 	@Override
@@ -476,7 +481,6 @@ public class Service implements IService {
 			throw new RuntimeException("ERROR: ",e.getCause());
 		}
 	}
-
 	@Override
 	public void RegistrarPagoCuotaSocio(List<Cuota> cuotas) {
 		try{
@@ -520,6 +524,91 @@ public class Service implements IService {
 	
 
 	
+
+	
+	
+	@Override
+	public void GuardarAlquiler(Alquiler alqui) {
+		try {
+			gestor.GuardarAlquiler(alqui);
+		} 
+		catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
+			throw new RuntimeException("Error al Guardar el socio",e.getCause());
+		}
+	}
+		
+		
+	
+
+	@Override
+	public List<Alquiler> ListarAlquileres() {
+		
+	try {
+			return gestor.listarAlquileres();
+		} 
+		catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
+			throw new RuntimeException("Error al Listar Alquileres",e.getCause());
+		}
+		
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Alquiler> ListarAlquileresRealizados(Inmuebles inm, Date a) {
+		try {
+			
+		java.util.List<Alquiler> listaH =new ArrayList<Alquiler>();
+			java.util.List<Alquiler> lista =new ArrayList<Alquiler>();
+			lista=gestor.listarAlquileres();
+			if(!lista.isEmpty()){
+				int num=lista.size();
+				for(int i=0;i<num;i++){
+					if((lista.get(i).getInmuebles().getIdInmubles().equals(inm.getIdInmubles()))&&
+							(0==(lista.get(i).getFechareserva().compareTo(a)))){
+					//compara el id inmueble que pase con el de la lista para ver si es el mismo.
+						//compara la fecha de reserva con la que se pasa por sistema. para determinar 
+						//la funcion tiene como ob obtener todos los alquileres con el mismo inmueble y fecha de reserva. en un listado.
+					
+						listaH.add(lista.get(i));
+					}
+				}
+			
+			}
+			return listaH;
+			/*
+			
+			java.util.List<Inmuebles> listaH =new ArrayList<Inmuebles>();
+			java.util.List<Inmuebles> lista =new ArrayList<Inmuebles>();
+			lista=gestor.ObtenerInmuebles();
+			int num=lista.size();
+			for(int i=0;i<num;i++){
+				if(lista.get(i).getNombre().indexOf(text)!=-1){
+					listaH.add(lista.get(i));			
+				}
+			}
+			return listaH;*/
+		} 
+		catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
+			throw new RuntimeException("Error al Listar Alquileres",e.getCause());
+		}
+	}
+
+	@Override
+	public Alquiler buscarAlquiler(Integer numAlquiler) {
+	try {
+			
+			return gestor.buscarAlquiler(numAlquiler);
+		} 
+		catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
+			throw new RuntimeException("Error en la Busqueda",e.getCause());
+		}
+		
+	}
 
 	
 	

@@ -865,6 +865,24 @@ public class Gestor {
 		return repositorio.BuscarConceptos(id);
 	}
 
+	public void GuardarAlquiler(Alquiler alqui) throws BussinessException {
+		repositorio.GuardarAlquiler(alqui);
+	}
+
+	public Alquiler buscarAlquiler(Integer numAlquiler) throws BussinessException {
+			return repositorio.BuscarAlquiler(numAlquiler);
+		 
+	}
+
+	public List<Alquiler> listarAlquileres() throws BussinessException {
+		// TODO Auto-generated method stub
+		List<Alquiler> lista= repositorio.ObtenerAlquileres();
+		if(!lista.isEmpty())
+			return lista;
+		return null;
+	}
+	
+
 	
 	public void HabiliInhabiCategoria(int id) throws BussinessException {
 		//Busco la categoria
@@ -877,6 +895,10 @@ public class Gestor {
 				categoria.setHabilitado(true);
 			repositorio.GuardarCategoria(categoria);
 		}
+	}
+
+	public Inmuebles CrearInmuble() throws BussinessException {
+		return repositorio.CrearInmueble();
 	}
 
 	

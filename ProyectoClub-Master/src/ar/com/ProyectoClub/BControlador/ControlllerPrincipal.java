@@ -29,26 +29,13 @@ public class ControlllerPrincipal {
 	PantallaConfiguracionCategoria  miVentanaConfCategoria;
 	
 
-	//
-	PantallaAlquiler miVentanaAlquiler;
+	
+	PantallaAlquilerPrincipal miVentanaAlquilerPrincipal;
 	PantallaNuevoAlquiler miVentanaNuevoAlquiler;
-	PantallaNuevoInmueble miVentanaNuevoInmueble;
-	PantallaBusquedaAlquiler miVentanaBusquedaAlquiler;
-	PantallaBusquedaInmueble miVentanaBusquedaInmueble;
-	PantallaNuevoInmueble miVentanaModificarInmueble;
-	PantallaNuevoInmueble miVentanaEliminarInmueble;
-	PantallaNuevoInmueble miVentanaRehabilitarInmueble;
+		
 	
 	
-	PantallaDetallesAlquiler miVentanaModificarAlquiler;
-	PantallaDetallesAlquiler miVentanaEliminarAlquiler;
-	PantallaDetallesAlquiler miVentanaPagarAlquiler;
 	
-	/*
-	 miVentanaModificarAlquiler
-	miVentanaEliminarAlquiler
-	miVentanaPagarAlquiler
-	 * */
 	
 	//clase puente entre el modelo y las vistas.
 	ControllerCoordinador miCoordinador;
@@ -75,19 +62,12 @@ public class ControlllerPrincipal {
 			miVentanaPrincipalPersonas= new PantallaPrincipalPersonas();
 			miVentanaDetalllesSNS=new PantallaDetallesInhabilitarSNS(miVentanaBusquedaSNSCobr, true);
 			miVentanaConfCategoria = new PantallaConfiguracionCategoria(miVentanaConfiguracion,true);
+
 			
-			miVentanaAlquiler=new PantallaAlquiler (miVentanaPrincipal,true);
-			miVentanaNuevoAlquiler=new PantallaNuevoAlquiler (miVentanaAlquiler,true);
-			miVentanaNuevoInmueble=new PantallaNuevoInmueble (miVentanaAlquiler,true,0);
-			miVentanaModificarInmueble=new PantallaNuevoInmueble (miVentanaBusquedaInmueble,true,1);//usan la misma vista
-			miVentanaEliminarInmueble=new PantallaNuevoInmueble (miVentanaBusquedaInmueble,true,2);
-			miVentanaRehabilitarInmueble=new PantallaNuevoInmueble (miVentanaBusquedaInmueble,true,3);
-			miVentanaBusquedaAlquiler=new PantallaBusquedaAlquiler (miVentanaAlquiler,true);
-			miVentanaBusquedaInmueble=new PantallaBusquedaInmueble (miVentanaAlquiler,true);
 			
-			miVentanaModificarAlquiler=new PantallaDetallesAlquiler(miVentanaBusquedaAlquiler,true,0);
-			miVentanaEliminarAlquiler=new PantallaDetallesAlquiler(miVentanaBusquedaAlquiler,true,1);
-			miVentanaPagarAlquiler=new PantallaDetallesAlquiler(miVentanaBusquedaAlquiler,true,2);
+			
+			miVentanaAlquilerPrincipal=new PantallaAlquilerPrincipal();
+			miVentanaNuevoAlquiler = new PantallaNuevoAlquiler(miVentanaAlquilerPrincipal,true);
 			
 			
 			
@@ -105,18 +85,12 @@ public class ControlllerPrincipal {
 			miVentanaDetalllesSNS.setCoordinador(miCoordinador);
 			miVentanaConfCategoria.setCoordinador(miCoordinador);
 			
-			miVentanaAlquiler.setCoordinador(miCoordinador);
+			
+			
+			
+			miVentanaAlquilerPrincipal.setCoordinador(miCoordinador);
 			miVentanaNuevoAlquiler.setCoordinador(miCoordinador);
-			miVentanaNuevoInmueble.setCoordinador(miCoordinador);
-			miVentanaBusquedaAlquiler.setCoordinador(miCoordinador);
-			miVentanaBusquedaInmueble.setCoordinador(miCoordinador);
-			miVentanaModificarInmueble.setCoordinador(miCoordinador);
-			miVentanaEliminarInmueble.setCoordinador(miCoordinador);
-			miVentanaRehabilitarInmueble.setCoordinador(miCoordinador);
-			miVentanaModificarAlquiler.setCoordinador(miCoordinador);
-			miVentanaEliminarAlquiler.setCoordinador(miCoordinador);
-			miVentanaPagarAlquiler.setCoordinador(miCoordinador);
-
+	
 			/*Se establecen relaciones con la clase coordinador*/
 			miCoordinador.setModeloService(miModeloService);
 			miCoordinador.setMiVentanaPrincipal(miVentanaPrincipal);
@@ -132,19 +106,16 @@ public class ControlllerPrincipal {
 			miCoordinador.setMiVentanaDetallesSNS(miVentanaDetalllesSNS);
 			miCoordinador.setMiVentanaConfCategoria(miVentanaConfCategoria);
 			
-			miCoordinador.setMiVentanaAlquiler(miVentanaAlquiler);
+			
+			
+			miCoordinador.setMiVentanaAlquilerPrincipal(miVentanaAlquilerPrincipal);
 			miCoordinador.setMiVentanaNuevoAlquiler(miVentanaNuevoAlquiler);
-			miCoordinador.setMiVentanaNuevoInmueble(miVentanaNuevoInmueble);
-			miCoordinador.setMiVentanaBusquedaAlquiler(miVentanaBusquedaAlquiler);
-			miCoordinador.setMiVentanaBusquedaInmueble(miVentanaBusquedaInmueble);
-			miCoordinador.setMiVentanaModificarInmueble(miVentanaModificarInmueble);
-			miCoordinador.setMiVentanaEliminarInmueble(miVentanaEliminarInmueble);
-			miCoordinador.setMiVentanaRehabilitarInmueble(miVentanaRehabilitarInmueble);
-			miCoordinador.setMiVentanaModificarAlquiler(miVentanaModificarAlquiler);
-			miCoordinador.setMiVentanaEliminarAlquiler(miVentanaEliminarAlquiler);
-			miCoordinador.setMiVentanaPagarAlquiler(miVentanaPagarAlquiler);
+			
+			
+
 			miVentanaInicio.setVisible(true);
 			
+//github.com/CristianELacuadra/RepositorioClub.git
 			
 			
 		}
