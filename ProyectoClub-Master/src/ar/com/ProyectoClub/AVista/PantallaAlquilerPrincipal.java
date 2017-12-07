@@ -157,9 +157,11 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		});
 		initComponents();
 		RecargarPanelAlquiler();
+	
 	}
 	
 	public void initComponents(){
+		miCoordinador=new ControllerCoordinador();
 		setBounds(100, 100, 821, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -743,8 +745,8 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		
 		panelInmuebles.setLayout(gl_panelInmuebles);
 		
-		inmuebleEnt=miCoordinador.CrearInmueble();
-		alquilerEnt=miCoordinador.CrearAlquiler();
+	//	inmuebleEnt=miCoordinador.CrearInmueble();
+	//	alquilerEnt=miCoordinador.CrearAlquiler();
 		// acciones b inmueble
 		bRegistrarI.addActionListener(this);
 		bActualizarI.addActionListener(this);
@@ -1188,7 +1190,7 @@ try{ miCoordinador.ListarInmuebles(tableInm, checkB.isSelected());
 				
 				
 						}catch(Exception ex){
-			
+							miCoordinador.mensajes("Ocurrio un error en el filtrado", 0);
 			}
 		}
 		

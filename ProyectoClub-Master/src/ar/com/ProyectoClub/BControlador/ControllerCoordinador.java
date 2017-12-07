@@ -1199,6 +1199,15 @@ public class ControllerCoordinador {
 		
 	}
 	
+	
+	public List<Personas> filtrarPersonaPor(String nom, String ape){
+		
+		return modeloService.ObtenerPersonaNomApe(nom,ape);
+			
+				
+		}
+	
+	
 }
 
 
