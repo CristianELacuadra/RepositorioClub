@@ -336,7 +336,8 @@ public class ControllerCoordinador {
         	tabla.getColumnModel().getColumn(0).setMaxWidth(0);
         	tabla.getColumnModel().getColumn(1).setMinWidth(0);
         	tabla.getColumnModel().getColumn(1).setMaxWidth(0);
-        	tabla.getColumnModel().getColumn(2).setMaxWidth(30);
+        	tabla.getColumnModel().getColumn(2).setMinWidth(0);
+        	tabla.getColumnModel().getColumn(2).setMaxWidth(0);
         	tabla.getColumnModel().getColumn(3).setMaxWidth(60);
         	tabla.getColumnModel().getColumn(4).setMaxWidth(60);
         	tabla.getColumnModel().getColumn(5).setMaxWidth(60);

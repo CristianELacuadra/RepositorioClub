@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 12-nov-2017 13:20:02 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="datosclub" dynamic-insert="false" dynamic-update="false" mutable="true" name="ar.com.ProyectoClub.CModelo.CEntidades.Socios" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="socios">
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated 07-dic-2017 15:57:46 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="ar.com.ProyectoClub.CModelo.CEntidades.Socios" table="socios">
         <id name="dni" type="java.lang.Integer">
             <column name="DNI"/>
             <generator class="foreign">
                 <param name="property">personas</param>
             </generator>
         </id>
-        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Categoria" embed-xml="true" fetch="join" insert="true" name="categoria" not-found="exception" optimistic-lock="true" unique="false" update="true">
+       <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Categoria" embed-xml="true" fetch="join" insert="true" name="categoria" not-found="exception" optimistic-lock="true" unique="false" update="true">
             <column name="idCATEGORIA" not-null="true"/>
         </many-to-one>
-        <one-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" lazy="false" fetch="join" cascade="save-update" constrained="true" embed-xml="true" name="personas"/>
+        <one-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" name="personas" cascade="all"/>
         <property generated="never" lazy="false" name="matricula" optimistic-lock="true" type="java.lang.Integer" unique="false">
             <column name="MATRICULA" not-null="true" unique="true"/>
         </property>
@@ -26,11 +26,11 @@
                 <comment>Campo que permite saber si el socio se dio de baja o no</comment>
             </column>
         </property>
-        <set embed-xml="true" fetch="join" inverse="true" lazy="true" mutable="true" name="cuotas" optimistic-lock="true" sort="unsorted" table="cuota">
+       <set embed-xml="true" fetch="join" inverse="true" lazy="true" mutable="true" name="cuotas" optimistic-lock="true" sort="unsorted" table="cuota">
             <key on-delete="noaction">
                 <column name="DNI" not-null="true"/>
             </key>
             <one-to-many class="ar.com.ProyectoClub.CModelo.CEntidades.Cuota" embed-xml="true" not-found="exception"/>
-        </set>
+       </set>
     </class>
 </hibernate-mapping>

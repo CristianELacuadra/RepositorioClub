@@ -34,7 +34,6 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 	public JButton btnCancel;
 	public JButton btnBackup;
 	public JButton btnRestaurar;
-	public JButton btnIr;
 	public JTextField txtEntero;
 	public JTextField txtDecimal;
     private JButton btnGuardar;
@@ -81,22 +80,6 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 		btnBackup.setText("BackUp");
 		btnBackup.setBounds(230, 176, 116, 23);
 		panel_3.add(btnBackup);
-		
-		JPanel panel_4 = new JPanel();
-		panel_4.setToolTipText("");
-		tabbedPane.addTab("Configuracion Categoria", null, panel_4, null);
-		panel_4.setLayout(null);
-		
-		JLabel lblAdministracionCategorias = new JLabel();
-		lblAdministracionCategorias.setBounds(10, 59, 399, 45);
-		lblAdministracionCategorias.setText("Administracion Categorias");
-		lblAdministracionCategorias.setFont(new Font("Tahoma", Font.BOLD, 23));
-		panel_4.add(lblAdministracionCategorias);
-		
-		btnIr = new JButton();
-		btnIr.setText("Ir");
-		btnIr.setBounds(329, 75, 51, 23);
-		panel_4.add(btnIr);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -152,7 +135,6 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 		}
 		btnBackup.addActionListener(this);
 		btnRestaurar.addActionListener(this);
-		btnIr.addActionListener(this);
 	}
 	
 	public void setCoordinador(ControllerCoordinador miCoordinador) {
@@ -175,9 +157,6 @@ public class PantallaConfiguracion extends JDialog implements  ActionListener {
 			if(e.getSource()==btnRestaurar){
 				RestaurarBD restore= new RestaurarBD(this, true);
 		        restore.setVisible(true);
-			}
-			if(e.getSource()==btnIr){
-				miCoordinador.MostarVentanaConfCategoria(PantallaConfiguracionCategoria.tablaCategoria);
 			}
 			
 			if(e.getSource()==btnGuardar){

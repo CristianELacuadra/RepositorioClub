@@ -267,10 +267,7 @@ public class Gestor {
     		if(this.PersonaHabilitada(persona.getDni())){
     			repositorio.GuardarPersona(persona);
     			if(persona.getSocios() != null){
-    				repositorio.GuardarSocio(persona.getSocios());
-    				if(!persona.getSocios().isBaja())
-    					this.ArmarPrimerCuota(persona.getSocios());
-
+    					this.ArmarPrimerCuota(persona.getSocios(),persona.getNombre(),persona.getApellido());
     			}
     		}
     		else
@@ -665,25 +662,25 @@ public class Gestor {
 	
 	//Gestion Cuota
 	
-	private void ArmarPrimerCuota(Socios socio) throws Exception{
+	private void ArmarPrimerCuota(Socios socio,String nombre,String apellido) throws Exception{
 		Cuota cuota=repositorio.CrearCuota();
 		cuota.setDescripcion(socio.getPersonas().getNombre()+ " "+ socio.getPersonas());
 		cuota.setSocios(socio);
 		cuota.setFechageneracion(new Date());
-		cuota.setImporte(CalcularImporteCuota(socio.getCategoria()));
+		cuota.setImporte(socio.getCategoria().getMonto());
 		cuota.setEstado("Debe");
 		repositorio.GuardarCuota(cuota);
 	}
 	
-	private float CalcularImporteCuota(Categoria categoria) throws Exception{
-		//leo el precio fijo en el archivo
-		float importeBase=this.LeerPrecioCuota();
-		//Calculo Precio
-		float total=importeBase+categoria.getMonto();
-		//retorno el total con descuento de porcentaje categoria
-		return((total*categoria.getDescuento())/100);
-	}
-	
+//	private float CalcularImporteCuota(Categoria categoria) throws Exception{
+//		//leo el precio fijo en el archivo
+//		float importeBase=this.LeerPrecioCuota();
+//		//Calculo Precio
+//		float total=importeBase+categoria.getMonto();
+//		//retorno el total con descuento de porcentaje categoria
+//		return total;//((total*categoria.getDescuento())/100);
+//	}
+
 	public float ObtenerPrecioCuota() throws Exception {
 		return this.LeerPrecioCuota();
 	}
