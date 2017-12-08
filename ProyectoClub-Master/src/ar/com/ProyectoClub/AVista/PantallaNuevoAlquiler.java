@@ -27,6 +27,7 @@ import javax.swing.event.ChangeListener;
 
 
 
+
 import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
 import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
 import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
@@ -142,29 +143,8 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		setBounds(100, 100, 540, 718);
 
 	}
-	public void limpiar(){
-		txtDni.setText(null);
-		txtApe.setText(null);
-		txtNom.setText(null);
-		txtSen.setText(null);
-		txtMontoApagar.setText(null);
-		txtMontoFaltante.setText(null);
-		lSolucionBusqueda.setVisible(false);
-		num=null;
-		listaPersonas.clear();
-		//dateFechaReserva.
-		
-		}
-	
-	
-	public void cargardatos(){
-		alqui.setNroalquiler(null);
-		alqui.setPersonas(pers);// revisar validacion de persona
-		alqui.setInmuebles(inm);// revisar validacion de inmueble
-		alqui.setFechaactual( new Date()); //directamente del sistema
-			
-			}
-	
+
+	//TODO initComponents
 	public void initComponents(){
 		miCoordinador=new ControllerCoordinador();
 		dateFechaReserva = new JDateChooser();
@@ -373,7 +353,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 					
 		});
 		
-		
+	 //TODO
 		
 		
 		
@@ -421,6 +401,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		
 			
 	}
+	//TODO final de init
 
 	public void cargarComboBoxDeBusquedaDePersonas(java.util.List<Personas> listaPersonas2){
 		comboResult.removeAllItems();
@@ -469,6 +450,75 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		 */
 	}
 	
+	
+	
+												/* 	public void limpiar(){
+												txtDni.setText(null);
+												txtApe.setText(null);
+												txtNom.setText(null);
+												txtSen.setText(null);
+												txtMontoApagar.setText(null);
+												txtMontoFaltante.setText(null);
+												lSolucionBusqueda.setVisible(false);
+												num=null;
+												listaPersonas.clear();
+												//dateFechaReserva.
+												
+												}
+											
+											
+											public void cargardatos(){
+												alqui.setNroalquiler(null);
+												alqui.setPersonas(pers);// revisar validacion de persona
+												alqui.setInmuebles(inm);// revisar validacion de inmueble
+												alqui.setFechaactual( new Date()); //directamente del sistema
+													
+													}    */
+												
+												
+												
+												
+												
+												
+												
+												
+											//TODO funciones
+												/*
+												public void cargarDatos(Alquiler a){
+											txtNroAlquiler.setText(a.getNroAlquiler().toString());
+											txtNroPersona.setText(a.getPersonas().getDni().toString());
+											txtFechaA.setText(a.getFechaActual().toString());
+											txtHoraA.setText(a.getHoraActual().toString());
+											fechaReserva.setDate(a.getFechaReserva());
+											horaReserva.setSelectedItem(a.getHoraReserva());
+											txtCantidadHoras.setText(a.getCantidadHora().toString());
+											txtPrecioTotal.setText(String.valueOf(a.getPrecioTotal()));
+											checkAlquilerPagado.setSelected(a.isPagoAlquiler());
+											txtObservaciones.setText(a.getObservaciones());
+											
+											
+											
+											}
+											
+											@SuppressWarnings("deprecation")
+											public Alquiler CargarModificar(Alquiler a){
+											//la modificacion solo modifica la fecha de reserva, y observaciones de lo contrario seria otro alquiler.
+											a.setFechaReserva(fechaReserva.getDate());
+											a.setObservaciones(txtObservaciones.getText());
+											
+											Date asd=new Date();
+											asd.setHours(Integer.parseInt(horaReserva.getSelectedItem().toString()));
+											a.setHoraReserva(asd);
+											return a;
+											
+											
+											}
+												*/
+	
+	
+	
+	
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -489,7 +539,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 	
 	
 @SuppressWarnings("deprecation")
-public void cargarDatos(){
+public void cargarDatos(){/*
 	alqui=miCoordinador.CrearAlquiler();
 	//alqui.setNroAlquiler(Integer.parseInt(txtNroAlquiler.getText().toString()));
 	if((pers!=null)&&(inm!=null)&&(dateFechaReserva.getDate()!=null)&&(textCantidadHoras.getText()!=null)){
@@ -511,46 +561,58 @@ public void cargarDatos(){
 		alqui.setPrecioTotal(this.CalcularPrecioTotal(Integer.parseInt(textCantidadHoras.getText().toString()),pers,inm));
 	}
 	
-}
+	*/
+}  
 
 public float CalcularPrecioTotal(Integer al, Personas per,Inmuebles in ){
-	float tot=in.getPrecioHora()*al;
-	lblNewLabel.setVisible(false);   no sirven yaaaaaa
+	float tot=0f;
+			/*tot=in.getPrecioHora()*al;
+	lblNewLabel.setVisible(false); //  no sirven yaaaaaa
 	if((per.isEssocio()==true)&&(per.getEstado()!="MOROSO")){
 		tot= tot*((100-per.getCategoria().getDescuento())/100);
 		lblNewLabel.setText("*Precio con descuento por Socio de % "+ per.getCategoria().getDescuento());
 		lblNewLabel.setVisible(true);
-	}
+	}*/
 	return tot;
+	
 }
 
 
-public boolean personaHabilitadaParaAlquiler(Personas per){
-	if(per.isHabilitado()&&(per!=null)){
-		return true;
-	}else{
+public boolean personaHabilitadaParaAlquiler(Personas per)
+{
+	if(per.isHabilitado()&&(per!=null))
+			return true;
+	else
+	{
 		miCoordinador.mensajes("Esta persona no esta habilitada para Alquilar", 3);
-		pers=null;
 		return false;
-	
-	
 	}
+	
 }
 
 
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		try{
-			if(e.getSource()==btnBuscarPersona){
-				if(!(txtDni.getText().isEmpty()||(!txtApe.getText().isEmpty())||(!txtNom.getText().isEmpty()))){
+	public void actionPerformed(ActionEvent e) 
+	{
+		try
+		{
+			if(e.getSource()==btnBuscarPersona)
+			{
+				if((!txtDni.getText().isEmpty())||(txtApe.getText().isEmpty())||(txtNom.getText().isEmpty()))
+				{
 					
 					pers=miCoordinador.BuscarPersona(Integer.parseInt(txtDni.getText()));
-						
+					if(personaHabilitadaParaAlquiler(pers))
+					{ txtApe.setText(pers.getApellido().toString());
+					txtNom.setText(pers.getNombre().toString());
+					
+					}
 					
 					
 				}else{
-					if((!txtApe.getText().isEmpty())||(!txtNom.getText().isEmpty())){
+					if((!txtApe.getText().isEmpty())||(!txtNom.getText().isEmpty()))
+					{
 						listaPersonas = new ArrayList<Personas>();
 						listaPersonas.clear();
 						listaPersonas=miCoordinador.filtrarPersonaPor(txtNom.getText().toString(), txtApe.getText().toString());
@@ -558,20 +620,33 @@ public boolean personaHabilitadaParaAlquiler(Personas per){
 							cargarComboBoxDeBusquedaDePersonas(listaPersonas);		
 								
 						
-					}
+						}
 					
-				}
-				//Personas pers=miCoordinador.CrearPersona();
-				//miCoordinado
-				if((pers==null)||(pers.isHabilitado()==false)){
-					JOptionPane.showMessageDialog(null, "NO SE ENCUENTRA LA PERSONA O NO NO ESTA HABILITADA", "RESULTADO DE BUSQUEDA",JOptionPane.INFORMATION_MESSAGE);
-				}else {JOptionPane.showMessageDialog(null, "SE ENCONTRO A LA PERSONA", "RESULTADO DE BUSQUEDA",JOptionPane.INFORMATION_MESSAGE);}
+					}
+			
+				
+//				if((pers==null)||(pers.isHabilitado()==false))
+//				{
+//					JOptionPane.showMessageDialog(null,
+//							"NO SE ENCUENTRA LA PERSONA O NO NO ESTA HABILITADA",
+//							"RESULTADO DE BUSQUEDA",JOptionPane.INFORMATION_MESSAGE);
+//					}else 
+//						{
+//						JOptionPane.showMessageDialog(null, "SE ENCONTRO A LA PERSONA",
+//						"	RESULTADO DE BUSQUEDA",JOptionPane.INFORMATION_MESSAGE);
+//						}
 			}
-		}catch(Exception e1){
+			
+			
+		}catch(Exception e1)
+		{
 			JOptionPane.showMessageDialog(null, "NO SE ENCUENTRA LA PERSONA", "HA OCURRIDO UN ERROR",JOptionPane.ERROR_MESSAGE);
 		}
 		try{
+			/*
 			if(e.getSource()==btnAceptar){
+				
+			
 				if((pers==null)||(pers.isHabilitado()==false)){
 					JOptionPane.showMessageDialog(null, "NO SE ELIGIO UNA PERSONA O NO NO ESTA HABILITADA", "NO SE REALIZO NINGUNA BUSQUEDA",JOptionPane.INFORMATION_MESSAGE);
 				}else {
@@ -582,6 +657,8 @@ public boolean personaHabilitadaParaAlquiler(Personas per){
 					
 				}
 			}
+			
+			*/
 		}catch(Exception e1){
 			JOptionPane.showMessageDialog(null, "REINTENTE LA OPERACION", "HA OCURRIDO UN ERROR",JOptionPane.ERROR_MESSAGE);
 		}

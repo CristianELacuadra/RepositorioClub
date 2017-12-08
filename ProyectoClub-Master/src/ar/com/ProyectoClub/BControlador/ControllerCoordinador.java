@@ -963,6 +963,8 @@ public class ControllerCoordinador {
 	}
 	
 	public void botonCancelarInm(){
+		
+		//TODO revisar funcion  no se ejecuta
 		if(0== mensajeOpciones("Pregunta", "¿Deseas cancelar? \n perdera toda la informacion que no guardo", 3)){
 			miVentanaAlquilerPrincipal.inmuebleEnt=null;
 			miVentanaAlquilerPrincipal.cargarDatosInmueble(miVentanaAlquilerPrincipal.inmuebleEnt);
@@ -1193,7 +1195,7 @@ public class ControllerCoordinador {
 	
 	
 	public void mostrarVentanaNuevoAlquiler(){
-		miVentanaNuevoAlquiler.setVisible(true);
+		miVentanaNuevoAlquiler.setVisible(true);//TODO pantalla nuevo alquiler 
 		//miVentanaNuevoAlquiler.limpiar();
 	}
 	public void mostrarVentanaNuevoAlquiler(int nroAlqui) {
