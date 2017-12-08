@@ -41,13 +41,11 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 
 	private ControllerCoordinador miCoordinador; // objeto miCoordinador que
 	private app.bolivia.swing.JCTextField buscar;
-	private javax.swing.JButton botonBaja;
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JPanel jPanel3;
 	private javax.swing.JPanel jPanel4;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JButton limpiar;
-	private JButton botonAlta;
 	private JButton btnControlCuotas;
 	private javax.swing.JButton registrar;
 	public static javax.swing.JTable tablaPersona;
@@ -63,6 +61,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 	public ButtonGroup GrupoSNS;
 	public static JRadioButton checkApe;
 	public JRadioButton chckNom;
+	private JButton btnCategorias;
 	public PantallaPrincipalPersonas() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				PantallaPrincipalPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoPaloma.png")));
@@ -90,8 +89,6 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		});
 		jPanel3 = new javax.swing.JPanel();
 		registrar = new javax.swing.JButton();
-		botonBaja = new javax.swing.JButton();
-		botonBaja.setEnabled(false);
 		limpiar = new javax.swing.JButton();
 		jPanel4 = new javax.swing.JPanel();
 		buscar = new app.bolivia.swing.JCTextField();
@@ -99,9 +96,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		buscar.setBounds(20, 40, 205, 32);
 		codigoL1 = new javax.swing.JLabel();
 		codigoL1.setBounds(10, 30, 250, 52);
-		botonAlta = new JButton();
 		btnControlCuotas= new JButton();
-		botonAlta.setEnabled(false);
 		resaltado = new RowsRenderer(0);
 		btnDetalles = new JButton();
 		btnDetalles.setName("btnDetalle");
@@ -185,23 +180,10 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		registrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		registrar.addActionListener(this);
 
-		botonBaja.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-		botonBaja.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/Baja1.png"))); // NOI18N
-		botonBaja.setText("Bar de Baja");
-		botonBaja.setBorder(null);
-		botonBaja.setBorderPainted(false);
-		botonBaja.setContentAreaFilled(false);
-		botonBaja.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		botonBaja.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		botonBaja.setRolloverIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/Baja2.png"))); // NOI18N
-		botonBaja.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
 		limpiar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 		limpiar.setIcon(
 				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/limpiar1.png"))); // NOI18N
-		limpiar.setText("Limpiar Campos");
+		limpiar.setText("Registrar");
 		limpiar.setBorder(null);
 		limpiar.setBorderPainted(false);
 		limpiar.setContentAreaFilled(false);
@@ -210,19 +192,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		limpiar.setRolloverIcon(
 				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/limpiar2.png"))); // NOI18N
 		limpiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-		botonAlta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-		botonAlta.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/Alta1.png"))); // NOI18N
-		botonAlta.setText("Dar de alta");
-		botonAlta.setBorder(null);
-		botonAlta.setBorderPainted(false);
-		botonAlta.setContentAreaFilled(false);
-		botonAlta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		botonAlta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		botonAlta.setRolloverIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/Alta2.png"))); // NOI18N
-		botonAlta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		limpiar.addActionListener(this);
 		
 		btnControlCuotas.setIcon(new ImageIcon(PantallaPrincipalPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/IcoMorosos.png")));
 		btnControlCuotas.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -232,6 +202,21 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		btnControlCuotas.setContentAreaFilled(false);
 		btnControlCuotas.setBorderPainted(false);
 		btnControlCuotas.setBorder(null);
+		
+		btnCategorias = new JButton();
+		btnCategorias.setIcon(new ImageIcon(PantallaPrincipalPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/IcoCategorias.png")));
+		btnCategorias.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnCategorias.setText("Categorias");
+		btnCategorias.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnCategorias.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnCategorias.setContentAreaFilled(false);
+		btnCategorias.setBorderPainted(false);
+		btnCategorias.setBorder(null);
+		btnCategorias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnCategorias.setRolloverIcon(
+				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/IcoCategorias2.png"))); // NOI18N
+		btnCategorias.addActionListener(this);
+		
 
 		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
 		jPanel3Layout.setHorizontalGroup(
@@ -239,27 +224,23 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 				.addGroup(jPanel3Layout.createSequentialGroup()
 					.addComponent(registrar, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(botonBaja)
-					.addGap(18)
-					.addComponent(botonAlta, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
 					.addComponent(limpiar)
-					.addGap(29)
+					.addGap(36)
+					.addComponent(btnCategorias, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addComponent(btnControlCuotas)
-					.addGap(847))
+					.addGap(1020))
 		);
 		jPanel3Layout.setVerticalGroup(
 			jPanel3Layout.createParallelGroup(Alignment.LEADING)
 				.addGroup(jPanel3Layout.createSequentialGroup()
 					.addGroup(jPanel3Layout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(registrar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(botonBaja, GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-						.addComponent(botonAlta, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
 						.addComponent(limpiar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnCategorias, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnControlCuotas, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
-		jPanel3Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {botonBaja, limpiar});
 		jPanel3.setLayout(jPanel3Layout);
 
 		jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -429,24 +410,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 
 						}
 					}
-			}
-			//CheckBox seleccionado
-			if(value instanceof java.lang.Boolean){
-				for (int i = 0; i < tablaPersona.getRowCount(); i++) {
-					if(tablaPersona.getValueAt(i, 1).equals(true))
-					{
-						botonAlta.setEnabled(true);
-						botonBaja.setEnabled(true);
-						break;
-					}
-					else{
-						botonAlta.setEnabled(false);
-						botonBaja.setEnabled(false);
-					}
-
-				}
-			}
-
+			}	
 		}
 	}
 
@@ -466,8 +430,11 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 			if(e.getSource()==buscar){
                  this.BusquedaPersona();
 			}
+			if(e.getSource()==btnCategorias){
+				miCoordinador.MostarVentanaConfCategoria(PantallaConfiguracionCategoria.tablaCategoria);  
+			}
 			if(e.getSource()==btnControlCuotas){
-               
+				
 			}
 		}
 		catch (Exception ex) {

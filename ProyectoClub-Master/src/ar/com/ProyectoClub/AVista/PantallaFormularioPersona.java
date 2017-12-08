@@ -97,18 +97,19 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	public PantallaFormularioPersona(PantallaPrincipalPersonas vtnPantallaPersona,boolean b) {  
 		super(vtnPantallaPersona,b);
 		setFont(new Font("Courier New", Font.PLAIN, 12));
-		setType(Type.POPUP);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				limpiar();
+				// miCoordinador.mostrarVentanaPrincipal();
+			}
+		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaFormularioPersona.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoPaloma.png")));
 		addWindowListener(new WindowAdapter() {			
 			@Override
 			public void windowClosing(WindowEvent e) {
 				limpiar();
-//				miCoordinador.CargarGrilla(PantallaPrincipalPersonas.tablaPersona);
-//				int itemCount = comboCate.getItemCount();
-//
-//			    for(int i=0;i<itemCount;i++){
-//			        comboCate.removeItemAt(0);
-//			     }
+				miCoordinador.CargarGrilla(PantallaPrincipalPersonas.tablaPersona);
 			}
 		});
 		initComponents();
@@ -451,7 +452,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		if(rdbtnSi.isSelected()){
 			//nuevapersona.setEssocio(true);
 			Socios socio= miCoordinador.CrearSocio();
-			socio.setDni(nuevapersona.getDni());
+			//socio.setDni(nuevapersona.getDni());
 			socio.setEstado("Activo");
 			socio.setFechaingreso(dateFechIngreso.getDate());
 			socio.setBaja(false);
@@ -528,7 +529,6 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		txtDomNro.setText(null);
 		lblEstado.setText("ESTADO");
 		lblEstado.setForeground(Color.black);
-		
 	}
 	//escuchando al usuario
 	private void Escuchando(){
@@ -612,6 +612,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			this.HabilitarBotonoes(true);
 			if(persona != null){
 				lblEstado.setText("ESTADO: PERSONA YA REGISTRADA");
+				limpiar();
 				lblEstado.setForeground(Color.RED);
 				txtApe.setText(persona.getApellido());
 				txtNom.setText(persona.getNombre());

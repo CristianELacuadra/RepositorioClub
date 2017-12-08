@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 12-nov-2017 13:20:02 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+<!-- Generated 07-dic-2017 15:57:46 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
     <class catalog="datosclub" dynamic-insert="false" dynamic-update="false" mutable="true" name="ar.com.ProyectoClub.CModelo.CEntidades.Personas" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="personas">
         <id name="dni" type="java.lang.Integer">
             <column name="DNI"/>
@@ -33,7 +33,7 @@
         <property generated="never" lazy="false" name="habilitado" optimistic-lock="true" type="boolean" unique="false">
             <column name="HABILITADO" not-null="true"/>
         </property>
-        <one-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Socios" cascade="save-update" lazy="false" fetch="join" constrained="false" embed-xml="true" name="socios"/>
+        <one-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Socios" name="socios" cascade="all" lazy="false"/>
         <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="alquilers" optimistic-lock="true" sort="unsorted" table="alquiler">
             <key on-delete="noaction">
                 <column name="DNI" not-null="true"/>
