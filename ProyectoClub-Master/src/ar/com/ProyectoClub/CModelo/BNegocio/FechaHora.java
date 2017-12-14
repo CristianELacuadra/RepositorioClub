@@ -131,4 +131,36 @@ public class FechaHora {
 		}
 	}
 	
+	/**
+	 * Obtinene la diferencia  de meses entre 2 fecha la cual se pasan como parametros.
+	 * @param fechaInicio
+	 * @param fechaFin
+	 * @return
+	 */
+	public static int DiferenciaMesFechas(Date fechaInicio,Date fechaFin){
+		Calendar fechaI = GregorianCalendar.getInstance();
+		Calendar fechaF = GregorianCalendar.getInstance();
+		fechaI.setTime(fechaInicio);
+		fechaF.setTime(fechaFin);
+		int elapsed = -1; // Por defecto estaba en 0 y siempre asi no haya pasado un mes contaba 1)
+		GregorianCalendar gc1, gc2;
+		Date d1,d2;
+
+		if (fechaF.after(fechaI)) {
+		gc2 = (GregorianCalendar) fechaF.clone();
+		gc1 = (GregorianCalendar) fechaI.clone();
+		}
+		else {
+		gc2 = (GregorianCalendar) fechaI.clone();
+		gc1 = (GregorianCalendar) fechaF.clone();
+		} 
+
+		while ( gc1.before(gc2) ) {
+		gc1.add(Calendar.MONTH, 1);
+		elapsed++; 
+		}
+
+		if (gc1.get(Calendar.DATE)==(gc2.get(Calendar.DATE))) elapsed++; // si es el mismo dia cuenta para la suma de meses 
+		return elapsed;
+	}
 }

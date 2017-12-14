@@ -347,7 +347,7 @@ public class ControllerCoordinador {
         	tabla.getColumnModel().getColumn(9).setMaxWidth(400);
         	tabla.getColumnModel().getColumn(10).setMaxWidth(200);
         	tabla.getColumnModel().getColumn(11).setMaxWidth(600);
-        	tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);
+        	tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);       	
         }
 	}
 	@SuppressWarnings("serial")
