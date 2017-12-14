@@ -19,7 +19,11 @@ public class MainPruebaModulos {
 	public static void main(String[] args) throws Exception {
 		IRepository repositorioprueba; 
 		repositorioprueba = new Repository();
+		//Socios socio= repositorioprueba.BuscarSocio(7664645);
+		Date fecha=repositorioprueba.ObtenerUltimoFechaActividad(7664645);
 		Gestor gestor=new Gestor();
+		List<Socios> listaSocio=gestor.ListarSocio();
+		gestor.ValidarCuotasSocio(listaSocio);
 		//	     long i= repositorioprueba.DevolverTotalRegistrosCaja();
 		//	     System.out.println(i);
 		//	     List<Caja> lista= repositorioprueba.BusquedaPorDescripcionCaja("Ingreso");
@@ -32,34 +36,34 @@ public class MainPruebaModulos {
 		//	     List<Caja> cajas=gestor.ObtenerRegistrosCaja();
 		//	     for(Caja u: cajas)
 		//	     System.out.println(u.getDescripcion());
-		try{
-			Personas persona=repositorioprueba.CrearPersona();
-			Socios socio=repositorioprueba.CrearSocio();
-			Categoria nuevaCategoria=repositorioprueba.CrearCategoria();
-			persona.setDni(1548752);
-			persona.setNombre("lalalla");
-			persona.setApellido("lalalla");
-			persona.setFechanac(new Date());
-			persona.setDomicilio("lalalal");
-			persona.setTelefono("34234");
-			persona.setNacionalidad("sdsd");
-			persona.setEstadocivil("dsdasd");
-			persona.setSexo("M");
-			persona.setHabilitado(true);
-			socio.setEstado("Activo");
-			socio.setFechaingreso(new Date());
-			socio.setBaja(false);
-			socio.setMatricula(1245);
-			nuevaCategoria= repositorioprueba.BuscarCategoria(1);
-			socio.setCategoria(nuevaCategoria);
-			socio.setPersonas(persona);
-			persona.setSocios(socio);
-			repositorioprueba.GuardarPersona(persona);
-		}
-		catch (Exception e) 
-		{
-			throw new RuntimeException(e);
-		}
+//		try{
+//			Personas persona=repositorioprueba.CrearPersona();
+//			Socios socio=repositorioprueba.CrearSocio();
+//			Categoria nuevaCategoria=repositorioprueba.CrearCategoria();
+//			persona.setDni(1548752);
+//			persona.setNombre("lalalla");
+//			persona.setApellido("lalalla");
+//			persona.setFechanac(new Date());
+//			persona.setDomicilio("lalalal");
+//			persona.setTelefono("34234");
+//			persona.setNacionalidad("sdsd");
+//			persona.setEstadocivil("dsdasd");
+//			persona.setSexo("M");
+//			persona.setHabilitado(true);
+//			socio.setEstado("Activo");
+//			socio.setFechaingreso(new Date());
+//			socio.setBaja(false);
+//			socio.setMatricula(1245);
+//			nuevaCategoria= repositorioprueba.BuscarCategoria(1);
+//			socio.setCategoria(nuevaCategoria);
+//			socio.setPersonas(persona);
+//			persona.setSocios(socio);
+//			repositorioprueba.GuardarPersona(persona);
+//		}
+//		catch (Exception e) 
+//		{
+//			throw new RuntimeException(e);
+//		}
 
 
 

@@ -138,10 +138,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 
 		// setClosable(true);
 		// setIconifiable(true);
-		tablaPersona.getTableHeader()
-				.setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
-		tablaPersona.setDefaultRenderer(Object.class,
-				new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
+		
 
 		tablaPersona.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		setTitle("PRINCIPAL SOCIO-NO SOCIO ");

@@ -1,7 +1,10 @@
 package ar.com.ProyectoClub.CModelo.DRepository.Repository;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -222,7 +225,13 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	@Override
 	public List<Socios> ObtenerSocios() throws BussinessException 
 	{
-		return sociodao.Listar();
+		List<Socios> listaSocio=new ArrayList<Socios>();
+		for(Socios socio : sociodao.Listar()){
+			if(!socio.isBaja()){//filtro unicamente lo que no estan dado de baja
+				listaSocio.add(socio);
+			}
+		}
+		return listaSocio;
 	}
 	@Override
 	public List<Usuario> ObtenerUsuarios() throws BussinessException 
@@ -408,7 +417,7 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	public List<Cuota> ListaCuotaSocio(Integer dni) throws BussinessException {
 		Setsession();
 		SetTransaction();
-		String query="SELECT c FROM Cuota c WHERE c. dni="+ dni; 
+		String query="SELECT s.cuotas FROM Socio s WHERE s.dni="+ dni; 
 		List<Cuota> listacouta=_sessiondehilo.createQuery(query).list();
 		if(!listacouta.isEmpty())
 			return listacouta;
@@ -505,7 +514,26 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 		return InmuebleDao.crear();
 	}
 
+	@Override
+	public int ObtenerIdCaja(String tipo) throws BussinessException {
+		Setsession();
+		SetTransaction();
+		String consulta="SELECT c.idConcepto FROM Conceptos c WHERE c.tipo='I'";
+		long i= (Long) _sessiondehilo.createQuery(consulta).uniqueResult();
+		if(i != 0)
+			return (int) (long) i;
+		return 0;
+		
+	}
+
 	
+	@Override
+	public Date ObtenerUltimoFechaActividad(Integer dni) throws BussinessException {
+		Setsession();
+		SetTransaction();
+		String query="select MAX(c.fechapago) from Cuota c inner join c.socios as s where s in(select s from Socios s where s.dni="+dni+")";
+		return (Date) _sessiondehilo.createQuery(query).uniqueResult();
+	}
 
 //	@Override
 //	public List<Socios> ObtenerTresPrimero() {

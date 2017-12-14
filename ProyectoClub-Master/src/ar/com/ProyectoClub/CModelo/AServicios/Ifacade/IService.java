@@ -34,7 +34,6 @@ public interface IService {
 	Usuario ObtenerUsuarioPorNombre(String nombreUsuario);
 	List<Personas> ListarPersonas();
 	void GuardarNoSocio(Personas persona);
-	List<Cuota>  ObtenerCuotasSocio(Integer dni);
 	//contrato inmueble
 	Inmuebles BuscarInmueble(Integer id);
 	Inmuebles CrearInstanciaInmueble();
@@ -56,6 +55,9 @@ public interface IService {
 	//cuotas
 	List<Cuota> ObtenerCuotasPorid(List<Integer> id);
 	void RegistrarPagoCuotaSocio(List<Cuota> cuotas);
+	float ObtenerPrecioCuota();
+	//Morosos
+	List<Socios> ListarMorosos();
 
 	
 	
@@ -67,5 +69,4 @@ public interface IService {
 	void HabilitarPersona(int dni);
 	List<Socios> ControlCuotaSocio();
 	List<Personas> ObtenerPersonaNomApe(String nom, String ape);
-	float ObtenerPrecioCuota();
 }

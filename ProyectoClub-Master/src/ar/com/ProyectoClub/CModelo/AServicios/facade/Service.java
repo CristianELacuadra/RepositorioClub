@@ -248,19 +248,6 @@ public class Service implements IService {
 			throw new RuntimeException("Error al buscar el dato:",e.getCause());
 		}
 	}
-	//Gestion Socio
-	@Override
-	public List<Cuota> ObtenerCuotasSocio(Integer dni) {
-		try {
-			return	gestor.ObtenerCuotasDelSocio(dni);
-		} catch (BussinessException e) {
-			//loggeo el error mostrando la localizacion y su causa
-			Logger.getLogger(Service.class.getName()).log(Level.INFO , "Mensaje Critico",e.getBussinessMessages()+" Cause : "+e.getCause());
-			//propago hacia el cliente el mensaje de error 
-			throw new RuntimeException("Error: "+e.getBussinessMessages());
-		}
-	}
-
 	
 	@Override
 	public List<Socios> ListarSocios() {
@@ -516,16 +503,6 @@ public class Service implements IService {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
-
-	
-
-	
-
-	
-
-	
-
-	
 	
 	@Override
 	public void GuardarAlquiler(Alquiler alqui) {
@@ -608,6 +585,24 @@ public class Service implements IService {
 			throw new RuntimeException("Error en la Busqueda",e.getCause());
 		}
 		
+	}
+
+	
+	//Moroso
+	/**
+	 * toma todos los socios registrado en el club, valida cada una de sus cuota y actualiza su estado deacuerdo a la
+	 * fecha actual, vuelca resultado 
+	 */
+	@Override
+	public List<Socios> ListarMorosos() {
+		try {
+			List<Socios> listaSocio=gestor.ListarSocio();
+			gestor.ValidarCuotasSocio(listaSocio);
+		} 
+		catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
+			throw new RuntimeException("Se produjo el siguiente error: ",e.getCause());
+		}
 	}
 
 	

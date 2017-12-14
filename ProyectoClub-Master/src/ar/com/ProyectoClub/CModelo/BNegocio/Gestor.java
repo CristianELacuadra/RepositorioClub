@@ -7,7 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -711,8 +714,23 @@ public class Gestor {
 		return repositorio.CrearCuota();
 	}
 	
+	private void VolcarDatosCuotaCaja(String tipo,Cuota cuota) throws BussinessException{
+		Caja caja=repositorio.CrearCaja();
+		int id= repositorio.ObtenerIdCaja(tipo);
+		caja.setConceptos(repositorio.BuscarConceptos(id));		
+		String nom=cuota.getSocios().getPersonas().getNombre();
+		String ape=cuota.getSocios().getPersonas().getApellido();
+		caja.setDescripcion("Ingreso Cuota Socio "+nom+ape);
+		caja.setFecha(cuota.getFechapago());
+		caja.setHabilitar(true);
+		caja.setMonto(cuota.getImporte());
+		repositorio.GuardarCaja(caja);
+		
+	}
+	
 	public void GuardarCuota(Cuota cuota) throws BussinessException {
 		 repositorio.GuardarCuota(cuota);
+		 VolcarDatosCuotaCaja("I",cuota);
 	}
 	
 	public Cuota BuscarCuota(Integer id) throws BussinessException {
@@ -810,13 +828,7 @@ public class Gestor {
 		}
 		return null;
 	}
-	
-	public List<Cuota> ObtenerCuotasDelSocio(Integer dni) throws BussinessException {
-		List<Cuota>cuotassocios=repositorio.ListaCuotaSocio(dni);
-		if(!cuotassocios.isEmpty())
-			return cuotassocios;
-		return null;
-	}
+
 
 	
 	public List<Inmuebles> ObtenerInmuebles() throws BussinessException {
@@ -898,20 +910,42 @@ public class Gestor {
 		return repositorio.CrearInmueble();
 	}
 
-	
+	//Morosos
+	public void ValidarCuotasSocio(List<Socios> listaSocio) throws BussinessException {
+		for(Socios socio : listaSocio){
+			Date fechaUltActiv= repositorio.ObtenerUltimoFechaActividad(socio.getDni()); //Obtengo la ultima fecha en donde se registro alguna actvidad del socio
+			Calendar fechaInicio = new GregorianCalendar();
+			Calendar fechaFin = new GregorianCalendar();
+			int CantidadMes=FechaHora.DiferenciaMesFechas(fechaUltActiv,new Date()); //Obtengo la cantidad de meses de diferencia
+			Socios socioMoroso=repositorio.CrearSocio();
+			if(CantidadMes==0){
+				//ACTIVO
+				socioMoroso=socio;
+				socioMoroso.setEstado("ACTIVO"); //Cambio su estado de Activo(mantiene su estado)
+				socioMoroso.getPersonas().setHabilitado(true);
+				//this.habilitarPersona(socio.getDni()); //Actualizo a habilitado
+			}
+			else{
+				if(CantidadMes < 3 && CantidadMes>=1){
+					//DEUDOR
+					socioMoroso=socio;
+					socioMoroso.setEstado("DEUDOR"); //Cambio su estado a Deudor
+					socioMoroso.getPersonas().setHabilitado(true);
+					//this.habilitarPersona(socio.getDni()); //Actualizo a habilitado
+				}
+				else{
+					if(CantidadMes >= 3){
+						//MOROSOS
+						socioMoroso=socio;
+						socioMoroso.setEstado("MOROSO"); //Cambio su estado de morosidad
+						socioMoroso.getPersonas().setHabilitado(false);
+						//this.InhabilitarPersona(socio.getDni()); //Actualizo a inhabilitado
+					}
+				}
 
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-	
+			}
+			repositorio.GuardarSocio(socioMoroso); //Actualizo para ese socio
+		}
+	}
 }
+
