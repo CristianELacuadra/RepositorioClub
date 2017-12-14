@@ -28,6 +28,7 @@ import javax.swing.event.ChangeListener;
 
 
 
+
 import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
 import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
 import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
@@ -79,6 +80,8 @@ import javax.swing.SpinnerDateModel;
 import java.util.Calendar;
 
 import javax.swing.SpinnerNumberModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class PantallaNuevoAlquiler extends JDialog implements ActionListener,KeyListener {
@@ -108,6 +111,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
  	public Alquiler alqui;
  	public Socios socio;
  	public JComboBox<String> comboBox;
+ 	//public Map< String,Integer> mapInmueble = new HashMap< 	String,Integer>();
  	public Map<Integer, String> mapInmueble = new HashMap<Integer, String>();
  	
  	public Integer num;
@@ -241,6 +245,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		scrollPane.setViewportView(textArea);
 		
 		comboBox = new JComboBox();
+	
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Seleccione el inmueble"}));
 		comboBox.setBounds(186, 195, 182, 20);
 		getContentPane().add(comboBox);
@@ -341,48 +346,50 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		comboResult.setBounds(63, 142, 290, 20);
 		getContentPane().add(comboResult);
 		
-		comboResult.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent ed) {
-				// TODO Auto-generated method stub
-				if(ed.getStateChange()== ItemEvent.DESELECTED){
-					
-				}
-					
-			}	
-					
-		});
+		
+		
+	//	comboResult.addItemListener();
 		
 	 //TODO
-		
-		
-		
-		
-	/*	
-		
-		comboBox.addItemListener(new ItemListener() {
+		comboBox.addMouseListener(new MouseAdapter() {
 			@Override
-			public void itemStateChanged(ItemEvent ed) {
-				// TODO Auto-generated method stub
-				if(ed.getStateChange()== ItemEvent.DESELECTED){
-					for (Map.Entry<Integer, String> entry : mapInmueble.entrySet()){
-						if(comboBox.getSelectedItem().equals(entry.getValue())){
+			public void mouseClicked(MouseEvent arg0) {
+//			}
+//		});
+//			
+//		comboBox.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent ed) {
+//		addItemListener(new ItemListener() {
+//			@Override
+//			public void itemStateChanged(ItemEvent ed) {
+				// TODO Auto-generated method stub// se esta ejecutando mal
+						
+				if(comboBox.getSelectedIndex()!=-1)
+				{
+			 
+				
+					for (Map.Entry<Integer, String> entry : mapInmueble.entrySet())
+					{
+						if(comboBox.getSelectedItem().equals(entry.getValue()))
+						{
 							auxIdInm=entry.getKey();
 							inm=miCoordinador.BuscarInmueble(auxIdInm);
-							textArea.setText(inm.getNombre());
+							//textArea.setText(inm.getNombre());
+							txtSen.setText(Float.toString(inm.getSenial()));
 							//if((pers!=null)&&(inm!=null)&&(textCantidadHoras.getText()!=null)){
 							//	ResuPrecioTotal.setText(String.valueOf(CalcularPrecioTotal(Integer.parseInt(textCantidadHoras.getText().toString()),pers,inm)));
-						
+						//}
 							
-							}
-					}
+							
+						}
 					
 					}
 				}
 				
-				
-			}});
-		*/
+			}
+		});
+		
+		
 		txtDni.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -412,11 +419,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 			mapPersona.put(_per.getDni(), _per.getApellido()+" "+_per.getNombre());
 			
 			
-		}
-		
-		
-		
-		
+		}	
 	}
 	
 	
@@ -424,14 +427,30 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		comboBox.removeAllItems();
 		mapInmueble.clear();
 		comboBox.addItem("Seleccione el inmueble");
-		for (Inmuebles _inm :miCoordinador.ListarInmueblesAlquiler()){
-			comboBox.addItem(_inm.getNombre());
+		for (Inmuebles _inm :miCoordinador.ListarInmueblesAlquiler())
+		{
+			//comboBox.addItem(_inm.getNombre());
 			mapInmueble.put(_inm.getIdInmubles(), _inm.getNombre());
 			//carga el combobox con los nombres de los inmuebles y usa un mapeo para
 			
 			//la puedo usar para mostrar los resultados de list usuarios cuando es mas de uno en un combobox con mapeo.
 		}
-	/*
+		   
+			for(Map.Entry<Integer, String> e : mapInmueble.entrySet()){                  
+				comboBox.addItem(e.getValue());
+		
+			//	comboBox.setLocation(e.getKey(), e.getValue());
+			  //  comboEstado.addItem(e.getKey());
+			  //  comboEstado.setItemCaption(e.getKey(), e.getValue()); 
+			}
+				
+		
+		
+		
+		
+		
+		/*
+	 * 
 		
 		Date fecha=new Date();
 		 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -452,26 +471,26 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 	
 	
 	
-												/* 	public void limpiar(){
-												txtDni.setText(null);
-												txtApe.setText(null);
-												txtNom.setText(null);
-												txtSen.setText(null);
-												txtMontoApagar.setText(null);
-												txtMontoFaltante.setText(null);
-												lSolucionBusqueda.setVisible(false);
-												num=null;
-												listaPersonas.clear();
-												//dateFechaReserva.
+								/* 	public void limpiar(){
+								txtDni.setText(null);
+								txtApe.setText(null);
+								txtNom.setText(null);
+								txtSen.setText(null);
+								txtMontoApagar.setText(null);
+								txtMontoFaltante.setText(null);
+								lSolucionBusqueda.setVisible(false);
+								num=null;
+								listaPersonas.clear();
+								//dateFechaReserva.
 												
-												}
+								}
 											
 											
-											public void cargardatos(){
-												alqui.setNroalquiler(null);
-												alqui.setPersonas(pers);// revisar validacion de persona
-												alqui.setInmuebles(inm);// revisar validacion de inmueble
-												alqui.setFechaactual( new Date()); //directamente del sistema
+								public void cargardatos(){
+								alqui.setNroalquiler(null);
+								alqui.setPersonas(pers);// revisar validacion de persona
+								alqui.setInmuebles(inm);// revisar validacion de inmueble
+								alqui.setFechaactual( new Date()); //directamente del sistema
 													
 													}    */
 												
@@ -482,34 +501,34 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 												
 												
 												
-											//TODO funciones
-												/*
-												public void cargarDatos(Alquiler a){
-											txtNroAlquiler.setText(a.getNroAlquiler().toString());
-											txtNroPersona.setText(a.getPersonas().getDni().toString());
-											txtFechaA.setText(a.getFechaActual().toString());
-											txtHoraA.setText(a.getHoraActual().toString());
-											fechaReserva.setDate(a.getFechaReserva());
-											horaReserva.setSelectedItem(a.getHoraReserva());
-											txtCantidadHoras.setText(a.getCantidadHora().toString());
-											txtPrecioTotal.setText(String.valueOf(a.getPrecioTotal()));
-											checkAlquilerPagado.setSelected(a.isPagoAlquiler());
-											txtObservaciones.setText(a.getObservaciones());
-											
+//TODO funciones
+						/*
+					public void cargarDatos(Alquiler a){
+					txtNroAlquiler.setText(a.getNroAlquiler().toString());
+					txtNroPersona.setText(a.getPersonas().getDni().toString());
+					txtFechaA.setText(a.getFechaActual().toString());
+					txtHoraA.setText(a.getHoraActual().toString());
+					fechaReserva.setDate(a.getFechaReserva());
+				horaReserva.setSelectedItem(a.getHoraReserva());
+					txtCantidadHoras.setText(a.getCantidadHora().toString());
+					txtPrecioTotal.setText(String.valueOf(a.getPrecioTotal()));
+				checkAlquilerPagado.setSelected(a.isPagoAlquiler());
+					txtObservaciones.setText(a.getObservaciones());
+									
 											
 											
 											}
 											
-											@SuppressWarnings("deprecation")
-											public Alquiler CargarModificar(Alquiler a){
-											//la modificacion solo modifica la fecha de reserva, y observaciones de lo contrario seria otro alquiler.
-											a.setFechaReserva(fechaReserva.getDate());
-											a.setObservaciones(txtObservaciones.getText());
+					@SuppressWarnings("deprecation")
+					public Alquiler CargarModificar(Alquiler a){
+			//la modificacion solo modifica la fecha de reserva, y observaciones de lo contrario seria otro alquiler.
+					a.setFechaReserva(fechaReserva.getDate());
+					a.setObservaciones(txtObservaciones.getText());
 											
-											Date asd=new Date();
-											asd.setHours(Integer.parseInt(horaReserva.getSelectedItem().toString()));
-											a.setHoraReserva(asd);
-											return a;
+					Date asd=new Date();
+					asd.setHours(Integer.parseInt(horaReserva.getSelectedItem().toString()));
+					a.setHoraReserva(asd);
+					return a;
 											
 											
 											}
@@ -581,7 +600,10 @@ public float CalcularPrecioTotal(Integer al, Personas per,Inmuebles in ){
 public boolean personaHabilitadaParaAlquiler(Personas per)
 {
 	if(per.isHabilitado()&&(per!=null))
+	{ 
+		cargarCombo();
 			return true;
+	}
 	else
 	{
 		miCoordinador.mensajes("Esta persona no esta habilitada para Alquilar", 3);
@@ -601,12 +623,10 @@ public boolean personaHabilitadaParaAlquiler(Personas per)
 			{
 				if((!txtDni.getText().isEmpty())||(txtApe.getText().isEmpty())||(txtNom.getText().isEmpty()))
 				{
-					
 					pers=miCoordinador.BuscarPersona(Integer.parseInt(txtDni.getText()));
 					if(personaHabilitadaParaAlquiler(pers))
 					{ txtApe.setText(pers.getApellido().toString());
 					txtNom.setText(pers.getNombre().toString());
-					
 					}
 					
 					
@@ -618,7 +638,7 @@ public boolean personaHabilitadaParaAlquiler(Personas per)
 						listaPersonas=miCoordinador.filtrarPersonaPor(txtNom.getText().toString(), txtApe.getText().toString());
 						if(!listaPersonas.equals(null))
 							cargarComboBoxDeBusquedaDePersonas(listaPersonas);		
-								
+								//TODO falta terminar y funcion seleccionar persona
 						
 						}
 					
@@ -643,6 +663,22 @@ public boolean personaHabilitadaParaAlquiler(Personas per)
 			JOptionPane.showMessageDialog(null, "NO SE ENCUENTRA LA PERSONA", "HA OCURRIDO UN ERROR",JOptionPane.ERROR_MESSAGE);
 		}
 		try{
+			if(e.getSource()==btnAceptar)
+			{
+				
+				
+				
+				
+				
+				
+			}
+			//TODO codigo para probar alquiler
+			
+			
+			
+			
+			
+			
 			/*
 			if(e.getSource()==btnAceptar){
 				
@@ -671,8 +707,6 @@ public boolean personaHabilitadaParaAlquiler(Personas per)
 	public void setCoordinador(ControllerCoordinador miCoordinador) {
 		this.miCoordinador=miCoordinador;
 	}
-	
-	
 }
 
 	

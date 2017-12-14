@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class RowsRende extends DefaultTableCellRenderer {
+public class RowsRende extends DefaultTableCellRenderer {// tabla grilla  inmuebley alquiler
 	private int columna ;
 
 	public RowsRende (int colPatron){
