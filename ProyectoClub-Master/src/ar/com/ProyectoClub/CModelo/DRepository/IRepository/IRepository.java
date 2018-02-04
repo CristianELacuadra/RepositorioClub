@@ -11,6 +11,7 @@ import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
 import ar.com.ProyectoClub.CModelo.CEntidades.Conceptos;
 import ar.com.ProyectoClub.CModelo.CEntidades.Cuota;
 import ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles;
+import ar.com.ProyectoClub.CModelo.CEntidades.Morosos;
 import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
 import ar.com.ProyectoClub.CModelo.CEntidades.Socios;
 import ar.com.ProyectoClub.CModelo.CEntidades.Usuario;
@@ -104,5 +105,12 @@ public interface IRepository  {
 	int ObtenerIdCaja(String tipo) throws BussinessException;
 	Date ObtenerUltimoFechaActividad (Integer dni) throws BussinessException; 
 	//List<Socios> ObteneresPrimero();
-	
+	List<Socios> ObtenerMorosos() throws BussinessException;
+	List<Socios> ObtenerDeudores() throws BussinessException;
+	float ObtenerUltimoImporteSocio(Date fechaultReg,Integer dni) throws BussinessException ;
+	Categoria ObtenerCategoriaSocio(Integer dni) throws BussinessException;
+	//Generacion cuota
+	Integer ObtenerUltimoIdCuotaSocio(Integer dni) throws BussinessException;
+	Date ObtenerUltimaFechaGeneracion(Integer dni) throws BussinessException;
+
 }

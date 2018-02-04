@@ -6,7 +6,7 @@
             <column name="IdCUOTA"/>
             <generator class="identity"/>
         </id>
-        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Socios" embed-xml="true" fetch="select" insert="true" name="socios" not-found="exception" optimistic-lock="true" unique="false" update="true">
+        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Socios" embed-xml="true" fetch="join" insert="true" name="socios" not-found="exception" optimistic-lock="true" unique="false" update="true">
             <column name="DNI" not-null="true"/>
         </many-to-one>
         <property generated="never" lazy="false" name="fechageneracion" optimistic-lock="true" type="date" unique="false">

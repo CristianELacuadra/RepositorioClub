@@ -19,14 +19,14 @@ public class Morosos {
 	private Integer matricula;
 	private Date fechaingreso;
 	private String estado;
-	private Integer cantidadCuota;
+	private Integer CantMesAtraso;
 	private Float importeTotal;
 	private Date ultimaFecMovim;
 
 	public Morosos() {
 	}
 
-	public Morosos(Integer dni,String nombre,String apellido,String telefono,String domicilio,String categoria,Integer matricula,Date fechaingreso,String estado,Integer cantidadCuota,Float importetotal,Date ultimafechaMov) {
+	public Morosos(Integer dni,String nombre,String apellido,String telefono,String domicilio,String categoria,Integer matricula,Date fechaingreso,String estado,Integer CantMesAtraso,Float importetotal,Date ultimafechaMov) {
 		this.dni=dni;
 		this.nombre=nombre;
 		this.apellido=apellido;
@@ -36,7 +36,7 @@ public class Morosos {
 		this.matricula=matricula;
 		this.fechaingreso=fechaingreso;
 		this.estado=estado;
-		this.cantidadCuota=cantidadCuota;
+		this.CantMesAtraso=CantMesAtraso;
 		this.importeTotal=importetotal;
 		this.ultimaFecMovim=ultimaFecMovim;
 	}
@@ -71,8 +71,8 @@ public class Morosos {
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
-	public void setCantidadCuota(Integer cantidadCuota) {
-		this.cantidadCuota = cantidadCuota;
+	public Integer getCantMesAtraso() {
+		return CantMesAtraso;
 	}
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
@@ -107,8 +107,8 @@ public class Morosos {
 	public String getCategoria() {
 		return categoria;
 	}
-	public Integer getCantidadCuota() {
-		return cantidadCuota;
+	public void setCantMesAtraso(Integer cantMesAtraso) {
+		CantMesAtraso = cantMesAtraso;
 	}
 	public String getApellido() {
 		return apellido;

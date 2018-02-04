@@ -453,7 +453,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			//nuevapersona.setEssocio(true);
 			Socios socio= miCoordinador.CrearSocio();
 			//socio.setDni(nuevapersona.getDni());
-			socio.setEstado("Activo");
+			socio.setEstado("ACTIVO");
 			socio.setFechaingreso(dateFechIngreso.getDate());
 			socio.setBaja(false);
 			socio.setMatricula(Integer.parseInt(txtMatri.getText()));
@@ -515,6 +515,24 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	//limpiar
 	private void limpiar(){
 		txtDni.setText(null);
+		txtApe.setText(null);
+		txtNom.setText(null);
+		dateFechNac.setCalendar(null);
+		txtDom.setText(null);
+		txtTel.setText(null);
+		txtMatri.setText(null);
+		txtCateg.setText(null);
+		txtEstdoCiv.setText(null);
+		comboCate.setSelectedItem("Seleccione una categoria");
+		txtNacion.setText(null);
+		dateFechIngreso.setCalendar(null);
+		txtDomNro.setText(null);
+		lblEstado.setText("ESTADO");
+		lblEstado.setForeground(Color.black);
+	}
+	
+	//limpiar
+	private void limpiar2(){
 		txtApe.setText(null);
 		txtNom.setText(null);
 		dateFechNac.setCalendar(null);
@@ -612,7 +630,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			this.HabilitarBotonoes(true);
 			if(persona != null){
 				lblEstado.setText("ESTADO: PERSONA YA REGISTRADA");
-				limpiar();
+				limpiar2();
 				lblEstado.setForeground(Color.RED);
 				txtApe.setText(persona.getApellido());
 				txtNom.setText(persona.getNombre());

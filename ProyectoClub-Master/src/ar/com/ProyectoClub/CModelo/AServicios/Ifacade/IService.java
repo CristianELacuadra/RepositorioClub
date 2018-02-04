@@ -30,7 +30,7 @@ public interface IService {
 	Conceptos BuscarConcepto(Integer id);
     //contrato usuario
 	Usuario CrearUsuario();
-	Usuario ValidarUsuario(String nombreUsuario,String PassUsuario);
+	Usuario ValidarUsuario(Usuario usuario);
 	Usuario ObtenerUsuarioPorNombre(String nombreUsuario);
 	List<Personas> ListarPersonas();
 	void GuardarNoSocio(Personas persona);
@@ -63,20 +63,14 @@ public interface IService {
 	void RegistrarPagoCuotaSocio(List<Cuota> cuotas);
 	float ObtenerPrecioCuota();
 	//Morosos
-	List<Socios> ListarMorosos();
-
-	
-	
-	
-	
-
+	List<Morosos> ListarMorososDeudores();
 	void GuardarCategoria(Categoria categoria);
 	void habilitarInhabilitarCategoria(int id);
 	void HabilitarPersona(int dni);
-	List<Socios> ControlCuotaSocio();
+	List<Cuota> ControlCuotaSocio(Integer dni);
 	List<Personas> ObtenerPersonaNomApe(String nom, String ape);
-	
-	
-	
-	
+	List<Morosos> FiltrarMorosos();
+	List<Morosos> FiltrarDeudores();
+
+
 }

@@ -253,7 +253,7 @@ public class PantallaBusquedaSNS extends JDialog implements ActionListener,KeyLi
 			}
 			if(e.getSource()==btnSeleccionar){
 				Personas persona=miCoordinador.BuscarPersona(Tempdni);
-				miCoordinador.CargarDatosPersona(persona);
+				//miCoordinador.CargarDatosPersona(persona);
 			}
 		}
 		catch (Exception ex) {

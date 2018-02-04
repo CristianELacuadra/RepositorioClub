@@ -46,7 +46,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 	private javax.swing.JPanel jPanel4;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JButton limpiar;
-	private JButton btnControlCuotas;
+	private JButton btnControlMorosos;
 	private javax.swing.JButton registrar;
 	public static javax.swing.JTable tablaPersona;
 	private javax.swing.JLabel codigoL1;
@@ -96,7 +96,8 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		buscar.setBounds(20, 40, 205, 32);
 		codigoL1 = new javax.swing.JLabel();
 		codigoL1.setBounds(10, 30, 250, 52);
-		btnControlCuotas= new JButton();
+		btnControlMorosos= new JButton();
+		
 		resaltado = new RowsRenderer(0);
 		btnDetalles = new JButton();
 		btnDetalles.setName("btnDetalle");
@@ -180,7 +181,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		limpiar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 		limpiar.setIcon(
 				new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/limpiar1.png"))); // NOI18N
-		limpiar.setText("Registrar");
+		limpiar.setText("Limpiar");
 		limpiar.setBorder(null);
 		limpiar.setBorderPainted(false);
 		limpiar.setContentAreaFilled(false);
@@ -191,14 +192,15 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		limpiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		limpiar.addActionListener(this);
 		
-		btnControlCuotas.setIcon(new ImageIcon(PantallaPrincipalPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/IcoMorosos.png")));
-		btnControlCuotas.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnControlCuotas.setText("Control Cuotas");
-		btnControlCuotas.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnControlCuotas.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnControlCuotas.setContentAreaFilled(false);
-		btnControlCuotas.setBorderPainted(false);
-		btnControlCuotas.setBorder(null);
+		btnControlMorosos.setIcon(new ImageIcon(PantallaPrincipalPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/IcoMorosos.png")));
+		btnControlMorosos.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnControlMorosos.setText("Control Morosos");
+		btnControlMorosos.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnControlMorosos.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnControlMorosos.setContentAreaFilled(false);
+		btnControlMorosos.setBorderPainted(false);
+		btnControlMorosos.setBorder(null);
+		btnControlMorosos.addActionListener(this);
 		
 		btnCategorias = new JButton();
 		btnCategorias.setIcon(new ImageIcon(PantallaPrincipalPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/IcoCategorias.png")));
@@ -225,7 +227,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 					.addGap(36)
 					.addComponent(btnCategorias, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(btnControlCuotas)
+					.addComponent(btnControlMorosos)
 					.addGap(1020))
 		);
 		jPanel3Layout.setVerticalGroup(
@@ -235,7 +237,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 						.addComponent(registrar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(limpiar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(btnCategorias, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnControlCuotas, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnControlMorosos, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		jPanel3.setLayout(jPanel3Layout);
@@ -308,18 +310,6 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		chckNom.setBounds(19, 53, 109, 23);
 		GrupoSNS.add(chckNom);
 		panelSNS.add(chckNom);
-		
-		JButton btnDfs = new JButton();
-		btnDfs.setVerticalTextPosition(SwingConstants.TOP);
-		btnDfs.setHorizontalAlignment(SwingConstants.LEFT);
-		btnDfs.setIcon(null);
-		btnDfs.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnDfs.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnDfs.setContentAreaFilled(false);
-		btnDfs.setBorderPainted(false);
-		btnDfs.setBorder(null);
-		btnDfs.setBounds(270, 40, 75, 32);
-		jPanel4.add(btnDfs);
 		jPanel1.setLayout(jPanel1Layout);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -430,12 +420,12 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 			if(e.getSource()==btnCategorias){
 				miCoordinador.MostarVentanaConfCategoria(PantallaConfiguracionCategoria.tablaCategoria);  
 			}
-			if(e.getSource()==btnControlCuotas){
-				
+			if(e.getSource()==btnControlMorosos){
+				miCoordinador.MostrarVentanaControlMorosos(PantallaControlMorosos.tablaDeudores);
 			}
 		}
 		catch (Exception ex) {
-			JOptionPane.showMessageDialog(null,"¡ERROR!"+e.toString(),"Atencion", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null,"ERROR: "+ex.toString(),"Atencion", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
