@@ -27,7 +27,7 @@ public class ControlllerPrincipal {
 	PantallaPrincipalPersonas miVentanaPrincipalPersonas;
 	PantallaDetallesInhabilitarSNS miVentanaDetalllesSNS;
 	PantallaConfiguracionCategoria  miVentanaConfCategoria;
-	
+	PantallaControlMorosos miVentanaControlMoroso;
 
 	
 	PantallaAlquilerPrincipal miVentanaAlquilerPrincipal;
@@ -62,6 +62,7 @@ public class ControlllerPrincipal {
 			miVentanaPrincipalPersonas= new PantallaPrincipalPersonas();
 			miVentanaDetalllesSNS=new PantallaDetallesInhabilitarSNS(miVentanaBusquedaSNSCobr, true);
 			miVentanaConfCategoria = new PantallaConfiguracionCategoria(miVentanaConfiguracion,true);
+			miVentanaControlMoroso =  new PantallaControlMorosos();
 
 			
 			
@@ -84,6 +85,7 @@ public class ControlllerPrincipal {
 			miVentanaPrincipalPersonas.setCoordinador(miCoordinador);
 			miVentanaDetalllesSNS.setCoordinador(miCoordinador);
 			miVentanaConfCategoria.setCoordinador(miCoordinador);
+			miVentanaControlMoroso.setMiCoordinador(miCoordinador);
 			
 			
 			
@@ -105,7 +107,7 @@ public class ControlllerPrincipal {
 			miCoordinador.setMiVentanaPrincipalPersona(miVentanaPrincipalPersonas);
 			miCoordinador.setMiVentanaDetallesSNS(miVentanaDetalllesSNS);
 			miCoordinador.setMiVentanaConfCategoria(miVentanaConfCategoria);
-			
+			miCoordinador.setMiVentanaControlMoroso(miVentanaControlMoroso);
 			
 			
 			miCoordinador.setMiVentanaAlquilerPrincipal(miVentanaAlquilerPrincipal);
@@ -113,15 +115,12 @@ public class ControlllerPrincipal {
 			
 			
 
-			miVentanaInicio.setVisible(true);
-			
-//github.com/CristianELacuadra/RepositorioClub.git
-			
+			miVentanaInicio.setVisible(true);		
 			
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null,"El sistema no puede seguir la ejecucion debido al siguiente error"+e.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
-
+			System.exit(1); 
 		}
 	}
 }

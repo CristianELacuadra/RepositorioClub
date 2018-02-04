@@ -156,33 +156,37 @@ public class Inicio extends JFrame  implements ActionListener,KeyListener {
 		}
 		
 		if(e.getSource()==botCancelar){
-			this.dispose();
+			System.exit(1); 
 		}
 
 	}
 	
 	private void EntraAlSistema(){
 		try{
-			String nom,pass;
+			String nom;
+			String pass = new String(passwordField.getPassword());
 			nom=textField.getText();
-			pass=passwordField.getText();
-			if(nom.isEmpty() || pass.isEmpty())
-				JOptionPane.showMessageDialog(this, "Los campos son obligatorios", "Acceso", 0, new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/info.png")));
-			else{
+			if(!nom.isEmpty() && !pass.isEmpty()){
 				Usuario usuario=miCoordinador.CrearUsuario();
-				usuario=miCoordinador.validarUsuario(nom, pass);
-				if(usuario !=null){
-					if(!usuario.getNick().equals(null)){
+				usuario.setNick(nom);
+				usuario.setPassword(pass);
+				usuario=miCoordinador.validarUsuario(usuario);
+				if(usuario.getNick() !=null){
+					if(usuario.getPassword() != null){
 						miCoordinador.mostrarVentanaPrincipal(usuario);	
 						dispose();
 					}
-					else					
-						JOptionPane.showMessageDialog(null,"Usuario o Contraseña Incorrecta,Por favor vuelva a intentarlo","Acceso al sistema denegado",JOptionPane.ERROR_MESSAGE);
+					else{					
+						JOptionPane.showMessageDialog(null,"Contraseña Incorrecta","Acceso al sistema denegado",JOptionPane.ERROR_MESSAGE);
+						passwordField.setText(null);
+					}
 				}
 				else
 					JOptionPane.showMessageDialog(null,"Usuario inexistente","Acceso al sistema denegado",JOptionPane.ERROR_MESSAGE);
-				this.limpiar();
 			}
+			else
+				JOptionPane.showMessageDialog(this, "Acceso denegado", "Acceso al sistema denegado", 0, new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/info.png")));
+
 			//Antes de abrir lanzo la generacion de cuota;
 			//miCoordinador.LanzarPrcesoAutGeneracionCuota(); //Lanza Proceso de generacion de cuotas
 			//miCoordinador.ProcesarMorosos(); //lanza proceso de generacion de morosos			

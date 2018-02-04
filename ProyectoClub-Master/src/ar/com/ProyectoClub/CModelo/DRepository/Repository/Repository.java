@@ -1,17 +1,9 @@
 package ar.com.ProyectoClub.CModelo.DRepository.Repository;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.hibernate.Query;
-
-import ar.com.ProyectoClub.CModelo.AServicios.facade.Service;
 import ar.com.ProyectoClub.CModelo.CEntidades.*;
 import ar.com.ProyectoClub.CModelo.DRepository.ClassParameterized.*;
 import ar.com.ProyectoClub.CModelo.DRepository.ExceptionsHibernate.BussinessException;
@@ -534,6 +526,64 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 		String query="select MAX(c.fechapago) from Cuota c inner join c.socios as s where s in(select s from Socios s where s.dni="+dni+")";
 		return (Date) _sessiondehilo.createQuery(query).uniqueResult();
 	}
+	
+	@Override
+	public Date ObtenerUltimaFechaGeneracion(Integer dni) throws BussinessException {
+		Setsession();
+		SetTransaction();
+		String query="select MAX(c.fechageneracion) from Cuota c inner join c.socios as s where s in(select s from Socios s where s.dni="+dni+")";
+		return (Date) _sessiondehilo.createQuery(query).uniqueResult();
+	}
+	
+	@Override
+	public float ObtenerUltimoImporteSocio(Date fechaultReg,Integer dni) throws BussinessException {
+		Setsession();
+		SetTransaction();
+		String query="select c.importe from Cuota c inner join c.socios as s where c.fechapago='"+fechaultReg+"' and s in(select s from Socios s where s.dni="+dni+")";
+		return (float) _sessiondehilo.createQuery(query).uniqueResult();
+	}
+
+	@Override
+	public List<Socios> ObtenerMorosos() throws BussinessException {
+		Setsession();
+		SetTransaction();
+		String consulta="SELECT s FROM Socios s WHERE s.estado='MOROSO' and s.baja=false";
+		List<Socios> listsSocios= _sessiondehilo.createQuery(consulta).list();
+		if(!listsSocios.isEmpty())
+			return listsSocios;
+		return null;
+		
+	}
+
+	@Override
+	public List<Socios> ObtenerDeudores() throws BussinessException {
+		Setsession();
+		SetTransaction();
+		String consulta="SELECT s FROM Socios s WHERE s.estado='DEUDOR' and s.baja=false";
+		List<Socios> listaDeudor= _sessiondehilo.createQuery(consulta).list();
+		return listaDeudor;
+	}
+
+	
+	@Override
+	public Categoria ObtenerCategoriaSocio(Integer dni) throws BussinessException {
+		Setsession();
+		SetTransaction();
+		String consulta="SELECT s.categoria FROM Socios s WHERE s.dni="+dni;
+		return (Categoria) _sessiondehilo.createQuery(consulta).uniqueResult();
+	}
+
+	
+	@Override
+	public Integer ObtenerUltimoIdCuotaSocio(Integer dni) throws BussinessException {
+		Setsession();
+		SetTransaction();
+		String query= "select MAX(c.id) from Cuota c inner join c.socios as s where s in (select s from Socios s where s.dni="+dni+")";
+		return (Integer) _sessiondehilo.createQuery(query).uniqueResult();
+		
+	}
+
+	
 
 //	@Override
 //	public List<Socios> ObtenerTresPrimero() {

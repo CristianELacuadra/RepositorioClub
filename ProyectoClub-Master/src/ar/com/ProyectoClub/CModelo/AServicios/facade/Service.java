@@ -8,15 +8,7 @@ import java.util.logging.Logger;
 
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IService;
 import ar.com.ProyectoClub.CModelo.BNegocio.Gestor;
-import ar.com.ProyectoClub.CModelo.CEntidades.Alquiler;
-import ar.com.ProyectoClub.CModelo.CEntidades.Caja;
-import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
-import ar.com.ProyectoClub.CModelo.CEntidades.Conceptos;
-import ar.com.ProyectoClub.CModelo.CEntidades.Cuota;
-import ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles;
-import ar.com.ProyectoClub.CModelo.CEntidades.Personas;
-import ar.com.ProyectoClub.CModelo.CEntidades.Socios;
-import ar.com.ProyectoClub.CModelo.CEntidades.Usuario;
+import ar.com.ProyectoClub.CModelo.CEntidades.*;
 import ar.com.ProyectoClub.CModelo.DRepository.ExceptionsHibernate.BussinessException;
 
 public class Service implements IService {
@@ -140,9 +132,9 @@ public class Service implements IService {
 	}
 	
 	@Override
-	public Usuario ValidarUsuario(String nombreUsuario, String PassUsuario) {
+	public Usuario ValidarUsuario(Usuario usuario) {
 		try{
-			return gestor.VerificarUsuario(nombreUsuario, PassUsuario);
+			return gestor.VerificarUsuario(usuario);
 		}
 		catch (BussinessException e) {
 			//loggeo el error mostrando la localizacion y su causa
@@ -482,10 +474,10 @@ public class Service implements IService {
 	}
 
 	@Override
-	public List<Socios> ControlCuotaSocio() {
+	public List<Cuota> ControlCuotaSocio(Integer dni) {
 		try{
 			//Genero las cuotas
-			return null;// gestor.GenerarCuotas();
+			return gestor.GeneracionCuotaSocio(dni);
 		}
 		catch (Exception e) {
 			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e);
@@ -594,10 +586,11 @@ public class Service implements IService {
 	 * fecha actual, vuelca resultado 
 	 */
 	@Override
-	public List<Socios> ListarMorosos() {
+	public List<Morosos> ListarMorososDeudores() {
 		try {
-			List<Socios> listaSocio=gestor.ListarSocio();
-			gestor.ValidarCuotasSocio(listaSocio);
+			List<Socios> listaSocio=gestor.ListarSocio(); // obtengo los socios
+			gestor.ValidarCuotasSocio(listaSocio); // valido si son morosos, deudor o activo
+			return gestor.ListarMorososDeudor();//obtengo los morosos
 		} 
 		catch (BussinessException e) {
 			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
@@ -606,23 +599,27 @@ public class Service implements IService {
 	}
 
 	
-	
-	
-	
 
-	
+	@Override
+	public List<Morosos> FiltrarMorosos() {
+		try{
+			return gestor.FiltrarMoroso();//obtengo los morosos
+		}
+		catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e.getCause());
+			throw new RuntimeException("ERROR: "+ e.getBussinessMessages());
+		}
+	}
 
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
+	@Override
+	public List<Morosos> FiltrarDeudores() {
+		try{
+			return gestor.FiltrarDeudores();//obtengo los morosos
+		}
+		catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e.getCause());
+			throw new RuntimeException("ERROR: "+ e.getBussinessMessages());
+		}
+	}
 
 }

@@ -11,7 +11,11 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.RowFilter.ComparisonType;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import ar.com.ProyectoClub.AVista.*;
 import ar.com.ProyectoClub.AVista.ClasesRender.Render;
@@ -23,7 +27,7 @@ import ar.com.ProyectoClub.CModelo.CEntidades.*;
 public class ControllerCoordinador {
 	//Objeto a mi modelo de servicio
 	private IService modeloService;
-
+	private  DefaultTableModel dm;
 	private Principal miVentanaPrincipal;
 	private Inicio miVentanaInicio;
 	private PantallaFormularioPersona miFormularioPersona;
@@ -35,7 +39,7 @@ public class ControllerCoordinador {
 	private PantallaPrincipalPersonas miVentanaPrincipalPersona;
 	private PantallaDetallesInhabilitarSNS miVentanaDetallesSNS;
 	private PantallaConfiguracionCategoria miVentanaConfCategoria ;
-
+    private PantallaControlMorosos miVentanaControlMoroso;
 	//ALQUILER
 	private PantallaAlquilerPrincipal miVentanaAlquilerPrincipal;
 	private PantallaNuevoAlquiler miVentanaNuevoAlquiler;
@@ -163,7 +167,24 @@ public class ControllerCoordinador {
 		this.miVentanaConfCategoria = miVentanaConfCategoria;
 	}
 	
-
+	public void setMiVentanaControlMoroso(PantallaControlMorosos miVentanaControlMoroso) {
+		this.miVentanaControlMoroso = miVentanaControlMoroso;
+	}
+	
+	public PantallaControlMorosos getMiVentanaControlMoroso() {
+		return miVentanaControlMoroso;
+	}
+	
+	/*Metodo filtro sobre tabla*/
+	//--------------------------------------------------------------------------------------------------
+	public void Filtro(String consulta,JTable jTable){
+		dm = (DefaultTableModel) jTable.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(dm);
+        jTable.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(consulta));
+	}
+	//----------------------------------------------------------------------------
+	
 //github.com/CristianELacuadra/RepositorioClub.git
 
 	//////////////////////////////////////////////////////////
@@ -201,7 +222,7 @@ public class ControllerCoordinador {
 		persona=modeloService.BuscarPersona(dni);
 		
 		habiilitado= persona.isHabilitado() ? "SI" : "NO";
-		Essocio=persona.getSocios() != null ? "SI" : "NO";
+		Essocio=(persona.getSocios() != null && !persona.getSocios().isBaja()) ? "SI" : "NO";
 		String[] partes = persona.getDomicilio().split("-");
 		String domicilio=partes[0]+" Nº "+partes[1];
 
@@ -210,9 +231,10 @@ public class ControllerCoordinador {
 				+"Sexo: "+persona.getSexo()+'\n'+""
 				+"Nacionalidad: "+persona.getNacionalidad()+'\n'+""
 				+"Estado Civil: "+persona.getEstadocivil()+'\n'+""
-				+"Habilitado: "+habiilitado+'\n'+"";
+				+"Habilitado: "+habiilitado+'\n'+""
+		        +"Es Socio: "+Essocio+'\n'+"";
 		miVentanaDetallesSNS.textDetalle.setText(textoPersona);
-		if(persona.getSocios() != null){
+		if(persona.getSocios() != null && !persona.getSocios().isBaja()){
 			textoSocio = "Matricula: "+persona.getSocios().getMatricula()+'\n'+""
 					+"Estado: "+persona.getSocios().getEstado()+'\n'+""	
 					+"Fecha de Ingreso: "+(new SimpleDateFormat("dd-MM-yyyy").format(persona.getSocios().getFechaingreso()))+'\n'+"";
@@ -464,7 +486,8 @@ public class ControllerCoordinador {
 	@SuppressWarnings("unchecked")
 	public void CargarDatosCobranza(Integer dni,JTable tabla){
 
-		java.util.Set<Cuota> cuotasSocio= new HashSet<Cuota>();
+		//java.util.Set<Cuota> cuotasSocio= new HashSet<Cuota>();
+		List<Cuota> cuotas=new ArrayList<Cuota>();
 		Socios socio = modeloService.CrearInstanciaSocio();
 		socio= modeloService.BuscarSocio(dni);
 		//Datos persona
@@ -474,6 +497,7 @@ public class ControllerCoordinador {
 		miVentanaCobranza.txtNyA.setText(socio.getPersonas().getNombre()+" "+socio.getPersonas().getApellido());
 		miVentanaCobranza.txtTel.setText(socio.getPersonas().getTelefono());
 		miVentanaCobranza.txtCat.setText(socio.getCategoria().getNombre());
+		miVentanaCobranza.txtEstado.setText(socio.getEstado());
 
 		//cuota
 		boolean[] editable = {false,true,false,false,false,false};
@@ -493,45 +517,55 @@ public class ControllerCoordinador {
 				return editable[colum];
 			}
 		};
-		Object[] columna = new Object[6];
+		Object[] columna = new Object[5];
 
 		tabla.setModel(modeloT);
 		modeloT.addColumn("");
 		modeloT.addColumn("");
 		modeloT.addColumn("MES");
 		modeloT.addColumn("AÑIO");
-		modeloT.addColumn("FECHA PAGO");
+		//modeloT.addColumn("FECHA PAGO");
 		modeloT.addColumn("IMPORTE");
 
 		//Paso las cuotas del socio
-		cuotasSocio= socio.getCuotas();
+		cuotas=  modeloService.ControlCuotaSocio(socio.getDni());
+		
 		float total=0;
-		if(!socio.getCuotas().isEmpty())
-		{
-			Iterator<Cuota> it= socio.getCuotas().iterator();
-			while(it.hasNext()){  		   
-				Cuota cuota=it.next();
-				if(cuota.getFechapago()==null){
-					columna[0]= cuota.getIdCuota();
-					columna[1]=false;
-					columna[2]=cuota.getFechageneracion().getMonth()+1;
-					columna[3]= cuota.getFechageneracion().getYear()+1900;
-					columna[4] ="";
-					columna[5]=cuota.getImporte();
-					total =0; //cuota.getImporte();
-					modeloT.addRow(columna);	   
-				}
-			}
+		for (int i = 0; i < cuotas.size(); i++) {
+			columna[0] = cuotas.get(i).getIdCuota();
+			columna[1] = true;
+			columna[2] = cuotas.get(i).getFechageneracion().getMonth()+1;
+			columna[3] = cuotas.get(i).getFechageneracion().getYear()+1900;
+			columna[4] = cuotas.get(i).getImporte();
+			total+=cuotas.get(i).getImporte();
+			miVentanaCobranza.btnCobrar.setEnabled(true);
+			modeloT.addRow(columna);
 		}
+//		if(!socio.getCuotas().isEmpty())
+//		{
+//			Iterator<Cuota> it= socio.getCuotas().iterator();
+//			while(it.hasNext()){  		   
+//				Cuota cuota=it.next();
+//				if(cuota.getFechapago()==null){
+//					columna[0]= cuota.getIdCuota();
+//					columna[1]=false;
+//					columna[2]=cuota.getFechageneracion().getMonth()+1;
+//					columna[3]= cuota.getFechageneracion().getYear()+1900;
+//					columna[4] ="";
+//					columna[5]=cuota.getImporte();
+//					total =0; //cuota.getImporte();
+//					modeloT.addRow(columna);	   
+//				}
+//			}
+//		}
 		tabla.setRowHeight(25);
 		tabla.getColumnModel().getColumn(0).setMinWidth(0);
 		tabla.getColumnModel().getColumn(0).setMaxWidth(0);
-		tabla.getColumnModel().getColumn(1).setMaxWidth(40);
-		tabla.getColumnModel().getColumn(2).setMaxWidth(150);
-		tabla.getColumnModel().getColumn(3).setMaxWidth(150);
-		tabla.getColumnModel().getColumn(4).setMaxWidth(200);
-		tabla.getColumnModel().getColumn(5).setMaxWidth(260);
-		tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);
+		tabla.getColumnModel().getColumn(1).setMaxWidth(50);
+		tabla.getColumnModel().getColumn(2).setMaxWidth(200);
+		tabla.getColumnModel().getColumn(3).setMaxWidth(250);
+		tabla.getColumnModel().getColumn(4).setMaxWidth(300);
+		//tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);
 		miVentanaCobranza.txttotal.setText(String.valueOf(total));
 		miVentanaCobranza.setVisible(true);
 
@@ -801,20 +835,109 @@ public class ControllerCoordinador {
 	public Usuario CrearUsuario(){
 		return modeloService.CrearUsuario();
 	}
-	public Usuario validarUsuario(String nombreUsuario,String PassUsuario){
-		return  modeloService.ValidarUsuario(nombreUsuario, PassUsuario);
+	public Usuario validarUsuario(Usuario usuario){
+		return  modeloService.ValidarUsuario(usuario);
 	}
 	public Usuario ObtenerUsuarioPorNombre(String nomUsuario){
 		return modeloService.ObtenerUsuarioPorNombre(nomUsuario);
 	}
 	
+	//---------------------------------------------------------------------------------------------------------------------------------------------------
+	//MOROSOS
+	//---------------------------------------------------------------------------------------------------------------------------------------------------	
+	
+	//no aplicable
+	public void FiltrarMorosos(String filtro,JTable tablaDeudores) {
+		List<Morosos> listaMorososDeudores=new ArrayList<Morosos>();
+		if(filtro.equals("MOROSO"))
+			 listaMorososDeudores= modeloService.FiltrarMorosos();
+		
+		if(filtro.equals("DEUDOR"))
+			listaMorososDeudores = modeloService.FiltrarDeudores();
+		
+		//CargarGrillaMorosos(tablaDeudores, listaMorososDeudores,null);
+	}
+	
+	
+	public void MostrarVentanaControlMorosos(JTable tablaDeudores) {
+		CargarGrillaMorosos(tablaDeudores);
+		miVentanaControlMoroso.setVisible(true);
+	}
+	
+	/**
+	 * rellena la tabla con los datos 
+	 * @param tabla
+	 * @param listaMorosos
+	 * @return
+	 */
+	public void  CargarGrillaMorosos(JTable tabla){
+		DefaultTableModel ModeloDeuMoros=this.ArmadoModeloDeudoresMorosos();
+		List<Morosos> listaMorosos=modeloService.ListarMorososDeudores();
+		Object[] columna = new Object[12];
+		int numRegistros=listaMorosos.size();
+		for (int i = 0; i < numRegistros; i++) {
+			columna[0] = listaMorosos.get(i).getMatricula();
+			columna[1] = listaMorosos.get(i).getDni();
+			columna[2] = listaMorosos.get(i).getNombre();
+			columna[3] = listaMorosos.get(i).getApellido();
+			columna[4] = listaMorosos.get(i).getTelefono();
+			columna[5] = listaMorosos.get(i).getDomicilio();
+			columna[6] = listaMorosos.get(i).getCategoria();
+			columna[7] = listaMorosos.get(i).getFechaingreso();
+			columna[8] = listaMorosos.get(i).getEstado();
+			columna[9] = listaMorosos.get(i).getCantMesAtraso()+" MES";
+			columna[10] = listaMorosos.get(i).getImporteTotal();
+			columna[11] = listaMorosos.get(i).getUltimaFecMovim();
+			ModeloDeuMoros.addRow(columna);
+		}	
+		tabla.setModel(ModeloDeuMoros);
+		//Estilo Tabla
+		tabla.getTableHeader().setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
+		tabla.setDefaultRenderer(Object.class,new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
+		//Dimentsion tabla
+		tabla.setRowHeight(25);
+		tabla.getColumnModel().getColumn(0).setMaxWidth(100);
+		tabla.getColumnModel().getColumn(1).setMaxWidth(70);
+    	tabla.getColumnModel().getColumn(2).setMaxWidth(100);
+    	tabla.getColumnModel().getColumn(3).setMaxWidth(100);
+    	tabla.getColumnModel().getColumn(4).setMaxWidth(150);
+    	tabla.getColumnModel().getColumn(5).setMaxWidth(250);
+    	tabla.getColumnModel().getColumn(6).setMaxWidth(100);
+    	tabla.getColumnModel().getColumn(7).setMaxWidth(120);
+    	tabla.getColumnModel().getColumn(8).setMaxWidth(100);
+    	tabla.getColumnModel().getColumn(9).setMaxWidth(70);
+    	tabla.getColumnModel().getColumn(10).setMaxWidth(120);
+    	tabla.getColumnModel().getColumn(11).setMaxWidth(140);
+    	//acciones tabla
+    	//tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);
+	}
 	
 	
 	
-	
-	
-	
-	
+	//Saco el modelo de datos para poder usar en varios metodos
+	private DefaultTableModel ArmadoModeloDeudoresMorosos(){
+
+		DefaultTableModel  modeloT = new DefaultTableModel(){
+			public boolean isCellEditable(int row,int colum){  //la filas de mi tabla no pueden ser editable
+				return false;
+			}
+		};
+
+		modeloT.addColumn("MATRICULA");
+		modeloT.addColumn("DNI");
+		modeloT.addColumn("NOMBRE");
+		modeloT.addColumn("APELLIDO");
+		modeloT.addColumn("TELEFONO");
+		modeloT.addColumn("DOMICILIO");
+		modeloT.addColumn("CATEGORIA");
+		modeloT.addColumn("INGRESO");
+		modeloT.addColumn("ESTADO");
+		modeloT.addColumn("ATRASO");
+		modeloT.addColumn("IMP. TOTAL $");
+		modeloT.addColumn("ULT. REGISTRACION");
+
+		return modeloT;
+	}
 	
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
 //set y get de pantallas
@@ -1226,6 +1349,10 @@ public class ControllerCoordinador {
 			
 				
 		}
+
+	
+
+	
 	
 	
 }

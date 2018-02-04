@@ -240,16 +240,17 @@ public class Gestor {
     	return repositorio.CrearUsuario();
     }
     
-    public Usuario VerificarUsuario(String nick, String pass) throws BussinessException{
-    	Usuario usuario= repositorio.CrearUsuario();
-    	usuario=repositorio.ObtenerUsuarioPorNombre(nick);
-    	if(usuario != null){
-    		if(usuario.getPassword().equals(pass))
-    			return usuario;
+    @SuppressWarnings("unused")
+	public Usuario VerificarUsuario(Usuario usuario) throws BussinessException{
+    	Usuario nuevoUsuario= repositorio.CrearUsuario();
+    	nuevoUsuario=repositorio.ObtenerUsuarioPorNombre(usuario.getNick());
+    	if(nuevoUsuario != null){
+    		if(nuevoUsuario.getPassword().equals(usuario.getPassword()))
+    			return nuevoUsuario;
     		else
-    			return new Usuario(null,null,null);
+    			return new Usuario("",null,"");
     	}
-    	return null;
+    	return new Usuario(null,"","");
     }
 	
     public Usuario ObtenerUsuarioPorNombre(String nombreUsuario) throws BussinessException{
@@ -667,7 +668,7 @@ public class Gestor {
 	
 	private void ArmarPrimerCuota(Socios socio,String nombre,String apellido) throws Exception{
 		Cuota cuota=repositorio.CrearCuota();
-		cuota.setDescripcion(socio.getPersonas().getNombre()+ " "+ socio.getPersonas());
+		cuota.setDescripcion("Primer Ingreso Cuota, Matricula socio: "+socio.getMatricula());
 		cuota.setSocios(socio);
 		cuota.setFechageneracion(new Date());
 		cuota.setImporte(socio.getCategoria().getMonto());
@@ -912,10 +913,15 @@ public class Gestor {
 
 	//Morosos
 	public void ValidarCuotasSocio(List<Socios> listaSocio) throws BussinessException {
+		Date fechaUltActiv=new Date();
 		for(Socios socio : listaSocio){
-			Date fechaUltActiv= repositorio.ObtenerUltimoFechaActividad(socio.getDni()); //Obtengo la ultima fecha en donde se registro alguna actvidad del socio
+			fechaUltActiv= repositorio.ObtenerUltimoFechaActividad(socio.getDni()); //Obtengo la ultima fecha en donde se registro alguna actvidad del socio
+			if(fechaUltActiv == null)
+				fechaUltActiv = repositorio.ObtenerUltimaFechaGeneracion(socio.getDni());	
 			Calendar fechaInicio = new GregorianCalendar();
 			Calendar fechaFin = new GregorianCalendar();
+			if(fechaUltActiv==FechaHora.FechaActual())
+				fechaUltActiv= FechaHora.sumarRestarDiasFecha(fechaUltActiv, 1);
 			int CantidadMes=FechaHora.DiferenciaMesFechas(fechaUltActiv,new Date()); //Obtengo la cantidad de meses de diferencia
 			Socios socioMoroso=repositorio.CrearSocio();
 			if(CantidadMes==0){
@@ -947,5 +953,150 @@ public class Gestor {
 			repositorio.GuardarSocio(socioMoroso); //Actualizo para ese socio
 		}
 	}
+
+	public List<Morosos> ListarMorososDeudor() throws BussinessException {
+		 List<Morosos> listaMorDeu=new ArrayList<Morosos>();
+		 List<Socios> listaMorosos=repositorio.ObtenerMorosos();
+		 List<Socios> listaDeudores=repositorio.ObtenerDeudores();
+		 if(listaMorosos != null ){
+			 for(Socios socio:listaMorosos)
+				 listaMorDeu.add(this.MapearSocioAMorososDeudor(socio,true));
+		 }
+		 if(listaDeudores != null){
+			 for(Socios socio:listaDeudores)
+				 listaMorDeu.add(this.MapearSocioAMorososDeudor(socio,false));
+		 }
+		return listaMorDeu;
+	}
+	
+	private Morosos MapearSocioAMorososDeudor(Socios socio,Boolean esMoroso)throws BussinessException{
+		Morosos moroso=new Morosos();
+		Date fechaUltMov = new Date();
+		moroso.setDni(socio.getDni());
+		moroso.setNombre(socio.getPersonas().getNombre());
+		moroso.setApellido(socio.getPersonas().getApellido());
+		moroso.setTelefono(socio.getPersonas().getTelefono());
+		moroso.setDomicilio(socio.getPersonas().getDomicilio());
+		moroso.setCategoria(socio.getCategoria().getNombre());
+		moroso.setMatricula(socio.getMatricula());
+		moroso.setFechaingreso(socio.getFechaingreso());
+		moroso.setEstado(socio.getEstado());
+		fechaUltMov=repositorio.ObtenerUltimoFechaActividad(socio.getDni());
+		if(fechaUltMov == null)
+			fechaUltMov = repositorio.ObtenerUltimaFechaGeneracion(socio.getDni());	
+		
+		if(fechaUltMov==FechaHora.FechaActual())
+			fechaUltMov= FechaHora.sumarRestarDiasFecha(fechaUltMov, 1);
+		
+		int diferencia=FechaHora.DiferenciaMesFechas(fechaUltMov, new Date());
+		moroso.setCantMesAtraso(diferencia);  //meses atrasados
+		moroso.setUltimaFecMovim(fechaUltMov); //ultima fecha de movimiento
+		Categoria categoria=repositorio.ObtenerCategoriaSocio(socio.getDni());
+		//si es moroso se multiplica por 3 el importe
+		if(esMoroso)
+			moroso.setImporteTotal(categoria.getMonto()*3);
+		else{
+			if(diferencia == 1 )
+				moroso.setImporteTotal(categoria.getMonto()); //solo un mes de atraso-> importe solo
+			else{
+				if(diferencia == 2)
+					moroso.setImporteTotal(categoria.getMonto()*2);
+			}
+		}
+		return moroso;
+	}
+
+	public List<Morosos> FiltrarMoroso() throws BussinessException {
+		List<Morosos> listaMorosos=new ArrayList<Morosos>();
+		List<Socios> listasocios=repositorio.ObtenerMorosos();
+		for(Socios socio:listasocios)
+			listaMorosos.add(this.MapearSocioAMorososDeudor(socio,true));
+		 return listaMorosos;
+	}
+	
+	public List<Morosos> FiltrarDeudores() throws BussinessException {
+		List<Morosos> listaDeudores=new ArrayList<Morosos>();
+		List<Socios> listasocios=repositorio.ObtenerDeudores();
+		for(Socios socio:listasocios)
+			listaDeudores.add(this.MapearSocioAMorososDeudor(socio,true));
+		 return listaDeudores;
+	}
+
+	//proceso Generacion cuota
+	public List<Cuota> GeneracionCuotaSocio(Integer dni) throws BussinessException{
+		Date fechaUltActiv =  new Date();
+		List<Cuota> listaCuota= new ArrayList<Cuota>();
+		Cuota cuota=repositorio.CrearCuota();
+				
+		
+		//obtengo el id del ultimo registro de cuota ingresado
+		Integer id= repositorio.ObtenerUltimoIdCuotaSocio(dni);
+		//Busco la cuota
+		cuota=repositorio.BuscarCuota(id);
+		
+		if(cuota.getFechapago() == null)
+			fechaUltActiv=cuota.getFechageneracion();
+		else
+			fechaUltActiv=cuota.getFechapago();
+		
+		if(FechaHora.CompararFecha(fechaUltActiv))// FechaHora.FechaActual())
+			fechaUltActiv=FechaHora.sumarRestarDiasFecha(fechaUltActiv, 1);
+
+		int diferencia=FechaHora.DiferenciaMesFechas(fechaUltActiv, new Date()); //obtengo la diferencia de meses
+		
+		int c=1;
+		switch (diferencia) {
+		case 0:
+			break; // no paso un mes por lo tanto no se genera la cuota
+		case 1:
+			if(cuota.getFechapago() != null) //si la fecha de pago es null genero cuota sino agrego la cuota registrada
+				listaCuota.add(GenerarCuota(cuota,1)); 
+			else
+				listaCuota.add(cuota);
+			break;
+		case 2:
+			if(cuota.getFechapago() != null){
+				while(c<=2){
+					listaCuota.add(GenerarCuota(cuota, c)); 
+					c++;
+				}
+			}
+			else{
+				listaCuota.add(cuota);
+				listaCuota.add(GenerarCuota(cuota,1)); 
+			}
+			break;
+		default:
+			if(cuota.getFechapago() != null){
+				while(c<=3){
+					listaCuota.add(GenerarCuota(cuota, c)); //para cualquier otro caso mayor o igual a 3 meses de atraso genera 3 cuotas de atraso
+					c++;
+				}
+			}
+			else{
+				listaCuota.add(cuota);
+				while(c<=2){
+					listaCuota.add(GenerarCuota(cuota, c)); //para cualquier otro caso mayor o igual a 3 meses de atraso genera 3 cuotas de atraso
+					c++;
+				}
+			}
+			break;
+		}
+		return listaCuota;
+		
+	}
+
+	private Cuota GenerarCuota(Cuota cuota,int i) throws BussinessException {
+		Cuota nuevaCuota=repositorio.CrearCuota();
+		nuevaCuota.setDescripcion("Cuota impaga del socio, estado socio: "+cuota.getSocios().getEstado());
+		nuevaCuota.setEstado(cuota.getSocios().getEstado());		
+		nuevaCuota.setFechageneracion(FechaHora.sumarRestarMesFecha(cuota.getFechageneracion(),i));
+	    nuevaCuota.setFechapago(null);
+	    Categoria categoria=repositorio.ObtenerCategoriaSocio(cuota.getSocios().getDni());
+	    nuevaCuota.setImporte(categoria.getMonto());
+		nuevaCuota.setSocios(cuota.getSocios());
+		return nuevaCuota;
+	}
+	
 }
 

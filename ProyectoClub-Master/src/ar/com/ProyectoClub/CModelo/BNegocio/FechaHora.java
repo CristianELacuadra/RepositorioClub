@@ -90,12 +90,25 @@ public class FechaHora {
 	 * @param dias
 	 * @return fecha modificada
 	 */
-	public Date sumarRestarDiasFecha(Date fecha, int dias){
+	public static Date sumarRestarDiasFecha(Date fecha, int dias){
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(fecha); // Configuramos la fecha que se recibe
 		calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0
 
 		return calendar.getTime(); // Devuelve el objeto Date con los nuevos días añadidos
+
+	}
+	 /* suma o resta la fecha deacuero al parametro(dias menos a 0 resta,dias mayor a 0 suma)
+	 * @param fecha
+	 * @param dias
+	 * @return fecha modificada
+	 */
+	public static Date sumarRestarMesFecha(Date fecha, int mes){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha); // Configuramos la fecha que se recibe
+		calendar.add(Calendar.MONTH , mes);  // numero de meses que sumamos o restamos 
+
+		return calendar.getTime(); // Devuelve el objeto Date con el mes sumado 
 
 	}
 	
@@ -163,4 +176,14 @@ public class FechaHora {
 		if (gc1.get(Calendar.DATE)==(gc2.get(Calendar.DATE))) elapsed++; // si es el mismo dia cuenta para la suma de meses 
 		return elapsed;
 	}
+
+    public static boolean CompararFecha(Date FechaAComparar){
+    	Date fechaActual= new Date();
+    	int dd=fechaActual.getDate();
+    	int mm=fechaActual.getMonth()+1;
+    	int aaaa=fechaActual.getYear()+1900;
+    	if(dd==FechaAComparar.getDate() && mm==FechaAComparar.getMonth()+1 && aaaa==fechaActual.getYear()+1900)
+    		return true;
+    	return false;
+    }
 }

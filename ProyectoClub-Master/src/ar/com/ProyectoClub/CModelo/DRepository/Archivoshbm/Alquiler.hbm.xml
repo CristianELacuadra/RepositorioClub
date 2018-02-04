@@ -1,113 +1,49 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC 
-	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-
-<!-- Generated 25-oct-2017 19:40:09 by Hibernate Tools 5.2.3.Final -->
-<hibernate-mapping>
-
-<class
-    name="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler"
-    table="alquiler"
-    catalog="datosclub"
-    optimistic-lock="version"
->
-
-	<id 
-        name="nroalquiler"
-        type="java.lang.Integer"
-    >
-    
-<column name="NROALQUILER" />
-	    <generator class="identity" />
-    </id>
-
-
-
-
-    <many-to-one
-	    name="inmuebles"
-	    class="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles"
-	    
-        fetch="select"
-    >
-<column name="INMUEBLE" not-null="true" />
-   </many-to-one>
-    <many-to-one
-	    name="personas"
-	    class="ar.com.ProyectoClub.CModelo.CEntidades.Personas"
-	    
-        fetch="select"
-    >
-<column name="DNI" not-null="true" />
-   </many-to-one>
-    <property
-        name="fechaactual"
-	    type="timestamp"
-    >
-<column name="FECHAACTUAL" length="19" not-null="true" >
-<comment>FECHAACTUAL al ser date time almacena fecha y hora actual</comment>
-</column>  </property>
-
-    <property
-        name="fechareserva"
-	    type="timestamp"
-    >
-<column name="FECHARESERVA" length="19" not-null="true" >
-<comment>FECHARESERVA al ser datetime guarda fecha y hora</comment>
-</column>  </property>
-
-    <property
-        name="fechapagoalquiler"
-	    type="timestamp"
-    >
-<column name="FECHAPAGOALQUILER" length="19" not-null="true" />
-  </property>
-
-    <property
-        name="montofaltante"
-	    type="float"
-    >
-<column name="MONTOFALTANTE" precision="12" scale="0" not-null="true" />
-  </property>
-
-    <property
-        name="cantidadhoras"
-	    type="java.lang.Integer"
-    >
-<column name="CANTIDADHORAS" not-null="true" />
-  </property>
-
-    <property
-        name="preciototal"
-	    type="float"
-    >
-<column name="PRECIOTOTAL" precision="12" scale="0" not-null="true" />
-  </property>
-
-    <property
-        name="pagoalquiler"
-	    type="byte"
-    >
-<column name="PAGOALQUILER" not-null="true" />
-  </property>
-
-    <property
-        name="observaciones"
-	    type="string"
-    >
-<column name="OBSERVACIONES" length="65535" not-null="true" >
-<comment>El texto solo permite 300 caracteres</comment>
-</column>  </property>
-
-    <property
-        name="activo"
-	    type="byte"
-    >
-<column name="ACTIVO" not-null="true" />
-  </property>
-
-
-</class>
-
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 04-feb-2018 14:13:20 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="datosclub" dynamic-insert="false" dynamic-update="false" mutable="true" name="ar.com.ProyectoClub.CModelo.CEntidades.Alquiler" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="alquiler">
+        <id name="nroalquiler" type="java.lang.Integer">
+            <column name="NROALQUILER"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles" embed-xml="true" fetch="join" insert="true" name="inmuebles" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="INMUEBLE" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" embed-xml="true" fetch="join" insert="true" name="personas" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="DNI" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="fechaactual" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="FECHAACTUAL" not-null="true">
+                <comment>FECHAACTUAL al ser date time almacena fecha y hora actual</comment>
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="fechareserva" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="FECHARESERVA" not-null="true">
+                <comment>FECHARESERVA al ser datetime guarda fecha y hora</comment>
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="fechapagoalquiler" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="FECHAPAGOALQUILER" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="montofaltante" optimistic-lock="true" type="float" unique="false">
+            <column name="MONTOFALTANTE" not-null="true" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="cantidadhoras" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="CANTIDADHORAS" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="preciototal" optimistic-lock="true" type="float" unique="false">
+            <column name="PRECIOTOTAL" not-null="true" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="pagoalquiler" optimistic-lock="true" type="byte" unique="false">
+            <column name="PAGOALQUILER" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="observaciones" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="OBSERVACIONES" not-null="true">
+                <comment>El texto solo permite 300 caracteres</comment>
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="activo" optimistic-lock="true" type="byte" unique="false">
+            <column name="ACTIVO" not-null="true"/>
+        </property>
+    </class>
 </hibernate-mapping>

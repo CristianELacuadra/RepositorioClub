@@ -8,6 +8,7 @@ import javax.management.RuntimeErrorException;
 
 import org.omg.CORBA.RepositoryIdHelper;
 
+import ar.com.ProyectoClub.CModelo.AServicios.facade.Service;
 import ar.com.ProyectoClub.CModelo.BNegocio.Gestor;
 import ar.com.ProyectoClub.CModelo.CEntidades.*;
 import ar.com.ProyectoClub.CModelo.DRepository.IRepository.IRepository;
@@ -19,11 +20,14 @@ public class MainPruebaModulos {
 	public static void main(String[] args) throws Exception {
 		IRepository repositorioprueba; 
 		repositorioprueba = new Repository();
+		Service service=new Service();
+		//service.ListarMorososDeudores();
+		Alquiler alquiler=repositorioprueba.BuscarAlquiler(1);
 		//Socios socio= repositorioprueba.BuscarSocio(7664645);
-		Date fecha=repositorioprueba.ObtenerUltimoFechaActividad(7664645);
-		Gestor gestor=new Gestor();
-		List<Socios> listaSocio=gestor.ListarSocio();
-		gestor.ValidarCuotasSocio(listaSocio);
+//		Date fecha=repositorioprueba.ObtenerUltimoFechaActividad(7664645);
+//		Gestor gestor=new Gestor();
+//		List<Socios> listaSocio=gestor.ListarSocio();
+//		gestor.ValidarCuotasSocio(listaSocio);
 		//	     long i= repositorioprueba.DevolverTotalRegistrosCaja();
 		//	     System.out.println(i);
 		//	     List<Caja> lista= repositorioprueba.BusquedaPorDescripcionCaja("Ingreso");
