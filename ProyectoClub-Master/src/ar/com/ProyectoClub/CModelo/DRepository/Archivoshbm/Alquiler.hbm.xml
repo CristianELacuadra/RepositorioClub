@@ -6,10 +6,10 @@
             <column name="NROALQUILER"/>
             <generator class="identity"/>
         </id>
-        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles" embed-xml="true" fetch="join" insert="true" name="inmuebles" not-found="exception" optimistic-lock="true" unique="false" update="true">
+        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Inmuebles" embed-xml="true" fetch="join" lazy="false" insert="true" name="inmuebles" not-found="exception" optimistic-lock="true" unique="false" update="true">
             <column name="INMUEBLE" not-null="true"/>
         </many-to-one>
-        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" embed-xml="true" fetch="join" insert="true" name="personas" not-found="exception" optimistic-lock="true" unique="false" update="true">
+        <many-to-one class="ar.com.ProyectoClub.CModelo.CEntidades.Personas" embed-xml="true" fetch="join" lazy="false" insert="true" name="personas" not-found="exception" optimistic-lock="true" unique="false" update="true">
             <column name="DNI" not-null="true"/>
         </many-to-one>
         <property generated="never" lazy="false" name="fechaactual" optimistic-lock="true" type="timestamp" unique="false">

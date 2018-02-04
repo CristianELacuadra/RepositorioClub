@@ -23,6 +23,10 @@ public class MainPruebaModulos {
 		Service service=new Service();
 		//service.ListarMorososDeudores();
 		Alquiler alquiler=repositorioprueba.BuscarAlquiler(1);
+		List<Alquiler> llalal=repositorioprueba.ObtenerAlquileres();
+		List<Socios> socios= repositorioprueba.ObtenerSocios();
+		List<Caja> caja=repositorioprueba.ObtenerCajas();
+		List<Categoria> caa=repositorioprueba.ObtenerCategorias();
 		//Socios socio= repositorioprueba.BuscarSocio(7664645);
 //		Date fecha=repositorioprueba.ObtenerUltimoFechaActividad(7664645);
 //		Gestor gestor=new Gestor();
