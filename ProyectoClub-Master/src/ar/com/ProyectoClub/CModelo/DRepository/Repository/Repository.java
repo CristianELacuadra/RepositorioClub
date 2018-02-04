@@ -302,13 +302,59 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	{
 		Setsession();
 		SetTransaction();
-			String QUERY = "SELECT a from Alquiler a where a.fechaReserva between :start and :end "; //Query rango de fecha
-			Query _query = _sessiondehilo.createQuery(QUERY);
-			_query.setParameter("start", fechainicial); //parametro inicial
-			_query.setParameter("end", fechafin); //parametro final
-			return _query.list(); //return lista alquileres		
+			String consulta = "SELECT a FROM Alquiler a WHERE a.fechareserva BETWEEN :start AND :end "; //Query rango de fecha
+			//String consulta = "SELECT a FROM Alquiler a WHERE a.fechareserva BETWEEN @fechainicial AND @fechafin "; //Query rango de fecha
+			Query query = _sessiondehilo.createQuery(consulta);
+			query.setDate("start", fechainicial);
+			query.setDate("end",fechafin);
+			List<Alquiler> listAlquiler=query.list();
+			if(!listAlquiler.isEmpty())
+				return listAlquiler;
+			return null;
+//			_query.setParameter("start", fechainicial); //parametro inicial
+//			_query.setParameter("end", fechafin); //parametro final
+//			return _query.list(); //return lista alquileres		
+			
 	}
 
+	public List<Alquiler> BusquedaAlquilerEntreFechas(Date fechaInicial,Date fechaFinal)  throws BussinessException 
+	{
+		Setsession();
+		SetTransaction();
+		String consulta="SELECT a FROM Alquiler a WHERE a.fechaactual BETWEEN :start AND :end ";
+		
+		Query query = _sessiondehilo.createQuery(consulta);
+		query.setDate("start", fechaInicial);
+		query.setDate("end", fechaFinal);
+		List<Alquiler> listAlquileres=query.list();
+		if(!listAlquileres.isEmpty())
+			return listAlquileres;
+		return null;
+
+	}	
+	
+	
+	public List<Alquiler> ListaAlquilerPormes(Integer anio, Integer mes) throws BussinessException {
+		Setsession();
+		SetTransaction();
+		String query="SELECT a FROM Alquiler a WHERE month(a.fechareserva)="+mes+"AND YEAR(a.fechareserva)="+anio;
+		List<Alquiler> listAlquileres= _sessiondehilo.createQuery(query).list();
+		if(!listAlquileres.isEmpty() )
+			return listAlquileres;
+		return null;
+	}
+	
+	public List<Alquiler> ListarAlquilerPorDia(int anio, int mes, int dia) throws BussinessException {
+		Setsession();
+		SetTransaction();
+		String query= "SELECT a FROM Alquiler a WHERE month(a.fechareserva)="+mes+
+				"AND YEAR(a.fechareserva)="+anio+"AND DATE(a.fechareserva)="+dia;
+		List<Alquiler> listAlquileres= _sessiondehilo.createQuery(query).list();
+		if(!listAlquileres.isEmpty() )
+			return listAlquileres;
+		return null;
+	}
+	
 	@Override
 	public long DevolverTotalRegistrosCaja() throws BussinessException 
 	{

@@ -379,13 +379,28 @@ public class Service implements IService {
 	
 	@Override
 	public Inmuebles BuscarInmueble(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		try
+		{return gestor.buscarInmueble(id);
+		
+		}catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.CONFIG, null, e);
+			throw new RuntimeException("Error: ",e.getCause());
+		}
+	
+	}
+	
+	public boolean validarNombreInmueble(String tex, Integer id){
+		try{
+			return gestor.validarNombreInmueble(tex, id);
+		}catch(BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.CONFIG, null, e);
+			throw new RuntimeException("Error: ",e.getCause());
+		}
 	}
 	@Override
 	public Inmuebles CrearInstanciaInmueble() {
 			try {
-				return gestor.CrearInmuble();
+				return gestor.CrearInmueble();
 			} catch (BussinessException e) {
 				Logger.getLogger(Service.class.getName()).log(Level.CONFIG, null, e);
 				throw new RuntimeException("Error: ",e.getCause());
@@ -406,10 +421,14 @@ public class Service implements IService {
 				
 			}
 			return listaH;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			throw new RuntimeException("No se pudo instanciar el servicio debido a un error: ");
+		} catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.CONFIG, null, e);
+			throw new RuntimeException("Error: ",e.getCause());
 		}
+//				Exception e) {
+//			// TODO Auto-generated catch block
+//			throw new RuntimeException("No se pudo instanciar el servicio debido a un error: ");
+//		}
 	}
 
 	@Override
@@ -436,16 +455,26 @@ public class Service implements IService {
 				}
 			}
 			return listaH;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			throw new RuntimeException("No se pudo instanciar el servicio debido a un error: "+e.getMessage());
+		} catch(BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e);
+			throw new RuntimeException("ERROR: ",e.getCause());
 		}
+		
+			
 	}
 
 	@Override
 	public List<Inmuebles> ListarInmueblesParaAlquiler() {
-		return gestor.ListarInmuebleHabilitado();
+		try
+		{return ListarInmuebleHabilitado();//gestor.ListarInmuebleHabilitado();
+		
+		}catch(Exception e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e);
+			throw new RuntimeException("ERROR: ",e.getCause());
+		}
 	}
+	
+	
     //contrato alquiler
 	@Override
 	public Alquiler CrearInstanciaAlquiler() {
@@ -453,7 +482,9 @@ public class Service implements IService {
 			return gestor.CrearAlquiler();
 		} 
 		catch (BussinessException e) {
-			throw new RuntimeException("No se pudo instanciar el servicio debido a un error: "+e.getMessage());
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e);
+			throw new RuntimeException("ERROR: ",e.getCause());
+			//throw new RuntimeException("No se pudo instanciar el servicio debido a un error: "+e.getMessage());
 		}
 	}
 
@@ -522,14 +553,15 @@ public class Service implements IService {
 	public List<Alquiler> ListarAlquileres() {
 		
 	try {
-			return gestor.listarAlquileres();
+		List<Alquiler> a=gestor.listarAlquileres();
+		return a ;
 		} 
 		catch (BussinessException e) {
 			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
 			throw new RuntimeException("Error al Listar Alquileres",e.getCause());
 		}
 		
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -607,10 +639,46 @@ public class Service implements IService {
 
 	
 	
-	
-	
+	public List<Alquiler> BusquedaAlquilerXFecha(Date fechaIn,Date fechaFin){
+		try{
+			return gestor.BusquedaAlquilerXFecha(fechaIn,fechaFin);
+		}catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
+			throw new RuntimeException("Se produjo el siguiente error: ",e.getCause());
+		}
+		
+	}
+	public List<Alquiler> BusquedaAlquilerEntreFechas(Date fechaInicio, Date fechaFin){
+	try{
+		return gestor.BusquedaAlquilerEntreFechas(fechaInicio,fechaFin);
+	}catch(BussinessException e) {
+		Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
+		throw new RuntimeException("Se produjo el siguiente error: ",e.getCause());
+		}
+	}
+
+	@Override
+	public List<Alquiler> ListaAlquilerPormes(Integer anio, Integer mes) {
+		// TODO Auto-generated method stub
+		try{
+			return gestor.ListaAlquilerPormes(anio, mes);
+		}catch(BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
+			throw new RuntimeException("Se produjo el siguiente error: ",e.getCause());
+			}
+	}
 
 	
+	public List<Alquiler> ListarAlquilerPorDia ( int anio,int mes, int dia)
+	{
+		try{
+			return gestor.ListarAlquilerPorDia(anio, mes, dia);
+		}catch(BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
+			throw new RuntimeException("Se produjo el siguiente error: ",e.getCause());
+			}
+		
+	}
 
 	
 

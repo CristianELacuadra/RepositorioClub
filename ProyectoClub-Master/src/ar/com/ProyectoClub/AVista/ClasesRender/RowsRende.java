@@ -8,10 +8,18 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class RowsRende extends DefaultTableCellRenderer {// tabla grilla  inmuebley alquiler
-	private int columna ;
-
+	private int columnaElim ;
+	private int columnaPagada;
+	private   	byte aux1=1;
+	private    	byte aux2=0;
+	
 	public RowsRende (int colPatron){
-		this.columna = colPatron;
+		this.columnaElim = colPatron;
+	}
+	
+	public RowsRende (int elim,int pagada){
+		columnaElim=elim;
+		columnaPagada=pagada;
 	}
 	
 	@Override
@@ -19,19 +27,41 @@ public class RowsRende extends DefaultTableCellRenderer {// tabla grilla  inmueb
 	{        
 	    setBackground(Color.white);
 	    table.setForeground(Color.black);
-	   
+
+	    
 	    if(value instanceof JButton){
 	    	JButton btn = (JButton) value;
+	    	btn.setEnabled(true);
+
+	    //	if(table.getValueAt(row,columnaElim).equals(true))
+	    	
+	    	if((table.getValueAt(row,columnaElim).equals(aux1))&&(table.getValueAt(row, columnaPagada).equals(aux1))&& btn.getName().equals("btnPag"))
+	    		btn.setEnabled(false);
+	    	if((table.getValueAt(row,columnaElim).equals(aux1))&&(table.getValueAt(row, columnaPagada).equals(aux1))&& btn.getName().equals("btnEli"))
+	    		btn.setEnabled(false);
+
+	    	if((table.getValueAt(row,columnaElim).equals(aux2))&&btn.getName().equals("btnMod"))
+	    		btn.setEnabled(false);
+	    	if((table.getValueAt(row,columnaElim).equals(aux2))&& btn.getName().equals("btnPag"))
+	    		btn.setEnabled(false);
+	    	if((table.getValueAt(row,columnaElim).equals(aux2))&& btn.getName().equals("btnEli"))
+	    		btn.setEnabled(false);
+////	completarrrr
 	    	return btn;
 	    }
 	   
 	    
-	    
-	    if(table.getValueAt(row,columna).equals(false))
+	    if(table.getValueAt(row,columnaElim).equals(aux2))
 	    {
 	        this.setForeground(Color.RED);
-	    }else if(table.getValueAt(row,columna).equals(true)){
+	    }else if(table.getValueAt(row,columnaElim).equals(aux1)){
 	    	this.setForeground(Color.black);
+	    }
+	    
+	    if(table.getValueAt(row,columnaPagada).equals(aux2)){
+	    	this.setForeground(Color.black);
+	    }else  if(table.getValueAt(row,columnaPagada).equals(aux1)){
+	    	this.setForeground(Color.GREEN);
 	    }
 	    
 	    
@@ -43,23 +73,7 @@ public class RowsRende extends DefaultTableCellRenderer {// tabla grilla  inmueb
 	    
 	    
 	    
-	 /* 
-	    if(value instanceof JButton){
-			JButton btn=(JButton)value;
-			btn.setEnabled(true);
-			if(table.getValueAt(row,columna).equals(false) && btn.getName().equals("btnBaja"))
-				btn.setEnabled(false);
-			if(table.getValueAt(row,columna).equals(false) && !btn.getName().equals("btnBaja"))
-				 btn.setEnabled(true);
-			if(table.getValueAt(row,columna).equals(true) && btn.getName().equals("btnHabilitado"))
-				btn.setEnabled(false);
-			if(table.getValueAt(row,columna).equals(true) && !btn.getName().equals("btnHabilitado"))
-				btn.setEnabled(true);
-			if(!table.getValueAt(row,1).equals(true) && btn.getName().equals("btnCuotas"))
-				btn.setEnabled(false);
-		    return btn;
-		}
-	*/
+
 	
 	
 	

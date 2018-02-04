@@ -32,7 +32,7 @@ public class ControlllerPrincipal {
 	
 	PantallaAlquilerPrincipal miVentanaAlquilerPrincipal;
 	PantallaNuevoAlquiler miVentanaNuevoAlquiler;
-		
+	PantallaDetallesAlquiler miVentanaDetallesAlquiler;
 	
 	
 	
@@ -68,7 +68,7 @@ public class ControlllerPrincipal {
 			
 			miVentanaAlquilerPrincipal=new PantallaAlquilerPrincipal();
 			miVentanaNuevoAlquiler = new PantallaNuevoAlquiler(miVentanaAlquilerPrincipal,true);
-			
+			miVentanaDetallesAlquiler = new PantallaDetallesAlquiler(miVentanaAlquilerPrincipal, true);
 			
 			
 			/*Se establecen las relaciones entre clases*/
@@ -90,7 +90,8 @@ public class ControlllerPrincipal {
 			
 			miVentanaAlquilerPrincipal.setCoordinador(miCoordinador);
 			miVentanaNuevoAlquiler.setCoordinador(miCoordinador);
-	
+			miVentanaDetallesAlquiler.setCoordinador(miCoordinador);
+			
 			/*Se establecen relaciones con la clase coordinador*/
 			miCoordinador.setModeloService(miModeloService);
 			miCoordinador.setMiVentanaPrincipal(miVentanaPrincipal);
@@ -110,17 +111,16 @@ public class ControlllerPrincipal {
 			
 			miCoordinador.setMiVentanaAlquilerPrincipal(miVentanaAlquilerPrincipal);
 			miCoordinador.setMiVentanaNuevoAlquiler(miVentanaNuevoAlquiler);
-			
+			miCoordinador.setMiVentanaDetallesAlquiler(miVentanaDetallesAlquiler);
 			
 
 			miVentanaInicio.setVisible(true);
 			
-//github.com/CristianELacuadra/RepositorioClub.git
-			
+	
 			
 		}
 		catch (Exception e) {
-			JOptionPane.showMessageDialog(null,"El sistema no puede seguir la ejecucion debido al siguiente error"+e.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null,"El sistema no puede seguir la ejecucion debido al siguiente error "+e.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 
 		}
 	}

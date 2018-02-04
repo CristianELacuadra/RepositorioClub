@@ -835,24 +835,24 @@ public class Gestor {
 		return repositorio.ObtenerInmuebles();
 	}
 
-	public List<Inmuebles> ListarInmuebleHabilitado() {
-		try {
-			java.util.List<Inmuebles> listaH =new ArrayList<Inmuebles>();
-			java.util.List<Inmuebles> lista =new ArrayList<Inmuebles>();
-			lista=repositorio.ObtenerInmuebles();
-			int num=lista.size();
-			for(int i=0;i<num;i++){
-				if((lista.get(i).isHabilitado())==true){
-					listaH.add(lista.get(i));
-				}
-				
-			}
-			return listaH;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			throw new RuntimeException("No se pudo instanciar el servicio debido a un error: ");
-		}
-	}
+//	public List<Inmuebles> ListarInmuebleHabilitado() {
+//		try {
+//			java.util.List<Inmuebles> listaH =new ArrayList<Inmuebles>();
+//			java.util.List<Inmuebles> lista =new ArrayList<Inmuebles>();
+//			lista=repositorio.ObtenerInmuebles();
+//			int num=lista.size();
+//			for(int i=0;i<num;i++){
+//				if((lista.get(i).isHabilitado())==true){
+//					listaH.add(lista.get(i));
+//				}
+//				
+//			}
+//			return listaH;
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			throw new RuntimeException("No se pudo instanciar el servicio debido a un error: ");
+//		}
+//	}
 //gestion alquiler
 	public Alquiler CrearAlquiler() throws BussinessException {
 		return repositorio.CrearAlquiler();
@@ -882,6 +882,12 @@ public class Gestor {
 			return repositorio.BuscarAlquiler(numAlquiler);
 		 
 	}
+	
+	public Inmuebles buscarInmueble(Integer id) throws BussinessException {
+		
+		return repositorio.BuscarInmueble(id);
+	}
+	
 
 	public List<Alquiler> listarAlquileres() throws BussinessException {
 		// TODO Auto-generated method stub
@@ -906,7 +912,7 @@ public class Gestor {
 		}
 	}
 
-	public Inmuebles CrearInmuble() throws BussinessException {
+	public Inmuebles CrearInmueble() throws BussinessException {
 		return repositorio.CrearInmueble();
 	}
 
@@ -946,6 +952,51 @@ public class Gestor {
 			}
 			repositorio.GuardarSocio(socioMoroso); //Actualizo para ese socio
 		}
+	}
+
+	public boolean validarNombreInmueble(String tex,Integer id) throws BussinessException  {
+		List<Inmuebles> list=new ArrayList<Inmuebles>();
+		list=repositorio.ObtenerInmuebles();
+		int num=list.size();
+		boolean ban=false;
+		if(!tex.equals(""))
+		{
+			
+			for(int i=0;i<num;i++)
+			{		String aux=list.get(i).getNombre();	
+				if(aux.equals(tex))
+				{
+					if((id==null)||(!list.get(i).getIdInmubles().equals(id))){
+						ban=true;
+						break;
+						}
+					}
+				
+				
+				}
+			
+		}else ban=true;
+		
+		 return ban;
+	}
+
+	public List<Alquiler> BusquedaAlquilerXFecha(Date fechaIn, Date fechaFin) throws BussinessException {
+		
+		return repositorio.BusquedaAlquilerXFecha(fechaIn, fechaFin);
+	}
+
+	public List<Alquiler> BusquedaAlquilerEntreFechas(Date fechaInicio,
+			Date fechaFin) throws BussinessException {
+		return repositorio.BusquedaAlquilerEntreFechas(fechaInicio, fechaFin);
+	}
+	public List<Alquiler> ListaAlquilerPormes(Integer anio, Integer mes)
+			throws BussinessException {
+		return repositorio.ListaAlquilerPormes(anio, mes);
+	}
+
+	public List<Alquiler> ListarAlquilerPorDia(int anio, int mes, int dia) throws BussinessException {
+		
+		return repositorio.ListarAlquilerPorDia(anio,mes,dia);
 	}
 }
 
