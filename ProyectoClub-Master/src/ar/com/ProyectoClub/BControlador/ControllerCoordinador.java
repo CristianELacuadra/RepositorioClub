@@ -1324,21 +1324,27 @@ public class ControllerCoordinador {
 	}
 	public void mostrarVentanaNuevoAlquiler(int nroAlqui) {
 		// TODO Auto-generated method stub
+		//
 		
 	}
 
 	public void eliminarAlquiler(int nroAlqui) {
 		// TODO Auto-generated method stub
+		//borrar fecha y hora reserva
+		
 		
 	}
 
 	public void modificarAlquiler(int nroAlqui) {
 		// TODO Auto-generated method stub
-		
+		// no puede modificar alquileres eliminados
+		// se genera como un nuevo alquiler con nueva fecha de emision
 	}
 
 	public void pagarAlquiler(int nroAlqui) {
 		// TODO Auto-generated method stub
+		//puede ser un joption panel que muestre la cantidad faltante, nombre apellido, 
+		// inmueble, monto total y monto faltante 
 		
 	}
 	
