@@ -16,6 +16,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import ar.com.ProyectoClub.AVista.ClasesRender.RowsRenderer;
 import ar.com.ProyectoClub.BControlador.ControllerCoordinador;
+import ar.com.ProyectoClub.CModelo.CEntidades.Categoria;
 
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -36,6 +37,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JRadioButton;
+import javax.swing.border.LineBorder;
 
 public class PantallaPrincipalPersonas extends JFrame implements ActionListener {
 
@@ -49,7 +51,6 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 	private JButton btnControlMorosos;
 	private javax.swing.JButton registrar;
 	public static javax.swing.JTable tablaPersona;
-	private javax.swing.JLabel codigoL1;
 	public static RowsRenderer resaltado;
 	// botones de la tabla;
 	public static JButton btnDetalles;
@@ -93,9 +94,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		jPanel4 = new javax.swing.JPanel();
 		buscar = new app.bolivia.swing.JCTextField();
 		buscar.setToolTipText("Ingrese Nombre o Apellido segun el filtro que haya seleccionado");
-		buscar.setBounds(20, 40, 205, 32);
-		codigoL1 = new javax.swing.JLabel();
-		codigoL1.setBounds(10, 30, 250, 52);
+		buscar.setBounds(10, 39, 368, 32);
 		btnControlMorosos= new JButton();
 		
 		resaltado = new RowsRenderer(0);
@@ -144,7 +143,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		tablaPersona.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		setTitle("PRINCIPAL SOCIO-NO SOCIO ");
 
-		jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+		jPanel1.setBackground(new Color(211, 211, 211));
 
 		tablaPersona.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {
 
@@ -248,21 +247,16 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 				javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12)));
 		jPanel4.setLayout(null);
 
-		buscar.setBackground(new java.awt.Color(34, 102, 145));
-        buscar.setBorder(null);
-        buscar.setForeground(new java.awt.Color(255, 255, 255));
+		buscar.setBackground(new Color(250, 250, 210));
+        buscar.setBorder(new LineBorder(new Color(0, 0, 0)));
+        buscar.setForeground(new Color(250, 250, 210));
         buscar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         buscar.setOpaque(false);
-        buscar.setPhColor(new java.awt.Color(255, 255, 255));
+        buscar.setPhColor(new Color(0, 0, 0));
         buscar.setPlaceholder("Ingrese Nombre o Apellido ");
         buscar.addActionListener(this);
 
 		jPanel4.add(buscar);
-
-		codigoL1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		codigoL1.setIcon(
-				new ImageIcon(PantallaPrincipalPersonas.class.getResource("/ar/com/ProyectoClub/AVista/icon/PanelEntrada.png"))); // NOI18N
-		jPanel4.add(codigoL1);
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1Layout.setHorizontalGroup(
@@ -270,9 +264,9 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 				.addGroup(jPanel1Layout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-						.addComponent(jScrollPane1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1433, Short.MAX_VALUE)
-						.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 808, GroupLayout.PREFERRED_SIZE))
+						.addComponent(jScrollPane1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1472, Short.MAX_VALUE)
+						.addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 808, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, 1334, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		jPanel1Layout.setVerticalGroup(
@@ -283,8 +277,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
-					.addGap(51))
+					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE))
 		);
 		checkApe= new JRadioButton();
 		checkApe.setSelected(true);
@@ -320,8 +313,6 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		getContentPane().setLayout(layout);
 
 		pack();
-		registrar.addActionListener(this);
-		limpiar.addActionListener(this);
 	}
 	
 	private void limpiaCampos() {
@@ -364,39 +355,43 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 
 				((JButton) value).doClick();
 				JButton boton = (JButton) value;
-					int dni = (Integer) tablaPersona.getValueAt(fila, 8);				
-                    //detalles 
-					if (boton.getName().equals("btnDetalle")){
-						miCoordinador.LimpiarDetallePersona();
-						miCoordinador.MostrarVentanaDetallesInhabilitar(dni);
-						
-					}
-					if (boton.getName().equals("btnCuotas")){
-						miCoordinador.mostrarVentanaCobranza(dni ,PantallaCobranzaCuota.jtDatosCuota);
-						//miCoordinador.MostrarVentanaDetallesInhabilitar(dni);
-					}
-					//Baja
-					if(boton.getName().equals("btnBaja"))
-					{
-						if (JOptionPane.showConfirmDialog(this, "¿Desea inhabilitar la persona", "Sistema Club Avenida Ejercito", JOptionPane.YES_NO_OPTION, 0,
-								new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/seguro.png"))) == JOptionPane.YES_OPTION) 
-						{
-							//dar de baja
-							miCoordinador.InhabilitarPersona(dni);
-							miCoordinador.CargarGrilla(tablaPersona);
+				int dni = (Integer) tablaPersona.getValueAt(fila, 8);				
+				//detalles 
+				if (boton.getName().equals("btnDetalle")){
+					miCoordinador.LimpiarDetallePersona();
+					miCoordinador.MostrarVentanaDetallesInhabilitar(dni);
 
-						}
-					}
-					if(boton.getName().equals("btnHabilitado"))
+				}
+				if (boton.getName().equals("btnCuotas")){
+					miCoordinador.mostrarVentanaCobranza(dni ,PantallaCobranzaCuota.jtDatosCuota);
+					//miCoordinador.MostrarVentanaDetallesInhabilitar(dni);
+				}
+				//Baja
+				if(boton.getName().equals("btnBaja"))
+				{
+					if (JOptionPane.showConfirmDialog(this, "¿Desea inhabilitar la persona", "Sistema Club Avenida Ejercito", JOptionPane.YES_NO_OPTION, 0,
+							new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/seguro.png"))) == JOptionPane.YES_OPTION) 
 					{
-						if (JOptionPane.showConfirmDialog(this, "¿Seguro que desea Habilitar esta Persona?", "Categorias", JOptionPane.YES_NO_OPTION, 0,
-	        					new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/seguro.png"))) == JOptionPane.YES_OPTION) {
-							//dar de baja
-							miCoordinador.HabilitarPersona(dni);
-							miCoordinador.CargarGrilla(tablaPersona);
+						//dar de baja
+						miCoordinador.InhabilitarPersona(dni);
+						miCoordinador.CargarGrilla(tablaPersona);
 
-						}
 					}
+				}
+				if(boton.getName().equals("btnHabilitado"))
+				{
+					if (JOptionPane.showConfirmDialog(this, "¿Seguro que desea Habilitar esta Persona?", "Categorias", JOptionPane.YES_NO_OPTION, 0,
+							new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/seguro.png"))) == JOptionPane.YES_OPTION) {
+						//dar de baja
+						miCoordinador.HabilitarPersona(dni);
+						miCoordinador.CargarGrilla(tablaPersona);
+
+					}
+				}
+				if(boton.getName().equals("btnEditar")){
+					PantallaFormularioPersona.TipoEntrada=false;
+					miCoordinador.CargarDatosPersona(dni);
+				}
 			}	
 		}
 	}
@@ -409,6 +404,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 	public void actionPerformed(ActionEvent e) {
 		try{
 			if (e.getSource() == registrar) {
+				PantallaFormularioPersona.TipoEntrada=true;
 				miCoordinador.mostrarFormularioPersona();
 			}
 			if (e.getSource() == limpiar) {

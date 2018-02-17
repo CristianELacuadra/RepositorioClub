@@ -33,7 +33,6 @@ public interface IService {
 	Usuario ValidarUsuario(Usuario usuario);
 	Usuario ObtenerUsuarioPorNombre(String nombreUsuario);
 	List<Personas> ListarPersonas();
-	void GuardarNoSocio(Personas persona);
 	//contrato inmueble
 	Inmuebles BuscarInmueble(Integer id);
 	Inmuebles CrearInstanciaInmueble();
@@ -47,7 +46,7 @@ public interface IService {
 	//contrato alquiler
 	Alquiler CrearInstanciaAlquiler();
 	Personas ValidarPersona(int dni);
-	void GuardarPersona(Personas personas);
+	void GuardarPersona(Personas personas,boolean tipoEntrada);
 	
 	void GuardarAlquiler(Alquiler alqui);//33 falta
 	List<Alquiler> ListarAlquileres();
@@ -63,6 +62,7 @@ public interface IService {
 	List<Cuota> ObtenerCuotasPorid(List<Integer> id);
 	void RegistrarPagoCuotaSocio(List<Cuota> cuotas);
 	float ObtenerPrecioCuota();
+	List<Cuota> ObtenerCuotaSocio(Integer dni);
 	//Morosos
 	List<Morosos> ListarMorososDeudores();
 	void GuardarCategoria(Categoria categoria);
