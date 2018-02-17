@@ -28,6 +28,7 @@ public class ControlllerPrincipal {
 	PantallaDetallesInhabilitarSNS miVentanaDetalllesSNS;
 	PantallaConfiguracionCategoria  miVentanaConfCategoria;
 	PantallaControlMorosos miVentanaControlMoroso;
+	PantallaHistCuota miVentanaHistCuotas;
 
 	
 	PantallaAlquilerPrincipal miVentanaAlquilerPrincipal;
@@ -54,7 +55,7 @@ public class ControlllerPrincipal {
 			miFormularioPersona=new PantallaFormularioPersona(miVentanaPrincipalPersonas,true); // mi ventana formulario persona depende de pantalla persona
 			miVentanaBusquedaSNSElim=new PantallaBusquedaSNS();
 			miVentanaBusquedaSNSCobr=new PantallaBusquedaSNS(miVentanaCobranzaCuota, true);
-			miVentanaCobranzaCuota= new PantallaCobranzaCuota(miVentanaPrincipalPersonas,true);
+			miVentanaCobranzaCuota= new PantallaCobranzaCuota();
 			miCoordinador= new ControllerCoordinador();
 			miVentanaIngresoEgreso=new PantallaIngresoEgreso(miVentanaCaja, true); 
 			miVentanaConfiguracion=new PantallaConfiguracion(miVentanaPrincipal, true);
@@ -63,7 +64,7 @@ public class ControlllerPrincipal {
 			miVentanaDetalllesSNS=new PantallaDetallesInhabilitarSNS(miVentanaBusquedaSNSCobr, true);
 			miVentanaConfCategoria = new PantallaConfiguracionCategoria(miVentanaConfiguracion,true);
 			miVentanaControlMoroso =  new PantallaControlMorosos();
-
+			miVentanaHistCuotas = new PantallaHistCuota(miVentanaCobranzaCuota,true);
 			
 			
 			
@@ -86,6 +87,7 @@ public class ControlllerPrincipal {
 			miVentanaDetalllesSNS.setCoordinador(miCoordinador);
 			miVentanaConfCategoria.setCoordinador(miCoordinador);
 			miVentanaControlMoroso.setMiCoordinador(miCoordinador);
+			miVentanaHistCuotas.setCoordinador(miCoordinador);
 			
 			
 			
@@ -109,7 +111,7 @@ public class ControlllerPrincipal {
 			miCoordinador.setMiVentanaDetallesSNS(miVentanaDetalllesSNS);
 			miCoordinador.setMiVentanaConfCategoria(miVentanaConfCategoria);
 			miCoordinador.setMiVentanaControlMoroso(miVentanaControlMoroso);
-			
+			miCoordinador.setMiVentanaHistCuota(miVentanaHistCuotas);
 			
 			miCoordinador.setMiVentanaAlquilerPrincipal(miVentanaAlquilerPrincipal);
 			miCoordinador.setMiVentanaNuevoAlquiler(miVentanaNuevoAlquiler);
@@ -121,7 +123,7 @@ public class ControlllerPrincipal {
 			
 		}
 		catch (Exception e) {
-			JOptionPane.showMessageDialog(null,"El sistema no puede seguir la ejecucion debido al siguiente error"+e.toString(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Error "+e.getMessage(),"Club Avenida Ejercito - ¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 			System.exit(1); 
 
 		}

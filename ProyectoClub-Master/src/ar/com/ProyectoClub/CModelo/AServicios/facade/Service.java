@@ -14,12 +14,8 @@ import ar.com.ProyectoClub.CModelo.DRepository.ExceptionsHibernate.BussinessExce
 public class Service implements IService {
 	private  Gestor gestor;
 
-	public Service() {
-		try {
-			gestor= new Gestor();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public Service() throws Exception  {
+					gestor= new Gestor();
 	}
 
 	//Contrato Caja
@@ -176,9 +172,9 @@ public class Service implements IService {
 	 * @throws
 	 */
 	@Override
-	public void GuardarPersona(Personas personas) {
+	public void GuardarPersona(Personas personas,boolean tipoEntrada) {
 		try {
-			gestor.GuardarPersona(personas);
+			gestor.GuardarPersona(personas,tipoEntrada);
 		} 
 		catch (Exception e) {
 			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
@@ -199,17 +195,8 @@ public class Service implements IService {
 		}
 		
 	}
-	@Override
-	public void GuardarNoSocio(Personas persona) {
-		try {
-			gestor.GuardarPersona(persona);
-		} 
-		catch (BussinessException e) {
-			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
-			throw new RuntimeException("Error al buscar el dato:",e.getCause());
-		}
-		
-	}
+	
+	
 	@Override
 	public Personas CrearInstanciaPersona() {
 		try {
@@ -482,6 +469,19 @@ public class Service implements IService {
 
 	//cuotas
 	@Override
+	public List<Cuota> ObtenerCuotaSocio(Integer dni) {
+		try {
+			return gestor.ObtenerCuotasSocio(dni);
+		} 
+		catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e);
+			throw new RuntimeException("ERROR: "+e.getBussinessMessages()+" "+e.getCause());
+		}
+		
+		
+	}
+	
+	@Override
 	public List<Cuota> ObtenerCuotasPorid(List<Integer> id) {
 		try{
 			return (gestor.ObtenerCuotasPorid(id));
@@ -496,6 +496,11 @@ public class Service implements IService {
 		try{
 			for(Cuota cuota : cuotas)
 				gestor.GuardarCuota(cuota);
+			if(cuotas.size()==3){
+				Socios socio= gestor.CrearSocio();
+				socio=cuotas.get(1).getSocios();
+				gestor.ArmarPrimerCuota (socio, socio.getPersonas().getNombre(), socio.getPersonas().getApellido());
+			}
 		}
 		catch (Exception e) {
 			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e);
@@ -695,5 +700,7 @@ public class Service implements IService {
 			throw new RuntimeException("ERROR: "+ e.getBussinessMessages());
 		}
 	}
+
+	
 
 }

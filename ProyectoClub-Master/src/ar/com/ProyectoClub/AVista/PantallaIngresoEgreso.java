@@ -234,10 +234,10 @@ public class PantallaIngresoEgreso extends JDialog implements ActionListener {
 					caja.setHabilitar(true);
 					caja.setMonto(Float.valueOf(MontoTotal));
 					caja.setConceptos(concepto);
-					//JOptionPane.showMessageDialog(null,"Los datos una ves ingresados no pueden ser modificados,solo pueden ser dado de baja","Advertencia",JOptionPane.WARNING_MESSAGE);
 					int opcion = JOptionPane.showConfirmDialog(null, "¿Desea guardar el registro?", "Aviso", JOptionPane.YES_NO_OPTION);
-					if (opcion == 0) { 
+					if (opcion == 0) {
 						miCoordinador.GuardarRegistroCaja(caja);
+						JOptionPane.showMessageDialog(null,"Se agrego el registro correctamente","Informacion",JOptionPane.INFORMATION_MESSAGE);
 						this.Limpiar();
 					} 
 					

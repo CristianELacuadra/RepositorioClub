@@ -86,13 +86,15 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		Panel.setLayout(null);
 		
 		btnBuscar = new JButton("Buscar");
+		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnBuscar.setIcon(new ImageIcon(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/lupa-para-buscar.png")));
 		//btnBuscar.setIcon(new ImageIcon(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/Search.png")));
-		btnBuscar.setBounds(1104, 112, 115, 33);
+		btnBuscar.setBounds(808, 22, 115, 33);
 		Panel.add(btnBuscar);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
-		panel_2.setBounds(834, 12, 487, 68);
+		panel_2.setBounds(10, 88, 487, 68);
 		Panel.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -135,12 +137,12 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		JLabel lblNewLabel = new JLabel("Filtrando Fecha");
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 		lblNewLabel.setForeground(SystemColor.textHighlightText);
-		lblNewLabel.setBounds(1005, 0, 128, 14);
+		lblNewLabel.setBounds(20, 66, 128, 14);
 		Panel.add(lblNewLabel);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.WHITE);
-		panel_3.setBounds(834, 112, 238, 33);
+		panel_3.setBounds(540, 116, 238, 33);
 		Panel.add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -159,13 +161,13 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		JLabel lblSeleccioneIngresosegresis = new JLabel("Seleccione Ingresos\\Egresos");
 		lblSeleccioneIngresosegresis.setForeground(Color.WHITE);
 		lblSeleccioneIngresosegresis.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblSeleccioneIngresosegresis.setBounds(854, 91, 189, 14);
+		lblSeleccioneIngresosegresis.setBounds(563, 91, 189, 14);
 		Panel.add(lblSeleccioneIngresosegresis);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(Color.WHITE);
 		panel_4.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel_4.setBounds(162, 28, 650, 44);
+		panel_4.setBounds(10, 11, 788, 44);
 		Panel.add(panel_4);
 		panel_4.setLayout(null);
 		
@@ -181,29 +183,23 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		lblBuscarPorDescripcion.setBounds(10, 14, 150, 14);
 		panel_4.add(lblBuscarPorDescripcion);
 		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel_5.setBackground(Color.WHITE);
-		panel_5.setBounds(10, 28, 128, 106);
-		Panel.add(panel_5);
-		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnLimpiar.setIcon(new ImageIcon(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/escoba-de-limpieza-para-suelos.png")));
+		//btnLimpiar.setIcon(new ImageIcon(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/limpiar.png")));
+		btnLimpiar.setBounds(1237, 116, 115, 33);
+		Panel.add(btnLimpiar);
 		
 		btnIngresos= new JButton();
-		btnIngresos.setBounds(615, 11, 97, 91);
-		btnIngresos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/Registrar.png")));
-		btnIngresos.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnIngresos.setToolTipText("Formulario Ingresos o Egreso");
+		btnIngresos.setBounds(1087, 116, 128, 33);
+		Panel.add(btnIngresos);
+		btnIngresos.setIcon(new ImageIcon(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoingreso.png")));
 		btnIngresos.setText("Registrar");
-		btnIngresos.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnIngresos.setFont(new java.awt.Font("Tahoma", 1, 12));
-		btnIngresos.setContentAreaFilled(false);
-		btnIngresos.setBorderPainted(false);
-		btnIngresos.setBorder(null);
-		panel_5.add(btnIngresos);
-		
-		btnLimpiar = new JButton("Limpiar");
-		//btnLimpiar.setIcon(new ImageIcon(PantallaCaja.class.getResource("/ar/com/ProyectoClub/AVista/icon/limpiar.png")));
-		btnLimpiar.setBounds(1237, 112, 115, 33);
-		Panel.add(btnLimpiar);
+		btnIngresos.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnIngresos.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnIngresos.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		btnIngresos.addActionListener(this);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -256,7 +252,6 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 		btnBuscar.addActionListener(this);
 		btnLimpiar.addActionListener(this);
 		txtBuscador.addKeyListener(this);
-		btnIngresos.addActionListener(this);
 	}
 	
 	public void setCoordinador(ControllerCoordinador miCoordinador) {

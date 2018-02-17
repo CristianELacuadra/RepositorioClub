@@ -455,7 +455,7 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	public List<Cuota> ListaCuotaSocio(Integer dni) throws BussinessException {
 		Setsession();
 		SetTransaction();
-		String query="SELECT s.cuotas FROM Socio s WHERE s.dni="+ dni; 
+		String query="SELECT s.cuotas FROM Socios s WHERE s.dni="+ dni; 
 		List<Cuota> listacouta=_sessiondehilo.createQuery(query).list();
 		if(!listacouta.isEmpty())
 			return listacouta;
@@ -556,12 +556,11 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	public int ObtenerIdCaja(String tipo) throws BussinessException {
 		Setsession();
 		SetTransaction();
-		String consulta="SELECT c.idConcepto FROM Conceptos c WHERE c.tipo='I'";
-		long i= (Long) _sessiondehilo.createQuery(consulta).uniqueResult();
+		String consulta="SELECT c.idConcepto FROM Conceptos c WHERE c.tipo="+"'"+tipo+"'";
+		int i= (int) _sessiondehilo.createQuery(consulta).uniqueResult();
 		if(i != 0)
-			return (int) (long) i;
+			return i;
 		return 0;
-		
 	}
 
 	

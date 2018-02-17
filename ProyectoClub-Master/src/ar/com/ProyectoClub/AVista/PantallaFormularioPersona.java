@@ -33,16 +33,9 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.Toolkit;
 import net.miginfocom.swing.MigLayout;
-import java.awt.Dialog.ModalityType;
-import java.awt.Dialog.ModalExclusionType;
-import java.awt.Window.Type;
-import javax.swing.UIManager;
 import javax.swing.ImageIcon;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
+@SuppressWarnings("serial")
 public class PantallaFormularioPersona extends JDialog implements ActionListener,KeyListener {
 
 	private ControllerCoordinador miCoordinador; //objeto miCoordinador que permite la relacion entre esta clase y la clase ControllerCoordinador
@@ -83,33 +76,28 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	private ButtonGroup grupoEssocio;
 	private JPanel panel_5;
 	private JLabel lblSocio;
-	private JRadioButton rdbtnSi;
-	private JRadioButton rdbtnNo;
-	private JRadioButton rdbFemenino;
-	private JRadioButton rdbMasculino;
+	public JRadioButton rdbtnSi;
+	public JRadioButton rdbtnNo;
+	public JRadioButton rdbFemenino;
+	public JRadioButton rdbMasculino;
 	private JButton btnValidar;
 	private JLabel lblEstado;
 	private JPanel panel;
-	private JTextField txtCateg;
-	private JTextField txtEstdoCiv;
-	
+	public JTextField txtCateg;
+	public JTextField txtEstdoCiv;
+	public static boolean TipoEntrada;
 
 	public PantallaFormularioPersona(PantallaPrincipalPersonas vtnPantallaPersona,boolean b) {  
 		super(vtnPantallaPersona,b);
 		setFont(new Font("Courier New", Font.PLAIN, 12));
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				limpiar();
-				// miCoordinador.mostrarVentanaPrincipal();
-			}
-		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaFormularioPersona.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoPaloma.png")));
 		addWindowListener(new WindowAdapter() {			
 			@Override
 			public void windowClosing(WindowEvent e) {
 				limpiar();
-				miCoordinador.CargarGrilla(PantallaPrincipalPersonas.tablaPersona);
+				miCoordinador.CargarGrilla(PantallaPrincipalPersonas. tablaPersona);
+				HabilitarBotonoes(false);
+				dispose();
 			}
 		});
 		initComponents();
@@ -174,12 +162,8 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		comboCate= new JComboBox();
 		comboCate.setEnabled(false);
 		comboCate.setBounds(234, 55, 211, 20);
+		
 		PanelDatosSocio.add(comboCate);
-		comboCate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
 		panelDatosObli.setLayout(null);
 		lblDni = new JLabel();
 		lblDni.setBounds(20, 25, 51, 14);
@@ -268,8 +252,8 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		
 		contentPane.add(lblEstado, "cell 0 1");
-		lblEstado.setText("   ESTADO:");
-		lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
+		//lblEstado.setText("ESTADO:");
+		lblEstado.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblEstado.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
 		contentPane.add(panelDatosObli, "cell 0 2,grow");
 		
@@ -363,7 +347,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		btnLimpiar = new JButton();
 		btnLimpiar.setBounds(534, 10, 89, 91);
 		PanelDatosSocio.add(btnLimpiar);
-		btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/limpiar1.png")));
+		btnLimpiar.setIcon(new ImageIcon(PantallaFormularioPersona.class.getResource("/ar/com/ProyectoClub/AVista/icon/goma-de-borrar.png")));
 		btnLimpiar.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnLimpiar.setText("Limpiar");
 		btnLimpiar.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -431,6 +415,11 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		try{
 		Personas nuevapersona=miCoordinador.CrearPersona();
 		int dni= Integer.parseInt(txtDni.getText().replaceAll("\\s*$",""));
+		Personas nueva=miCoordinador.BuscarPersona(dni);
+		if (nueva != null)
+			nuevapersona=nueva;
+		if(nuevapersona.getSocios() != null && nuevapersona.getSocios().getEstado().equals("MOROSO"))
+			throw new RuntimeException("Socio bloqueado por falta de pago");
 		nuevapersona.setDni(dni);
 		nuevapersona.setNombre(txtNom.getText());
 		nuevapersona.setApellido(txtApe.getText());
@@ -452,6 +441,9 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		if(rdbtnSi.isSelected()){
 			//nuevapersona.setEssocio(true);
 			Socios socio= miCoordinador.CrearSocio();
+			Socios socioExistente= miCoordinador.BuscarSocio(dni);
+			if(socioExistente != null)
+				socio=socioExistente;
 			//socio.setDni(nuevapersona.getDni());
 			socio.setEstado("ACTIVO");
 			socio.setFechaingreso(dateFechIngreso.getDate());
@@ -471,9 +463,16 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			//	}
 			//	}		
 		}
-		miCoordinador.GuardarPersona(nuevapersona);
+		if(rdbtnNo.isSelected()){
+			if(nuevapersona.getSocios() != null)
+				nuevapersona.getSocios().setBaja(true);
+		}
+		miCoordinador.GuardarPersona(nuevapersona,TipoEntrada);
 		JOptionPane.showMessageDialog(null,"Persona registrada con exito","Mensaje",JOptionPane.INFORMATION_MESSAGE);
-		this.limpiar();
+		limpiar();
+		miCoordinador.CargarGrilla(PantallaPrincipalPersonas. tablaPersona);
+		this.HabilitarBotonoes(false);
+		dispose();
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null,e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
@@ -515,6 +514,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	//limpiar
 	private void limpiar(){
 		txtDni.setText(null);
+		txtDni.setEnabled(true);
 		txtApe.setText(null);
 		txtNom.setText(null);
 		dateFechNac.setCalendar(null);
@@ -523,11 +523,11 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		txtMatri.setText(null);
 		txtCateg.setText(null);
 		txtEstdoCiv.setText(null);
-		comboCate.setSelectedItem("Seleccione una categoria");
+		comboCate.removeAllItems();
 		txtNacion.setText(null);
 		dateFechIngreso.setCalendar(null);
 		txtDomNro.setText(null);
-		lblEstado.setText("ESTADO");
+		lblEstado.setText(null);
 		lblEstado.setForeground(Color.black);
 	}
 	
@@ -545,7 +545,6 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		txtNacion.setText(null);
 		dateFechIngreso.setCalendar(null);
 		txtDomNro.setText(null);
-		lblEstado.setText("ESTADO");
 		lblEstado.setForeground(Color.black);
 	}
 	//escuchando al usuario
@@ -560,6 +559,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		txtDom.addKeyListener(this);
 		txtTel.addKeyListener(this);
 		btnValidar.addActionListener(this);
+		//comboCate.removeAllItems();
 	}
 	
 	
@@ -569,7 +569,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource()==comboCate){
-			if(comboCate.getSelectedItem().toString() != "Seleccione una categoria")
+			if(comboCate.getItemCount() != 0 && comboCate.getSelectedItem().toString() != "Seleccione una categoria")
 				txtCateg.setText(comboCate.getSelectedItem().toString());
 			else
 				txtCateg.setText("");
@@ -629,8 +629,8 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			persona=miCoordinador.ValidarPersona(Integer.parseInt(txtDni.getText()));
 			this.HabilitarBotonoes(true);
 			if(persona != null){
-				lblEstado.setText("ESTADO: PERSONA YA REGISTRADA");
-				limpiar2();
+				lblEstado.setText("REGISTRADA");
+				//limpiar2();
 				lblEstado.setForeground(Color.RED);
 				txtApe.setText(persona.getApellido());
 				txtNom.setText(persona.getNombre());
@@ -647,7 +647,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 					rdbMasculino.setSelected(true);
 				txtEstdoCiv.setText(persona.getEstadocivil());
 				//si es socio
-				if(persona.getSocios() != null ){
+				if(persona.getSocios() != null && !persona.getSocios().isBaja() ){
 					rdbtnSi.setSelected(true);
 					BotonesSocioHabilitado(true);
 					txtMatri.setText(persona.getSocios().getMatricula().toString());
@@ -662,13 +662,12 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			}
 			else
 			{
-				lblEstado.setText("ESTADO:PERSONA NO REGISTRADA");
+				lblEstado.setText("NO REGISTRADA");
 				lblEstado.setForeground(Color.GREEN);
 			}
 		}
 		else
 			JOptionPane.showMessageDialog(null,"El numero de documento es obligatorio","Error",JOptionPane.ERROR_MESSAGE);
-
 	}
 	//Depende si se cieere o si busca bloquea o no
 	
