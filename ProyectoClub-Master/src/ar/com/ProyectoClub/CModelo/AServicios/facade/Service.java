@@ -673,6 +673,16 @@ public class Service implements IService {
 			}
 		
 	}
+	
+	public List<Alquiler> ListarAlquilerPorDia(Date dia)
+	{
+		try{
+			return gestor.ListarAlquilerPorDia(dia);
+		}catch(BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
+			throw new RuntimeException("Se produjo el siguiente error: ",e.getCause());
+			}
+	}
 
 	@Override
 	public List<Morosos> FiltrarMorosos() {

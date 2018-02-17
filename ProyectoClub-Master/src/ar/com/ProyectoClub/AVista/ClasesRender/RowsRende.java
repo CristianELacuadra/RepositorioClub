@@ -22,6 +22,8 @@ public class RowsRende extends DefaultTableCellRenderer {// tabla grilla  inmueb
 		columnaPagada=pagada;
 	}
 	
+	
+	
 	@Override
 	public Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column)
 	{        
@@ -37,46 +39,42 @@ public class RowsRende extends DefaultTableCellRenderer {// tabla grilla  inmueb
 	    	
 	    	if((table.getValueAt(row,columnaElim).equals(aux1))&&(table.getValueAt(row, columnaPagada).equals(aux1))&& btn.getName().equals("btnPag"))
 	    		btn.setEnabled(false);
-	    	if((table.getValueAt(row,columnaElim).equals(aux1))&&(table.getValueAt(row, columnaPagada).equals(aux1))&& btn.getName().equals("btnEli"))
-	    		btn.setEnabled(false);
-
-	    	if((table.getValueAt(row,columnaElim).equals(aux2))&&btn.getName().equals("btnMod"))
-	    		btn.setEnabled(false);
 	    	if((table.getValueAt(row,columnaElim).equals(aux2))&& btn.getName().equals("btnPag"))
 	    		btn.setEnabled(false);
+	    	
+	    	if((table.getValueAt(row,columnaElim).equals(aux1))&&(table.getValueAt(row, columnaPagada).equals(aux1))&& btn.getName().equals("btnEli"))
+	    		btn.setEnabled(false);
+	    	
 	    	if((table.getValueAt(row,columnaElim).equals(aux2))&& btn.getName().equals("btnEli"))
 	    		btn.setEnabled(false);
 ////	completarrrr
 	    	return btn;
 	    }
-	   
 	    
-	    if(table.getValueAt(row,columnaElim).equals(aux2))
+	    
+	    if((table.getValueAt(row,columnaPagada).equals(aux1))&&(table.getValueAt(row,columnaElim).equals(aux1))){
+	    	this.setForeground(Color.GREEN);
+	    }else {
+	    	if((table.getValueAt(row,columnaPagada).equals(aux2))&&(table.getValueAt(row,columnaElim).equals(aux1))){
+		    	this.setForeground(Color.black);
+	    		}else if(table.getValueAt(row,columnaElim).equals(aux2))
+	    			this.setForeground(Color.RED);
+	    }
+  
+	     if(table.getValueAt(row,columnaElim).equals(false))
 	    {
 	        this.setForeground(Color.RED);
-	    }else if(table.getValueAt(row,columnaElim).equals(aux1)){
+	    }else if(table.getValueAt(row,columnaElim).equals(true)){
 	    	this.setForeground(Color.black);
 	    }
 	    
-	    if(table.getValueAt(row,columnaPagada).equals(aux2)){
-	    	this.setForeground(Color.black);
-	    }else  if(table.getValueAt(row,columnaPagada).equals(aux1)){
-	    	this.setForeground(Color.GREEN);
-	    }
-	    
+	   
 	    
 	    
 	    
 	    return  super.getTableCellRendererComponent(table, value, selected, focused, row, column);
 	    
-	    
-	    
-	    
-	    
-
-	
-	
-	
+	  
 	
 	}
 	

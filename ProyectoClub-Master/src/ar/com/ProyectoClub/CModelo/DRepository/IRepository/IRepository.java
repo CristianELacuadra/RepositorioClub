@@ -82,6 +82,7 @@ public interface IRepository  {
 	List<Alquiler> BusquedaAlquilerEntreFechas(Date fechaInicial,Date fechaFinal)  throws BussinessException;
 	List<Alquiler> ListaAlquilerPormes(Integer anio, Integer mes) throws BussinessException ;
 	List<Alquiler> ListarAlquilerPorDia(int anio, int mes, int dia)throws BussinessException ;
+	List<Alquiler> ListarAlquilerPorDia(Date dia) throws BussinessException;
 	
 	long DevolverTotalRegistrosCaja() throws BussinessException;
 	List<Caja> ListaCajaPorRangoFecha(Date FechaDesde,Date FechaHasta) throws BussinessException;

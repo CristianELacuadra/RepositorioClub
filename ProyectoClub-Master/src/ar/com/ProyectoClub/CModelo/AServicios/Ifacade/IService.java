@@ -57,6 +57,7 @@ public interface IService {
 	List<Alquiler> BusquedaAlquilerEntreFechas(Date fechaInicio, Date fechaFin);
 	List<Alquiler> ListaAlquilerPormes(Integer anio, Integer mes);
 	List<Alquiler> ListarAlquilerPorDia(int anio, int mes, int dia);
+	List<Alquiler> ListarAlquilerPorDia(Date dia);
 	
 	//cuotas
 	List<Cuota> ObtenerCuotasPorid(List<Integer> id);

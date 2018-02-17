@@ -4,7 +4,9 @@ import java.awt.CardLayout;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -18,12 +20,20 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+
+
+
+
+
+
+
 import ar.com.ProyectoClub.AVista.*;
 import ar.com.ProyectoClub.AVista.ClasesRender.Render;
 import ar.com.ProyectoClub.AVista.ClasesRender.RowsRende;
 import ar.com.ProyectoClub.CModelo.AServicios.Ifacade.IService;
 import ar.com.ProyectoClub.CModelo.AServicios.facade.Service;
 import ar.com.ProyectoClub.CModelo.CEntidades.*;
+import ar.com.ProyectoClub.AVista.ClasesRender.FechasCalendar;
 
 public class ControllerCoordinador {
 	//Objeto a mi modelo de servicio
@@ -1122,8 +1132,7 @@ public class ControllerCoordinador {
 					(miVentanaAlquilerPrincipal.texInmDescrip.getText().length()<300)){
 				if((miVentanaAlquilerPrincipal.texInmSe.getText().isEmpty()))
 					miVentanaAlquilerPrincipal.texInmSe.setText("0");
-				
-				
+
 				ban= true;
 				
 			}else ban= false;
@@ -1178,12 +1187,7 @@ public class ControllerCoordinador {
 			 */
 		}
 	}
-	public int soloNumeros(int num){
-		if(num<2){}
-		
-		
-		return num;
-	}
+
 	
 	public void botonEliminarInm(Inmuebles inm){
 		// accion del boton eliminar-- es una actualizacion
@@ -1240,7 +1244,14 @@ public class ControllerCoordinador {
 	
 	
 	public void GuardarAlquiler(Alquiler alqui) {
-			modeloService.GuardarAlquiler(alqui);
+		if(alqui.getNroalquiler()==null)
+				PagarAlquilerCaja(alqui.getFechaactual(),
+						( alqui.getPreciototal()-alqui.getMontofaltante()),
+						alqui.getPersonas().getApellido()+" "+ alqui.getPersonas().getNombre());
+		modeloService.GuardarAlquiler(alqui);
+			
+				
+			
 }
 	
 //TODO REVISAR SI COMPRUEBA BIEN LOS DATOS VALOR BYTE
@@ -1250,7 +1261,7 @@ public class ControllerCoordinador {
 	@SuppressWarnings("deprecation")
 	public void ListarAlquileres(JTable tableAlq, List<Alquiler> listaAlquiler) {
 		try{
-		java.util.List<Alquiler> listaAlquiler3= new ArrayList<Alquiler>();
+//		java.util.List<Alquiler> listaAlquiler3= new ArrayList<Alquiler>();
 //		Date aux= new Date(0,0,0,0,0);
 //		aux.setDate(22);
 //		aux.setMonth(1);
@@ -1258,13 +1269,15 @@ public class ControllerCoordinador {
 //		//pruebas
 //		Date in=new Date(0,0,0,0,0);
 //		listaAlquiler3= BusquedaAlquilerXFechaActual(in,aux);
-			Integer anio, mes;
-			anio=2018;
-			mes=3;
-			Alquiler a=CrearAlquiler();
-				a=	buscarAlquiler(2);
-			listaAlquiler3=ListarAlquilerPormes(anio, mes);
-////		listaAlquiler=modeloService.ListarAlquileres();
+//			Integer anio, mes;
+//			anio=2018;
+//			mes=3;
+//			Alquiler a=CrearAlquiler();
+//				a=	buscarAlquiler(2);
+//				Inmuebles I=BuscarInmueble(3);
+//			listaAlquiler3=ListarAlquilerPormes(anio, mes);
+//		this.listarCalendarioReserva();
+//			listaAlquiler3=modeloService.ListarAlquileres();
 //			Alquiler aux = modeloService.buscarAlquiler(1);
 		DefaultTableModel  modeloT = new DefaultTableModel(){
 			
@@ -1311,7 +1324,7 @@ public class ControllerCoordinador {
 		if(listaAlquiler!=null){
 		int numr=listaAlquiler.size();
 		for(int i=numr-1;i>=0;i--){
-//		for(int i=0;i<numr;i++){
+
 			columna[0]=listaAlquiler.get(i).getActivo();
 			columna[1]=listaAlquiler.get(i).getPagoalquiler();		
 			columna[2]=miVentanaAlquilerPrincipal.btnDet;
@@ -1319,8 +1332,8 @@ public class ControllerCoordinador {
 			columna[4]=miVentanaAlquilerPrincipal.btnPag;
 			columna[5]=miVentanaAlquilerPrincipal.btnEli;
 			columna[6]=listaAlquiler.get(i).getNroalquiler();
-			columna[7]=""+i;//listaAlquiler.get(i).getPersonas().getApellido()+" "+listaAlquiler.get(i).getPersonas().getNombre();
-			columna[8]=""+i+3;//listaAlquiler.get(i).getInmuebles().getNombre();
+			columna[7]=listaAlquiler.get(i).getPersonas().getApellido()+" "+listaAlquiler.get(i).getPersonas().getNombre();
+			columna[8]=listaAlquiler.get(i).getInmuebles().getNombre();
 			columna[9]=listaAlquiler.get(i).getFechareserva();
 			//new SimpleDateFormat("dd-MM-yyyy").format(listaAlquiler.get(i).getFechareserva();)
 			columna[10]= listaAlquiler.get(i).getPreciototal();
@@ -1398,6 +1411,22 @@ public class ControllerCoordinador {
 		}
 		
 		
+	public List<Calendar> listarCalendarioReserva(){
+			List<Calendar> aux=new ArrayList<Calendar>();
+			List<Alquiler> auxAl= new ArrayList<Alquiler>();
+			auxAl=modeloService.ListarAlquileres();
+			
+			for(int i=0;i<auxAl.size();i++){
+				Calendar cal=Calendar.getInstance();
+//				if((auxAl.get(i).getActivo()==(byte)1)&&(auxAl.get(i).getInmuebles()==numIdInmueble))
+				if(auxAl.get(i).getActivo()==(byte)1){
+					cal.setTime(auxAl.get(i).getFechareserva());
+					aux.add(cal);
+				}
+			}
+		return aux;
+	}
+	
 	public List<Alquiler> listaAlquileresTodos(){
 		
 	java.util.List<Alquiler> listaAlquiler= new ArrayList<Alquiler>();
@@ -1409,11 +1438,11 @@ public class ControllerCoordinador {
 		java.util.List<Alquiler> listaAlquiler= new ArrayList<Alquiler>();
 		listaAlquiler=modeloService.ListarAlquileres();
 		java.util.List<Alquiler> listaAux = new ArrayList<Alquiler>();
-		
+		byte b=1;
 		int numr=listaAlquiler.size();
 		
 		for(int i=0;i<numr;i++){
-			if(listaAlquiler.get(i).getPagoalquiler()==1){
+			if(listaAlquiler.get(i).getPagoalquiler()==b){
 				listaAux.add(listaAlquiler.get(i));
 			}
 		}
@@ -1425,10 +1454,10 @@ public class ControllerCoordinador {
 		java.util.List<Alquiler> listaAlquiler= new ArrayList<Alquiler>();
 		listaAlquiler=modeloService.ListarAlquileres();
 		java.util.List<Alquiler> listaAux = new ArrayList<Alquiler>();
-		
+		byte b=0;
 		int numr=listaAlquiler.size();
 		for(int i=0;i<numr;i++){
-			if(listaAlquiler.get(i).getPagoalquiler()==0){
+			if(listaAlquiler.get(i).getPagoalquiler()==b){
 				listaAux.add(listaAlquiler.get(i));
 			}
 		}
@@ -1455,6 +1484,9 @@ public class ControllerCoordinador {
 		return modeloService.ListarAlquilerPorDia(anio,mes,dia);
 	}
 	
+	public List<Alquiler> ListarAlquilerPorDia (Date dia){
+		return modeloService.ListarAlquilerPorDia(dia);
+	}
 	public Alquiler buscarAlquiler(Integer numAlquiler) {
 	
 		return modeloService.buscarAlquiler(numAlquiler);
@@ -1486,18 +1518,17 @@ public class ControllerCoordinador {
 		
 		switch(tip){
 		case 0:
-			JOptionPane.showMessageDialog(null,mensaje,"Sistema Club Avenida Ejercito: Error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/impo.png")));
+			JOptionPane.showMessageDialog(null,mensaje,"Sistema Club Avenida Ejercito"/*: Error"*/,JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/impo.png")));
 			break;
 		case 1:
-			JOptionPane.showMessageDialog(null, mensaje ,"Sistema Club Avenida Ejercito: Información",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, mensaje ,"Sistema Club Avenida Ejercito"/*: Información"*/,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/info.png")));
 			
 			break;
 		case 2:
-			//JOptionPane.showMessageDialog(null, mensaje ,"Sistema Club Avenida Ejercito: Advertencia",JOptionPane.WARNING_MESSAGE);
-			JOptionPane.showMessageDialog(null, mensaje ,"Sistema Club Avenida Ejercito: Advertencia",JOptionPane.WARNING_MESSAGE, new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/seguro.png")));
+			JOptionPane.showMessageDialog(null, mensaje ,"Sistema Club Avenida Ejercito"/*: Advertencia"*/,JOptionPane.WARNING_MESSAGE, new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/seguro.png")));
 			break;
 			
-		case 3:JOptionPane.showMessageDialog(null, mensaje, "Sistema Club Avenida Ejercito: ¿Pregunta?",JOptionPane.QUESTION_MESSAGE);
+		case 3:JOptionPane.showMessageDialog(null, mensaje, "Sistema Club Avenida Ejercito"/*: ¿Pregunta?"*/,JOptionPane.QUESTION_MESSAGE);
 			break;
 			
 			default:
@@ -1557,13 +1588,15 @@ public class ControllerCoordinador {
 	
 
 	public void mostrarVentanaNuevoAlquiler(){
-		//miVentanaNuevoAlquiler.limpiar();
+		miVentanaNuevoAlquiler.limpiar();
+		miVentanaNuevoAlquiler.Colorear.setListDeFechasCalendar(modeloService.ListarAlquileres());
+		miVentanaNuevoAlquiler.Colorear.nullNombreInmuble();
+		//miVentanaNuevoAlquiler.calen.getDayChooser().addDateEvaluator(new FechasCalendar(null));
 		miVentanaNuevoAlquiler.setVisible(true);//TODO pantalla nuevo alquiler
-		//miVentanaNuevoAlquiler.cargarCombo();
+		
 		
 	}
 	public void mostrarVentanaDetallesAlquiler(int nroAlqui) {
-		// TODO detalles
 		try{
 		
 		miVentanaDetallesAlquiler.texDetalle.setText(null);
@@ -1604,8 +1637,8 @@ System.out.println("Hora: "+hourFormat.format(date));
 		 */
 		
 		
-	//	texPer=aux.getPersonas().getApellido()+" "+aux.getPersonas().getNombre();
-		//texInm=aux.getInmuebles().getNombre();
+		texPer=aux.getPersonas().getApellido()+" "+aux.getPersonas().getNombre();
+		texInm=aux.getInmuebles().getNombre();
 		texto= "Persona: " + texPer +'\n'+""+
 		"Inmueble Alquilado: "+texInm +'\n'+""+
 		"Fecha de emisión: "+ (new SimpleDateFormat("dd-MM-yyyy").format(aux.getFechaactual())) +'\n'+""+
@@ -1626,18 +1659,80 @@ System.out.println("Hora: "+hourFormat.format(date));
 	}
 
 	public void eliminarAlquiler(int nroAlqui) {
-		mensajes("boton eliminar "+ nroAlqui ,2);
+		Alquiler auxAlquiler=modeloService.buscarAlquiler(nroAlqui);
+		byte a=0;
+		auxAlquiler.setActivo(a);
+		Calendar cal= new GregorianCalendar(0, 0, 0, 0, 0, 0);
+		auxAlquiler.setFechareserva(cal.getTime());
+		modeloService.GuardarAlquiler(auxAlquiler);
+//		mensajes("boton eliminar "+ nroAlqui ,2);
 		//borrar fecha y hora reserva
 		
 		
 	}
 
+	public void recargarPanelAlquiler(){
+		miVentanaAlquilerPrincipal.RecargarPanelAlquiler();
+	}
 	public void modificarAlquiler(int nroAlqui) {
 		mensajes("boton Modificar " + nroAlqui ,3);
+		cargarDatosAlquilerModificar(nroAlqui);
 		// no puede modificar alquileres eliminados
 		// se genera como un nuevo alquiler con nueva fecha de emision
 	}
+	
+	public void cargarDatosAlquilerModificar(int nroAlqui){
+try {   
+			miVentanaNuevoAlquiler.limpiar();
+			miVentanaNuevoAlquiler.oldAlqui=modeloService.buscarAlquiler(nroAlqui);
+			/**Campos personas*/
+		miVentanaNuevoAlquiler.pers=miVentanaNuevoAlquiler.oldAlqui.getPersonas();
+			if(miVentanaNuevoAlquiler.personaHabilitadaParaAlquiler(miVentanaNuevoAlquiler.pers)){
+				miVentanaNuevoAlquiler.habilitarCampoPersona(false);
+				miVentanaNuevoAlquiler.txtApe.setText(miVentanaNuevoAlquiler.oldAlqui.getPersonas().getApellido());
+				miVentanaNuevoAlquiler.txtDni.setText(miVentanaNuevoAlquiler.oldAlqui.getPersonas().getDni().toString());
+				miVentanaNuevoAlquiler.txtNom.setText(miVentanaNuevoAlquiler.oldAlqui.getPersonas().getNombre());
+				//miVentanaNuevoAlquiler.
+				miVentanaNuevoAlquiler.pers=this.BuscarPersona(
+						miVentanaNuevoAlquiler.oldAlqui.getPersonas().getDni());
+				if(miVentanaNuevoAlquiler.oldAlqui.getInmuebles().isHabilitado()==true){
+					String auxNombreInmueble =miVentanaNuevoAlquiler.oldAlqui.getInmuebles().getNombre();
+//					miVentanaNuevoAlquiler.comboInmuebles.setSelectedItem(miVentanaNuevoAlquiler.oldAlqui.getInmuebles().getNombre());
+					miVentanaNuevoAlquiler.comboInmuebles.setSelectedItem(auxNombreInmueble);
+				}else
+					this.mensajes("El inmueble de este alquiler esta deshabilitado", 1);
+				
+				
+				Calendar fechaDeReserva = new GregorianCalendar();
+				fechaDeReserva.setTime(miVentanaNuevoAlquiler.oldAlqui.getFechareserva());
+				
+				miVentanaNuevoAlquiler.txtHoraR.setValue(fechaDeReserva.get(Calendar.HOUR_OF_DAY));
+				miVentanaNuevoAlquiler.calen.setDate(fechaDeReserva.getTime());
+				miVentanaNuevoAlquiler.txtCantidadHoras.setValue(miVentanaNuevoAlquiler.oldAlqui.getCantidadhoras());
+				miVentanaNuevoAlquiler.txtSen.setText(Float.toString(miVentanaNuevoAlquiler.oldAlqui.getInmuebles().getSenial()));
+				miVentanaNuevoAlquiler.ResuPrecioTotal.setText(Float.toString(miVentanaNuevoAlquiler.oldAlqui.getPreciototal()));
+				Float montoAFavor=miVentanaNuevoAlquiler.oldAlqui.getPreciototal()-miVentanaNuevoAlquiler.oldAlqui.getMontofaltante();
+				miVentanaNuevoAlquiler.txtMontoApagar.setText(Float.toString(montoAFavor));
+				miVentanaNuevoAlquiler.txtMontoFaltante.setText(Float.toString(miVentanaNuevoAlquiler.oldAlqui.getMontofaltante()));
+				miVentanaNuevoAlquiler.habilitarCamporReserva(true, false);
+				miVentanaNuevoAlquiler.txtObservaciones.setText(miVentanaNuevoAlquiler.oldAlqui.getObservaciones());
+				
+				miVentanaNuevoAlquiler.setVisible(true);
+			} else 
+				this.mensajes("La persona no esta habilitada para el alquiler", 2);
+} catch (Exception e) {
+	this.mensajes("Ocurrió un error: "+e.getMessage(), 0);
+//	e.printStackTrace();
+}
+		
+		
+		
+		
+		
+	}
+	
 
+	
 	public void pagarAlquiler(int nroAlqui) {
 		mensajes("boton Pagar "+ nroAlqui,0);
 		//puede ser un joption panel que muestre la cantidad faltante, nombre apellido, 
@@ -1653,6 +1748,73 @@ System.out.println("Hora: "+hourFormat.format(date));
 				
 		}
 
+	
+	public void PagarAlquilerCaja(Date fecha,float monto, String ApeYNomb){
+		Caja aux=CrearRegistroCaja();
+		aux.setConceptos(BuscarConcepto(1));
+		aux.setFecha(fecha);
+		aux.setMonto(monto);
+		String descripcion=ApeYNomb +"Pago de Alquiler";
+		aux.setDescripcion(descripcion);
+		aux.setHabilitar(true);
+		GuardarRegistroCaja(aux);
+		
+		
+	}
+
+
+	public void CargarTablaAlquilerPorDia(JTable tableDia, List<Alquiler> listaAl,
+			Object selectedItem) {
+		
+		try {
+			DefaultTableModel modeloT =new DefaultTableModel(){
+				
+				public boolean isCellEditable (int row, int colum){
+					return false;
+				}
+			};
+			tableDia.setModel(modeloT);
+			modeloT.addColumn("Inmueble");
+			modeloT.addColumn("Reservado Desde");
+			modeloT.addColumn("Hasta");
+			modeloT.addColumn("nroAlquiler");
+			modeloT.addColumn("cantidadHoras");
+			
+			Object[] columna=new Object[5];
+			if(listaAl!=null){
+				int num=listaAl.size();
+				for(int i =0;i<num;i++){
+					if((listaAl.get(i).getInmuebles().getNombre().equals(selectedItem))
+							||(selectedItem.equals("Seleccione el inmueble"))){
+						columna[0]=listaAl.get(i).getInmuebles().getNombre();
+						Calendar cal =Calendar.getInstance();
+						cal.setTime(listaAl.get(i).getFechareserva());
+						columna[1]=cal.get(Calendar.HOUR_OF_DAY)+":00";
+						int aux=(cal.get(Calendar.HOUR_OF_DAY)+listaAl.get(i).getCantidadhoras());
+						if(aux>=24)
+							aux=aux-24;
+						columna[2]=aux+":00";
+						columna[3]=listaAl.get(i).getNroalquiler();
+						columna[4]=listaAl.get(i).getCantidadhoras();
+						modeloT.addRow(columna);
+					}
+				}
+				tableDia.setRowHeight(25);
+				tableDia.setToolTipText("Clic para ver\n detalles");
+				ocultarColumnaAlquiler(3, tableDia);	
+				ocultarColumnaAlquiler(4, tableDia);
+			}
+			tableDia.setRowHeight(25);
+			tableDia.setToolTipText("Clic para ver\n detalles");
+			ocultarColumnaAlquiler(3, tableDia);	
+		} catch (Exception e) {
+			mensajes("OCURRIÓ UN ERROR EN LA CARGA", 0);
+//			e.printStackTrace();
+		}
+	}
+	
+
+	
 	
 }
 

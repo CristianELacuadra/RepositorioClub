@@ -260,7 +260,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				{null, null, null, null, null, null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"Habilitado", "Pagado", "", "", "", "", "Nro de Alquiler", "Persona", "Inmueble", "Fecha de reserva", "Monto", "Fecha de Emicion"
+				"Habilitado", "Pagado", "", "", "", "", "Nro de Alquiler", "Persona", "Inmueble", "Fecha de reserva", "Monto", "Fecha de Emisión"
 			}
 		));
 
@@ -933,6 +933,8 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 			LimpiarTablaAlquileres();
 			miCoordinador.ListarAlquileres(tableAlq,miCoordinador.listaAlquileresTodos());
 			radioB4.setSelected(true);
+			
+			
 		}catch(Exception ex){
 			miCoordinador.mensajes("Error al recargar la pagina", 0);
 		}
@@ -967,6 +969,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				bRegistrarI.setText("Registrar");
 				bActualizarI.setText("Modificar");
 				botCanhab=false;
+				bRegistrarI.setEnabled(true);
 			}catch(Exception ex){
 				miCoordinador.mensajes("Error al recargar la pagina", 0);
 		}
@@ -1007,8 +1010,9 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 								miCoordinador.panelRegInmDesHabilitar();
 								bRegistrarI.setText("Registrar");
 								miCoordinador.botonCancelarDeshabilitarInm();
-								LimpiarTablaInmuebles();
-								cargarDatosListadoInmueble();
+//								LimpiarTablaInmuebles();
+//								cargarDatosListadoInmueble();
+								recargarPanelInmueble();
 						}
 					}else{
 						//mensaje de campos no completados o valores no validos
@@ -1030,6 +1034,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				if(bActualizarI.isSelected()&&(!auxNum.equals(null))){
 					miCoordinador.panelRegInmHabilitar();
 					bActualizarI.setText("Guardar");
+					bRegistrarI.setEnabled(false);
 					miCoordinador.botonCancelarHabilitarInm();
 				}else{
 					
@@ -1043,8 +1048,10 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 								miCoordinador.panelRegInmDesHabilitar();
 								bActualizarI.setText("Modificar");
 								miCoordinador.botonCancelarDeshabilitarInm();
-								LimpiarTablaInmuebles();
-								cargarDatosListadoInmueble();
+								bRegistrarI.setEnabled(true);
+//								LimpiarTablaInmuebles();
+//								cargarDatosListadoInmueble();
+								recargarPanelInmueble();
 							}
 						}else{
 							//mensaje de campos no completados o valores no validos
@@ -1063,8 +1070,9 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				if(botCanhab){//variable para determinar cuando esta activo el boton cancelar
 					//boton cancelar
 					miCoordinador.botonCancelarInm();
-					LimpiarTablaInmuebles();
-					cargarDatosListadoInmueble();
+//					LimpiarTablaInmuebles();
+//					cargarDatosListadoInmueble();
+					recargarPanelInmueble();
 				}else
 				//boton eliminar
 					if(0==miCoordinador.mensajeOpciones("Pregunta", "¿Desea continuar?", 3)){
@@ -1152,8 +1160,9 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				miCoordinador.mostrarVentanaNuevoAlquiler();
 				
 			}catch(Exception ex){
-				JOptionPane.showMessageDialog(null, 0,
-						"Ocurrio un error con el Boton", JOptionPane.ERROR_MESSAGE);
+				miCoordinador.mensajes("Ocurrio un error con el Boton", 0);
+//				JOptionPane.showMessageDialog(null,"Ocurrio un error con el Boton",
+//						, JOptionPane.ERROR_MESSAGE);
 			}
 			}
 				 

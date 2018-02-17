@@ -3,7 +3,9 @@ package ar.com.ProyectoClub.CModelo.DRepository.Repository;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.hibernate.Query;
+
 import ar.com.ProyectoClub.CModelo.CEntidades.*;
 import ar.com.ProyectoClub.CModelo.DRepository.ClassParameterized.*;
 import ar.com.ProyectoClub.CModelo.DRepository.ExceptionsHibernate.BussinessException;
@@ -309,6 +311,7 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 			
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Alquiler> BusquedaAlquilerEntreFechas(Date fechaInicial,Date fechaFinal)  throws BussinessException 
 	{
 		Setsession();
@@ -326,6 +329,7 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	}	
 	
 	
+	@SuppressWarnings("unchecked")
 	public List<Alquiler> ListaAlquilerPormes(Integer anio, Integer mes) throws BussinessException {
 		Setsession();
 		SetTransaction();
@@ -336,16 +340,28 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Alquiler> ListarAlquilerPorDia(int anio, int mes, int dia) throws BussinessException {
 		Setsession();
 		SetTransaction();
-		String query= "SELECT a FROM Alquiler a WHERE month(a.fechareserva)="+mes+
-				"AND YEAR(a.fechareserva)="+anio+"AND DATE(a.fechareserva)="+dia;
+		String query="SELECT a FROM Alquiler a WHERE month(a.fechareserva)="+mes+ "AND year(a.fechareserva)="+anio+ "AND day(a.fechareserva)="+dia;
 		List<Alquiler> listAlquileres= _sessiondehilo.createQuery(query).list();
 		if(!listAlquileres.isEmpty() )
 			return listAlquileres;
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Alquiler> ListarAlquilerPorDia(Date dia) throws BussinessException{
+		Setsession();
+		SetTransaction();
+		String query= "SELECT a FROM Alquiler a WHERE Date(a.fechareserva)="+dia;
+		List<Alquiler> listAlquileres= _sessiondehilo.createQuery(query).list();
+		if(!listAlquileres.isEmpty() )
+			return listAlquileres;
+		return null;
+	}
+	
 	
 	@Override
 	public long DevolverTotalRegistrosCaja() throws BussinessException 

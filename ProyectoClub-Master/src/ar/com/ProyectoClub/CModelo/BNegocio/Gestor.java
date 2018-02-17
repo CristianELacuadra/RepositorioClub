@@ -1004,6 +1004,10 @@ public class Gestor {
 		return repositorio.ListarAlquilerPorDia(anio,mes,dia);
 	}
 
+	public List<Alquiler> ListarAlquilerPorDia(Date dia) throws BussinessException{
+		return repositorio.ListarAlquilerPorDia(dia);
+	}
+	
 	public List<Morosos> ListarMorososDeudor() throws BussinessException {
 		 List<Morosos> listaMorDeu=new ArrayList<Morosos>();
 		 List<Socios> listaMorosos=repositorio.ObtenerMorosos();
