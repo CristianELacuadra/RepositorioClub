@@ -89,12 +89,12 @@ public class FechasCalendar implements IDateEvaluator{
 	@Override
 	public Color getSpecialForegroundColor() {
 		
-		return Color.BLUE;
+		return Color.MAGENTA;
 	}
 	@Override
 	public Color getSpecialBackroundColor() {
 	
-		return Color.RED;
+		return null;
 	}
 	@Override
 	public String getSpecialTooltip() {

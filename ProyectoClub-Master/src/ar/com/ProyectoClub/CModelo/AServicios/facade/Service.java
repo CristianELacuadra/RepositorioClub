@@ -1,7 +1,9 @@
 package ar.com.ProyectoClub.CModelo.AServicios.facade;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -639,8 +641,13 @@ public class Service implements IService {
 
 	
 	public List<Alquiler> BusquedaAlquilerXFecha(Date fechaIn,Date fechaFin){
-		try{
-			return gestor.BusquedaAlquilerXFecha(fechaIn,fechaFin);
+		try{//fecha reserva
+			
+			Calendar auxFechaFin = new GregorianCalendar();
+			auxFechaFin.setTime(fechaFin);
+			
+			auxFechaFin.set(Calendar.DAY_OF_MONTH,auxFechaFin.get(Calendar.DAY_OF_MONTH)+1 );
+			return gestor.BusquedaAlquilerXFecha(fechaIn,auxFechaFin.getTime());
 		}catch (BussinessException e) {
 			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
 			throw new RuntimeException("Se produjo el siguiente error: ",e.getCause());
@@ -648,8 +655,12 @@ public class Service implements IService {
 		
 	}
 	public List<Alquiler> BusquedaAlquilerEntreFechas(Date fechaInicio, Date fechaFin){
-	try{
-		return gestor.BusquedaAlquilerEntreFechas(fechaInicio,fechaFin);
+	try{//fecha actual
+		Calendar auxFechaFin = new GregorianCalendar();
+		auxFechaFin.setTime(fechaFin);
+		
+		auxFechaFin.set(Calendar.DAY_OF_MONTH,auxFechaFin.get(Calendar.DAY_OF_MONTH)+1 );
+		return gestor.BusquedaAlquilerEntreFechas(fechaInicio,auxFechaFin.getTime());
 	}catch(BussinessException e) {
 		Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
 		throw new RuntimeException("Se produjo el siguiente error: ",e.getCause());
@@ -706,6 +717,15 @@ public class Service implements IService {
 			return gestor.FiltrarDeudores();//obtengo los morosos
 		}
 		catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e.getCause());
+			throw new RuntimeException("ERROR: "+ e.getBussinessMessages());
+		}
+	}
+	
+	public void EliminarAlquiler(int nroAlqui){
+		try{
+		gestor.EliminarAlquiler(nroAlqui);
+		}catch (BussinessException e) {
 			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e.getCause());
 			throw new RuntimeException("ERROR: "+ e.getBussinessMessages());
 		}

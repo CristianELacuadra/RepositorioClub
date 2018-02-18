@@ -116,7 +116,6 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 	public JLabel lblNewLabel_1;
 	public JDateChooser dateHasta;
 	public JLabel lblNewLabel_2;
-	public JLabel lblNewLabel_3;
 	public ButtonGroup bg;
 	public JRadioButton radioB4;
 	public JRadioButton radioB2;
@@ -124,6 +123,10 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 	public JButton bNuevoAlq;
 	public JButton bLimpiar;
 	public JButton btnBuscarFec;
+	public JRadioButton radioFecAc;
+	public JRadioButton radioFecRes;
+	public ButtonGroup fechasGrup;
+	
 	//botones de tabla
 	public JButton btnDet;
 	public JButton btnMod;
@@ -192,22 +195,12 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		panelAlquileres.setBackground(Color.LIGHT_GRAY);
 		contentPane.add(panelAlquileres, "p1"); 
 		
-		// CardLayout de p1 == panel alquileres  // p2==panel inmuebles 
-		//agregados dentro de contentPanel
-		
-		btnIrInmueble = new JButton("Ir a Inmuebles");
-		btnIrInmueble.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnIrInmueble.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnIrInmueble.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/gohome_action_ir_102351.png")));
-		
 		
 		panelOpcionesAlquileres = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panelOpcionesAlquileres.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		panelOpcionesAlquileres.setBackground(Color.LIGHT_GRAY);
+		panelOpcionesAlquileres.setBackground(new Color(245, 245, 245));
 		
 		panelBusquedaFiltro = new JPanel();
-		panelBusquedaFiltro.setBackground(Color.LIGHT_GRAY);
+		panelBusquedaFiltro.setBackground(new Color(255, 255, 255));
 		panelBusquedaFiltro.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(),
 				"BUSQUEDA Y FILTROS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
 	javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12)));
@@ -221,23 +214,15 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 					.addContainerGap()
 					.addGroup(gl_panelAlquileres.createParallelGroup(Alignment.TRAILING)
 						.addComponent(panelBusquedaFiltro, GroupLayout.PREFERRED_SIZE, 884, Short.MAX_VALUE)
-						.addGroup(gl_panelAlquileres.createSequentialGroup()
-							.addComponent(panelOpcionesAlquileres, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 518, Short.MAX_VALUE)
-							.addComponent(btnIrInmueble))
-						.addComponent(panelTablaAlq, GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE))
+						.addComponent(panelTablaAlq, GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE)
+						.addComponent(panelOpcionesAlquileres, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_panelAlquileres.setVerticalGroup(
 			gl_panelAlquileres.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelAlquileres.createSequentialGroup()
-					.addGroup(gl_panelAlquileres.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelAlquileres.createSequentialGroup()
-							.addGap(21)
-							.addComponent(btnIrInmueble))
-						.addGroup(gl_panelAlquileres.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(panelOpcionesAlquileres, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap()
+					.addComponent(panelOpcionesAlquileres, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panelBusquedaFiltro, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -247,6 +232,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		panelTablaAlq.setLayout(new BorderLayout(0, 0));
 		
 		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelTablaAlq.add(scrollPane_1, BorderLayout.CENTER);
 		
 		tableAlq = new JTable();
@@ -256,9 +242,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		tableAlq.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		tableAlq.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null, null, null, null, null, null},
-			},
+			new Object[][] {},
 			new String[] {
 				"Habilitado", "Pagado", "", "", "", "", "Nro de Alquiler", "Persona", "Inmueble", "Fecha de reserva", "Monto", "Fecha de Emisión"
 			}
@@ -335,36 +319,50 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		
 		
 		tFiltroAlquiler = new JTextField();
+		tFiltroAlquiler.setBackground(new Color(250, 250, 210));
+		tFiltroAlquiler.setBounds(531, 14, 303, 24);
 		tFiltroAlquiler.setToolTipText("Buscar por Nombre o Apellido del cliente");
 		tFiltroAlquiler.setColumns(10);
 		
 		labBusqued = new JLabel("BUSCAR EN EL LISTADO:");
+		labBusqued.setHorizontalAlignment(SwingConstants.RIGHT);
+		labBusqued.setBounds(358, 19, 155, 14);
 		
 		labelFecha = new JLabel("BUSCAR ENTRE LAS FECHAS");
+		labelFecha.setBounds(6, 19, 212, 14);
 		
 		dateDesde = new JDateChooser();
+		dateDesde.getCalendarButton().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		dateDesde.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+		dateDesde.setBounds(6, 43, 95, 20);
 		dateDesde.getCalendarButton().setToolTipText("DESDE");
 		dateDesde.setToolTipText("DESDE");
 		
 		lblNewLabel_1 = new JLabel("Y");
-		lblNewLabel_1.setVisible(false);
+		lblNewLabel_1.setBounds(111, 49, 14, 14);
 		
 		dateHasta = new JDateChooser();
+		dateHasta.setBackground(new Color(250, 250, 210));
+		dateHasta.getCalendarButton().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		dateHasta.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+		dateHasta.setBounds(132, 43, 87, 20);
 		dateHasta.setToolTipText("HASTA");
 		dateHasta.getCalendarButton().setToolTipText("HASTA");
 		
 		lblNewLabel_2 = new JLabel("");
-		
-		//
-		
-		
-		lblNewLabel_3 = new JLabel("TIPO DE BUSQUEDA:");
+		lblNewLabel_2.setBounds(313, 43, 0, 0);
 		
 		radioB4 = new JRadioButton("TODOS LOS ALQUILERES");
+		radioB4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		radioB4.setBounds(531, 45, 200, 23);
 		
 		radioB2 = new JRadioButton("SOLO ALQUILERES PAGADOS");
+		radioB2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		radioB2.setBounds(531, 97, 200, 23);
 		
 		radioB3 = new JRadioButton("SOLO ALQUILERES SE\u00D1ADOS");
+		radioB3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		radioB3.setBounds(531, 71, 200, 23);
 		
 		bg =new ButtonGroup();
 		bg.add(radioB4);
@@ -372,94 +370,74 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		bg.add(radioB3);
 		radioB4.setSelected(true);
 		
+		fechasGrup= new ButtonGroup();
+		radioFecAc= new JRadioButton("Fecha de Emisión");
+		radioFecAc.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		radioFecRes=new JRadioButton("Fecha de Reserva");
+		radioFecRes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+		radioFecAc.setBounds(6, 96, 134, 23);
+		radioFecRes.setBounds(155, 96, 138, 23);
+		
+		fechasGrup.add(radioFecAc);
+		fechasGrup.add(radioFecRes);
+		radioFecAc.setSelected(true);
+		
 		btnBuscarFec = new JButton("");
+		btnBuscarFec.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnBuscarFec.setBounds(229, 19, 83, 59);
 		btnBuscarFec.setToolTipText("BUSCAR POR FECHAS");
 		btnBuscarFec.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/buscaF1.png")));
-		
-		
-		
-		GroupLayout gl_panelBusquedaFiltro = new GroupLayout(panelBusquedaFiltro);
-		gl_panelBusquedaFiltro.setHorizontalGroup(
-			gl_panelBusquedaFiltro.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelBusquedaFiltro.createSequentialGroup()
-					.addGroup(gl_panelBusquedaFiltro.createParallelGroup(Alignment.LEADING)
-						.addComponent(labBusqued)
-						.addGroup(gl_panelBusquedaFiltro.createSequentialGroup()
-							.addComponent(tFiltroAlquiler, GroupLayout.PREFERRED_SIZE, 303, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblNewLabel_2))
-						.addGroup(gl_panelBusquedaFiltro.createSequentialGroup()
-							.addGroup(gl_panelBusquedaFiltro.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panelBusquedaFiltro.createSequentialGroup()
-									.addComponent(dateDesde, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 6, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
-									.addComponent(dateHasta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-								.addComponent(labelFecha))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnBuscarFec)))
-					.addGap(53)
-					.addGroup(gl_panelBusquedaFiltro.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelBusquedaFiltro.createSequentialGroup()
-							.addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-							.addGap(264))
-						.addGroup(gl_panelBusquedaFiltro.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(radioB4)
-							.addGap(18)
-							.addGroup(gl_panelBusquedaFiltro.createParallelGroup(Alignment.LEADING)
-								.addComponent(radioB3)
-								.addComponent(radioB2))
-							.addGap(165))))
-		);
-		gl_panelBusquedaFiltro.setVerticalGroup(
-			gl_panelBusquedaFiltro.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelBusquedaFiltro.createSequentialGroup()
-					.addGap(4)
-					.addGroup(gl_panelBusquedaFiltro.createParallelGroup(Alignment.BASELINE)
-						.addComponent(labBusqued)
-						.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panelBusquedaFiltro.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelBusquedaFiltro.createSequentialGroup()
-							.addGroup(gl_panelBusquedaFiltro.createParallelGroup(Alignment.BASELINE)
-								.addComponent(tFiltroAlquiler, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNewLabel_2))
-							.addGroup(gl_panelBusquedaFiltro.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panelBusquedaFiltro.createSequentialGroup()
-									.addGap(18)
-									.addComponent(labelFecha)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(gl_panelBusquedaFiltro.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblNewLabel_1)
-										.addComponent(dateHasta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(dateDesde, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(gl_panelBusquedaFiltro.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnBuscarFec))))
-						.addGroup(gl_panelBusquedaFiltro.createSequentialGroup()
-							.addGroup(gl_panelBusquedaFiltro.createParallelGroup(Alignment.BASELINE)
-								.addComponent(radioB2)
-								.addComponent(radioB4))
-							.addGap(18)
-							.addComponent(radioB3)))
-					.addContainerGap(58, Short.MAX_VALUE))
-		);
-		panelBusquedaFiltro.setLayout(gl_panelBusquedaFiltro);
+		panelBusquedaFiltro.setLayout(null);
+		panelBusquedaFiltro.add(labBusqued);
+		panelBusquedaFiltro.add(tFiltroAlquiler);
+		panelBusquedaFiltro.add(lblNewLabel_2);
+		panelBusquedaFiltro.add(dateDesde);
+		panelBusquedaFiltro.add(lblNewLabel_1);
+		panelBusquedaFiltro.add(dateHasta);
+		panelBusquedaFiltro.add(labelFecha);
+		panelBusquedaFiltro.add(btnBuscarFec);
+		panelBusquedaFiltro.add(radioB4);
+		panelBusquedaFiltro.add(radioB2);
+		panelBusquedaFiltro.add(radioB3);
+		panelBusquedaFiltro.add(radioFecAc);
+		panelBusquedaFiltro.add(radioFecRes);
 		panelAlquileres.setLayout(gl_panelAlquileres);
 		
 		panelOpcionesAlquileres.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(),
-				"OPCIONES DE ALQUILERES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+				"OPCIONES: ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
 	javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12)));//para agregar titulo en el recuadro de un panel
+		panelOpcionesAlquileres.setLayout(null);
+		
+		// CardLayout de p1 == panel alquileres  // p2==panel inmuebles 
+		//agregados dentro de contentPanel
+		
+		btnIrInmueble = new JButton("Ir a Inmuebles");
+		btnIrInmueble.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnIrInmueble.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnIrInmueble.setBounds(10, 22, 120, 77);
+		panelOpcionesAlquileres.add(btnIrInmueble);
+		btnIrInmueble.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnIrInmueble.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnIrInmueble.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/gohome_action_ir_102351.png")));
+		
+			
+		//acciones alquileres
+		btnIrInmueble.addActionListener(this);
 		
 		bNuevoAlq = new JButton("NUEVO ALQUILER");
+		bNuevoAlq.setFont(new Font("Tahoma", Font.BOLD, 11));
+		bNuevoAlq.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		bNuevoAlq.setBounds(147, 22, 141, 77);
 		bNuevoAlq.setHorizontalTextPosition(SwingConstants.CENTER);
 		bNuevoAlq.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoAlquiler1.png")));
 		bNuevoAlq.setVerticalTextPosition(SwingConstants.BOTTOM);
 		panelOpcionesAlquileres.add(bNuevoAlq);
 		
 		bLimpiar = new JButton("LIMPIAR CAMPOS");
+		bLimpiar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		bLimpiar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		bLimpiar.setBounds(305, 22, 142, 77);
 		bLimpiar.setVerticalTextPosition(SwingConstants.BOTTOM);
 		bLimpiar.setHorizontalTextPosition(SwingConstants.CENTER);
 		bLimpiar.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/limpiar22.png")));
@@ -488,7 +466,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		contentPane.add(panelInmuebles, "p2");
 		
 		panelFiltro = new JPanel();
-		panelFiltro.setBackground(Color.LIGHT_GRAY);
+		panelFiltro.setBackground(Color.WHITE);
 		panelFiltro.setLayout(null);
 		panelFiltro.setBorder(UIManager.getBorder("ComboBox.border"));
 	
@@ -502,21 +480,16 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		panelTablaInm.setLayout(new BorderLayout(0, 0));
 		
 		panelRegInm = new JPanel();
-		panelRegInm.setBackground(Color.LIGHT_GRAY);
+		panelRegInm.setBackground(Color.WHITE);
 		panelRegInm.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(),
 				"REGISTRO/ DETALLES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
 	javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12)));
-		
-		btnIrAlquileres = new JButton("Ir a Alquileres");
-		btnIrAlquileres.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnIrAlquileres.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnIrAlquileres.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoSalida32x32.png")));
 
 		
 		panelOpcionInm = new JPanel();
 		panelOpcionInm.setToolTipText("Panel de opciones disponibles ");
 		panelOpcionInm.setBorder(UIManager.getBorder("ComboBox.border"));
-		panelOpcionInm.setBackground(Color.LIGHT_GRAY);
+		panelOpcionInm.setBackground(Color.WHITE);
 		panelOpcionInm.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		panelOpcionInm.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(),
 				"OPCIONES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
@@ -524,68 +497,80 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		
 		
 		bRegistrarI = new JToggleButton("Registrar");
+		bRegistrarI.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		bRegistrarI.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/Newsupport.png")));
 		bRegistrarI.setVerticalTextPosition(SwingConstants.BOTTOM);
 		bRegistrarI.setHorizontalTextPosition(SwingConstants.CENTER);
 		panelOpcionInm.add(bRegistrarI);
 		
 		bActualizarI = new JToggleButton("Modificar");
+		bActualizarI.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		bActualizarI.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/actualizar.png")));
 		bActualizarI.setVerticalTextPosition(SwingConstants.BOTTOM);
 		bActualizarI.setHorizontalTextPosition(SwingConstants.CENTER);
 		panelOpcionInm.add(bActualizarI);
 		
-		bEliminarI = new JButton("Eliminar");
+		bEliminarI = new JButton("Deshabilitar");
+		bEliminarI.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		bEliminarI.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/borrarT1.png")));
 		bEliminarI.setVerticalTextPosition(SwingConstants.BOTTOM);
 		bEliminarI.setHorizontalTextPosition(SwingConstants.CENTER);
 		panelOpcionInm.add(bEliminarI);
 		
 		bRestaurarI = new JButton("Restaurar");
+		bRestaurarI.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		bRestaurarI.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/borrar1.png")));
 		bRestaurarI.setVerticalTextPosition(SwingConstants.BOTTOM);
 		bRestaurarI.setHorizontalTextPosition(SwingConstants.CENTER);
 		panelOpcionInm.add(bRestaurarI);
 		
+		btnIrAlquileres = new JButton("Ir a Alquileres");
+		btnIrAlquileres.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnIrAlquileres.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnIrAlquileres.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnIrAlquileres.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoSalida32x32.png")));
+		
+		btnIrAlquileres.addActionListener(this);
+		
 		GroupLayout gl_panelInmuebles = new GroupLayout(panelInmuebles);
 		gl_panelInmuebles.setHorizontalGroup(
 			gl_panelInmuebles.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelInmuebles.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panelInmuebles.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panelTablaInm, GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE)
+					.addGroup(gl_panelInmuebles.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panelInmuebles.createSequentialGroup()
-							.addGap(2)
+							.addContainerGap()
+							.addGroup(gl_panelInmuebles.createParallelGroup(Alignment.TRAILING)
+								.addComponent(panelTablaInm, GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE)
+								.addGroup(gl_panelInmuebles.createSequentialGroup()
+									.addComponent(panelOpcionInm, GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(panelFiltro, GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+									.addGap(4))))
+						.addGroup(gl_panelInmuebles.createSequentialGroup()
+							.addGap(8)
+							.addComponent(btnIrAlquileres)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(panelRegInm, GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnIrAlquileres, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panelInmuebles.createSequentialGroup()
-							.addComponent(panelOpcionInm, GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panelFiltro, GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)))
+							.addGap(0)))
 					.addContainerGap())
 		);
 		gl_panelInmuebles.setVerticalGroup(
 			gl_panelInmuebles.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelInmuebles.createSequentialGroup()
-					.addGroup(gl_panelInmuebles.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panelInmuebles.createSequentialGroup()
-							.addGap(19)
-							.addComponent(btnIrAlquileres))
-						.addGroup(gl_panelInmuebles.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(panelRegInm, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)))
-					.addGap(0)
-					.addGroup(gl_panelInmuebles.createParallelGroup(Alignment.BASELINE, false)
-						.addComponent(panelOpcionInm, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panelInmuebles.createSequentialGroup()
-							.addGap(5)
-							.addComponent(panelFiltro, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(panelTablaInm, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap()
+					.addGroup(gl_panelInmuebles.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelRegInm, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnIrAlquileres, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panelInmuebles.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(panelFiltro, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panelOpcionInm, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panelTablaInm, GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
 		);
 		
 		scrollPane = new JScrollPane();
+		scrollPane.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelTablaInm.add(scrollPane, BorderLayout.CENTER);
 		
 		tableInm = new JTable();
@@ -637,11 +622,13 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		lNombreI.setToolTipText("");
 		
 		texInmNombre = new JCTextField();
+		texInmNombre.setBackground(new Color(250, 250, 210));
+		texInmNombre.setDisabledTextColor(Color.RED);
+		texInmNombre.setFont(new Font("Tahoma", Font.BOLD, 12));
 		texInmNombre.setBounds(new Rectangle(0, 0, 180, 32));
 		texInmNombre.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent tec) {
-		//TODO
 				//		tec.setKeyChar(miCoordinador.teclaMayus(tec));
 				char aux= tec.getKeyChar();
 				if(Character.isLowerCase(aux)){
@@ -666,48 +653,46 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		});
 		texInmNombre.setToolTipText("ej: cancha de futbol");
 		texInmNombre.setColumns(10);
-		texInmNombre.setBackground(new Color(70, 130, 180));
 //		texInmNombre.
 		
 		lDireccionI = new JLabel("DIRECCIÓN");
 		
 		texInmDireccion = new JCTextField();
+		texInmDireccion.setBackground(new Color(250, 250, 210));
+		texInmDireccion.setDisabledTextColor(Color.RED);
+		texInmDireccion.setFont(new Font("Tahoma", Font.BOLD, 12));
 		texInmDireccion.setToolTipText("Dirección del inmueble");
 		texInmDireccion.setColumns(10);
-		texInmDireccion.setBackground(new Color(70, 130, 180));
 		
 		lPrecioHoraI = new JLabel("PRECIO POR HORA");
 		
 		lSeI = new JLabel("SE\u00D1A");
 		
 		texInmPrecioHora = new JCTextField();
+		texInmPrecioHora.setBackground(new Color(250, 250, 210));
+		texInmPrecioHora.setDisabledTextColor(Color.RED);
+		texInmPrecioHora.setFont(new Font("Tahoma", Font.BOLD, 12));
 		texInmPrecioHora.setToolTipText("Precio por hora que que cuesta \n alquilar este inmueble");
 		texInmPrecioHora.setColumns(10);
-		texInmPrecioHora.setBackground(new Color(70, 130, 180));
 		
 		
 		texInmSe = new JCTextField();
+		texInmSe.setBackground(new Color(250, 250, 210));
+		texInmSe.setDisabledTextColor(Color.RED);
+		texInmSe.setFont(new Font("Tahoma", Font.BOLD, 12));
 		texInmSe.setToolTipText("en caso de no tener seña \n dejar vacio ");
 		texInmSe.setColumns(10);
-		texInmSe.setBackground(new Color(70, 130, 180));
 		
 		lDescripcionI = new JLabel("DESCRIPCION");
 		
-		/*
-				scrollPane = new JScrollPane();
-		scrollPane.setBounds(182, 568, 271, 113);
-		getContentPane().add(scrollPane);
-		
-		txtObservaciones = new JTextArea();
-		txtObservaciones.setLineWrap(true);
-		scrollPane.setViewportView(txtObservaciones);
 
-		*/
 		
 		texInmDireccionNum = new JTextField();
+		texInmDireccionNum.setBackground(new Color(250, 250, 210));
+		texInmDireccionNum.setDisabledTextColor(Color.RED);
+		texInmDireccionNum.setFont(new Font("Tahoma", Font.BOLD, 12));
 		texInmDireccionNum.setColumns(2);
 		texInmDireccionNum.setToolTipText("Numero de la direccion");
-		texInmDireccionNum.setBackground(new Color(70, 130, 180));
 		
 		JLabel lblNewLabel_4 = new JLabel("NUMERO");
 		
@@ -720,49 +705,55 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 					.addGroup(gl_panelRegInm.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panelRegInm.createSequentialGroup()
 							.addGroup(gl_panelRegInm.createParallelGroup(Alignment.LEADING)
-								.addComponent(lDireccionI, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-								.addComponent(texInmDireccion, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
+								.addComponent(texInmDireccion, GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+								.addComponent(lDireccionI, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panelRegInm.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panelRegInm.createSequentialGroup()
+									.addComponent(texInmDireccionNum, GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+									.addGap(6))
+								.addGroup(gl_panelRegInm.createSequentialGroup()
+									.addComponent(lblNewLabel_4, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED))))
+						.addGroup(gl_panelRegInm.createSequentialGroup()
+							.addComponent(texInmNombre, GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED))
+						.addGroup(gl_panelRegInm.createSequentialGroup()
+							.addComponent(lNombreI, GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addGroup(gl_panelRegInm.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panelRegInm.createSequentialGroup()
 							.addGroup(gl_panelRegInm.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_panelRegInm.createSequentialGroup()
-									.addComponent(lblNewLabel_4)
-									.addPreferredGap(ComponentPlacement.RELATED, 26, Short.MAX_VALUE))
-								.addGroup(gl_panelRegInm.createSequentialGroup()
-									.addComponent(texInmDireccionNum, GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
-									.addGap(6))))
+								.addComponent(texInmPrecioHora, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+								.addComponent(texInmSe, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+								.addComponent(lSeI, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+							.addGap(18))
 						.addGroup(gl_panelRegInm.createSequentialGroup()
-							.addComponent(lNombreI, GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-							.addGap(124))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lPrecioHoraI, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addGroup(gl_panelRegInm.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panelRegInm.createSequentialGroup()
-							.addComponent(texInmNombre, GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-							.addGap(18)))
-					.addGap(0)
-					.addGroup(gl_panelRegInm.createParallelGroup(Alignment.LEADING)
-						.addComponent(lPrecioHoraI)
-						.addGroup(gl_panelRegInm.createParallelGroup(Alignment.TRAILING)
-							.addComponent(lSeI, Alignment.LEADING)
-							.addComponent(texInmPrecioHora, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-							.addComponent(texInmSe, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-					.addGap(18)
-					.addGroup(gl_panelRegInm.createParallelGroup(Alignment.LEADING)
-						.addComponent(lDescripcionI)
-						.addComponent(scrollPane_2, GroupLayout.PREFERRED_SIZE, 291, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+							.addComponent(lDescripcionI, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+							.addGap(207))
+						.addGroup(gl_panelRegInm.createSequentialGroup()
+							.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+							.addContainerGap())))
 		);
 		gl_panelRegInm.setVerticalGroup(
 			gl_panelRegInm.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelRegInm.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panelRegInm.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lNombreI)
 						.addComponent(lPrecioHoraI)
-						.addComponent(lDescripcionI))
+						.addComponent(lDescripcionI)
+						.addComponent(lNombreI))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panelRegInm.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panelRegInm.createSequentialGroup()
-							.addGroup(gl_panelRegInm.createParallelGroup(Alignment.BASELINE, false)
-								.addComponent(texInmNombre, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-								.addComponent(texInmPrecioHora, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+							.addGroup(gl_panelRegInm.createParallelGroup(Alignment.BASELINE)
+								.addComponent(texInmPrecioHora, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(texInmNombre, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
 							.addGroup(gl_panelRegInm.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lDireccionI)
@@ -774,16 +765,28 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 								.addComponent(texInmSe, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 								.addComponent(texInmDireccionNum, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(scrollPane_2, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		
+//		scrollPane = new JScrollPane();
+//		scrollPane.setBounds(10, 271, 325, 172);
+//		panelReserva.add(scrollPane);
+//		
+//		txtObservaciones = new JTextArea();
+//		txtObservaciones.setEnabled(false);
+//		txtObservaciones.setLineWrap(true);
+//		scrollPane.setViewportView(txtObservaciones);
+								
 		
 		texInmDescrip = new  JTextArea();
-		scrollPane_2.setViewportView(texInmDescrip);
+		texInmDescrip.setBackground(new Color(250, 250, 210));
+		texInmDescrip.setDisabledTextColor(Color.RED);
+		texInmDescrip.setFont(new Font("Tahoma", Font.BOLD, 12));
 		texInmDescrip.setLineWrap(true);
-		texInmDescrip.setBackground(new Color(70, 130, 180));
 		texInmDescrip.setAutoscrolls(true);
-		texInmSe.setNextFocusableComponent(texInmDescrip);
+		scrollPane_2.setViewportView(texInmDescrip);
+	
+		
 		panelRegInm.setLayout(gl_panelRegInm);
 		new app.bolivia.swing.JCTextField();
 		
@@ -793,7 +796,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		tFiltroBusI.setFont(new Font("Arial", tFiltroBusI.getFont().getStyle() & ~Font.ITALIC | Font.BOLD, tFiltroBusI.getFont().getSize()));
 		tFiltroBusI.setPhColor(Color.BLACK);
 		tFiltroBusI.setPlaceholder("BUSCAR");
-		tFiltroBusI.setBackground(new Color(70, 130, 180));
+		tFiltroBusI.setBackground(new Color(250, 250, 210));
 		//tFiltroBusI.setText();
 		tFiltroBusI.setToolTipText("Filtra la Tabla por Nombre");
 		tFiltroBusI.setBorder(UIManager.getBorder("Button.border"));
@@ -801,16 +804,18 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		panelFiltro.add(tFiltroBusI);
 		tFiltroBusI.setColumns(10);
 		
-		checkB = new JCheckBox("incluir Inmuebles Inactivos");
-		checkB.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		checkB = new JCheckBox("Incluir Inmuebles Inactivos");
+		checkB.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		checkB.setFont(new Font("Tahoma", Font.BOLD, 12));
 
-		checkB.setBounds(10, 70, 174, 23);
+		checkB.setBounds(10, 70, 238, 23);
 		
 		panelFiltro.add(checkB);
 		
 		
 	
 		bLimpiarCamposI = new JButton("Limpiar Campos");
+		bLimpiarCamposI.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		bLimpiarCamposI.setHorizontalTextPosition(SwingConstants.CENTER);
 		bLimpiarCamposI.setVerticalTextPosition(SwingConstants.BOTTOM);
 		bLimpiarCamposI.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/limpiar1.png")));
@@ -826,6 +831,19 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		texInmDireccion.setNextFocusableComponent(texInmDireccionNum);
 		texInmDireccionNum.setNextFocusableComponent(texInmPrecioHora);
 		texInmPrecioHora.setNextFocusableComponent(texInmSe);
+		texInmSe.setNextFocusableComponent(texInmDescrip);
+		
+		texInmPrecioHora.addKeyListener(this);
+		texInmSe.addKeyListener(this);
+		texInmDescrip.addKeyListener(this);
+		
+//        jTextField1.setEnabled(true); 
+//        jTextField1.setBackground(Color.WHITE);
+//        jTextField1.setForeground(Color.GREEN);
+//        jTextField1.setDisabledTextColor(Color.RED);
+//        jTextField1.setBorder(new LineBorder(Color.GRAY));
+
+
 		
 		// acciones b inmueble
 		bRegistrarI.addActionListener(this);
@@ -833,13 +851,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		bEliminarI.addActionListener(this);
 		bRestaurarI.addActionListener(this);
 		bLimpiarCamposI.addActionListener(this);
-		
-		btnIrAlquileres.addActionListener(this);
 		tFiltroBusI.addKeyListener(this);
-		
-			
-		//acciones alquileres
-		btnIrInmueble.addActionListener(this);
 		checkB.addActionListener(this);
 		bLimpiar.addActionListener(this);
 		bNuevoAlq.addActionListener(this);
@@ -849,7 +861,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		tFiltroAlquiler.addKeyListener(this);
 		btnBuscarFec.addActionListener(this);
 		
-		
+		//TODO .addKeyListener(this);
 		
 	//	bRegistrarI.disable();
 		bActualizarI.setEnabled(false);
@@ -857,9 +869,6 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		bRestaurarI.setEnabled(true);
 	//	bLimpiarCamposI.disable();
 		auxNum=null;
-		
-		
-		java.util.List<Alquiler> listaAlquiler3= new ArrayList<Alquiler>();
 		
 		
 		tableInm.addMouseListener(
@@ -880,7 +889,8 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
     				
     			}
     		}catch(Exception ex){
-    			JOptionPane.showMessageDialog(null, "Error: Al seleccionar una fila \nInténtelo nuevamente", " .::Error En la Operacion::." ,JOptionPane.ERROR_MESSAGE);
+    			miCoordinador.mensajes("Error: Al seleccionar una fila \nInténtelo nuevamente", 0);
+//    			JOptionPane.showMessageDialog(null, "Error: Al seleccionar una fila \nInténtelo nuevamente", " .::Error En la Operacion::." ,JOptionPane.ERROR_MESSAGE);
     		}
     	}   	
     	}
@@ -916,6 +926,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		texInmPrecioHora.setText(Float.toString(aux.getPreciohora()));
 		texInmSe.setText(Float.toString(aux.getSenial()));
 		texInmDescrip.setText(aux.getDescripcion());
+		
 
 		}
 		
@@ -933,7 +944,10 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 			LimpiarTablaAlquileres();
 			miCoordinador.ListarAlquileres(tableAlq,miCoordinador.listaAlquileresTodos());
 			radioB4.setSelected(true);
-			
+			radioFecAc.setSelected(true);
+			dateDesde.setDate(null);
+			dateHasta.setDate(null);
+			tFiltroAlquiler.setText("");
 			
 		}catch(Exception ex){
 			miCoordinador.mensajes("Error al recargar la pagina", 0);
@@ -970,6 +984,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				bActualizarI.setText("Modificar");
 				botCanhab=false;
 				bRegistrarI.setEnabled(true);
+				
 			}catch(Exception ex){
 				miCoordinador.mensajes("Error al recargar la pagina", 0);
 		}
@@ -1098,8 +1113,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				}
 		if(e.getSource()==bLimpiarCamposI){
 			try{ 
-				this.recargarPanelInmueble();
-				
+				recargarPanelInmueble();
 			}catch(Exception ex){
 				miCoordinador.mensajes("Ocurrio un error con el Boton", 0);
 				//JOptionPane.showMessageDialog(null, 0,
@@ -1142,11 +1156,8 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				
 		
 		if(e.getSource()==bLimpiar){
-			try{LimpiarTablaAlquileres();
-			miCoordinador.ListarAlquileres(tableAlq, miCoordinador.listaAlquileresTodos());
-			dateDesde.setDate(null);
-			dateHasta.setDate(null);
-				
+			try{
+				this.RecargarPanelAlquiler();	
 			}catch(Exception ex){
 				JOptionPane.showMessageDialog(null, 0,
 						"Ocurrio un error con el Boton", JOptionPane.ERROR_MESSAGE);
@@ -1176,8 +1187,10 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		}
 		if(e.getSource()==radioB4){
 			try{
-				LimpiarTablaAlquileres();
-			miCoordinador.ListarAlquileres(tableAlq,miCoordinador.listaAlquileresTodos() );
+				TableRowSorter<TableModel> Ordena = new TableRowSorter<TableModel>(tableAlq.getModel());
+			tableAlq.setRowSorter(Ordena);
+//				LimpiarTablaAlquileres();
+//			miCoordinador.ListarAlquileres(tableAlq,miCoordinador.listaAlquileresTodos() );
 			
 				
 			}catch(Exception ex){
@@ -1186,8 +1199,14 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		}
 		
 		if(e.getSource()==radioB3){
-			try{ LimpiarTablaAlquileres();
-			miCoordinador.ListarAlquileres(tableAlq,miCoordinador.listaAlquileresSeñados());
+			try{ 
+				TableRowSorter<TableModel> Ordena = new TableRowSorter<TableModel>(tableAlq.getModel());
+			tableAlq.setRowSorter(Ordena);
+			byte a=0;
+			Ordena.setRowFilter(RowFilter.regexFilter( Byte.toString(a),1));
+			
+//				LimpiarTablaAlquileres();
+//			miCoordinador.ListarAlquileres(tableAlq,miCoordinador.listaAlquileresSeñados());
 				
 			}catch(Exception ex){
 				miCoordinador.mensajes("Ocurrio un error con el Boton", 0);
@@ -1195,8 +1214,13 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		}
 		
 		if(e.getSource()==radioB2){
-			try{ LimpiarTablaAlquileres();
-			miCoordinador.ListarAlquileres(tableAlq,miCoordinador.listaAlquileresPagados());
+			try{ 
+				TableRowSorter<TableModel> Ordena = new TableRowSorter<TableModel>(tableAlq.getModel());
+			tableAlq.setRowSorter(Ordena);
+			byte a=1;
+			Ordena.setRowFilter(RowFilter.regexFilter( Byte.toString(a),1));
+//				LimpiarTablaAlquileres();
+//			miCoordinador.ListarAlquileres(tableAlq,miCoordinador.listaAlquileresPagados());
 				
 			}catch(Exception ex){
 				miCoordinador.mensajes("Ocurrio un error con el Boton", 0);
@@ -1205,12 +1229,12 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		
 		if(e.getSource()==btnBuscarFec){
 			try{ 
-				
-				
-				
-			if((dateDesde.getDate()!=null)&&(dateHasta.getDate()!=null)){
+			if((dateDesde.getDate()!=null)&&(dateHasta.getDate()!=null)&&(dateDesde.getDate().before(dateHasta.getDate()))){
 				LimpiarTablaAlquileres();
-				miCoordinador.ListarAlquileres(tableAlq,miCoordinador.BusquedaAlquilerXFechaActual(dateDesde.getDate(),dateHasta.getDate()) );
+				if(radioFecAc.isSelected())
+					miCoordinador.ListarAlquileres(tableAlq,miCoordinador.BusquedaAlquilerXFechaActual(dateDesde.getDate(),dateHasta.getDate()) );
+				else if(radioFecRes.isSelected())
+					miCoordinador.ListarAlquileres(tableAlq, miCoordinador.BusquedaAlquilerXFechaReserva(dateDesde.getDate(),dateHasta.getDate()));
 
 			}else miCoordinador.mensajes("Tienes que elegir las dos fechas", 0);
 				
@@ -1251,7 +1275,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
              
 		             if (boton.getName().equals("btnEli")){
 		            	
-		            	 byte a=1;//TODO funcion anda comparacion
+		            	 byte a=1;
 		            	 if(tableAlq.getValueAt(fila, 0).equals(a)){
 			            	if(0==miCoordinador.mensajeOpciones("Sistema Club Avenida Ejercito", "¿Desea Eliminar Alquiler?", 3)){
 			            		miCoordinador.eliminarAlquiler(nroAlqui);
@@ -1279,8 +1303,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				}
 		}	
 	 }		
-					//	 if (JOptionPane.showConfirmDialog(this, "¿Desea inhabilitar la persona", "Sistema Club Avenida Ejercito", JOptionPane.YES_NO_OPTION, 0,
-					//			new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/seguro.png"))) == JOptionPane.YES_OPTION) 
+
 					
 
 						
@@ -1324,9 +1347,9 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 	}
 
 	
-	/***evento teclado***/
+	//TODO evento teclado
 	@Override
-	public void keyPressed(KeyEvent arg0) {
+	public void keyPressed(KeyEvent e) {
 		
 		
 	}
@@ -1360,8 +1383,68 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		
 	}
 
+	
 	@Override
-	public void keyTyped(KeyEvent arg0) {
+	public void keyTyped(KeyEvent e) {
+		if(e.getSource()==texInmDescrip){
+			try{
+				{if (texInmDescrip.getText().length()>= 300)
+				     e.consume();
+				}
+			
+		
+			}catch(Exception ex){
+				miCoordinador.mensajes("Ocurrio un error", 0);
+				}
+		}
+		
+		if(e.getSource()==texInmPrecioHora){
+			try{
+				char tecla=e.getKeyChar();
+				if((Character.isDigit(tecla))||(tecla=='\b')||(tecla=='.')){//'\n'
+					if(texInmPrecioHora.getText().indexOf(".")!=-1){
+						int	aux1=texInmPrecioHora.getText().indexOf(".");
+						int aux2=texInmPrecioHora.getText().length();
+						if(((aux2-1)-aux1)>1)
+							e.consume();
+					}else{
+						getToolkit().beep(); 
+						e.consume(); 
+						JOptionPane.showMessageDialog(null,"El campo solo admite valores numericos","ERROR",JOptionPane.ERROR_MESSAGE);
+					}
+					
+					}
+				
+				
+			}catch(Exception ex){
+				miCoordinador.mensajes("Ocurrio un error", 0);
+				}
+		}
+	
+		if(e.getSource()==texInmSe){
+			try{
+				char tecla=e.getKeyChar();
+				if((Character.isDigit(tecla))||(tecla=='\b')||(tecla=='.')){
+					if(texInmSe.getText().indexOf(".")!=-1){
+						int	aux1=texInmSe.getText().indexOf(".");
+						int aux2=texInmSe.getText().length();
+						if(((aux2-1)-aux1)>1)
+							e.consume();
+					}else{
+						getToolkit().beep(); 
+						e.consume(); 
+						JOptionPane.showMessageDialog(null,"El campo solo admite valores numericos","ERROR",JOptionPane.ERROR_MESSAGE);
+					}
+					
+					}
+			}catch(Exception ex){
+				miCoordinador.mensajes("Ocurrio un error", 0);
+				}
+			
+			
+		}
+	
+	
 	
 	}
 	
