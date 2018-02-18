@@ -61,6 +61,7 @@ public class PantallaControlMorosos extends JFrame implements KeyListener{
 	private JTextField txtDni;
 	
 	public PantallaControlMorosos() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaControlMorosos.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoPaloma.png")));
 		initComponents();
 		
 		addWindowListener(new WindowAdapter() {

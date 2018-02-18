@@ -33,7 +33,7 @@ public class PantallaDetallesInhabilitarSNS extends JDialog implements ActionLis
 	private void initComponents() {
 		textDetalle= new JTextPane();
 		textDetalle.setFont(new Font("Calibri Light", Font.ITALIC, 17));
-		textDetalle.setBackground(new Color(0, 153, 255));
+		textDetalle.setBackground(new Color(250, 250, 210));
 		
 		//setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Cristian Lacuadra\\Documents\\Git\\RepositorioClub\\ProyectoClub-Master\\src\\ar\\com\\ProyectoClub\\AVista\\icon\\logo.png"));
 		setBounds(100, 100, 549, 428);
@@ -51,7 +51,7 @@ public class PantallaDetallesInhabilitarSNS extends JDialog implements ActionLis
 		textPanelDetalleSocio= new JTextPane();
 		textPanelDetalleSocio.setFont(new Font("Calibri Light", Font.ITALIC, 17));
 		textPanelDetalleSocio.setEditable(false);
-		textPanelDetalleSocio.setBackground(new Color(0, 153, 255));
+		textPanelDetalleSocio.setBackground(new Color(250, 250, 210));
 		textPanelDetalleSocio.setBounds(264, 30, 254, 359);
 		contentPanel.add(textPanelDetalleSocio);
 		

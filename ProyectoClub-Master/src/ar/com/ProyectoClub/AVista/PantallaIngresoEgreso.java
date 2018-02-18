@@ -16,6 +16,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.Toolkit;
@@ -133,17 +135,19 @@ public class PantallaIngresoEgreso extends JDialog implements ActionListener {
 		comboTipo = new JComboBox();
 		comboTipo.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				if ( e.getStateChange() == ItemEvent.DESELECTED )
-				{
-					for ( Map.Entry<Integer, String> entry : mapConceptos.entrySet() ){ //recorre las categorias
-						String string=comboTipo.getSelectedItem().toString(); //obtengo el string cargado en el item
-						String[] parte=string.split("-"); //separo en identificador y nombre
-						if(parte[0].equals(entry.getValue())){ //Compara nombres
-							 UltimoIdConceptos=entry.getKey();
-						}
+				if(comboTipo == null){
+					if ( e.getStateChange() == ItemEvent.DESELECTED )
+					{
+						for ( Map.Entry<Integer, String> entry : mapConceptos.entrySet() ){ //recorre las categorias
+							String string=comboTipo.getSelectedItem().toString(); //obtengo el string cargado en el item
+							String[] parte=string.split("-"); //separo en identificador y nombre
+							if(parte[0].equals(entry.getValue())){ //Compara nombres
+								UltimoIdConceptos=entry.getKey();
+							}
 
+						}
 					}
-				} 
+				}
 
 			}
 		});
@@ -217,8 +221,7 @@ public class PantallaIngresoEgreso extends JDialog implements ActionListener {
 		txtDescrip.setText(null);
 		TxtMonto.setText(null);
 		txtMontoDec.setText(null);
-		dateRegistracion.setDate(null);
-		comboTipo.setSelectedItem("Seleccione el tipo de ingreso");
+		dateRegistracion.setDate(null);		
 	}
 
 	@Override

@@ -116,10 +116,10 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		grupoSexo=new ButtonGroup();
 		grupoEssocio=new ButtonGroup();
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(255, 255, 255));
+		contentPane.setBackground(new Color(220, 220, 220));
 		panelTitulo= new JPanel();
 		panelTitulo.setBounds(15, 15, 796, 31);
-		panelTitulo.setBackground(new Color(0, 191, 255));
+		panelTitulo.setBackground(new Color(250, 250, 210));
 		lblTitulo = new JLabel();
 		//setBounds(100, 100,1129, 978);
 		//contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -140,6 +140,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		lblMatri.setText("MATRICULA");
 		txtMatri = new JTextField();
+		txtMatri.setBackground(new Color(250, 250, 210));
 		txtMatri.setEnabled(false);
 		txtMatri.setBounds(98, 24, 103, 20);
 		PanelDatosSocio.add(txtMatri);
@@ -150,6 +151,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		lblFechingreso.setText("FECHA INGRESO");
 		dateFechIngreso = new JDateChooser();
+		dateFechIngreso.setBackground(new Color(250, 250, 210));
 		dateFechIngreso.setEnabled(false);
 		dateFechIngreso.setBounds(128, 86, 138, 20);
 		PanelDatosSocio.add(dateFechIngreso);
@@ -160,6 +162,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		lblCate.setText("CATEGORIA");
 		comboCate= new JComboBox();
+		comboCate.setBackground(new Color(250, 250, 210));
 		comboCate.setEnabled(false);
 		comboCate.setBounds(234, 55, 211, 20);
 		
@@ -172,6 +175,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		lblDni.setText("DNI");
 		txtDni = new JTextField();
+		txtDni.setBackground(new Color(250, 250, 210));
 		txtDni.setBounds(83, 22, 251, 20);
 		panelDatosObli.add(txtDni);
 		//
@@ -182,10 +186,12 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		lblApe.setText("APELLIDO");
 		txtApe = new JTextField();
+		txtApe.setBackground(new Color(250, 250, 210));
 		txtApe.setEnabled(false);
 		txtApe.setBounds(83, 53, 251, 20);
 		panelDatosObli.add(txtApe);
 		txtNom = new JTextField();
+		txtNom.setBackground(new Color(250, 250, 210));
 		txtNom.setEnabled(false);
 		txtNom.setBounds(83, 81, 251, 20);
 		panelDatosObli.add(txtNom);
@@ -202,6 +208,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		lblFechNac.setText("FECHA NACIMIENTO");
 		dateFechNac = new JDateChooser();
+		dateFechNac.setBackground(new Color(250, 250, 210));
 		dateFechNac.setEnabled(false);
 		dateFechNac.setBounds(159, 191, 117, 20);
 		panelDatosObli.add(dateFechNac);
@@ -212,15 +219,29 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		lblDom.setText("DOMICILIO");
 		txtDom = new JTextField();
+		txtDom.setBackground(new Color(250, 250, 210));
 		txtDom.setEnabled(false);
 		txtDom.setBounds(83, 150, 251, 20);
 		panelDatosObli.add(txtDom);
 		
 		txtDomNro = new JTextField();
+		txtDomNro.setBackground(new Color(250, 250, 210));
 		txtDomNro.setEnabled(false);
 		txtDomNro.setBounds(388, 150, 51, 20);
 		panelDatosObli.add(txtDomNro);
 		txtTel = new JTextField();
+		txtTel.setBackground(new Color(250, 250, 210));
+		txtTel.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char numero=e.getKeyChar(); 
+				if(Character.isLetter(numero)) { 
+					getToolkit().beep(); 
+					e.consume(); 
+					JOptionPane.showMessageDialog(null,"El campo solo admite valores numericos","ERROR",JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		txtTel.setEnabled(false);
 		txtTel.setBounds(83, 112, 251, 20);
 		panelDatosObli.add(txtTel);
@@ -287,6 +308,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		lblNaciona.setText("NACIONALIDAD");
 		txtNacion = new JTextField();
+		txtNacion.setBackground(new Color(250, 250, 210));
 		txtNacion.setEnabled(false);
 		txtNacion.setBounds(133, 283, 251, 20);
 		panelDatosObli.add(txtNacion);
@@ -347,7 +369,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		btnLimpiar = new JButton();
 		btnLimpiar.setBounds(534, 10, 89, 91);
 		PanelDatosSocio.add(btnLimpiar);
-		btnLimpiar.setIcon(new ImageIcon(PantallaFormularioPersona.class.getResource("/ar/com/ProyectoClub/AVista/icon/goma-de-borrar.png")));
+		btnLimpiar.setIcon(new ImageIcon(PantallaFormularioPersona.class.getResource("/ar/com/ProyectoClub/AVista/icon/limpiar2.png")));
 		btnLimpiar.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnLimpiar.setText("Limpiar");
 		btnLimpiar.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -369,6 +391,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		btnRegistrar.setBorder(null);
 		
 		txtCateg = new JTextField();
+		txtCateg.setBackground(new Color(250, 250, 210));
 		txtCateg.setEditable(false);
 		txtCateg.setBounds(98, 55, 126, 20);
 		PanelDatosSocio.add(txtCateg);
@@ -398,6 +421,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		panelDatosObli.add(lblNro);
 		
 		txtEstdoCiv = new JTextField();
+		txtEstdoCiv.setBackground(new Color(250, 250, 210));
 		txtEstdoCiv.setEnabled(false);
 		txtEstdoCiv.setBounds(99, 316, 117, 20);
 		panelDatosObli.add(txtEstdoCiv);
@@ -557,7 +581,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		txtDni.addKeyListener(this);
 		dateFechNac.addKeyListener(this);
 		txtDom.addKeyListener(this);
-		txtTel.addKeyListener(this);
+		//txtTel.addKeyListener(this);
 		btnValidar.addActionListener(this);
 		//comboCate.removeAllItems();
 	}

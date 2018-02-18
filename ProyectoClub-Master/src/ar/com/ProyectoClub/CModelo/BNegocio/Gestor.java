@@ -366,7 +366,7 @@ public class Gestor {
 	 */
 	public List<Personas> FiltrarPersonasNombeApellido(String nom, String ape) throws BussinessException {
 		List<Personas> listafiltrada= repositorio.FiltrarPersonasPorNombreApellido(nom, ape);
-		if(!listafiltrada.isEmpty())
+		if(listafiltrada != null)
 			return listafiltrada;
 		return null;
 	}
