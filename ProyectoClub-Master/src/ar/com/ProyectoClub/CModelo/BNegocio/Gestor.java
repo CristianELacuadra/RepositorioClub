@@ -872,25 +872,7 @@ public class Gestor {
 		return repositorio.ObtenerInmuebles();
 	}
 
-//	public List<Inmuebles> ListarInmuebleHabilitado() {
-//		try {
-//			java.util.List<Inmuebles> listaH =new ArrayList<Inmuebles>();
-//			java.util.List<Inmuebles> lista =new ArrayList<Inmuebles>();
-//			lista=repositorio.ObtenerInmuebles();
-//			int num=lista.size();
-//			for(int i=0;i<num;i++){
-//				if((lista.get(i).isHabilitado())==true){
-//					listaH.add(lista.get(i));
-//				}
-//				
-//			}
-//			return listaH;
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			throw new RuntimeException("No se pudo instanciar el servicio debido a un error: ");
-//		}
-//	}
-//gestion alquiler
+
 	public Alquiler CrearAlquiler() throws BussinessException {
 		return repositorio.CrearAlquiler();
 	}
@@ -927,7 +909,6 @@ public class Gestor {
 	
 
 	public List<Alquiler> listarAlquileres() throws BussinessException {
-		// TODO Auto-generated method stub
 		List<Alquiler> lista= repositorio.ObtenerAlquileres();
 		if(!lista.isEmpty())
 			return lista;
@@ -1208,6 +1189,17 @@ public class Gestor {
 				iter.remove();			
 		}
 		return listaCuota;
+	}
+
+	public void EliminarAlquiler(int nroAlqui) throws BussinessException {
+		
+		Alquiler auxAlquiler=repositorio.BuscarAlquiler(nroAlqui);
+		byte a=0;
+		auxAlquiler.setActivo(a);
+		Calendar cal= new GregorianCalendar(0, 0, 0, 0, 0, 0);
+		auxAlquiler.setFechareserva(cal.getTime());
+		repositorio.GuardarAlquiler(auxAlquiler);
+		
 	}
 }
 

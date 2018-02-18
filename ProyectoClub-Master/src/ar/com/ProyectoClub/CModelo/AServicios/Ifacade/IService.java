@@ -57,6 +57,7 @@ public interface IService {
 	List<Alquiler> ListaAlquilerPormes(Integer anio, Integer mes);
 	List<Alquiler> ListarAlquilerPorDia(int anio, int mes, int dia);
 	List<Alquiler> ListarAlquilerPorDia(Date dia);
+	void EliminarAlquiler(int nroAlqui);
 	
 	//cuotas
 	List<Cuota> ObtenerCuotasPorid(List<Integer> id);
@@ -72,6 +73,7 @@ public interface IService {
 	List<Personas> ObtenerPersonaNomApe(String nom, String ape);
 	List<Morosos> FiltrarMorosos();
 	List<Morosos> FiltrarDeudores();
+	
 
 
 }
