@@ -1494,6 +1494,7 @@ public class ControllerCoordinador {
 		tableAlq.setRowHeight(25);
 		ocultarColumnaAlquiler(0,tableAlq);
 		ocultarColumnaAlquiler(1,tableAlq);
+		ocultarColumnaAlquiler(6, tableAlq);
 //		tableAlq.getTableHeader().getColumnModel().getColumn(numCol).setMaxWidth(0);
 //		tableAlq.getTableHeader().getColumnModel().getColumn(numCol).setMinWidth(0);
 //		tableAlq.getColumnModel().getColumn(numCol).setMaxWidth(0);
