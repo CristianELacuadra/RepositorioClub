@@ -86,7 +86,7 @@ public class PantallaDetallesAlquiler extends JDialog {
 		{
 			texDetalle= new JTextPane();
 			texDetalle.setFont(new Font("Calibri Light", Font.ITALIC, 17));
-			texDetalle.setBackground(new Color(0, 153, 255));
+			texDetalle.setBackground(new Color(250, 250, 210));
 			panelDetalle.add(texDetalle,BorderLayout.CENTER);
 		}
 		

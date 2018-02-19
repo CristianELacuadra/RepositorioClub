@@ -38,6 +38,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JRadioButton;
 import javax.swing.border.LineBorder;
+import javax.swing.JLabel;
 
 public class PantallaPrincipalPersonas extends JFrame implements ActionListener {
 
@@ -94,7 +95,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		jPanel4 = new javax.swing.JPanel();
 		buscar = new app.bolivia.swing.JCTextField();
 		buscar.setToolTipText("Ingrese Nombre o Apellido segun el filtro que haya seleccionado");
-		buscar.setBounds(10, 39, 368, 32);
+		buscar.setBounds(80, 39, 281, 32);
 		btnControlMorosos= new JButton();
 		
 		resaltado = new RowsRenderer(0);
@@ -247,9 +248,9 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 				javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12)));
 		jPanel4.setLayout(null);
 
-		buscar.setBackground(new Color(250, 250, 210));
+		buscar.setBackground(Color.BLACK);
         buscar.setBorder(new LineBorder(new Color(0, 0, 0)));
-        buscar.setForeground(new Color(250, 250, 210));
+        buscar.setForeground(Color.BLACK);
         buscar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         buscar.setOpaque(false);
         buscar.setPhColor(new Color(0, 0, 0));
@@ -303,6 +304,11 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		chckNom.setBounds(19, 53, 109, 23);
 		GrupoSNS.add(chckNom);
 		panelSNS.add(chckNom);
+		
+		JLabel lblNewLabel = new JLabel("BUSCAR");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel.setBounds(10, 38, 67, 32);
+		jPanel4.add(lblNewLabel);
 		jPanel1.setLayout(jPanel1Layout);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

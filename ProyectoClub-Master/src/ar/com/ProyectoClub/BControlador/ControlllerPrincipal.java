@@ -62,7 +62,7 @@ public class ControlllerPrincipal {
 			miVentanaCaja=new PantallaCaja();
 			miVentanaPrincipalPersonas= new PantallaPrincipalPersonas();
 			miVentanaDetalllesSNS=new PantallaDetallesInhabilitarSNS(miVentanaBusquedaSNSCobr, true);
-			miVentanaConfCategoria = new PantallaConfiguracionCategoria(miVentanaConfiguracion,true);
+			miVentanaConfCategoria = new PantallaConfiguracionCategoria(miVentanaPrincipalPersonas,true);
 			miVentanaControlMoroso =  new PantallaControlMorosos();
 			miVentanaHistCuotas = new PantallaHistCuota(miVentanaCobranzaCuota,true);
 			
