@@ -648,7 +648,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 					
 				}else{	getToolkit().beep(); 
 					e.consume(); 
-					JOptionPane.showMessageDialog(null,"El campo solo admite valores numericos","ERROR",JOptionPane.ERROR_MESSAGE);
+					miCoordinador.mensajes("El campo solo admite valores numericos", 0);
 				}
 			}
 		});
@@ -668,7 +668,8 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 					}else{
 						getToolkit().beep(); 
 						e.consume(); 
-						JOptionPane.showMessageDialog(null,"El campo solo admite valores numericos","ERROR",JOptionPane.ERROR_MESSAGE);
+						miCoordinador.mensajes("El campo solo admite valores numericos", 0);
+//						JOptionPane.showMessageDialog(null,"El campo solo admite valores numericos","ERROR",JOptionPane.ERROR_MESSAGE);
 					}
 				} catch (HeadlessException e1) {
 					JOptionPane.showMessageDialog(null,"Ocurrio un error en el teclado","ERROR",JOptionPane.ERROR_MESSAGE);

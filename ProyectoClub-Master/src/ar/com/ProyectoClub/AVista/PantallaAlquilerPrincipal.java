@@ -544,8 +544,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 								.addGroup(gl_panelInmuebles.createSequentialGroup()
 									.addComponent(panelOpcionInm, GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(panelFiltro, GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-									.addGap(4))))
+									.addComponent(panelFiltro, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(gl_panelInmuebles.createSequentialGroup()
 							.addGap(8)
 							.addComponent(btnIrAlquileres)
@@ -562,11 +561,11 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 						.addComponent(panelRegInm, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnIrAlquileres, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panelInmuebles.createParallelGroup(Alignment.TRAILING, false)
+					.addGroup(gl_panelInmuebles.createParallelGroup(Alignment.TRAILING)
 						.addComponent(panelFiltro, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(panelOpcionInm, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
+						.addComponent(panelOpcionInm, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelTablaInm, GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
+					.addComponent(panelTablaInm, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))
 		);
 		
 		scrollPane = new JScrollPane();
@@ -1399,7 +1398,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 					getToolkit().beep(); 
 					e.consume(); 
 					miCoordinador.mensajes("El campo solo admite valores numericos", 0);
-//					JOptionPane.showMessageDialog(null,"El campo solo admite valores numericos","ERROR",JOptionPane.ERROR_MESSAGE);
+
 					}
 					
 					
@@ -1415,9 +1414,9 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				char tecla=e.getKeyChar();
 				if((Character.isDigit(tecla))||(tecla=='\b')||(tecla=='.')){ //'\n'
 					
-					if(texInmPrecioHora.getText().indexOf(".")!=-1){
-						int	aux1=texInmPrecioHora.getText().indexOf(".");
-						int aux2=texInmPrecioHora.getText().length();
+					if(texInmSe.getText().indexOf(".")!=-1){
+						int	aux1=texInmSe.getText().indexOf(".");
+						int aux2=texInmSe.getText().length();
 							if(((aux2-1)-aux1)>1)
 								e.consume();
 					}
