@@ -1035,8 +1035,12 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				}
 				
 			}catch(Exception ex){
-				JOptionPane.showMessageDialog(null, 0,
-						"Ocurrio un error", JOptionPane.ERROR_MESSAGE);
+//				limpiarCampos();
+				recargarPanelInmueble();
+				miCoordinador.mensajes("Valores incorrectos revise los datos a cargar", 0);
+				
+//				JOptionPane.showMessageDialog(null, 0,
+//						"Ocurrio un error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		
@@ -1074,7 +1078,9 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 					}
 				}
 			}catch(Exception ex){
-				miCoordinador.mensajes("Ocurrio un error con el Boton", 0);
+				recargarPanelInmueble();
+				miCoordinador.mensajes("Valores incorrectos revise los datos a cargar", 0);
+//				miCoordinador.mensajes("Ocurrio un error con el Boton", 0);
 				}
 		}
 		if(e.getSource()==bEliminarI){
