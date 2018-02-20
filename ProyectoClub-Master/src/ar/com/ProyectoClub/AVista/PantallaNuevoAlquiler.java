@@ -147,6 +147,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 	public FechasCalendar Colorear;
 	public boolean paraPagar;
 	public Integer nroAlquiModificar;
+	public float montoAnterior;
 	
 	public PantallaNuevoAlquiler(PantallaAlquilerPrincipal vtnPantallaAlquiler,boolean b) {
 		super(vtnPantallaAlquiler,b);
@@ -579,8 +580,18 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 				// Ponemos el valor del JSpinner en el JTextField
 				Integer.parseInt(txtHoraR.getValue().toString());
 				txtCantidadHoras.setModel(new SpinnerNumberModel(1, 1,(30-Integer.parseInt(txtHoraR.getValue().toString())),1));	
-//				txtHoraR.setValue(6);
 				txtCantidadHoras.setValue(1);
+				//
+				if((pers.getDni()!=null)
+						&&(inm.getIdInmubles()!=null)
+						//&&((oldAlqui==null)/*||(oldAlqui.getCantidadhoras()!=(Integer) txtCantidadHoras.getValue())*///)
+						){
+					ResuPrecioTotal.setText(Float.toString(CalcularPrecioTotal(pers, inm,(Integer) txtCantidadHoras.getValue())));
+					if(txtMontoApagar.getText().isEmpty())
+						txtMontoFaltante.setText(Float.toString(calcularMontoFaltante(Float.parseFloat(ResuPrecioTotal.getText()), 0)));
+					else 
+						txtMontoFaltante.setText(Float.toString(calcularMontoFaltante(Float.parseFloat(ResuPrecioTotal.getText()),Float.parseFloat(txtMontoApagar.getText()))));
+				}
 		//los alquileres empiezan desde las 6 hasta las 23
 				//todos los alquileres tienen como maximo hasta las 6 del otro dia
 				//esta funcion determina el numero maximo de horas para alquilar, 
@@ -589,10 +600,6 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		});
 		txtCantidadHoras.addChangeListener(new ChangeListener() {
 			public void stateChanged (ChangeEvent e){
-				/*compara los valores que no esten en nulo, 
-				y en caso de funcion modificar, no calcula el
-				 jtexfield ResuTrecioTotal a 
-				menos que cambie la cantidad de horas*/
 				if((pers.getDni()!=null)
 						&&(inm.getIdInmubles()!=null)
 						//&&((oldAlqui==null)/*||(oldAlqui.getCantidadhoras()!=(Integer) txtCantidadHoras.getValue())*///)
@@ -675,6 +682,8 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 
 	public float calcularMontoFaltante(float montoRestante,float montoApagar){
 		try {// MontoRestante sirve para monto total o  monto faltante de oldalquiler
+			if(montoApagar<montoAnterior)
+				montoApagar=montoAnterior;
 			float montoFaltante=0;
 			if(montoRestante>0){
 				montoFaltante=montoRestante-montoApagar;
@@ -683,7 +692,8 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 				montoFaltante=0;
 				montoApagar=montoRestante-montoFaltante;
 				txtMontoApagar.setText(Float.toString(montoApagar));
-			}
+			}else
+				txtMontoApagar.setText(Float.toString(montoApagar));
 			
 			
 			
@@ -791,6 +801,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		txtMontoApagar.setEditable(true);
 		txtMontoFaltante.setText(null);
 		chcAlquilerPagado.setSelected(false);
+		ResuPrecioTotal.setText(null);
 		num=null;
 		txtObservaciones.setText(null);
 		Calendar hoy= new GregorianCalendar();
@@ -805,6 +816,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 		oldAlqui=null;
 		Colorear.nullNombreInmuble();
 		nroAlquiModificar=null;
+		montoAnterior=0;
 		/*Calendar calendario = new GregorianCalendar(2014,5,10);
 		calendar.setDate(calendario.getTime());*/
 		//		calen.setDate(null);
@@ -818,14 +830,16 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 	
 	public Alquiler cargarDatos(Personas per, Inmuebles inm){
 		try {
+			Alquiler auxAlqui;
 			if(oldAlqui!=null){
-				
-			}
+				auxAlqui=oldAlqui;
+			}else
+				auxAlqui = miCoordinador.CrearAlquiler();
+
 			if((per.getDni()==null)||(inm.getIdInmubles()==null)){
 				limpiar();
 				return null;//si algo falla en la carga de inmueble o persona
 			}
-
 			
 			Calendar fechaRese= calen.getCalendar();
 			fechaRese.set(Calendar.MINUTE, 0);
@@ -846,7 +860,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 			byte activo = 1;
 			String observaciones = txtObservaciones.getText().toString();
 			if((chcAlquilerPagado.isSelected())||
-					((montofaltante==0)&&(preciototal== Float.parseFloat(txtMontoApagar.getText())))){
+					((montofaltante==0)||(preciototal== Float.parseFloat(txtMontoApagar.getText())))){
 				auxFechaPago=new GregorianCalendar();
 				auxFechaPago.set(Calendar.SECOND, 0);
 				pagoalquiler = 1;
@@ -854,17 +868,20 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 				auxFechaPago=new GregorianCalendar(0, 0, 0, 0, 0, 0);
 				pagoalquiler = 0;
 			}
-			Alquiler auxAlqui = miCoordinador.CrearAlquiler();//new Alquiler();
-			if((oldAlqui!=null)&&(oldAlqui.getNroalquiler()!=null)){//es para update
-				auxAlqui.setNroalquiler(oldAlqui.getNroalquiler());
-				auxActual=oldAlqui.getFechaactual();
-			}
-			if((montofaltante==preciototal)&&(txtMontoApagar.getText().isEmpty())){//para evitar valor nulo de ingreso de plata.//4
+			
+//			if((oldAlqui!=null)&&(oldAlqui.getNroalquiler()!=null)){//es para update
+//				auxAlqui.setNroalquiler(oldAlqui.getNroalquiler());
+//				auxActual=oldAlqui.getFechaactual();
+//			}
+			if((montofaltante==preciototal)||(txtMontoApagar.getText().isEmpty())){//para evitar valor nulo de ingreso de plata.//4
 			return null;
 			}else {
+				if(oldAlqui==null){
 					auxAlqui.setPersonas(per);
 					auxAlqui.setInmuebles(inm);
-					auxAlqui.setFechaactual(auxActual);//auxCalendar.getTime();
+					auxAlqui.setFechaactual(auxActual);
+				}
+					//auxCalendar.getTime();
 					auxAlqui.setFechareserva(fechaRese.getTime());
 					auxAlqui.setFechapagoalquiler(auxFechaPago.getTime());
 					auxAlqui.setMontofaltante(montofaltante);
@@ -922,6 +939,7 @@ public float CalcularPrecioTotal( Personas per,Inmuebles in, Integer cantHoras )
 		{
 			LabelSocioDes.setVisible(true);
 			tot=tot*(1-((auxPersona.getSocios().getCategoria().getDescuento())/100));
+			txtSen.setText(Float.toString(in.getSenial()*(1-((auxPersona.getSocios().getCategoria().getDescuento())/100))));
 		}
 
 		return tot;
@@ -1061,16 +1079,22 @@ public boolean personaHabilitadaParaAlquiler(Personas per)
 			if(e.getSource()==btnAceptar)
 			{
 				if(horarioValido()){
-					if(0==miCoordinador.mensajeOpciones("¿Pregunta?", "Desea Guardar el alquiler", 3)){//cambiar de lugar
-						Alquiler aux = cargarDatos( pers,inm);
-						if(aux!=null){
-							miCoordinador.GuardarAlquiler(aux);
-							miCoordinador.mensajes("SE GUARDO CORRECTAMENTE", 3);
-							this.limpiar();
-	//					this.dispose();
+					Alquiler aux = cargarDatos( pers,inm);
+					if(aux!=null){
 					
-						}else miCoordinador.mensajes("Error Faltan valores", 0);
-					}
+					if(0==miCoordinador.mensajeOpciones("¿Pregunta?", "Desea Guardar el alquiler", 3)){//cambiar de lugar
+//							if(oldAlqui==null)
+								miCoordinador.GuardarAlquiler(aux);
+//							else
+//								miCoordinador.GuardarAlquiler(aux,oldAlqui);
+							
+							miCoordinador.mensajes("SE GUARDO CORRECTAMENTE", 3);
+					//		this.limpiar();
+							miCoordinador.recargarPanelAlquiler();
+							this.dispose();
+						}
+					}else miCoordinador.mensajes("Error Faltan valores", 0);
+					
 				}else{
 				miCoordinador.mensajes("Las Fecha y/u Horas de reserva no son validas", 0);
 				}
@@ -1137,6 +1161,8 @@ public boolean personaHabilitadaParaAlquiler(Personas per)
 			nroAlquiModificar=nroAlqui;
 			oldAlqui=miCoordinador.buscarAlquiler(nroAlquiModificar);
 //			setVisible(true);
+			pers=oldAlqui.getPersonas();
+			inm=oldAlqui.getInmuebles();
 			if(personaHabilitadaParaAlquiler(oldAlqui.getPersonas()) )
 			{
 				txtApe.setText(oldAlqui.getPersonas().getApellido());
@@ -1166,12 +1192,12 @@ public boolean personaHabilitadaParaAlquiler(Personas per)
 					
 				
 					txtMontoApagar.setText(Float.toString(oldAlqui.getPreciototal()-oldAlqui.getMontofaltante()));
+					montoAnterior=(oldAlqui.getPreciototal()-oldAlqui.getMontofaltante());
 					txtMontoFaltante.setText(Float.toString(oldAlqui.getMontofaltante()));
 					txtObservaciones.setText(oldAlqui.getObservaciones());
 					habilitarCamporReserva(true,false);
 					chcAlquilerPagado.setEnabled(false);
 					setVisible(true);
-					
 					
 				}else{
 					miCoordinador.mensajes("El inmueble de este alquiler esta deshabilitado", 1);
@@ -1195,6 +1221,7 @@ public boolean personaHabilitadaParaAlquiler(Personas per)
 //			w
 		}catch(Exception e){
 			miCoordinador.mensajes("Ocurrio un error: "+ e.getMessage(), 0);
+			limpiar();
 		}
 		
 	

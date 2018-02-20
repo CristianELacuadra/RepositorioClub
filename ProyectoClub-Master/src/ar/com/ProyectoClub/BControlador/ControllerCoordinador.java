@@ -27,6 +27,7 @@ import javax.swing.table.TableRowSorter;
 
 
 
+
 import ar.com.ProyectoClub.AVista.*;
 import ar.com.ProyectoClub.AVista.ClasesRender.Render;
 import ar.com.ProyectoClub.AVista.ClasesRender.RowsRende;
@@ -1400,9 +1401,15 @@ public class ControllerCoordinador {
 						alqui.getPersonas().getApellido()+" "+ alqui.getPersonas().getNombre());
 		modeloService.GuardarAlquiler(alqui);
 			
-				
-			
-}
+	}
+	
+	
+//	public void GuardarAlquiler(Alquiler aux, Alquiler oldAlqui) {
+//		modeloService.GuardarAlquiler(alqui);
+//		
+//		
+//	}
+	
 	
 //TODO REVISAR SI COMPRUEBA BIEN LOS DATOS VALOR BYTE
 	/**
@@ -2029,6 +2036,8 @@ try {
 //			e.printStackTrace();
 		}
 	}
+
+	
 	
 
 
