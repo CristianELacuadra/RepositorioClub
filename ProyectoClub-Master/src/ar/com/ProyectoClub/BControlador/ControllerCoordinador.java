@@ -341,6 +341,7 @@ public class ControllerCoordinador {
 		miVentanaDetallesSNS.textDetalle.setText(textoPersona);
 		if(persona.getSocios() != null && !persona.getSocios().isBaja()){
 			textoSocio = "Matricula: "+persona.getSocios().getMatricula()+'\n'+""
+					+"Categoria: "+persona.getSocios().getCategoria().getNombre()+'\n'+""
 					+"Estado: "+persona.getSocios().getEstado()+'\n'+""	
 					+"Fecha de Ingreso: "+(new SimpleDateFormat("dd-MM-yyyy").format(persona.getSocios().getFechaingreso()))+'\n'+"";
 			miVentanaDetallesSNS.textPanelDetalleSocio.setText(textoSocio);
@@ -800,7 +801,6 @@ public class ControllerCoordinador {
 		modeloT.addColumn("DESCUENTO");
 		modeloT.addColumn("DESCRIPCION");
 		categorias=modeloService.DevolverListaCategoria();
-
 		int numRegistros=categorias.size();
 		for (int i = 0; i < numRegistros; i++) {
 			columna[0] = categorias.get(i).isHabilitado();

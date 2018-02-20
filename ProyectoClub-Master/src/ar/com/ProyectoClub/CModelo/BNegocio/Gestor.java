@@ -675,10 +675,7 @@ public class Gestor {
 	}
 	
 	public List<Categoria> ObtenerCategorias() throws BussinessException {
-		List<Categoria> listaCategoria=repositorio.ObtenerCategorias();
-		if(!listaCategoria.isEmpty())
-			return listaCategoria;
-		return null;
+		return repositorio.ObtenerCategorias();
 	}
 	
 	public void InhabilitarCategoria(Categoria categoria) throws BussinessException {
