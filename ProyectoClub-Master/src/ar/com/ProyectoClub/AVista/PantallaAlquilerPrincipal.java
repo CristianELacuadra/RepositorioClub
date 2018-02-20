@@ -578,8 +578,8 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		//da estilo a las filas y a la cabecera
 		tableInm.getTableHeader()
 				.setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
-		tableInm.setDefaultRenderer(Object.class,
-				new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());// garilla intercalada
+//		tableInm.setDefaultRenderer(Object.class,
+//				new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());// garilla intercalada
 
 		tableInm.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		tableInm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -593,16 +593,15 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 			new String[] {
 				"NUMERO DEL INMUEBLE", "NOMBRE", "PRECIO/HORA", "SE\u00D1A", "HABILITADO"
 			}
-		){
+		) {
 			Class[] columnTypes = new Class[] {
-					Object.class, Object.class, Float.class, Float.class, Object.class
-				};
-			public boolean isCellEditable(int row, int column){
-				return false;
+				Object.class, Object.class, Integer.class, Integer.class, Object.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
 			}
 		}
 		);
-		
 		tableInm.getColumnModel().getColumn(0).setPreferredWidth(80);
 		tableInm.getColumnModel().getColumn(0).setMinWidth(80);
 		tableInm.getColumnModel().getColumn(1).setPreferredWidth(81);
@@ -768,14 +767,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		
-//		scrollPane = new JScrollPane();
-//		scrollPane.setBounds(10, 271, 325, 172);
-//		panelReserva.add(scrollPane);
-//		
-//		txtObservaciones = new JTextArea();
-//		txtObservaciones.setEnabled(false);
-//		txtObservaciones.setLineWrap(true);
-//		scrollPane.setViewportView(txtObservaciones);
+
 								
 		
 		texInmDescrip = new  JTextArea();
@@ -797,7 +789,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		tFiltroBusI.setPhColor(Color.BLACK);
 		tFiltroBusI.setPlaceholder("BUSCAR");
 		tFiltroBusI.setBackground(new Color(250, 250, 210));
-		//tFiltroBusI.setText();
+
 		tFiltroBusI.setToolTipText("Filtra la Tabla por Nombre");
 		tFiltroBusI.setBorder(UIManager.getBorder("Button.border"));
 		tFiltroBusI.setBounds(10, 23, 238, 40);
@@ -836,12 +828,8 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		texInmPrecioHora.addKeyListener(this);
 		texInmSe.addKeyListener(this);
 		texInmDescrip.addKeyListener(this);
-		
-//        jTextField1.setEnabled(true); 
-//        jTextField1.setBackground(Color.WHITE);
-//        jTextField1.setForeground(Color.GREEN);
-//        jTextField1.setDisabledTextColor(Color.RED);
-//        jTextField1.setBorder(new LineBorder(Color.GRAY));
+		texInmDireccionNum.addKeyListener(this);
+
 
 
 		
@@ -861,23 +849,27 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		tFiltroAlquiler.addKeyListener(this);
 		btnBuscarFec.addActionListener(this);
 		
-		//TODO .addKeyListener(this);
 		
-	//	bRegistrarI.disable();
+		
+		
+	
 		bActualizarI.setEnabled(false);
 		bEliminarI.setEnabled(false);
 		bRestaurarI.setEnabled(true);
-	//	bLimpiarCamposI.disable();
+
 		auxNum=null;
 		
 		
 		tableInm.addMouseListener(
 				new MouseAdapter(){
     		//para selecionar una fila
-    		public void mouseClicked(MouseEvent e){ 
-    		Integer _fila;
-    		auxNum=null;
-    		try{
+    		public void mouseClicked(MouseEvent e){
+    			if(!botCanhab){
+    			Integer _fila;
+    		
+    			auxNum=null;
+    		
+    			try{
     			_fila=tableInm.getSelectedRow();
     			if(_fila!= -1){
     				DefaultTableModel modelotabla=(DefaultTableModel) tableInm.getModel();
@@ -887,11 +879,16 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
     				cargarDatosInmueble(inmuebleEnt);
     				miCoordinador.habilitarBotonesInm(inmuebleEnt.isHabilitado());
     				
+    			
     			}
-    		}catch(Exception ex){
+    		
+    			}catch(Exception ex){
     			miCoordinador.mensajes("Error: Al seleccionar una fila \nInténtelo nuevamente", 0);
 //    			JOptionPane.showMessageDialog(null, "Error: Al seleccionar una fila \nInténtelo nuevamente", " .::Error En la Operacion::." ,JOptionPane.ERROR_MESSAGE);
+    			}
+    			
     		}
+    			
     	}   	
     	}
 	);
@@ -984,6 +981,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				bActualizarI.setText("Modificar");
 				botCanhab=false;
 				bRegistrarI.setEnabled(true);
+				
 				
 			}catch(Exception ex){
 				miCoordinador.mensajes("Error al recargar la pagina", 0);
@@ -1085,8 +1083,6 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				if(botCanhab){//variable para determinar cuando esta activo el boton cancelar
 					//boton cancelar
 					miCoordinador.botonCancelarInm();
-//					LimpiarTablaInmuebles();
-//					cargarDatosListadoInmueble();
 					recargarPanelInmueble();
 				}else
 				//boton eliminar
@@ -1127,9 +1123,8 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 			try{
 			CardLayout c= (CardLayout)(contentPane.getLayout());
 			c.show(contentPane, "p1");
-			
+			this.RecargarPanelAlquiler();
 			//cambiar al panel alquileres-
-			//funcion de recargar pagina!!
 				
 			}catch(Exception ex){
 				miCoordinador.mensajes("Ocurrio un error con el Boton", 0);
@@ -1205,9 +1200,6 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 			byte a=0;
 			Ordena.setRowFilter(RowFilter.regexFilter( Byte.toString(a),1));
 			
-//				LimpiarTablaAlquileres();
-//			miCoordinador.ListarAlquileres(tableAlq,miCoordinador.listaAlquileresSeñados());
-				
 			}catch(Exception ex){
 				miCoordinador.mensajes("Ocurrio un error con el Boton", 0);
 				}
@@ -1219,8 +1211,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 			tableAlq.setRowSorter(Ordena);
 			byte a=1;
 			Ordena.setRowFilter(RowFilter.regexFilter( Byte.toString(a),1));
-//				LimpiarTablaAlquileres();
-//			miCoordinador.ListarAlquileres(tableAlq,miCoordinador.listaAlquileresPagados());
+
 				
 			}catch(Exception ex){
 				miCoordinador.mensajes("Ocurrio un error con el Boton", 0);
@@ -1231,6 +1222,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 			try{ 
 			if((dateDesde.getDate()!=null)&&(dateHasta.getDate()!=null)&&(dateDesde.getDate().before(dateHasta.getDate()))){
 				LimpiarTablaAlquileres();
+				radioB4.setSelected(true);
 				if(radioFecAc.isSelected())
 					miCoordinador.ListarAlquileres(tableAlq,miCoordinador.BusquedaAlquilerXFechaActual(dateDesde.getDate(),dateHasta.getDate()) );
 				else if(radioFecRes.isSelected())
@@ -1243,16 +1235,10 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				}
 			
 		}
-		
-		
-		
-		
-		
 	}
 	
 	
-	//TODO  genera  faltan fun botones
-	 private void AccionesTablaAlquiler(MouseEvent e) {
+		 private void AccionesTablaAlquiler(MouseEvent e) {
 		int columna = tableAlq.getColumnModel().getColumnIndexAtX(e.getX());
 		int fila = e.getY() / tableAlq.getRowHeight();
 		
@@ -1402,18 +1388,21 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 			try{
 				char tecla=e.getKeyChar();
 				if((Character.isDigit(tecla))||(tecla=='\b')||(tecla=='.')){//'\n'
+					
 					if(texInmPrecioHora.getText().indexOf(".")!=-1){
 						int	aux1=texInmPrecioHora.getText().indexOf(".");
 						int aux2=texInmPrecioHora.getText().length();
 						if(((aux2-1)-aux1)>1)
 							e.consume();
-					}else{
-						getToolkit().beep(); 
-						e.consume(); 
-						JOptionPane.showMessageDialog(null,"El campo solo admite valores numericos","ERROR",JOptionPane.ERROR_MESSAGE);
+						}
+				}else{
+					getToolkit().beep(); 
+					e.consume(); 
+					miCoordinador.mensajes("El campo solo admite valores numericos", 0);
+//					JOptionPane.showMessageDialog(null,"El campo solo admite valores numericos","ERROR",JOptionPane.ERROR_MESSAGE);
 					}
 					
-					}
+					
 				
 				
 			}catch(Exception ex){
@@ -1424,26 +1413,47 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		if(e.getSource()==texInmSe){
 			try{
 				char tecla=e.getKeyChar();
-				if((Character.isDigit(tecla))||(tecla=='\b')||(tecla=='.')){
-					if(texInmSe.getText().indexOf(".")!=-1){
-						int	aux1=texInmSe.getText().indexOf(".");
-						int aux2=texInmSe.getText().length();
-						if(((aux2-1)-aux1)>1)
-							e.consume();
-					}else{
-						getToolkit().beep(); 
-						e.consume(); 
-						JOptionPane.showMessageDialog(null,"El campo solo admite valores numericos","ERROR",JOptionPane.ERROR_MESSAGE);
+				if((Character.isDigit(tecla))||(tecla=='\b')||(tecla=='.')){ //'\n'
+					
+					if(texInmPrecioHora.getText().indexOf(".")!=-1){
+						int	aux1=texInmPrecioHora.getText().indexOf(".");
+						int aux2=texInmPrecioHora.getText().length();
+							if(((aux2-1)-aux1)>1)
+								e.consume();
 					}
 					
+				}else{
+					getToolkit().beep(); 
+					e.consume();
+					miCoordinador.mensajes("El campo solo admite valores numericos", 0);
+//					JOptionPane.showMessageDialog(null,"El campo solo admite valores numericos","ERROR",JOptionPane.ERROR_MESSAGE);
 					}
+		
 			}catch(Exception ex){
 				miCoordinador.mensajes("Ocurrio un error", 0);
 				}
 			
 			
 		}
-	
+		
+		if(e.getSource()==texInmDireccionNum){
+			try{
+				char tecla=e.getKeyChar();
+				if((Character.isDigit(tecla))||(tecla=='\b')){
+					//
+				}else{
+					getToolkit().beep(); 
+					e.consume(); 
+					miCoordinador.mensajes("El campo solo admite valores numericos", 0);
+				}
+				
+				
+				
+				
+			}catch(Exception ex){
+				miCoordinador.mensajes("Ocurrio un error", 0);
+				}
+		}
 	
 	
 	}

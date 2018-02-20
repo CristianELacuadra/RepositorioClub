@@ -42,12 +42,15 @@ public class RowsRende extends DefaultTableCellRenderer {// tabla grilla  inmueb
 	    	if((table.getValueAt(row,columnaElim).equals(aux2))&& btn.getName().equals("btnPag"))
 	    		btn.setEnabled(false);
 	    	
-	    	if((table.getValueAt(row,columnaElim).equals(aux1))&&(table.getValueAt(row, columnaPagada).equals(aux1))&& btn.getName().equals("btnEli"))
-	    		btn.setEnabled(false);
 	    	
 	    	if((table.getValueAt(row,columnaElim).equals(aux2))&& btn.getName().equals("btnEli"))
 	    		btn.setEnabled(false);
-////	completarrrr
+	    	
+
+	    	if((table.getValueAt(row,columnaElim).equals(aux2))&& btn.getName().equals("btnMod"))
+	    		btn.setEnabled(false);
+	    	
+	    	
 	    	return btn;
 	    }
 	    
