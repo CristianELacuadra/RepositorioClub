@@ -21,6 +21,8 @@ import java.awt.event.MouseEvent;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import javax.swing.border.LineBorder;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class PantallaConfiguracionCategoria extends JDialog implements ActionListener{
 	private ControllerCoordinador miCoordinador; //objeto miCoordinador que permite la relacion entre esta clase y la clase ControllerCoordinador
@@ -45,6 +47,8 @@ public class PantallaConfiguracionCategoria extends JDialog implements ActionLis
     private JTextField Descuento;
     private JLabel lblDescuento;
     private JLabel label;
+    private boolean CategoriaEditada=false;
+    private int idCatEdit;
     // End of variables declaration//GEN-END:variables
 
 	/**
@@ -241,6 +245,17 @@ public class PantallaConfiguracionCategoria extends JDialog implements ActionLis
         jPanel2.add(lblNombre);
         
         Monto = new JTextField();
+        Monto.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyTyped(KeyEvent e) {
+        		char numero=e.getKeyChar(); 
+				if(Character.isLetter(numero)) { 
+					getToolkit().beep(); 
+					e.consume(); 
+					JOptionPane.showMessageDialog(null,"El campo no permite caracteres","ERROR",JOptionPane.ERROR_MESSAGE);
+				}
+        	}
+        });
         Monto.setFont(new Font("Tahoma", Font.PLAIN, 13));
         Monto.setColumns(10);
         Monto.setBackground(new Color(250, 250, 210));
@@ -253,6 +268,17 @@ public class PantallaConfiguracionCategoria extends JDialog implements ActionLis
         jPanel2.add(lblDescripcion);
         
         Descuento = new JTextField();
+        Descuento.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyTyped(KeyEvent e) {
+        		char numero=e.getKeyChar(); 
+				if(Character.isLetter(numero)) { 
+					getToolkit().beep(); 
+					e.consume(); 
+					JOptionPane.showMessageDialog(null,"El campo no permite caracteres","ERROR",JOptionPane.ERROR_MESSAGE);
+				}
+        	}
+        });
         Descuento.setFont(new Font("Tahoma", Font.PLAIN, 13));
         Descuento.setColumns(10);
         Descuento.setBackground(new Color(250, 250, 210));
@@ -292,6 +318,7 @@ public class PantallaConfiguracionCategoria extends JDialog implements ActionLis
         Monto.setText("");
         descripcion.setText("");
         btnHabInhabi.setEnabled(false);
+        CategoriaEditada=false;
     }
     
     private boolean validarEntradasRegistro(){
@@ -311,6 +338,7 @@ public class PantallaConfiguracionCategoria extends JDialog implements ActionLis
     private void registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarActionPerformed
     	try{
     		if (this.validarEntradasRegistro()) {
+    			String Palabra;
     			Categoria categoria =  miCoordinador.CrearCategoria();
     			categoria.setNombre(nombre.getText());//nombre
     			String descrip= !descripcion.getText().isEmpty()? descripcion.getText(): " "; //si la descripcion es vacia agrego espacio vacio
@@ -318,10 +346,16 @@ public class PantallaConfiguracionCategoria extends JDialog implements ActionLis
     			categoria.setDescuento(Float.parseFloat(Descuento.getText()));
     			categoria.setMonto(Float.parseFloat(Monto.getText()));
     			categoria.setHabilitado(true);
-    			if (JOptionPane.showConfirmDialog(this, "¿Seguro que desea ingresar una nueva categoria?", "Categorias", JOptionPane.YES_NO_OPTION, 0,
+    			if(CategoriaEditada){
+    				Palabra="¿Seguro que desea modificar la categoria?";
+    				categoria.setIdCategoria(idCatEdit);
+    			}
+    			else
+    				Palabra="¿Seguro que desea ingresar una nueva categoria?";
+    			if (JOptionPane.showConfirmDialog(this, Palabra, "Categorias", JOptionPane.YES_NO_OPTION, 0,
     					new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/seguro.png"))) == JOptionPane.YES_OPTION) {
     				miCoordinador.GuardarCategoria(categoria);
-    				JOptionPane.showMessageDialog(null,"La categoria se registro con existo","Mensaje",JOptionPane.INFORMATION_MESSAGE);
+    				JOptionPane.showMessageDialog(null,"La categoria se registro con exito","Mensaje",JOptionPane.INFORMATION_MESSAGE);
     				miCoordinador.CargarGrillaCategoria(tablaCategoria);
     				this.limpiaCampos();
     			}
@@ -338,14 +372,19 @@ public class PantallaConfiguracionCategoria extends JDialog implements ActionLis
     private void AccionesTabla(MouseEvent e) {//GEN-FIRST:event_registrarActionPerformed
     	int columna = tablaCategoria.getColumnModel().getColumnIndexAtX(e.getX());
     	int fila = e.getY() / tablaCategoria.getRowHeight();//Guardo fila enn una variiable global
-    	if (fila < tablaCategoria.getRowCount() && fila >= 0){// && columna < tablaCategoria.getColumnCount() && columna >= 0) {
-    		Object value = tablaCategoria.getValueAt(fila, 2);
-    		if(value instanceof Integer){
+    	if (fila < tablaCategoria.getRowCount() && fila >= 0 && columna < tablaCategoria.getColumnCount() && columna >= 0){// && columna < tablaCategoria.getColumnCount() && columna >= 0) {
+    		Object valueButon = tablaCategoria.getValueAt(fila, columna);
     			btnHabInhabi.setEnabled(true);
     			id = (Integer) tablaCategoria.getValueAt(fila, 2);	    			
+    		if(valueButon instanceof JButton){
+    			Categoria categoria= miCoordinador.BuscarCategoria(id);
+    			nombre.setText(categoria.getNombre());
+    			descripcion.setText(categoria.getDescripcion());
+    			Monto.setText(Float.toString(categoria.getMonto()));
+    			Descuento.setText(Float.toString(categoria.getDescuento()));
+    			CategoriaEditada=true;
+    			idCatEdit=id;
     		}
-    		
-    		Object valueButon = tablaCategoria.getValueAt(fila, columna);
     		
     	}
     }

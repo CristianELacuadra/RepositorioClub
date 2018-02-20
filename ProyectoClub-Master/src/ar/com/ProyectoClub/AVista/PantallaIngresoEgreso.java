@@ -135,7 +135,7 @@ public class PantallaIngresoEgreso extends JDialog implements ActionListener {
 		comboTipo = new JComboBox();
 		comboTipo.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				if(comboTipo == null){
+				if(comboTipo != null && comboTipo.getItemCount()>0){
 					if ( e.getStateChange() == ItemEvent.DESELECTED )
 					{
 						for ( Map.Entry<Integer, String> entry : mapConceptos.entrySet() ){ //recorre las categorias

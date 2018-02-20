@@ -164,7 +164,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		comboCate= new JComboBox();
 		comboCate.setBackground(new Color(250, 250, 210));
 		comboCate.setEnabled(false);
-		comboCate.setBounds(234, 55, 211, 20);
+		comboCate.setBounds(98, 55, 211, 20);
 		
 		PanelDatosSocio.add(comboCate);
 		panelDatosObli.setLayout(null);
@@ -391,9 +391,10 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		btnRegistrar.setBorder(null);
 		
 		txtCateg = new JTextField();
+		txtCateg.setVisible(false);
 		txtCateg.setBackground(new Color(250, 250, 210));
 		txtCateg.setEditable(false);
-		txtCateg.setBounds(98, 55, 126, 20);
+		txtCateg.setBounds(319, 55, 126, 20);
 		PanelDatosSocio.add(txtCateg);
 		btnRegistrar.addActionListener(this);
 		btnLimpiar.addActionListener(this);

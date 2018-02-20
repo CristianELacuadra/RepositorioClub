@@ -358,7 +358,6 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 			//botones
 			if (value instanceof JButton)
 			{
-
 				((JButton) value).doClick();
 				JButton boton = (JButton) value;
 				int dni = (Integer) tablaPersona.getValueAt(fila, 8);				

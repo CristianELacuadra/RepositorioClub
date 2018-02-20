@@ -369,11 +369,13 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 
 	private void RegistrarPagoCuotas(List<Cuota> cuotas) {
 		try{
-			miCoordinador.RegistrarPagoCuotaSocio(cuotas);
-			miCoordinador.ActulizarListaMoroso();
-			miCoordinador.CargarGrilla(PantallaPrincipalPersonas.tablaPersona);
-			this.dispose();
-			
+			if (JOptionPane.showConfirmDialog(this, "¿Desea confirmar el pago?", "Control cuotas socio", JOptionPane.YES_NO_OPTION, 0,
+					new ImageIcon(getClass().getResource("/ar/com/ProyectoClub/AVista/icon/seguro.png"))) == JOptionPane.YES_OPTION) {
+				miCoordinador.RegistrarPagoCuotaSocio(cuotas);
+				miCoordinador.ActulizarListaMoroso();
+				miCoordinador.CargarGrilla(PantallaPrincipalPersonas.tablaPersona);
+				this.dispose();
+			}
 		}
 		catch (Exception ex) {
 			JOptionPane.showMessageDialog(null,"No se pudo llevar a cabo la transaccion, ERROR:"+ex.getCause(),"ERROR", JOptionPane.ERROR_MESSAGE);
