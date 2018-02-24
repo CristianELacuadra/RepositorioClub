@@ -1,5 +1,6 @@
 package ar.com.ProyectoClub.CModelo.AServicios.Ifacade;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -73,6 +74,8 @@ public interface IService {
 	List<Personas> ObtenerPersonaNomApe(String nom, String ape);
 	List<Morosos> FiltrarMorosos();
 	List<Morosos> FiltrarDeudores();
+	ArrayList<String> ObtenerNombreCategorias();
+	Categoria ObtenerCategoriaXNombre(String nombreCategoria);
 	
 
 

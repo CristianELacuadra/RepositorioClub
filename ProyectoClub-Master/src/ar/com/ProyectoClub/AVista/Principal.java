@@ -103,7 +103,7 @@ public class Principal extends JFrame implements ActionListener{
         btnSocios.setFuente1(new java.awt.Font("Arial Black", 1, 12));
         btnSocios.setFuente2(new java.awt.Font("Arial", 1, 10));
         btnSocios.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSocios.setTexto1("socios-no socios ");
+        btnSocios.setTexto1("Personas");
         btnSocios.setTexto2("");
         btnSocios.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jtoolbar1.add(btnSocios);

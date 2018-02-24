@@ -76,6 +76,8 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		});
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		initComponents();
+		tablaPersona.getTableHeader().setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
+        tablaPersona.setDefaultRenderer(Object.class, new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -142,7 +144,7 @@ public class PantallaPrincipalPersonas extends JFrame implements ActionListener 
 		
 
 		tablaPersona.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		setTitle("PRINCIPAL SOCIO-NO SOCIO ");
+		setTitle("PRINCIPAL PERSONAS");
 
 		jPanel1.setBackground(new Color(211, 211, 211));
 

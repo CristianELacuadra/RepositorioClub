@@ -71,6 +71,8 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 			}
 		});
 		initComponents();
+		//jtdatos.getTableHeader().setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
+		//jtdatos.setDefaultRenderer(Object.class, new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
 	}
 	private void initComponents() {
 		setBounds(100, 100, 450, 300);
@@ -227,26 +229,22 @@ public class PantallaCaja extends JFrame implements  ActionListener,KeyListener 
 	            }
 	        });
 		jtdatos.getTableHeader().setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
-		jtdatos.setDefaultRenderer(Object.class, new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
+		//jtdatos.setDefaultRenderer(Object.class, new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
 		jtdatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtdatos.getTableHeader().setReorderingAllowed(false);
 		scrollPane.setViewportView(jtdatos);
 		
 		txtSubTotal = new JTextField();
+		txtSubTotal.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtSubTotal.setEditable(false);
 		txtSubTotal.setColumns(10);
-		txtSubTotal.setBackground(Color.YELLOW);
-		txtSubTotal.setBounds(1134, 680, 199, 20);
+		txtSubTotal.setBackground(new Color(255, 215, 0));
+		txtSubTotal.setBounds(1214, 680, 148, 20);
 		contentPane.add(txtSubTotal);
-		
-		JLabel label_1 = new JLabel("$");
-		label_1.setFont(new Font("Arial", Font.PLAIN, 15));
-		label_1.setBounds(1343, 681, 16, 16);
-		contentPane.add(label_1);
 		
 		JLabel lblSubtotal = new JLabel("Sub-Total");
 		lblSubtotal.setFont(lblSubtotal.getFont().deriveFont(lblSubtotal.getFont().getStyle() | Font.BOLD | Font.ITALIC));
-		lblSubtotal.setBounds(1061, 681, 72, 16);
+		lblSubtotal.setBounds(1132, 682, 72, 16);
 		contentPane.add(lblSubtotal);
 		
 		btnBuscar.addActionListener(this);

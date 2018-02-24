@@ -49,6 +49,7 @@ public class PantallaConfiguracionCategoria extends JDialog implements ActionLis
     private JLabel label;
     private boolean CategoriaEditada=false;
     private int idCatEdit;
+    private int i=0;
     // End of variables declaration//GEN-END:variables
 
 	/**
@@ -216,8 +217,11 @@ public class PantallaConfiguracionCategoria extends JDialog implements ActionLis
         			.addContainerGap()
         			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
         				.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 884, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE)
         				.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, 490, GroupLayout.PREFERRED_SIZE))
+        			.addGap(3))
+        		.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        			.addContainerGap()
+        			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 898, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -271,12 +275,14 @@ public class PantallaConfiguracionCategoria extends JDialog implements ActionLis
         Descuento.addKeyListener(new KeyAdapter() {
         	@Override
         	public void keyTyped(KeyEvent e) {
-        		char numero=e.getKeyChar(); 
+        		char numero=e.getKeyChar();
 				if(Character.isLetter(numero)) { 
 					getToolkit().beep(); 
 					e.consume(); 
 					JOptionPane.showMessageDialog(null,"El campo no permite caracteres","ERROR",JOptionPane.ERROR_MESSAGE);
 				}
+				if(Character.getNumericValue(numero)==-1)
+					i++;				
         	}
         });
         Descuento.setFont(new Font("Tahoma", Font.PLAIN, 13));

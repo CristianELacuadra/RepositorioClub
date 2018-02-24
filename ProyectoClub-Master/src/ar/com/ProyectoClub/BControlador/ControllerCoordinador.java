@@ -12,12 +12,16 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.RowFilter.ComparisonType;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -229,13 +233,14 @@ public class ControllerCoordinador {
 	}
 	
 	public void CargarDatosPersona(Integer dni) {
+		//Limpio
 		miFormularioPersona.comboCate.removeAllItems();
-		miFormularioPersona.comboCate.addItem("Seleccione una categoria");
-		for(Categoria categoria : modeloService.DevolverListaCategoria()){
-			if(categoria.isHabilitado()){ //si esta habilitada la categoria
-				miFormularioPersona.comboCate.addItem(categoria.getIdCategoria()+"-"+categoria.getNombre()); //Cargo Categorias y sus id
-				miFormularioPersona.mapCategoria.put(categoria.getIdCategoria(), categoria.getNombre());
-			}
+		//Obtengo los nombres de las categorias
+		ArrayList<String> listaNombre = new ArrayList<String>();
+		listaNombre=modeloService.ObtenerNombreCategorias();  
+		miFormularioPersona.comboCate.addItem("Seleccione una Categoria");
+		for(int i=0; i<listaNombre.size(); i++){
+			miFormularioPersona.comboCate.addItem(listaNombre.get(i));
 		}
 		CargarDatos(dni);
 		miFormularioPersona.setVisible(true);
@@ -264,7 +269,6 @@ public class ControllerCoordinador {
 			miFormularioPersona.txtMatri.setText(persona.getSocios().getMatricula().toString());
 			miFormularioPersona.txtMatri.setEnabled(false);
 			miFormularioPersona.dateFechIngreso.setDate(persona.getSocios().getFechaingreso());
-			miFormularioPersona.txtCateg.setText(persona.getSocios().getCategoria().getIdCategoria()+"-"+persona.getSocios().getCategoria().getNombre());
 			if(!persona.getSocios().isBaja()){
 				miFormularioPersona.rdbtnSi.setSelected(true);
 				botones(true);				
@@ -285,7 +289,6 @@ public class ControllerCoordinador {
 		miFormularioPersona.txtMatri.setEnabled(valor);
 		miFormularioPersona.comboCate.setEnabled(valor);
 		miFormularioPersona.dateFechIngreso.setEnabled(valor);
-		miFormularioPersona.txtCateg.setEnabled(valor);
 	}
 	private void HabilitarBotonoes(boolean valor){
 
@@ -366,21 +369,23 @@ public class ControllerCoordinador {
 	}
 	@SuppressWarnings("unchecked")
 	public void mostrarFormularioPersona(){
-		miFormularioPersona.txtDni.setEnabled(true);
-		//Limpia el combo de categoria y lo vuelve agragar
+		//Limpio
 		miFormularioPersona.comboCate.removeAllItems();
-		miFormularioPersona.comboCate.addItem("Seleccione una categoria");
-		for(Categoria categoria : modeloService.DevolverListaCategoria()){
-			if(categoria.isHabilitado()){ //si esta habilitada la categoria
-				miFormularioPersona.comboCate.addItem(categoria.getIdCategoria()+"-"+categoria.getNombre()); //Cargo Categorias y sus id
-				miFormularioPersona.mapCategoria.put(categoria.getIdCategoria(), categoria.getNombre());
-			}
+		//Obtengo los nombres de las categorias
+		ArrayList<String> listaNombre = new ArrayList<String>();
+		listaNombre=modeloService.ObtenerNombreCategorias();
+		miFormularioPersona.comboCate.addItem("Seleccione una Categoria");
+		for(int i=0; i<listaNombre.size(); i++){
+			miFormularioPersona.comboCate.addItem(listaNombre.get(i));
 		}
+		miFormularioPersona.txtDni.setEnabled(true);
 		miFormularioPersona.setVisible(true);
 	}
+	
+	
 
 	//mustra ventana busqueda para obtener un socio para cobrar
-	public void MostrarVentanaBusqueda(){
+ 	public void MostrarVentanaBusqueda(){
 		miVentanaBusquedaSNS.setVisible(true);
 	}
 
@@ -410,8 +415,8 @@ public class ControllerCoordinador {
 	}
 
 	@SuppressWarnings("serial")
-	public void CargarGrilla(JTable tabla){
-
+	public void CargarGrilla(JTable tabla){	
+		//AlinearEncabezados(tabla);		
 		boolean[] editable= { false,false,true,false,false,false,false,false,false,false,false };
 		DefaultTableModel  modeloT = new DefaultTableModel(){
 
@@ -426,6 +431,8 @@ public class ControllerCoordinador {
 			public boolean isCellEditable(int row,int colum){  
 				return editable[colum];
 			}
+			
+			
 		};
 		Object[] columna = new Object[12];
 
@@ -442,6 +449,7 @@ public class ControllerCoordinador {
 		modeloT.addColumn("NOMBRE Y APELLIDO");
 		modeloT.addColumn("TELEFONO");
 		modeloT.addColumn("DOMICILIO");
+		
 		java.util.List<Personas> listaPersona = modeloService.ListarPersonas();
 		if(listaPersona != null){
 
@@ -478,16 +486,35 @@ public class ControllerCoordinador {
 		tabla.getColumnModel().getColumn(5).setMaxWidth(60);
 		tabla.getColumnModel().getColumn(6).setMaxWidth(60);
 		tabla.getColumnModel().getColumn(7).setMaxWidth(60);
-		tabla.getColumnModel().getColumn(8).setMaxWidth(200);
-		tabla.getColumnModel().getColumn(9).setMaxWidth(400);
+		tabla.getColumnModel().getColumn(8).setMaxWidth(80);
+		tabla.getColumnModel().getColumn(9).setMaxWidth(250);
 		tabla.getColumnModel().getColumn(10).setMaxWidth(200);
 		tabla.getColumnModel().getColumn(11).setMaxWidth(600);
 		tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);       	
 
 	}
-	@SuppressWarnings("serial")
+	
+	private void Alinear(int colum,JTable tabla){
+		DefaultTableCellRenderer tcr;
+		tcr = new DefaultTableCellRenderer();
+		tcr.setHorizontalAlignment(SwingConstants.RIGHT); //CENTER o LEFT
+		tabla.getColumnModel().getColumn(colum).setCellRenderer(tcr);
+	}
+	private void AlinearCentrar(int colum,JTable tabla){
+		DefaultTableCellRenderer tcr;
+		tcr = new DefaultTableCellRenderer();
+		tcr.setHorizontalAlignment(SwingConstants.CENTER); //CENTER o LEFT
+		tabla.getColumnModel().getColumn(colum).setCellRenderer(tcr);
+	}
+	
+	private void AlinearEncabezados(JTable tabla){
+	((DefaultTableCellRenderer)tabla.getTableHeader().getDefaultRenderer())
+    .setHorizontalAlignment(JLabel.LEFT);
+	}
+	
+	@SuppressWarnings("serial")	
 	public void CargarGrilla(JTable tabla,List<Personas> listaPersonas){
-
+        //AlinearEncabezados(tabla);
 		boolean[] editable= { false,false,true,false,false,false,false,false,false,false,false };
 		DefaultTableModel  modeloT = new DefaultTableModel(){
 
@@ -592,6 +619,8 @@ public class ControllerCoordinador {
 	//Gestion Cuotas
 	//---------------------------------------------------------------------------------------------------------------------------------------------------
 	public void MostrarPantallaHistorialCuota(Integer dni,JTable tabla){
+		SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+		DecimalFormat df = new DecimalFormat("#.##");
 		Personas persona= modeloService.BuscarPersona(dni);
 		miVentanaHistCuota.txtNomApe.setText((persona.getApellido()+" "+persona.getNombre()));
 		
@@ -617,16 +646,19 @@ public class ControllerCoordinador {
 		miVentanaHistCuota.txtTotal.setText(numRegistros.toString());
 		for (int i = 0; i < numRegistros; i++) {
 			columna[0] = listaCuota.get(i).getFechageneracion().getMonth()+1+"-"+(listaCuota.get(i).getFechageneracion().getYear()+1900);
-			columna[1] = listaCuota.get(i).getFechapago();
+			columna[1] = formateador.format(listaCuota.get(i).getFechapago());
 			columna[2] = listaCuota.get(i).getDescripcion();
-			columna[3] = listaCuota.get(i).getImporte();
+			columna[3] = df.format(listaCuota.get(i).getImporte());
 			modeloT.addRow(columna);
 		}
-		tabla.setRowHeight(25);
-		tabla.getColumnModel().getColumn(0).setMaxWidth(200);
+		//tabla.setRowHeight(25);
+		tabla.getColumnModel().getColumn(0).setMaxWidth(80);
 		tabla.getColumnModel().getColumn(1).setMaxWidth(100);
-		tabla.getColumnModel().getColumn(2).setMaxWidth(310);
-		tabla.getColumnModel().getColumn(3).setMaxWidth(120);
+		tabla.getColumnModel().getColumn(2).setMaxWidth(450);
+		tabla.getColumnModel().getColumn(3).setMaxWidth(75);
+		AlinearCentrar(0, tabla);
+		AlinearCentrar(1, tabla);
+		Alinear(3, tabla);
 		miVentanaHistCuota.setVisible(true);
 	}
 
@@ -637,7 +669,7 @@ public class ControllerCoordinador {
 
 	@SuppressWarnings("unchecked")
 	public void CargarDatosCobranza(Integer dni,JTable tabla){
-
+		DecimalFormat df = new DecimalFormat("#.##");
 		//java.util.Set<Cuota> cuotasSocio= new HashSet<Cuota>();
 		List<Cuota> cuotas=new ArrayList<Cuota>();
 		Socios socio = modeloService.CrearInstanciaSocio();
@@ -646,7 +678,7 @@ public class ControllerCoordinador {
 		miVentanaCobranza.txtdni.setText(Integer.toString(socio.getDni()));
 		miVentanaCobranza.txtDomi.setText(socio.getPersonas().getDomicilio());
 		miVentanaCobranza.txtMatri.setText(Integer.toString(socio.getMatricula()));
-		miVentanaCobranza.txtNyA.setText(socio.getPersonas().getNombre()+" "+socio.getPersonas().getApellido());
+		miVentanaCobranza.txtNyA.setText(socio.getPersonas().getApellido()+" "+socio.getPersonas().getNombre());
 		miVentanaCobranza.txtTel.setText(socio.getPersonas().getTelefono());
 		miVentanaCobranza.txtCat.setText(socio.getCategoria().getNombre());
 		miVentanaCobranza.txtEstado.setText(socio.getEstado());
@@ -712,7 +744,7 @@ public class ControllerCoordinador {
 			columna[1] = true;
 			columna[2] = FechaHora.ConvertMestoMes(cuotas.get(i).getFechageneracion().getMonth());
 			columna[3] = cuotas.get(i).getFechageneracion().getYear()+1900;
-			columna[4] = cuotas.get(i).getImporte();
+			columna[4] = df.format(cuotas.get(i).getImporte());
 			total+=cuotas.get(i).getImporte();
 			miVentanaCobranza.btnCobrar.setEnabled(true);
 			modeloT.addRow(columna);
@@ -721,12 +753,14 @@ public class ControllerCoordinador {
 		//tabla.getColumnModel().getColumn(0).;
 		tabla.getColumnModel().getColumn(0).setMinWidth(0);
 		tabla.getColumnModel().getColumn(0).setMaxWidth(0);
-		tabla.getColumnModel().getColumn(1).setMaxWidth(50);
+		tabla.getColumnModel().getColumn(1).setMaxWidth(60);
 		tabla.getColumnModel().getColumn(2).setMaxWidth(200);
-		tabla.getColumnModel().getColumn(3).setMaxWidth(250);
-		tabla.getColumnModel().getColumn(4).setMaxWidth(300);
+		tabla.getColumnModel().getColumn(3).setMaxWidth(400);
+		tabla.getColumnModel().getColumn(4).setMaxWidth(110);
+		Alinear(4, tabla);
+		
 		//tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);
-		miVentanaCobranza.txttotal.setText(String.valueOf(total));
+		miVentanaCobranza.txttotal.setText(df.format(total));
 		if(miVentanaCobranza.txtEstado.getText().equals("MOROSO"))
 			JOptionPane.showMessageDialog(null,"El estado actual del socio es MOROSO."
 					+'\n'+ "Debe saldar la totalidad de la deuda para actualizar su estado","ATENCION",JOptionPane.WARNING_MESSAGE);
@@ -790,7 +824,7 @@ public class ControllerCoordinador {
 	}
      
 	public void CargarGrillaCategoria(JTable tabla){
-
+		DecimalFormat df = new DecimalFormat("#.00");
 		java.util.List<Categoria> categorias=new ArrayList<Categoria>();
 		DefaultTableModel  modeloT = new DefaultTableModel(){
 			public boolean isCellEditable(int row,int colum){  //la filas de mi tabla no pueden ser editable
@@ -814,8 +848,8 @@ public class ControllerCoordinador {
 			columna[1] = miVentanaConfCategoria.btnEditar;
 			columna[2] = categorias.get(i).getIdCategoria();
 			columna[3] = categorias.get(i).getNombre();
-			columna[4] = categorias.get(i).getMonto();
-			columna[5] = categorias.get(i).getDescuento();
+			columna[4] = df.format(categorias.get(i).getMonto());
+			columna[5] = df.format(categorias.get(i).getDescuento());
 			columna[6] = categorias.get(i).getDescripcion();
 			modeloT.addRow(columna);
 		}
@@ -829,12 +863,23 @@ public class ControllerCoordinador {
 		tabla.getColumnModel().getColumn(1).setMaxWidth(30);
 		tabla.getColumnModel().getColumn(2).setMinWidth(0);
     	tabla.getColumnModel().getColumn(2).setMaxWidth(0);
-    	tabla.getColumnModel().getColumn(3).setMaxWidth(150);
-    	tabla.getColumnModel().getColumn(4).setMaxWidth(100);
-    	tabla.getColumnModel().getColumn(5).setMaxWidth(120);
+    	tabla.getColumnModel().getColumn(3).setMaxWidth(100);
+    	tabla.getColumnModel().getColumn(4).setMaxWidth(80);
+    	tabla.getColumnModel().getColumn(5).setMaxWidth(100);
     	tabla.getColumnModel().getColumn(6).setMaxWidth(450);
+    	AlinearCentrar(3, tabla);
+    	Alinear(4, tabla);
+    	Alinear(5, tabla);
     	//acciones tabla
     	tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);
+	}
+	
+	public Categoria BuscarCategoriaNombre(String nombreCategoria) {
+		return modeloService.ObtenerCategoriaXNombre(nombreCategoria);
+	}
+	
+	public ArrayList<String> ObtenerNombreCategorias(){
+		return modeloService.ObtenerNombreCategorias();
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------
 	//Gestion Caja
@@ -904,6 +949,7 @@ public class ControllerCoordinador {
 			JOptionPane.showMessageDialog(null,"No se encuentra registro en la base de datos,Por favor ingrese un monto inicial ","Informacion",JOptionPane.INFORMATION_MESSAGE);
 		}
 		else{
+			SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 			java.util.List<Caja> cajas=new ArrayList<Caja>();
 			float SubTotal=0;
 			DecimalFormat df = new DecimalFormat("#.##");
@@ -923,7 +969,7 @@ public class ControllerCoordinador {
 			if(cajas != null){
 				int numRegistros=cajas.size();
 				for (int i = 0; i < numRegistros; i++) {
-					columna[0] = cajas.get(i).getFecha();
+					columna[0] = formateador.format(cajas.get(i).getFecha());
 					columna[1] = cajas.get(i).getDescripcion();
 					if(cajas.get(i).getConceptos().getTipo().equals("I")){
 						columna[2] = "I";
@@ -933,22 +979,28 @@ public class ControllerCoordinador {
 						columna[2]="E";
 						SubTotal -= cajas.get(i).getMonto();//resta el subtotal
 					}
-					columna[3]= String.valueOf(cajas.get(i).getMonto()); 
+					columna[3]= df.format(cajas.get(i).getMonto()); 
 					modeloT.addRow(columna);
 				}
 			}
 			else
 				JOptionPane.showMessageDialog(null,"No se han encontrado coincidencias","Information",JOptionPane.INFORMATION_MESSAGE);
-
+			
+			//Estilo Tabla
+			//tabla.getTableHeader().setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
+			//tabla.setDefaultRenderer(Object.class,new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
 			//fecha
 			tabla.getColumnModel().getColumn(0).setMaxWidth(110);
 			//descripcion
-			tabla.getColumnModel().getColumn(1).setMaxWidth(1000);
+			tabla.getColumnModel().getColumn(1).setMaxWidth(1100);
 			//tipo
 			tabla.getColumnModel().getColumn(2).setMaxWidth(90);
 			//importe
-			tabla.getColumnModel().getColumn(3).setMaxWidth(150);
-			miVentanaCaja.txtSubTotal.setText(String.valueOf(df.format(SubTotal)));
+			tabla.getColumnModel().getColumn(3).setMaxWidth(100);
+			AlinearCentrar(0, tabla);
+			AlinearCentrar(2, tabla);
+			Alinear(3, tabla);
+			miVentanaCaja.txtSubTotal.setText(df.format(SubTotal)+" $");
 
 		}
 	}
@@ -977,7 +1029,7 @@ public class ControllerCoordinador {
 	}
 	
 	public void MostrarVentnaConfiguracion(){
-		this.CargarPrecioCuota();
+		//this.CargarPrecioCuota();
 		miVentanaConfiguracion.setVisible(true);
 	}
 
@@ -1041,6 +1093,8 @@ public class ControllerCoordinador {
 	 * @return
 	 */
 	public void  CargarGrillaMorosos(JTable tabla){
+		SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+		DecimalFormat df = new DecimalFormat("#.##");
 		DefaultTableModel ModeloDeuMoros=this.ArmadoModeloDeudoresMorosos();
 		List<Morosos> listaMorosos=this.ActulizarListaMoroso();
 		Object[] columna = new Object[12];
@@ -1053,31 +1107,35 @@ public class ControllerCoordinador {
 			columna[4] = listaMorosos.get(i).getTelefono();
 			columna[5] = listaMorosos.get(i).getDomicilio();
 			columna[6] = listaMorosos.get(i).getCategoria();
-			columna[7] = listaMorosos.get(i).getFechaingreso();
+			columna[7] = formateador.format(listaMorosos.get(i).getFechaingreso());
 			columna[8] = listaMorosos.get(i).getEstado();
 			columna[9] = listaMorosos.get(i).getCantMesAtraso()+" MES";
-			columna[10] = listaMorosos.get(i).getImporteTotal();
-			columna[11] = listaMorosos.get(i).getUltimaFecMovim();
+			columna[10] = df.format(listaMorosos.get(i).getImporteTotal());
+			columna[11] = formateador.format(listaMorosos.get(i).getUltimaFecMovim());
 			ModeloDeuMoros.addRow(columna);
 		}	
 		tabla.setModel(ModeloDeuMoros);
-		//Estilo Tabla
-		tabla.getTableHeader().setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
-		tabla.setDefaultRenderer(Object.class,new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
 		//Dimentsion tabla
 		tabla.setRowHeight(25);
 		tabla.getColumnModel().getColumn(0).setMaxWidth(100);
 		tabla.getColumnModel().getColumn(1).setMaxWidth(70);
-    	tabla.getColumnModel().getColumn(2).setMaxWidth(100);
-    	tabla.getColumnModel().getColumn(3).setMaxWidth(100);
+    	tabla.getColumnModel().getColumn(2).setMaxWidth(130);
+    	tabla.getColumnModel().getColumn(3).setMaxWidth(120);
     	tabla.getColumnModel().getColumn(4).setMaxWidth(150);
     	tabla.getColumnModel().getColumn(5).setMaxWidth(250);
     	tabla.getColumnModel().getColumn(6).setMaxWidth(100);
     	tabla.getColumnModel().getColumn(7).setMaxWidth(120);
-    	tabla.getColumnModel().getColumn(8).setMaxWidth(100);
+    	tabla.getColumnModel().getColumn(8).setMaxWidth(80);
     	tabla.getColumnModel().getColumn(9).setMaxWidth(70);
     	tabla.getColumnModel().getColumn(10).setMaxWidth(120);
     	tabla.getColumnModel().getColumn(11).setMaxWidth(140);
+    	AlinearCentrar(9,tabla);
+    	Alinear(10, tabla);
+    	AlinearCentrar(0, tabla);
+    	AlinearCentrar(6, tabla);
+    	AlinearCentrar(7, tabla);
+    	AlinearCentrar(8, tabla);
+    	AlinearCentrar(11, tabla);
     	//acciones tabla
     	//tabla.setDefaultRenderer(Object.class, miVentanaPrincipalPersona.resaltado);
 	}
@@ -2016,6 +2074,8 @@ System.out.println("Hora: "+hourFormat.format(date));
 //			e.printStackTrace();
 		}
 	}
+
+	
 
 	
 	

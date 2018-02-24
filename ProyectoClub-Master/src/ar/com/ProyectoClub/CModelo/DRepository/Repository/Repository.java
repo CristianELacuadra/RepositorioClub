@@ -645,123 +645,13 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 	}
 
 	
-
-//	@Override
-//	public List<Socios> ObtenerTresPrimero() {
-//		List<Socios> lista= new ArrayList<Socios>(3);
-//		String consulta=new String();
-//		consulta="SELECT s FROM Socios s ORDER BY fechaingreso DESC";
-//		List<Socios> listaSocio=_sessiondehilo.createQuery(consulta).list();
-//		int i=0;
-//		for(Socios socios: listaSocio)
-//		{
-//			if(i<3){
-//				lista.add(socios);
-//				i++;
-//			}
-//		}
-//	}
-
 	
-
-	//este metodo esta en desuso por que al estar separado las entidades usa el list generico que tienen en comuun las
-		//entidades y asi listar los socios
-		/*
-		@Override
-		public List<Personas> HistoricoNoSocio() throws BussinessException {
-			try 
-			{
-				Setsession();
-				SetTransaction();
-				List<Personas> _list =_sessiondehilo.createQuery("SELECT p FROM Personas p").list();
-				_sessiondehilo.getTransaction().commit();		
-				return _list;
-			}
-			catch (Exception e) 
-			{
-				_sessiondehilo.beginTransaction().rollback();
-				_sessiondehilo.close();
-				throw new RuntimeException("Error al realizar la consulta"+e.toString());
-			}
-		}
-		*/
-
-	
-	//esta consulta se puede simplificar llamando al list generico en el gestor y si esta vacio la lista no hay registro
-		/*
-		@Override
-		public float Subtotal() {
-			try {
-			Setsession();
-			SetTransaction();
-			Integer i=(Integer) _sessiondehilo.createQuery("SELECT count(caja) from Caja caja").uniqueResult(); //-> consulta si esta vacia la tabla
-			if(i!=0) {
-				Integer id=(Integer) _sessiondehilo.createSQLQuery("SELECT max(caja) from Caja caja").uniqueResult();
-				String consulta="SELECT caja.subTotal FROM Caja caja WHERE caja.idCaja="+id;
-				return (float) _sessiondehilo.createQuery(consulta).uniqueResult();
-			}
-			else
-				return 0;
-			}
-			catch (Exception e) {
-				_sessiondehilo.beginTransaction().rollback();
-				_sessiondehilo.close();
-				throw new RuntimeException(e);
-			}
-		}
-		*/
-	//la implementacion de este metodo se debe realizar en el gestor ya que el campo habilitado se encuentra en 
-		//la entidad persona
-	/*
-		@Override
-		public List<Personas> ListaActivaSocios() throws BussinessException {
-			try {
-				Setsession();
-				SetTransaction();
-				Query q= _sessiondehilo.createQuery("SELECT s FROM Socios s WHERE s.essocio=true ORDER BY s.nroSocio");
-				//q.setMaxResults(100); //Devuelve un maximo de 100	
-				List<Personas> lista=q.list();
-				_sessiondehilo.getTransaction().commit();
-				return lista;
-			}
-			catch (Exception e) {
-				_sessiondehilo.beginTransaction().rollback();
-				_sessiondehilo.close();
-				throw new RuntimeException(e);
-			}
-		}
-	*/
-		//este metodo se utilizaba para sacar el mayor de los numero de socios y asi poder asinar uno mas cuando se agrege
-		//desestimar,ya que el nro de socio no se utiliza mas
-		/*
-		@Override
-		public Integer MaxNroSocio() throws BussinessException {
-			try {
-				Setsession();
-				SetTransaction();
-				socios.clear();
-				Integer _query= (Integer) _sessiondehilo.createQuery("SELECT MAX(s.nroSocio) From Personas s").uniqueResult();
-				_sessiondehilo.getTransaction().commit();
-				return _query;
-				
-			}
-			catch (Exception e) {
-				_sessiondehilo.beginTransaction().rollback();
-				_sessiondehilo.close();
-				throw new BussinessException(e);
-			}
-		}
-		*/
-
-
-
-	
-	
-	
-	
-	
-	
-
-
+	@Override
+	public Categoria ObteerCategoriaXNombre(String nombreCategoria) throws BussinessException {
+		Setsession();
+		SetTransaction();
+		String consulta="SELECT c FROM Categoria c WHERE c.nombre= '"+nombreCategoria+"'";
+		return (Categoria) _sessiondehilo.createQuery(consulta).uniqueResult();
+	}
 	
 }
