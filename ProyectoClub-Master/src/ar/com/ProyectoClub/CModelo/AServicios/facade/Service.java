@@ -456,6 +456,7 @@ public class Service implements IService {
 	}
 	
 	
+	
     //contrato alquiler
 	@Override
 	public Alquiler CrearInstanciaAlquiler() {
@@ -730,7 +731,42 @@ public class Service implements IService {
 			throw new RuntimeException("ERROR: "+ e.getBussinessMessages());
 		}
 	}
+	
+	public long NumeroAlquileresPorInmueble(Integer idInmueble){
+		try{
+			return gestor.NumeroAlquileresPorInmueble(idInmueble);
+		}catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e.getCause());
+			throw new RuntimeException("ERROR: "+ e.getBussinessMessages());
+		}
+	}
+	
+	public boolean NoTieneAlquileres(Integer idInmueble){
+		try{
+			return gestor.NoTieneAlquileres( idInmueble);
+		}catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e.getCause());
+			throw new RuntimeException("ERROR: "+ e.getBussinessMessages());
+		}
+	}
+	
+	public void HabilOInhabilInmueble(){
+//		try{
+//			
+//		}catch (BussinessException e) {
+//			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e.getCause());
+//			throw new RuntimeException("ERROR: "+ e.getBussinessMessages());
+//		}
+	}
 
+	public void EliminacionFisicaInmueble(Integer idInmueble){
+		try{
+			gestor.EliminacionFisicaInmueble(idInmueble);
+		}catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e.getCause());
+			throw new RuntimeException("ERROR: "+ e.getBussinessMessages());
+		}
+	}
 	
 
 }

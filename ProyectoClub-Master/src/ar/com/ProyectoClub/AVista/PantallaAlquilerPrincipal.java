@@ -22,6 +22,7 @@ import java.awt.Color;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
@@ -89,6 +90,8 @@ import javax.swing.border.EtchedBorder;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.Rectangle;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -144,6 +147,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 	public JToggleButton bActualizarI;
 	public JButton	bEliminarI;
 	public JButton bRestaurarI;
+	public JButton bEliminarFisica;
 	public JScrollPane scrollPane;
 	public JLabel lNombreI;
 	public JCTextField texInmNombre;
@@ -151,8 +155,9 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 	public JCTextField texInmDireccion;
 	public JLabel lPrecioHoraI;
 	public JLabel lSeI;
-	public JCTextField texInmPrecioHora ;
-	public JCTextField texInmSe;
+	public JFormattedTextField texInmPrecioHora ;
+	  
+	public JFormattedTextField texInmSe;
 	public JLabel lDescripcionI;
 	public JTextArea texInmDescrip;
 	public JCheckBox checkB;
@@ -177,15 +182,11 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		});
 		initComponents();
 
-
-
-		//RecargarPanelAlquiler(); /// revisar /// poner la 
-//github.com/CristianELacuadra/RepositorioClub.git
 	}
 	
 	public void initComponents(){
 		miCoordinador=new ControllerCoordinador();
-		setBounds(50, 50, 930, 600);
+		setBounds(50, 50, 1020, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -264,12 +265,9 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 //		tableAlq.getColumnModel().getColumn(12).setMaxWidth(90);
 //		tableAlq.getColumnModel().getColumn(13).setPreferredWidth(90);
 //		tableAlq.getColumnModel().getColumn(13).setMinWidth(70);
-//		tableAlq.getColumnModel().getColumn(13).setMaxWidth(110);
-//				
+//		tableAlq.getColumnModel().getColumn(13).setMaxWidth(110);				
 		tableAlq.getTableHeader()
 		.setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
-//		tableAlq.setDefaultRenderer(Object.class,
-//		new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
 
 		
 		tableAlq.addMouseListener(new MouseAdapter() {
@@ -313,7 +311,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		//Eli		
 		btnEli = new JButton();
 		btnEli.setName("btnEli");
-		btnEli.setToolTipText("Eliminar");
+		btnEli.setToolTipText("Cancelar");
 		btnEli.setText("");
 		btnEli.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/cancel1.png")));
 		
@@ -512,14 +510,14 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		
 		bEliminarI = new JButton("Deshabilitar");
 		bEliminarI.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		bEliminarI.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/borrarT1.png")));
+		bEliminarI.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/InhabilitarInmuebleTrasparente.png")));
 		bEliminarI.setVerticalTextPosition(SwingConstants.BOTTOM);
 		bEliminarI.setHorizontalTextPosition(SwingConstants.CENTER);
 		panelOpcionInm.add(bEliminarI);
 		
 		bRestaurarI = new JButton("Restaurar");
 		bRestaurarI.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		bRestaurarI.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/borrar1.png")));
+		bRestaurarI.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/habilitarInmuebleTrasparente.png")));
 		bRestaurarI.setVerticalTextPosition(SwingConstants.BOTTOM);
 		bRestaurarI.setHorizontalTextPosition(SwingConstants.CENTER);
 		panelOpcionInm.add(bRestaurarI);
@@ -666,7 +664,13 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		
 		lSeI = new JLabel("SE\u00D1A");
 		
-		texInmPrecioHora = new JCTextField();
+		DecimalFormatSymbols formatoDecimal =new DecimalFormatSymbols();
+		formatoDecimal.setDecimalSeparator('.');
+		formatoDecimal.setGroupingSeparator(',');
+		texInmPrecioHora = new JFormattedTextField(new DecimalFormat("#0.00",formatoDecimal));
+		
+		
+//		JFormattedTextField formatPrueba =new JFormattedTextField(new DecimalFormat("#0.00"));
 		texInmPrecioHora.setBackground(new Color(250, 250, 210));
 		texInmPrecioHora.setDisabledTextColor(Color.RED);
 		texInmPrecioHora.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -674,11 +678,12 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		texInmPrecioHora.setColumns(10);
 		
 		
-		texInmSe = new JCTextField();
+		texInmSe = new JFormattedTextField(new DecimalFormat("#0.00",formatoDecimal));
+//		JFormattedTextField formatPrueba =new JFormattedTextField(new DecimalFormat("#0.00"));
 		texInmSe.setBackground(new Color(250, 250, 210));
 		texInmSe.setDisabledTextColor(Color.RED);
 		texInmSe.setFont(new Font("Tahoma", Font.BOLD, 12));
-		texInmSe.setToolTipText("en caso de no tener seña \n dejar vacio ");
+		texInmSe.setToolTipText("En caso de no tener seña \n dejar valor 0");
 		texInmSe.setColumns(10);
 		
 		lDescripcionI = new JLabel("DESCRIPCION");
@@ -803,6 +808,12 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		
 		panelFiltro.add(checkB);
 		
+		bEliminarFisica = new JButton("Eliminar");
+		bEliminarFisica.setVerticalTextPosition(SwingConstants.BOTTOM);
+		bEliminarFisica.setHorizontalTextPosition(SwingConstants.CENTER);
+		bEliminarFisica.setIcon(new ImageIcon(PantallaAlquilerPrincipal.class.getResource("/ar/com/ProyectoClub/AVista/icon/borrarT1.png")));
+		panelOpcionInm.add(bEliminarFisica);
+		
 		
 	
 		bLimpiarCamposI = new JButton("Limpiar Campos");
@@ -818,16 +829,17 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		inmuebleEnt= new Inmuebles(); 
 		alquilerEnt= new Alquiler(); 
 		
-		texInmNombre.setNextFocusableComponent(texInmDireccion);
+		texInmNombre.setNextFocusableComponent(texInmPrecioHora);
+		texInmPrecioHora.setNextFocusableComponent(texInmDireccion);
 		texInmDireccion.setNextFocusableComponent(texInmDireccionNum);
-		texInmDireccionNum.setNextFocusableComponent(texInmPrecioHora);
-		texInmPrecioHora.setNextFocusableComponent(texInmSe);
+		texInmDireccionNum.setNextFocusableComponent(texInmSe);
 		texInmSe.setNextFocusableComponent(texInmDescrip);
 		
 		texInmPrecioHora.addKeyListener(this);
 		texInmSe.addKeyListener(this);
 		texInmDescrip.addKeyListener(this);
 		texInmDireccionNum.addKeyListener(this);
+		texInmDireccion.addKeyListener(this);
 
 
 
@@ -847,7 +859,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		radioB3.addActionListener(this);
 		tFiltroAlquiler.addKeyListener(this);
 		btnBuscarFec.addActionListener(this);
-		
+		bEliminarFisica.addActionListener(this);
 		
 		
 		
@@ -855,7 +867,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		bActualizarI.setEnabled(false);
 		bEliminarI.setEnabled(false);
 		bRestaurarI.setEnabled(true);
-
+		bEliminarFisica.setEnabled(false);
 		auxNum=null;
 		
 		
@@ -864,33 +876,27 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
     		//para selecionar una fila
     		public void mouseClicked(MouseEvent e){
     			if(!botCanhab){
-    			Integer _fila;
-    		
-    			auxNum=null;
-    		
-    			try{
-    			_fila=tableInm.getSelectedRow();
-    			if(_fila!= -1){
-    				DefaultTableModel modelotabla=(DefaultTableModel) tableInm.getModel();
-    				auxNum=(Integer) modelotabla.getValueAt(_fila, 0);
-    				inmuebleEnt=miCoordinador.BuscarInmueble(auxNum);
-    				miCoordinador.panelRegInmDesHabilitar();
-    				cargarDatosInmueble(inmuebleEnt);
-    				miCoordinador.habilitarBotonesInm(inmuebleEnt.isHabilitado());
+    				Integer _fila;
+    				auxNum=null;
+    				try{
+    					_fila=tableInm.getSelectedRow();
+    					if(_fila!= -1){
+    						DefaultTableModel modelotabla=(DefaultTableModel) tableInm.getModel();
+    						auxNum=(Integer) modelotabla.getValueAt(_fila, 0);
+    						miCoordinador.FuncionBotonSeleccionInmueble(auxNum);
     				
-    			
-    			}
+
+    					}
     		
-    			}catch(Exception ex){
-    			miCoordinador.mensajes("Error: Al seleccionar una fila \nInténtelo nuevamente", 0);
-//    			JOptionPane.showMessageDialog(null, "Error: Al seleccionar una fila \nInténtelo nuevamente", " .::Error En la Operacion::." ,JOptionPane.ERROR_MESSAGE);
+    				}catch(Exception ex){
+    					miCoordinador.mensajes("Error: Al seleccionar una fila \nInténtelo nuevamente", 0);
+//    					JOptionPane.showMessageDialog(null, "Error: Al seleccionar una fila \nInténtelo nuevamente", " .::Error En la Operacion::." ,JOptionPane.ERROR_MESSAGE);
+    				}
+    			
     			}
     			
     		}
-    			
-    	}   	
-    	}
-	);
+		});
 		
 		
 		
@@ -944,7 +950,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 			dateDesde.setDate(null);
 			dateHasta.setDate(null);
 			tFiltroAlquiler.setText("");
-			
+			setTitle("ALQUILERES");
 		}catch(Exception ex){
 			miCoordinador.mensajes("Error al recargar la pagina", 0);
 		}
@@ -973,14 +979,14 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				limpiarCampos();	
 				cargarDatosListadoInmueble();
 				miCoordinador.botonCancelarDeshabilitarInm();
-				miCoordinador.deshabilitarBotonesInm();
+				miCoordinador.deshabilitarBotonesInm(true,false,false,false,false);
 				bRegistrarI.setSelected(false);
 				bActualizarI.setSelected(false);
 				bRegistrarI.setText("Registrar");
 				bActualizarI.setText("Modificar");
 				botCanhab=false;
 				bRegistrarI.setEnabled(true);
-				
+				setTitle("INMUEBLES");
 				
 			}catch(Exception ex){
 				miCoordinador.mensajes("Error al recargar la pagina", 0);
@@ -1007,9 +1013,11 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				if(bRegistrarI.isSelected()){
 					inmuebleEnt=miCoordinador.CrearInmueble();
 					miCoordinador.limpiarPanelRegInm();
-					miCoordinador.panelRegInmHabilitar();
+					miCoordinador.panelRegInmHabilitar(true);
 					bRegistrarI.setText("Guardar");
+					miCoordinador.deshabilitarBotonesInm(true, false,true,false,false);
 					miCoordinador.botonCancelarHabilitarInm();
+					
 				}else{
 					
 					if(miCoordinador.validarPanelRegInm()){
@@ -1022,14 +1030,12 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 								miCoordinador.panelRegInmDesHabilitar();
 								bRegistrarI.setText("Registrar");
 								miCoordinador.botonCancelarDeshabilitarInm();
-//								LimpiarTablaInmuebles();
-//								cargarDatosListadoInmueble();
 								recargarPanelInmueble();
 						}
 					}else{
 						//mensaje de campos no completados o valores no validos
 						bRegistrarI.setSelected(true);
-						miCoordinador.mensajes("Campos no completados o valores no validos", 0);
+						miCoordinador.mensajes("Campos no completados, Seña superior al precio \n o Valores no validos", 0);
 						
 					}
 				}
@@ -1048,9 +1054,11 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		if(e.getSource()== bActualizarI){
 			try{
 				if(bActualizarI.isSelected()&&(!auxNum.equals(null))){
-					miCoordinador.panelRegInmHabilitar();
+					//Long LAlA =miCoordinador.NumeroAlquileresPorInmueble(auxNum);
+					miCoordinador.panelRegInmHabilitar(
+							miCoordinador.NoTieneAlquileres(auxNum));
 					bActualizarI.setText("Guardar");
-					bRegistrarI.setEnabled(false);
+					miCoordinador.deshabilitarBotonesInm(false,true,true,false,false);
 					miCoordinador.botonCancelarHabilitarInm();
 				}else{
 					
@@ -1065,8 +1073,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 								bActualizarI.setText("Modificar");
 								miCoordinador.botonCancelarDeshabilitarInm();
 								bRegistrarI.setEnabled(true);
-//								LimpiarTablaInmuebles();
-//								cargarDatosListadoInmueble();
+
 								recargarPanelInmueble();
 							}
 						}else{
@@ -1111,7 +1118,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				JOptionPane.showMessageDialog(null, 0,
 						"Ocurrio un error con el Boton", JOptionPane.ERROR_MESSAGE);
 			}
-				}
+		}
 		if(e.getSource()==bLimpiarCamposI){
 			try{ 
 				recargarPanelInmueble();
@@ -1120,7 +1127,20 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				//JOptionPane.showMessageDialog(null, 0,
 				//		"Ocurrio un error con el Boton", JOptionPane.ERROR_MESSAGE);
 			}
+		}
+		
+		if(e.getSource()==bEliminarFisica){
+			try{
+				if(0==miCoordinador.mensajeOpciones("", "El inmueble se eliminará permanentemente \n ¿Desea Eliminarlo?", 1)){
+					miCoordinador.EliminacionFisicaInmueble(auxNum);
+					miCoordinador.mensajes("Se Elimino Correctamente", 1);
+					recargarPanelInmueble();
 				}
+			}catch(Exception ex){
+				miCoordinador.mensajes("Ocurrio un error con el Boton", 0);
+			}
+			
+		}
 				
 		
 		
@@ -1128,7 +1148,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 			try{
 			CardLayout c= (CardLayout)(contentPane.getLayout());
 			c.show(contentPane, "p1");
-			this.RecargarPanelAlquiler();
+			this.RecargarPanelAlquiler();//cambiar titulo
 			//cambiar al panel alquileres-
 				
 			}catch(Exception ex){
@@ -1169,11 +1189,9 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		if(e.getSource()==bNuevoAlq){
 			try{
 				miCoordinador.mostrarVentanaNuevoAlquiler();
-				
 			}catch(Exception ex){
 				miCoordinador.mensajes("Ocurrio un error con el Boton", 0);
-//				JOptionPane.showMessageDialog(null,"Ocurrio un error con el Boton",
-//						, JOptionPane.ERROR_MESSAGE);
+
 			}
 			}
 				 
@@ -1268,7 +1286,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		            	
 		            	 byte a=1;
 		            	 if(tableAlq.getValueAt(fila, 0).equals(a)){
-			            	if(0==miCoordinador.mensajeOpciones("Sistema Club Avenida Ejercito", "¿Desea Eliminar Alquiler?", 3)){
+			            	if(0==miCoordinador.mensajeOpciones("Sistema Club Avenida Ejercito", "¿Desea Cancelar el Alquiler?", 3)){
 			            		miCoordinador.eliminarAlquiler(nroAlqui);
 			            	}
 		            	 }
@@ -1400,16 +1418,15 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 						if(((aux2-1)-aux1)>1)
 							e.consume();
 						}
+					
+					
 				}else{
 					getToolkit().beep(); 
 					e.consume(); 
 					miCoordinador.mensajes("El campo solo admite valores numericos", 0);
 
 					}
-					
-					
-				
-				
+
 			}catch(Exception ex){
 				miCoordinador.mensajes("Ocurrio un error", 0);
 				}
@@ -1459,8 +1476,11 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				miCoordinador.mensajes("Ocurrio un error", 0);
 				}
 		}
-	
-	
+		if(e.getSource()==texInmDireccion){
+			char tecla=e.getKeyChar();
+			if((tecla=='-')||(tecla=='_'))
+				e.consume();
+		}	
 	}
 	
 

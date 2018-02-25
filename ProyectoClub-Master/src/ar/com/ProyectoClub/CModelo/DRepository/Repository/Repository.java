@@ -362,6 +362,26 @@ public class Repository extends GenericDAOImplHibernate implements IRepository {
 		return null;
 	}
 	
+	public List<Alquiler> listaAlquileresPorInmueble(Integer idInmueble) throws BussinessException{
+		Setsession();
+		SetTransaction();
+		String query="SELECT a FROM Alquiler a WHERE a.inmuebles.idInmubles="+idInmueble;
+		List<Alquiler> listAlquileres= _sessiondehilo.createQuery(query).list();
+		if(!listAlquileres.isEmpty())
+			return listAlquileres;
+		return null;
+	}	
+	
+	public long NumeroAlquileresPorInmueble(Integer idInmueble) throws BussinessException {
+		Setsession();
+		SetTransaction();
+		String query="SELECT count(a) FROM Alquiler a WHERE a.inmuebles.idInmubles="+idInmueble;
+		long i=(long) _sessiondehilo.createQuery(query).uniqueResult();
+		if(i!=0)
+			return i;
+		return 0;
+				
+	};
 	
 	@Override
 	public long DevolverTotalRegistrosCaja() throws BussinessException 

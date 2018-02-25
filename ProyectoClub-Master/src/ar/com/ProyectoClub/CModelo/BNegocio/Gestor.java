@@ -1198,5 +1198,32 @@ public class Gestor {
 		repositorio.GuardarAlquiler(auxAlquiler);
 		
 	}
+
+	public long NumeroAlquileresPorInmueble(Integer idInmueble) throws BussinessException {
+//		List<Alquiler> lista= repositorio.listaAlquileresPorInmueble(idInmueble);
+		 long aux1 =repositorio.NumeroAlquileresPorInmueble(idInmueble);
+		 return aux1;
+		
+	}
+	
+	public void EliminacionFisicaInmueble(Integer idInmueble)throws BussinessException {
+		long numeroAlquileres = repositorio.NumeroAlquileresPorInmueble(idInmueble);
+		try {
+			if(numeroAlquileres==0)
+				repositorio.EliminarInmueble(idInmueble);
+		} catch (Exception e) {
+		}
+			
+	}
+
+	public boolean NoTieneAlquileres(Integer idInmueble)throws BussinessException  {
+		long numeroAlquileres = repositorio.NumeroAlquileresPorInmueble(idInmueble);
+		if(numeroAlquileres==0)
+			return true;
+		else 
+			return false;
+	}
+	
+	
 }
 

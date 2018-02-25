@@ -84,6 +84,10 @@ public interface IRepository  {
 	List<Alquiler> ListarAlquilerPorDia(int anio, int mes, int dia)throws BussinessException ;
 	List<Alquiler> ListarAlquilerPorDia(Date dia) throws BussinessException;
 	
+	List<Alquiler> listaAlquileresPorInmueble(Integer idInmueble)throws BussinessException;
+	long NumeroAlquileresPorInmueble(Integer idInmueble)throws BussinessException;
+	
+	
 	long DevolverTotalRegistrosCaja() throws BussinessException;
 	List<Caja> ListaCajaPorRangoFecha(Date FechaDesde,Date FechaHasta) throws BussinessException;
 	List<Caja> ListaCajaPoranio(Integer anio)throws BussinessException;
@@ -113,5 +117,7 @@ public interface IRepository  {
 	//Generacion cuota
 	Integer ObtenerUltimoIdCuotaSocio(Integer dni) throws BussinessException;
 	Date ObtenerUltimaFechaGeneracion(Integer dni) throws BussinessException;
+;
+	
 
 }

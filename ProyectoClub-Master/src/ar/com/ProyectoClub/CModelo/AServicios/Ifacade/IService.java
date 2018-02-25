@@ -42,6 +42,7 @@ public interface IService {
 	List<Inmuebles> ListarInmueblesParaAlquiler();
 	void GuardarInmueble(Inmuebles entity); 
 	boolean validarNombreInmueble(String tex, Integer id);
+	void EliminacionFisicaInmueble(Integer idInmueble);
 	
 	//contrato alquiler
 	Alquiler CrearInstanciaAlquiler();
@@ -58,6 +59,8 @@ public interface IService {
 	List<Alquiler> ListarAlquilerPorDia(int anio, int mes, int dia);
 	List<Alquiler> ListarAlquilerPorDia(Date dia);
 	void EliminarAlquiler(int nroAlqui);
+	long NumeroAlquileresPorInmueble(Integer idInmueble);
+	boolean NoTieneAlquileres(Integer idInmueble);
 	
 	//cuotas
 	List<Cuota> ObtenerCuotasPorid(List<Integer> id);
@@ -73,6 +76,9 @@ public interface IService {
 	List<Personas> ObtenerPersonaNomApe(String nom, String ape);
 	List<Morosos> FiltrarMorosos();
 	List<Morosos> FiltrarDeudores();
+
+
+	
 	
 
 
