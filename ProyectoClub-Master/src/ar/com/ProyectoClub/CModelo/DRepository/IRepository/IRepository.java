@@ -117,7 +117,7 @@ public interface IRepository  {
 	//Generacion cuota
 	Integer ObtenerUltimoIdCuotaSocio(Integer dni) throws BussinessException;
 	Date ObtenerUltimaFechaGeneracion(Integer dni) throws BussinessException;
-;
-	
+	Categoria ObteerCategoriaXNombre(String nombreCategoria)  throws BussinessException;
+
 
 }

@@ -661,6 +661,16 @@ public class Gestor {
 //	}
 	
 	//Gestion Categoria
+	
+	public ArrayList<String> ObtenerNombreCategorias() throws BussinessException {
+		ArrayList<String> nombre= new ArrayList<String>();
+		for(Categoria categoria: repositorio.ObtenerCategorias()){
+			if(categoria.isHabilitado())
+				nombre.add(categoria.getNombre());
+		}
+		return nombre;
+	}
+	
 	public Categoria CrearRegistroCategoria() throws BussinessException {
 		return  repositorio.CrearCategoria();
 	}
@@ -1223,6 +1233,13 @@ public class Gestor {
 		else 
 			return false;
 	}
+
+	
+	public Categoria ObtenerCategoriaXNombre(String nombreCategoria) throws BussinessException {
+		return repositorio.ObteerCategoriaXNombre(nombreCategoria);
+	}
+
+
 	
 	
 }

@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,7 +84,6 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	private JButton btnValidar;
 	private JLabel lblEstado;
 	private JPanel panel;
-	public JTextField txtCateg;
 	public JTextField txtEstdoCiv;
 	public static boolean TipoEntrada;
 
@@ -389,15 +389,9 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		btnRegistrar.setContentAreaFilled(false);
 		btnRegistrar.setBorderPainted(false);
 		btnRegistrar.setBorder(null);
-		
-		txtCateg = new JTextField();
-		txtCateg.setVisible(false);
-		txtCateg.setBackground(new Color(250, 250, 210));
-		txtCateg.setEditable(false);
-		txtCateg.setBounds(319, 55, 126, 20);
-		PanelDatosSocio.add(txtCateg);
 		btnRegistrar.addActionListener(this);
 		btnLimpiar.addActionListener(this);
+		btnVolver.addActionListener(this);
 		grupoEssocio.add(rdbtnNo);
 		grupoEssocio.add(rdbtnSi);
 				
@@ -475,8 +469,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			socio.setBaja(false);
 			socio.setMatricula(Integer.parseInt(txtMatri.getText()));
 			Categoria nuevaCategoria=miCoordinador.CrearCategoria();
-			String[] id = txtCateg.getText().split("-");
-			nuevaCategoria= miCoordinador.BuscarCategoria(Integer.parseInt(id[0]));
+			nuevaCategoria= miCoordinador.BuscarCategoriaNombre(comboCate.getSelectedItem().toString()); //BuscarCategoria(Integer.parseInt(id[0]));
 			socio.setCategoria(nuevaCategoria);
 			socio.setPersonas(nuevapersona);
 			nuevapersona.setSocios(socio);
@@ -516,7 +509,9 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 			 	   && (!rdbFemenino.isSelected() || !rdbMasculino.isSelected()))
 		{
 			if(rdbtnSi.isSelected()){
-				if(!txtMatri.getText().isEmpty() && !txtCateg.getText().isEmpty()  && !dateFechIngreso.getDate().equals(null))
+				String txt; 
+				txt=comboCate.getSelectedItem().toString(); 
+				if(!txtMatri.getText().isEmpty() && (!txt.isEmpty() && txt.toString()!=null)  && !dateFechIngreso.getDate().equals(null))
 					retorno=true; 
 			}
 			else
@@ -546,7 +541,6 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		txtDom.setText(null);
 		txtTel.setText(null);
 		txtMatri.setText(null);
-		txtCateg.setText(null);
 		txtEstdoCiv.setText(null);
 		comboCate.removeAllItems();
 		txtNacion.setText(null);
@@ -554,8 +548,19 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		txtDomNro.setText(null);
 		lblEstado.setText(null);
 		lblEstado.setForeground(Color.black);
+		LimpiarCategoria();
 	}
-	
+	private void LimpiarCategoria(){
+		//Limpio
+		comboCate.removeAllItems();
+		//Obtengo los nombres de las categorias
+		ArrayList<String> listaNombre = new ArrayList<String>();
+		listaNombre=miCoordinador.ObtenerNombreCategorias();  
+		comboCate.addItem("Seleccione una Categoria");
+		for(int i=0; i<listaNombre.size(); i++){
+			comboCate.addItem(listaNombre.get(i));
+		}
+	}
 	//limpiar
 	private void limpiar2(){
 		txtApe.setText(null);
@@ -564,7 +569,6 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		txtDom.setText(null);
 		txtTel.setText(null);
 		txtMatri.setText(null);
-		txtCateg.setText(null);
 		txtEstdoCiv.setText(null);
 		comboCate.setSelectedItem("Seleccione una categoria");
 		txtNacion.setText(null);
@@ -574,7 +578,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	}
 	//escuchando al usuario
 	private void Escuchando(){
-		comboCate.addActionListener(this);
+		//comboCate.addActionListener(this);
 		rdbtnSi.addActionListener(this);
 		rdbtnNo.addKeyListener(this);
 		txtApe.addKeyListener(this);
@@ -593,19 +597,13 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if(e.getSource()==comboCate){
-			if(comboCate.getItemCount() != 0 && comboCate.getSelectedItem().toString() != "Seleccione una categoria")
-				txtCateg.setText(comboCate.getSelectedItem().toString());
-			else
-				txtCateg.setText("");
-		}
-		
 		if(e.getSource() == btnRegistrar){
 			if(ValidarDatos()){
 				this.CargaYGuardarDatos();
 			}
 
 		}
+		//System.out.println("");
 		if(e.getSource()==btnValidar){
 			this.ValidarDatosIngresados();
 		}
@@ -623,9 +621,7 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		
 		txtMatri.setEnabled(valor);
 		comboCate.setEnabled(valor);
-		dateFechIngreso.setEnabled(valor);
-		txtCateg.setEnabled(valor);
-		
+		dateFechIngreso.setEnabled(valor);	
 	}
 	private void HabilitarBotonoes(boolean valor){
 
@@ -645,7 +641,6 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 		dateFechIngreso.setEnabled(valor);
 		dateFechNac.setEnabled(valor);
 		comboCate.setEnabled(valor);
-		txtCateg.setEnabled(valor);
 	}
 
 	private void ValidarDatosIngresados() {
@@ -677,8 +672,6 @@ public class PantallaFormularioPersona extends JDialog implements ActionListener
 					BotonesSocioHabilitado(true);
 					txtMatri.setText(persona.getSocios().getMatricula().toString());
 					dateFechIngreso.setDate(persona.getSocios().getFechaingreso());
-					txtCateg.setText(persona.getSocios().getCategoria().getIdCategoria()+"-"+persona.getSocios().getCategoria().getNombre());
-
 				}
 				else{
 					rdbtnNo.setSelected(true);

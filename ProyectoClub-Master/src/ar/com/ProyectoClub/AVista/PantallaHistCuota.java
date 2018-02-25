@@ -45,7 +45,7 @@ public class PantallaHistCuota extends JDialog{
     	setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaHistCuota.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoPaloma.png")));
         initComponents();
         tablaCuotas.getTableHeader().setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
-        tablaCuotas.setDefaultRenderer(Object.class, new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
+        //tablaCuotas.setDefaultRenderer(Object.class, new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
         tablaCuotas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);    
     }
 

@@ -72,7 +72,9 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCobranzaCuota.class.getResource("/ar/com/ProyectoClub/AVista/icon/transaccion.png")));
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaCobranzaCuota.class.getResource("/ar/com/ProyectoClub/AVista/icon/dollar_money_17872.png")));
 		setTitle("Sistema Club Avenida Ejercito - Control de Cuotas");
-		initComponents();	
+		initComponents();
+		jtDatosCuota.getTableHeader().setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
+		jtDatosCuota.setDefaultRenderer(Object.class, new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
 	}
 
 	
@@ -218,7 +220,7 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		lblCuotasImpagas.setBounds(10, 21, 729, 21);
 		panel_3.add(lblCuotasImpagas);
 		
-		scrollPane.setBounds(10, 53, 882, 183);
+		scrollPane.setBounds(10, 53, 771, 183);
 		panel_3.add(scrollPane);
 		
 		//Panel cuotas
@@ -240,21 +242,22 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		scrollPane.setViewportView(jtDatosCuota);
 		
 		txttotal = new JTextField();
+		txttotal.setHorizontalAlignment(SwingConstants.RIGHT);
 		txttotal.setFont(new Font("Arial", Font.PLAIN, 16));
 		txttotal.setBackground(new Color(250, 250, 210));
 		txttotal.setEditable(false);
-		txttotal.setBounds(531, 255, 233, 20);
+		txttotal.setBounds(650, 255, 131, 20);
 		panel_3.add(txttotal);
 		txttotal.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Total importe a pagar :");
 		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 15));
-		lblNewLabel_2.setBounds(362, 258, 159, 17);
+		lblNewLabel_2.setBounds(481, 258, 159, 17);
 		panel_3.add(lblNewLabel_2);
 		
 		JLabel label = new JLabel("$");
 		label.setFont(new Font("Arial", Font.PLAIN, 15));
-		label.setBounds(774, 258, 19, 17);
+		label.setBounds(786, 258, 19, 17);
 		panel_3.add(label);
 		
 		btnCobrar = new JButton("Cobrar Cuota");
@@ -268,7 +271,7 @@ public class PantallaCobranzaCuota extends JDialog implements ActionListener {
 		btnHistorial.setIcon(new ImageIcon(PantallaCobranzaCuota.class.getResource("/ar/com/ProyectoClub/AVista/icon/historialCuota.png")));
 		btnHistorial.setVerticalAlignment(SwingConstants.TOP);
 		btnHistorial.setToolTipText("Ver Historial Cuotas");
-		btnHistorial.setBounds(749, 21, 40, 31);
+		btnHistorial.setBounds(741, 21, 40, 31);
 		panel_3.add(btnHistorial);
 		btnCobrar.addActionListener(this);
 		btnHistorial.addActionListener(this);

@@ -288,6 +288,16 @@ public class Service implements IService {
     //contrato Categoria
 	
 	@Override
+	public Categoria ObtenerCategoriaXNombre(String nombreCategoria) {
+		try {
+			return gestor.ObtenerCategoriaXNombre(nombreCategoria);
+		} 
+		catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE, "Mensaje Critico", e);
+			throw new RuntimeException("ERROR: ",e.getCause());
+		}	
+	}
+	@Override
 	public void habilitarInhabilitarCategoria(int id) {
 		try {
 			gestor.HabiliInhabiCategoria(id);
@@ -345,6 +355,16 @@ public class Service implements IService {
 		
 	}
 
+	@Override
+	public ArrayList<String> ObtenerNombreCategorias() {
+		try {
+			return gestor.ObtenerNombreCategorias();
+		} 
+		catch (BussinessException e) {
+			Logger.getLogger(Service.class.getName()).log(Level.SEVERE,"Mensaje Critico", e);
+			throw new RuntimeException("ERROR: "+ e.getMessage());
+		}
+	}
 
 	//contrato inmueble
 	@Override
@@ -767,6 +787,10 @@ public class Service implements IService {
 			throw new RuntimeException("ERROR: "+ e.getBussinessMessages());
 		}
 	}
+	
+
+	
+
 	
 
 }

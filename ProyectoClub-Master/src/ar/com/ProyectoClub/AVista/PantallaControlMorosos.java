@@ -57,7 +57,6 @@ public class PantallaControlMorosos extends JFrame implements KeyListener{
     public static javax.swing.JTable tablaDeudores;
     public ButtonGroup GrupoSNS;
 	private ControllerCoordinador miCoordinador; //objeto miCoordinador que permite la relacion entre esta clase y la clase ControllerCoordinador
-	private JComboBox cmbFilter;
 	private JTextField txtDni;
 	
 	public PantallaControlMorosos() {
@@ -73,7 +72,7 @@ public class PantallaControlMorosos extends JFrame implements KeyListener{
 		});
 		
 		tablaDeudores.getTableHeader().setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
-		tablaDeudores.setDefaultRenderer(Object.class, new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
+		//tablaDeudores.setDefaultRenderer(Object.class, new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
@@ -109,41 +108,22 @@ public class PantallaControlMorosos extends JFrame implements KeyListener{
         tablaDeudores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jScrollPane1.setViewportView(tablaDeudores);
         
-        JLabel lblNewLabel = new JLabel("Filtrar por:");
-        lblNewLabel.setVisible(false);
-        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-        
-        cmbFilter = new JComboBox();
-        cmbFilter.setVisible(false);
-        cmbFilter.addItemListener(new ItemListener() {
-        	public void itemStateChanged(ItemEvent arg0) {
-        		
-        		filtrarGrilla();
-        	}
-        });
-        cmbFilter.setModel(new DefaultComboBoxModel(new String[] {"TODOS", "MOROSO", "DEUDOR"}));
-        
         txtDni = new JTextField();
-        txtDni.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char numero=e.getKeyChar(); 
-				if(Character.isLetter(numero)) { 
-					getToolkit().beep(); 
-					e.consume(); 
-					JOptionPane.showMessageDialog(null,"El campo solo admite valores numericos","ERROR",JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
         txtDni.setColumns(10);
         txtDni.addKeyListener(this);
         
         
-        JLabel lblBuscarPorApellido = new JLabel("INGRESE DNI:");
+        JLabel lblBuscarPorApellido = new JLabel("BUSCAR:");
+        lblBuscarPorApellido.setToolTipText("Escribe la palabra a buscar en la grilla");
         lblBuscarPorApellido.setFont(new Font("Tahoma", Font.BOLD, 14));
-
-
-
+        
+        JButton btnNewButton = new JButton("");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		miCoordinador.Filtro(txtDni.getText().toUpperCase(), tablaDeudores);
+        	}
+        });
+        btnNewButton.setIcon(new ImageIcon(PantallaControlMorosos.class.getResource("/ar/com/ProyectoClub/AVista/icon/buscar-lupa-simbolo-de-interfaz.png")));
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1Layout.setHorizontalGroup(
         	jPanel1Layout.createParallelGroup(Alignment.LEADING)
@@ -151,25 +131,23 @@ public class PantallaControlMorosos extends JFrame implements KeyListener{
         			.addGap(18)
         			.addComponent(lblBuscarPorApellido)
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(txtDni, GroupLayout.PREFERRED_SIZE, 291, GroupLayout.PREFERRED_SIZE)
-        			.addGap(575)
-        			.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-        			.addGap(59)
-        			.addComponent(cmbFilter, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-        			.addGap(170))
+        			.addComponent(txtDni, GroupLayout.PREFERRED_SIZE, 444, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addComponent(btnNewButton)
+        			.addGap(804))
         		.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 1393, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
         	jPanel1Layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(jPanel1Layout.createSequentialGroup()
         			.addGap(23)
-        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(cmbFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(lblNewLabel)
-        				.addComponent(lblBuscarPorApellido, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(txtDni, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addGap(71)
-        			.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
+        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+        					.addComponent(lblBuscarPorApellido, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+        					.addComponent(txtDni, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+        				.addComponent(btnNewButton))
+        			.addGap(18)
+        			.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
         			.addContainerGap())
         );
         jPanel1.setLayout(jPanel1Layout);
@@ -210,13 +188,6 @@ public class PantallaControlMorosos extends JFrame implements KeyListener{
 //			 tb.removeRow(tb.getRowCount()-1);
 //		 } 
 	 }
-	
-	 
-	 @SuppressWarnings("unchecked")
-	private void filtrarGrilla() {
-		 String filtro=cmbFilter.getSelectedItem().toString();
-			 miCoordinador.FiltrarMorosos(filtro,tablaDeudores);
-	 }
 
 
 	@Override
@@ -236,5 +207,4 @@ public class PantallaControlMorosos extends JFrame implements KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
-	
 }
