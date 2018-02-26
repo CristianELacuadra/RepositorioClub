@@ -160,6 +160,7 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 	
 	public PantallaNuevoAlquiler(PantallaAlquilerPrincipal vtnPantallaAlquiler,boolean b) {
 		super(vtnPantallaAlquiler,b);
+		setAlwaysOnTop(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaNuevoAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoPaloma.png")));
 		getContentPane().setForeground(Color.BLACK);
 		getContentPane().setBackground(UIManager.getColor("Button.light"));
@@ -294,11 +295,13 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 			lblHoraDeReserva.setHorizontalAlignment(SwingConstants.RIGHT);
 			
 			txtHoraR = new JSpinner();
-			txtHoraR.setBackground(new Color(250, 250, 210));
 			txtHoraR.setEnabled(false);
+			txtHoraR.setForeground(Color.BLACK);
+			txtHoraR.setBackground(new Color(250, 250, 210));
 			txtHoraR.setBounds(155, 50, 180, 20);
 			panelReserva.add(txtHoraR);
 			txtHoraR.setModel(new SpinnerNumberModel(6, 6, 23, 1));
+			
 			
 			txtCantidadHoras = new JSpinner();
 			txtCantidadHoras.setBackground(new Color(250, 250, 210));

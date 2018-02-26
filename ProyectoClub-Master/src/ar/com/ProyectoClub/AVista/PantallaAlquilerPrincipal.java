@@ -571,12 +571,9 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		panelTablaInm.add(scrollPane, BorderLayout.CENTER);
 		
 		tableInm = new JTable();
-		tableInm.setAutoCreateRowSorter(true);
 		//da estilo a las filas y a la cabecera
 		tableInm.getTableHeader()
 				.setDefaultRenderer(new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaHeader());
-//		tableInm.setDefaultRenderer(Object.class,
-//				new ar.com.ProyectoClub.AVista.EstiloVentanas.EstiloTablaRenderer());// garilla intercalada
 
 		tableInm.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		tableInm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -669,8 +666,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		formatoDecimal.setGroupingSeparator(',');
 		texInmPrecioHora = new JFormattedTextField(new DecimalFormat("#0.00",formatoDecimal));
 		
-		
-//		JFormattedTextField formatPrueba =new JFormattedTextField(new DecimalFormat("#0.00"));
+
 		texInmPrecioHora.setBackground(new Color(250, 250, 210));
 		texInmPrecioHora.setDisabledTextColor(Color.RED);
 		texInmPrecioHora.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -679,7 +675,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		
 		
 		texInmSe = new JFormattedTextField(new DecimalFormat("#0.00",formatoDecimal));
-//		JFormattedTextField formatPrueba =new JFormattedTextField(new DecimalFormat("#0.00"));
+
 		texInmSe.setBackground(new Color(250, 250, 210));
 		texInmSe.setDisabledTextColor(Color.RED);
 		texInmSe.setFont(new Font("Tahoma", Font.BOLD, 12));

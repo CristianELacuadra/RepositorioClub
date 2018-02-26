@@ -1287,7 +1287,6 @@ public class ControllerCoordinador {
 		ocultarColumnaAlquiler(4, jtablaInmueble);
 		RowsRende rr= new RowsRende(4); // para determinar si esta borrado o no
 		jtablaInmueble.setDefaultRenderer(Object.class, rr);
-		jtablaInmueble.setAutoCreateRowSorter(true);
 		jtablaInmueble.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		jtablaInmueble.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtablaInmueble.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
@@ -1476,7 +1475,7 @@ public class ControllerCoordinador {
 	}
 	
 	
-//TODO REVISAR SI COMPRUEBA BIEN LOS DATOS VALOR BYTE
+
 	/**
 		CLASS ROWSRENDE YA MODIFICADA COMPROBAR BOTONES
 	**/
