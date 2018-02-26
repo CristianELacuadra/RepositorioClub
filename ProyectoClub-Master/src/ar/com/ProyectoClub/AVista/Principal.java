@@ -24,10 +24,13 @@ import javax.swing.ImageIcon;
 
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Desktop;
 
 import javax.swing.SwingConstants;
 
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.ComponentOrientation;
 
@@ -61,6 +64,7 @@ import javax.swing.GroupLayout.Alignment;
 import java.awt.CardLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.Font;
 
 public class Principal extends JFrame implements ActionListener{
     
@@ -73,6 +77,8 @@ public class Principal extends JFrame implements ActionListener{
 	public j2Button btnSalir;
 	public JToolBar jtoolbar1;
 	public JDesktopPane jCDesktopPane1; 
+	private j2Button info;
+	private j2Button btnAyuda;
 	
 	public Principal(){
 		initComponents();
@@ -152,6 +158,51 @@ public class Principal extends JFrame implements ActionListener{
         jtoolbar1.addSeparator();
         
         //btnConfig.setHorizontalTextPosition(SwingConstants.LEFT);
+       
+        
+        info = new j2Button();
+        info.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/Informacion.png")));
+        info.setColor1(new java.awt.Color(0, 0, 0));
+        info.setColor2(new java.awt.Color(153, 153, 153));
+        info.setEnabled(true);
+        info.setFocusable(false);
+        info.setFuente1(new java.awt.Font("Arial Black", 1, 12));
+        info.setFuente2(new java.awt.Font("Arial", 1, 10));
+        info.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        info.setTexto1("Acerca de");
+        info.setTexto2("");
+        info.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        info.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(java.awt.event.ActionEvent evt) {
+        		infoActionPerformed(evt);
+        	}
+        });
+        jtoolbar1.add(info);
+        jtoolbar1.addSeparator();
+        
+        btnAyuda = new j2Button();
+        btnAyuda.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/pregunta (1).png")));
+        btnAyuda.setColor1(new java.awt.Color(0, 0, 0));
+        btnAyuda.setColor2(new java.awt.Color(153, 153, 153));
+        btnAyuda.setEnabled(true);
+        btnAyuda.setFocusable(false);
+        btnAyuda.setFuente1(new java.awt.Font("Arial Black", 1, 12));
+        btnAyuda.setFuente2(new java.awt.Font("Arial", 1, 10));
+        btnAyuda.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAyuda.setTexto1("Ayuda");
+        btnAyuda.setTexto2("");
+        btnAyuda.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAyuda.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(java.awt.event.ActionEvent evt) {
+        		AbrirArchivo("src/ar/com/ProyectoClub/Avista/icon/ArchivoAyuda/ManualUsuario.pdf");
+        	}
+
+			
+        });
+        
+        jtoolbar1.add(btnAyuda);
+        jtoolbar1.addSeparator();
+        
         btnSalir.setIcon(new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/icoSalida.png")));
         btnSalir.setColor1(new java.awt.Color(0, 0, 0));
         btnSalir.setColor2(new java.awt.Color(153, 153, 153));
@@ -164,9 +215,8 @@ public class Principal extends JFrame implements ActionListener{
         btnSalir.setTexto2("");
         btnSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jtoolbar1.add(btnSalir);
-        
-        
-		 jCDesktopPane1.setBackground(new java.awt.Color(153, 153, 153));
+
+        jCDesktopPane1.setBackground(new java.awt.Color(153, 153, 153));
 		 
 		 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 	        getContentPane().setLayout(layout);
@@ -182,6 +232,7 @@ public class Principal extends JFrame implements ActionListener{
 	                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 	                .addComponent(jCDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE))
 	        );
+	        
 
 	        pack();
 	        
@@ -195,6 +246,39 @@ public class Principal extends JFrame implements ActionListener{
 		
 	}
 	
+	private void AbrirArchivo(String archivo) {
+		try {
+
+			File objetofile = new File (archivo);
+			Desktop.getDesktop().open(objetofile);
+
+		}catch (IOException  ex) {
+
+			JOptionPane.showMessageDialog(null,ex.getMessage(),"Atencion", JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+	private void infoActionPerformed(ActionEvent evt) {//GEN-FIRST:event_infoActionPerformed
+		JOptionPane.showMessageDialog(this, "El SISTEMA CLUB AVENIDA EJERCITO fue creado por estudiantes de la Facultad de Ciencia y Tecnologia UADER\n\n"
+				+" Con el propósito de recibirse de Analista de Sistemas de información. "
+				+ "cuenta con una serie de opciones para el manejo del mismo.\n\n" 
+				+"*PERSONAS: este apartado registra personas(Socio y no socios) "
+				+ "para que puedan acceder al sistema, Y unas series de funcionalidades\n"
+				+ " que le permitirán entre otras cosas: cobrar cuota del socio,revisar morosos,\n"
+				+ "editar una personas existente, habilitar e inhabilitar una persona.\n\n"
+				+"*ALQUILER: este apartado realiza CREACION-MODIFICACION-CANCELACION de alquileres\n"
+				+ " de los distintos inmuebles que posee el club.\n\n"                                
+				+ "*CAJA: en este apartado se muestran todos los ingreso y egresos realizadas\n"
+				+ "durante determinada fecha y se pueden filtrar diferentes registros.\n\n"
+				+ "*CONFIGURACION: en este apartado mustra y configura el backup. Solo Usuario Administrador.\n\n"
+				+ "el usuario administrador es el unnico con todos los privilegios sobre el sistema,\n"
+				+ "y el usuario normal a todos menos a la configuracion.\n\n" +
+				"________________________________________________________________\n"+
+				"FCYT FACULTAD DE CIENCIA Y TECNOLOGIA UADER \n"
+				+"INTEGRANTES: GIECO MAXIMILIANO ROMAN , LACUADRA CRISTIAN EMANUEL CEFERINO\n"
+				+"CONTACO: maximiliano-g@hotmail.com  emanuellacuadra@gmail.com", "Informacion", 0,new ImageIcon(Principal.class.getResource("/ar/com/ProyectoClub/AVista/icon/facultad.png")));
+	}
+
 	public void setCoordinador(ControllerCoordinador miCoordinador) {
 		this.miCoordinador=miCoordinador;
 	}	
