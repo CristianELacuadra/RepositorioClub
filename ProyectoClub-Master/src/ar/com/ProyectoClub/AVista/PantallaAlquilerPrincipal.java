@@ -186,7 +186,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 	
 	public void initComponents(){
 		miCoordinador=new ControllerCoordinador();
-		setBounds(50, 50, 1020, 600);
+		setBounds(50, 50, 1030, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -538,16 +538,16 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 						.addGroup(gl_panelInmuebles.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(gl_panelInmuebles.createParallelGroup(Alignment.TRAILING)
-								.addComponent(panelTablaInm, GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE)
+								.addComponent(panelTablaInm, GroupLayout.DEFAULT_SIZE, 974, Short.MAX_VALUE)
 								.addGroup(gl_panelInmuebles.createSequentialGroup()
-									.addComponent(panelOpcionInm, GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
+									.addComponent(panelOpcionInm, GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(panelFiltro, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(gl_panelInmuebles.createSequentialGroup()
 							.addGap(8)
 							.addComponent(btnIrAlquileres)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(panelRegInm, GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE)
+							.addComponent(panelRegInm, GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
 							.addGap(0)))
 					.addContainerGap())
 		);
@@ -556,11 +556,11 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				.addGroup(gl_panelInmuebles.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panelInmuebles.createParallelGroup(Alignment.LEADING)
-						.addComponent(panelRegInm, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panelRegInm, GroupLayout.PREFERRED_SIZE, 186, Short.MAX_VALUE)
 						.addComponent(btnIrAlquileres, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panelInmuebles.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panelFiltro, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_panelInmuebles.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(panelFiltro, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
 						.addComponent(panelOpcionInm, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panelTablaInm, GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))
@@ -665,6 +665,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		formatoDecimal.setDecimalSeparator('.');
 		formatoDecimal.setGroupingSeparator(',');
 		texInmPrecioHora = new JFormattedTextField(new DecimalFormat("#0.00",formatoDecimal));
+		texInmPrecioHora.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 
 		texInmPrecioHora.setBackground(new Color(250, 250, 210));
@@ -675,6 +676,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		
 		
 		texInmSe = new JFormattedTextField(new DecimalFormat("#0.00",formatoDecimal));
+		texInmSe.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		texInmSe.setBackground(new Color(250, 250, 210));
 		texInmSe.setDisabledTextColor(Color.RED);
@@ -906,7 +908,6 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		inmuebleEnt.setNombre(texInmNombre.getText());
 		inmuebleEnt.setPreciohora(Float.parseFloat(texInmPrecioHora.getText())  );//convertir a float
 		inmuebleEnt.setSenial(Float.parseFloat(texInmSe.getText()));//convertir a float
-		// (Integer.parseInt(textCantidadHoras.getText().toString()));
 		inmuebleEnt.setDireccion(texInmDireccion.getText()+"-"+texInmDireccionNum.getText());
 		inmuebleEnt.setDescripcion(texInmDescrip.getText());
 	}
@@ -917,12 +918,13 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 		texInmNombre.setText(aux.getNombre());	
 		
 		String[] parts= aux.getDireccion().split("-");
-
 		texInmDireccion.setText(parts[0]);
 		texInmDireccionNum.setText(parts[1]);
 		
-		texInmPrecioHora.setText(Float.toString(aux.getPreciohora()));
-		texInmSe.setText(Float.toString(aux.getSenial()));
+//		texInmPrecioHora.setText(Float.toString(aux.getPreciohora()));
+//		texInmSe.setText(Float.toString(aux.getSenial()));
+		texInmPrecioHora.setValue(aux.getPreciohora());
+		texInmSe.setValue(aux.getSenial());
 		texInmDescrip.setText(aux.getDescripcion());
 		
 
@@ -972,6 +974,8 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				LimpiarTablaInmuebles();
 				inmuebleEnt= new Inmuebles();
 				miCoordinador.panelRegInmDesHabilitar();
+				texInmPrecioHora.setValue(0);
+				texInmSe.setValue(0);
 				limpiarCampos();	
 				cargarDatosListadoInmueble();
 				miCoordinador.botonCancelarDeshabilitarInm();
@@ -983,6 +987,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				botCanhab=false;
 				bRegistrarI.setEnabled(true);
 				setTitle("INMUEBLES");
+				
 				
 			}catch(Exception ex){
 				miCoordinador.mensajes("Error al recargar la pagina", 0);
@@ -1027,7 +1032,10 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 								bRegistrarI.setText("Registrar");
 								miCoordinador.botonCancelarDeshabilitarInm();
 								recargarPanelInmueble();
+						}else {
+							bRegistrarI.setSelected(true);
 						}
+						
 					}else{
 						//mensaje de campos no completados o valores no validos
 						bRegistrarI.setSelected(true);
@@ -1058,7 +1066,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 					miCoordinador.botonCancelarHabilitarInm();
 				}else{
 					
-				if(!miCoordinador.validarNombreInmueble(texInmNombre.getText(),inmuebleEnt.getIdInmubles())){
+					if(!miCoordinador.validarNombreInmueble(texInmNombre.getText(),inmuebleEnt.getIdInmubles())){
 						if(miCoordinador.validarPanelRegInm()&&(inmuebleEnt.getIdInmubles().equals(auxNum))){
 							this.cargarDatosInmueble();
 							if(0==miCoordinador.mensajeOpciones("¿Pregunta?", "¿Estas seguro que deseas guardar?",3)){
@@ -1071,7 +1079,8 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 								bRegistrarI.setEnabled(true);
 
 								recargarPanelInmueble();
-							}
+							}else
+								bActualizarI.setSelected(true);
 						}else{
 							//mensaje de campos no completados o valores no validos
 							bActualizarI.setSelected(true);
@@ -1091,7 +1100,7 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
 				if(botCanhab){//variable para determinar cuando esta activo el boton cancelar
 					//boton cancelar
 					miCoordinador.botonCancelarInm();
-					recargarPanelInmueble();
+				
 				}else
 				//boton eliminar
 					if(0==miCoordinador.mensajeOpciones("Pregunta", "¿Desea continuar?", 3)){
@@ -1280,12 +1289,17 @@ public class PantallaAlquilerPrincipal extends JFrame implements ActionListener,
              
 		             if (boton.getName().equals("btnEli")){
 		            	
-		            	 byte a=1;
-		            	 if(tableAlq.getValueAt(fila, 0).equals(a)){
-			            	if(0==miCoordinador.mensajeOpciones("Sistema Club Avenida Ejercito", "¿Desea Cancelar el Alquiler?", 3)){
-			            		miCoordinador.eliminarAlquiler(nroAlqui);
-			            	}
-		            	 }
+		            	 try {
+							byte a=1;
+							 if(tableAlq.getValueAt(fila, 0).equals(a)){
+								if(0==miCoordinador.mensajeOpciones("Sistema Club Avenida Ejercito", "¿Desea Cancelar el Alquiler?", 3)){
+									miCoordinador.eliminarAlquiler(nroAlqui);
+								}
+							 }
+		            	 } catch (Exception e1) {
+							miCoordinador.mensajes("Ocurrio un error con el Boton", 0);
+						}
+		            	 
 		             }
 								
 		             if( (boton.getName().equals("btnMod"))&&(tableAlq.getValueAt(fila, 0).equals(aux))){

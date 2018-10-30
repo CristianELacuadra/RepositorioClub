@@ -160,7 +160,6 @@ public class PantallaNuevoAlquiler extends JDialog implements ActionListener,Key
 	
 	public PantallaNuevoAlquiler(PantallaAlquilerPrincipal vtnPantallaAlquiler,boolean b) {
 		super(vtnPantallaAlquiler,b);
-		setAlwaysOnTop(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PantallaNuevoAlquiler.class.getResource("/ar/com/ProyectoClub/AVista/icon/iconoPaloma.png")));
 		getContentPane().setForeground(Color.BLACK);
 		getContentPane().setBackground(UIManager.getColor("Button.light"));

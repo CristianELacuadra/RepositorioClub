@@ -3,6 +3,7 @@ package ar.com.ProyectoClub.BControlador;
 import java.awt.CardLayout;
 import java.awt.Cursor;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -25,6 +27,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
 
 
 
@@ -1239,11 +1242,14 @@ public class ControllerCoordinador {
 			// solo inmuebles habilitados
 			}else if(selected){
 				listaInmuebles=modeloService.ListarInmueble();
-				//incluir todos habilitados y no habilitados
-				
+								
 				}
 		
 //		DefaultTableModel  modeloT = (DefaultTableModel) jtdatos.getModel();
+		
+		DecimalFormatSymbols Symbolo=new DecimalFormatSymbols();
+		Symbolo.setDecimalSeparator('.');
+		DecimalFormat filtro = new DecimalFormat("#0.00", Symbolo);
 		DefaultTableModel  modeloT = new DefaultTableModel(){
 			Class[] columnTypes= new Class[]{
 					Object.class, 
@@ -1276,8 +1282,10 @@ public class ControllerCoordinador {
 			for (int i = 0; i < numr; i++) {
 				columna[0] = listaInmuebles.get(i).getIdInmubles();
 				columna[1] = listaInmuebles.get(i).getNombre();
-				columna[2] = listaInmuebles.get(i).getPreciohora();
-				columna[3] = listaInmuebles.get(i).getSenial();
+				
+				columna[2] = filtro.format(listaInmuebles.get(i).getPreciohora());
+				columna[3] = filtro.format(listaInmuebles.get(i).getSenial());
+				
 				columna[4] = listaInmuebles.get(i).isHabilitado();
 				modeloT.addRow(columna);
 			}
@@ -1393,7 +1401,6 @@ public class ControllerCoordinador {
 	}
 	
 	public void botonCancelarInm(){
-		
 
 		if(0== mensajeOpciones("Pregunta", "¿Deseas cancelar? \n perdera toda la informacion que no guardo", 3)){
 			miVentanaAlquilerPrincipal.inmuebleEnt=null;
@@ -1482,8 +1489,9 @@ public class ControllerCoordinador {
 	@SuppressWarnings("deprecation")
 	public void ListarAlquileres(JTable tableAlq, List<Alquiler> listaAlquiler) {
 		try{
-
-		DefaultTableModel  modeloT = new DefaultTableModel(){
+		
+			
+			DefaultTableModel  modeloT = new DefaultTableModel(){
 			
 			Class[] columnTypes = new Class[] {
 					Byte.class, 
@@ -1496,7 +1504,7 @@ public class ControllerCoordinador {
 					String.class, 
 					String.class ,//Date.class
 					String.class,
-					Float.class,
+					Integer.class,
 					String.class//Date.class
 				};
 				public Class getColumnClass(int columnIndex) {
@@ -1524,7 +1532,10 @@ public class ControllerCoordinador {
 		modeloT.addColumn("Monto");
 		modeloT.addColumn("Fecha de emisi\u00F3n");
 	
-	
+		DecimalFormatSymbols Symbolo=new DecimalFormatSymbols();
+		Symbolo.setDecimalSeparator('.');
+		DecimalFormat filtroNumero = new DecimalFormat("#0.00", Symbolo);
+		
 		Object[] columna = new Object[12];//tableAlq
 		if(listaAlquiler!=null){
 		int numr=listaAlquiler.size();
@@ -1541,17 +1552,15 @@ public class ControllerCoordinador {
 			columna[8]=listaAlquiler.get(i).getInmuebles().getNombre();
 			Calendar cal =new GregorianCalendar(2015,1,1,0,0,0);
 			if(listaAlquiler.get(i).getFechareserva().before(cal.getTime()))
-				columna[9]= "S/N";
+				columna[9]= "S/F";
 			else
 				columna[9]=""+new SimpleDateFormat("dd-MM-yyyy").format(listaAlquiler.get(i).getFechareserva())
 						+" " + new SimpleDateFormat("HH:mm:ss").format(listaAlquiler.get(i).getFechareserva());
-			columna[10]= listaAlquiler.get(i).getPreciototal();
+			columna[10]= filtroNumero.format(listaAlquiler.get(i).getPreciototal());
 			
 			columna[11]=""+ new SimpleDateFormat("dd-MM-yyyy").format(listaAlquiler.get(i).getFechaactual())
 					+" "+ new SimpleDateFormat("HH:mm:ss").format(listaAlquiler.get(i).getFechaactual());
 					
-
-
 			modeloT.addRow(columna);
 			}
 		}
@@ -1791,53 +1800,61 @@ public class ControllerCoordinador {
 	}
 	public void mostrarVentanaDetallesAlquiler(int nroAlqui) {
 		try{
-		
-		miVentanaDetallesAlquiler.texDetalle.setText(null);
-		miVentanaDetallesAlquiler.texDetalle.setEditable(false);
-		Alquiler aux=this.CrearAlquiler();
-		aux=modeloService.buscarAlquiler(nroAlqui);
-		String texto=new String();
-		String textoactivo=new String();
-		String textoPagado=new String();
-		String textoFechaReserva= new String();
-		String textoHoraReserva=new String();
-		byte q=1;
-		String texPer=new String();
-		String texInm=new String();
-		if(aux.getActivo()==q){
-			textoactivo="Estado del Alquiler: Habilitado";
-			textoFechaReserva="Fecha de Reserva: "+ (new SimpleDateFormat("dd-MM-yyyy").format(aux.getFechareserva()));
-			textoHoraReserva="Hora de Reserva: "+ new SimpleDateFormat("HH:mm:ss").format(aux.getFechareserva());
-		}else{
-			textoactivo	= "Estado del Alquiler: Deshabilitado";
-			textoFechaReserva="Fecha de Reserva: S/N";
-			textoHoraReserva="Hora de Reserva: S/N";
-		}
-		if(aux.getPagoalquiler()==q){
-			textoPagado="Alquiler: Pagado Completo" +'\n'+""+ 
-		"Fecha de Pago: "+ (new SimpleDateFormat("dd-MM-yyyy").format(aux.getFechapagoalquiler()));
+			DecimalFormatSymbols Symbolo=new DecimalFormatSymbols();
+			Symbolo.setDecimalSeparator('.');
+			DecimalFormat filtro = new DecimalFormat("#0.00", Symbolo);
 			
-			
-		}else{
-			textoPagado="Alquiler: Pagado Incompleto" +'\n'+""+ 
-		"Monto Faltante: "+aux.getMontofaltante();
-		}
+			miVentanaDetallesAlquiler.texDetalle.setText(null);
+			miVentanaDetallesAlquiler.texDetalle.setEditable(false);
+			Alquiler aux=this.CrearAlquiler();
+			aux=modeloService.buscarAlquiler(nroAlqui);
+			String texto=new String();
+			String textoactivo=new String();
+			String textoPagado=new String();
+			String textoFechaReserva= new String();
+			String textoHoraReserva=new String();
+			byte q=1;
+			String texPer=new String();
+			String texInm=new String();
+			if(aux.getActivo()==q){
+				textoactivo="Estado del Alquiler: Habilitado";
+				textoFechaReserva="Fecha de Reserva: "+ (new SimpleDateFormat("dd-MM-yyyy").format(aux.getFechareserva()));
+				textoHoraReserva="Hora de Reserva: "+ new SimpleDateFormat("HH:mm:ss").format(aux.getFechareserva());
+			}else{
+				textoactivo	= "Estado del Alquiler: Deshabilitado";
+				textoFechaReserva="Fecha de Reserva: S/F";
+				textoHoraReserva="Hora de Reserva: S/F";
+	
+			}
 		
-		texPer=aux.getPersonas().getApellido()+" "+aux.getPersonas().getNombre();
-		texInm=aux.getInmuebles().getNombre();
-		texto= "Persona: " + texPer +'\n'+""+
-		"Inmueble Alquilado: "+texInm +'\n'+""+
-		"Fecha de emisión: "+ (new SimpleDateFormat("dd-MM-yyyy").format(aux.getFechaactual())) +'\n'+""+
-		textoactivo +'\n'+""+ 
-		textoFechaReserva +'\n'+""+
-		textoHoraReserva +'\n'+""+
-		"Cantidad de horas alquilado: "+ aux.getCantidadhoras() +'\n'+""+
-		"Precio Total: "+aux.getPreciototal()  +'\n'+""+
-		textoPagado +'\n'+""+
-		"Observaciones: "+ aux.getObservaciones();
-		miVentanaDetallesAlquiler.texDetalle.setText(texto);
+			if(aux.getPagoalquiler()==q){
+				textoPagado="Alquiler: Pagado Completo" +'\n'+""+ 
+						"Fecha de Pago: "+ (new SimpleDateFormat("dd-MM-yyyy").format(aux.getFechapagoalquiler())+ " "
+				+ new SimpleDateFormat("HH:mm:ss").format(aux.getFechapagoalquiler()));
+				
+			}else{
+				textoPagado="Alquiler: Pagado Incompleto" +'\n'+""+ 
+						"Monto Faltante: "+filtro.format(aux.getMontofaltante());
+			}
 		
-		miVentanaDetallesAlquiler.setVisible(true);
+			texPer=aux.getPersonas().getApellido()+" "+aux.getPersonas().getNombre();
+			texInm=aux.getInmuebles().getNombre();
+			texto= "Persona: " + texPer +'\n'+""+
+					"Inmueble Alquilado: "+texInm +'\n'+""+
+					"Fecha de emisión: "+ (new SimpleDateFormat("dd-MM-yyyy").format(aux.getFechaactual())+ " "+
+					 new SimpleDateFormat("HH:mm:ss").format(aux.getFechaactual()))  +'\n'+""+   
+				
+					textoactivo +'\n'+""+ 
+					textoFechaReserva +'\n'+""+
+					textoHoraReserva +'\n'+""+
+					"Cantidad de horas alquilado: "+ aux.getCantidadhoras() +'\n'+""+
+					"Precio Total: "+filtro.format(aux.getPreciototal())  +'\n'+""+
+			textoPagado +'\n'+""+
+			"Observaciones: "+ aux.getObservaciones();
+			miVentanaDetallesAlquiler.texDetalle.setText(texto);
+		
+			miVentanaDetallesAlquiler.setVisible(true);
+		
 		}catch(Exception e){
 			mensajes("Error en la ventana detalles", 0);
 		}
@@ -1963,8 +1980,6 @@ public class ControllerCoordinador {
 		miVentanaAlquilerPrincipal.inmuebleEnt=BuscarInmueble(auxNum1);
 		panelRegInmDesHabilitar();
 		miVentanaAlquilerPrincipal.cargarDatosInmueble(miVentanaAlquilerPrincipal.inmuebleEnt);
-		boolean hayAlquileres =this.NoTieneAlquileres(auxNum1);
-		long numeroAlquileres=NumeroAlquileresPorInmueble(auxNum1);
 		habilitarBotonesInm(miVentanaAlquilerPrincipal.inmuebleEnt.isHabilitado(),NoTieneAlquileres(auxNum1));
 		
 		
